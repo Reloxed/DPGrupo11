@@ -1,8 +1,0 @@
-127.0.0.1 - - [01/Oct/2018:12:24:30 +0200] "GET / HTTP/1.1" 404 951
-127.0.0.1 - - [01/Oct/2018:12:25:10 +0200] "GET / HTTP/1.1" 404 951
-127.0.0.1 - - [01/Oct/2018:12:25:36 +0200] "GET /Acme-Shout/ HTTP/1.1" 200 1960
-127.0.0.1 - - [01/Oct/2018:12:25:37 +0200] "GET /Acme-Shout/scripts/jquery-ui.js HTTP/1.1" 304 -
-127.0.0.1 - - [01/Oct/2018:12:25:37 +0200] "GET /Acme-Shout/styles/common.css HTTP/1.1" 304 -
-127.0.0.1 - - [01/Oct/2018:12:25:37 +0200] "GET /Acme-Shout/styles/jmenu.css HTTP/1.1" 304 -
-127.0.0.1 - - [01/Oct/2018:12:25:37 +0200] "GET /Acme-Shout/styles/displaytag.css HTTP/1.1" 304 -
-127.0.0.1 - - [01/Oct/2018:12:25:37 +0200] "GET /favicon.ico HTTP/1.1" 404 973
