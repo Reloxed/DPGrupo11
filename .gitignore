@@ -1,5 +1,4 @@
-\.metadata/
-\.RemoteSystemsTempFiles/
-\Scrapbook/
-\Servers/
-RemoteSystemsTempFiles
+target/
+src/main/resources/Entities.map
+Entities.map
+.classpath

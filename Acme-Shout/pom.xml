@@ -19,7 +19,7 @@
 
 	<!-- Artifact identification and properties -->
 
-	<groupId>Acme.com</groupId>
+	<groupId>Acme.comm</groupId>
 	<artifactId>Acme-Shout</artifactId>
 	<version>0.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
