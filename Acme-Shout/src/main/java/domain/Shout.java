@@ -13,7 +13,7 @@ public class Shout extends DomainEntity {
 	private String	link;
 	private String	text;
 
-
+	/** Holaaaa **/
 	@NotBlank
 	public String getUsername() {
 		return this.username;
