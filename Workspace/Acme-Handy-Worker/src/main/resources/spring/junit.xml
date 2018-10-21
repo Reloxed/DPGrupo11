@@ -3,7 +3,7 @@
 <!-- 
  * junit.xml
  *
- * Copyright (C) 2018 Universidad de Sevilla
+ * Copyright (C) 2017 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -18,6 +18,9 @@
 	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	">
 
+	<bean name="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	</bean>
+	
 	<import resource="datasource.xml" />
 	<import resource="config/packages.xml" />
 	
