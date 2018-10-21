@@ -1,8 +1,6 @@
 \.metadata/
 \.RemoteSystemsTempFiles/
-\Workspace/Scrapbook/
-\Workspace/Servers/
+\Scrapbook/
+\Servers/
 RemoteSystemsTempFiles
-\Workspace/Acme-Handy-Worker/target/
-\Workspace/Acme-Handy-Worker/src/main/resources/Entities.map
-\Workspace/Acme-Handy-Worker/.classpath
+\Acme-Handy-Worker/target/
