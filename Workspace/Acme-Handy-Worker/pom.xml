@@ -28,8 +28,8 @@
 
 	<!-- Indexing information -->
 
-	<name>Sample Project</name>
-	<url>http://www.sample-project.com</url>
+	<name>Acme Handy Worker</name>
+	<url>http://www.acme-handy-worker.com</url>
 	<description>This is Acme Certifications, a sample project.</description>
 	
 	<!-- Build commands -->
