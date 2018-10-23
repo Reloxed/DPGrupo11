@@ -28,9 +28,9 @@
 
 	<!-- Indexing information -->
 
-	<name>Sample Project</name>
-	<url>http://www.sample-project.com</url>
-	<description>This is Acme Certifications, a sample project.</description>
+	<name>Acme Handy Worker</name>
+	<url>http://www.acme-handy-worker.com</url>
+	<description>This is Acme Certifications, Acme Handy Worker Project.</description>
 	
 	<!-- Build commands -->
 
