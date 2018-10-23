@@ -102,6 +102,10 @@
 
 				<Context docBase="Acme-Handy-Worker" path="/Acme-Handy-Worker"
 					reloadable="true" source="org.eclipse.jst.jee.server:Acme-Handy-Worker" />
+<<<<<<< HEAD
+=======
+				
+>>>>>>> master
 			</Host>
 		</Engine>
 	</Service>
