@@ -30,11 +30,11 @@
 
 	<name>Acme Handy Worker</name>
 	<url>http://www.acme-handy-worker.com</url>
-<<<<<<< HEAD
+
 	<description>This is Acme Certifications, Acme Handy Worker Project.</description>
-=======
+
 	<description>This is Acme Certifications, a sample project.</description>
->>>>>>> master
+	
 	
 	<!-- Build commands -->
 
