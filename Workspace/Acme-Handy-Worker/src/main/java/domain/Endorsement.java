@@ -2,13 +2,20 @@ package domain;
 
 import java.util.Date;
 
-public class Endorsement extends DomainEntity {
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+public class Endorsement {
 
 	private Date publishedDate;
 	private String comment;
 	private Customer customer;
 	private HandyWorker handyWorker;
 
+	@Past
 	public Date getPublishedDate() {
 		return publishedDate;
 	}
@@ -17,6 +24,7 @@ public class Endorsement extends DomainEntity {
 		this.publishedDate = publishedDate;
 	}
 
+	@NotBlank
 	public String getComment() {
 		return comment;
 	}
@@ -25,6 +33,8 @@ public class Endorsement extends DomainEntity {
 		this.comment = comment;
 	}
 
+	@NotNull
+	@Valid
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -33,6 +43,8 @@ public class Endorsement extends DomainEntity {
 		this.customer = customer;
 	}
 
+	@NotNull
+	@Valid
 	public HandyWorker getHandyWorker() {
 		return handyWorker;
 	}

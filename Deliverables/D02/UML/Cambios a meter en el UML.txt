@@ -7,3 +7,4 @@
 - Hay que poner overlapping en la partici—n de Actor en los distintos tipos de actores, tal y como pone en las diapositivas.
 - La relaci—n Note-HandyWorker no ser’a *-1? De momento en java voy a ponerlo as’.
 - Note: otherActorComment por otherActorComments
+- endDate de Finder

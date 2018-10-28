@@ -3,7 +3,11 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import com.lowagie.text.Section;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Tutorial {
 
@@ -14,6 +18,7 @@ public class Tutorial {
 	private HandyWorker writer;
 	private Collection<Seccion> sections;
 
+	@NotBlank
 	public String getTitle() {
 		return title;
 	}
@@ -22,6 +27,7 @@ public class Tutorial {
 		this.title = title;
 	}
 
+	@Past
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
@@ -30,6 +36,7 @@ public class Tutorial {
 		this.lastUpdated = lastUpdated;
 	}
 
+	@NotBlank
 	public String getSummary() {
 		return summary;
 	}
@@ -46,6 +53,8 @@ public class Tutorial {
 		this.picture = picture;
 	}
 
+	@NotNull
+	@Valid
 	public HandyWorker getWriter() {
 		return writer;
 	}
@@ -54,6 +63,8 @@ public class Tutorial {
 		this.writer = writer;
 	}
 
+	@NotNull
+	@Valid
 	public Collection<Seccion> getSections() {
 		return sections;
 	}

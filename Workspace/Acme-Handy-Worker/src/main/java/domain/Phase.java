@@ -38,8 +38,7 @@ public class Phase{
 		return startDate;
 	}
 
-	@NotNull
-	@Past
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -49,7 +48,6 @@ public class Phase{
 		return endDate;
 	}
 
-	@NotNull
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}

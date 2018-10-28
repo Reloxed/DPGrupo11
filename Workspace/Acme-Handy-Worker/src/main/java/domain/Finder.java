@@ -1,6 +1,11 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 public class Finder {
 
@@ -9,7 +14,7 @@ public class Finder {
 	private Money priceHigh;
 	private Date startDate;
 	private Date endDate;
-	private Category category;
+	private Categoria category;
 	private Warranty warranty;
 	private Collection<FixUpTask> fixuptask;
 
@@ -37,6 +42,7 @@ public class Finder {
 		this.priceHigh = priceHigh;
 	}
 
+	@Past
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -53,14 +59,18 @@ public class Finder {
 		this.endDate = endDate;
 	}
 
-	public Category getCategory() {
+	@NotNull
+	@Valid
+	public Categoria getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(Categoria category) {
 		this.category = category;
 	}
 
+	@NotNull
+	@Valid
 	public Warranty getWarranty() {
 		return warranty;
 	}
@@ -69,6 +79,8 @@ public class Finder {
 		this.warranty = warranty;
 	}
 
+	@NotNull
+	@Valid
 	public Collection<FixUpTask> getFixuptask() {
 		return fixuptask;
 	}

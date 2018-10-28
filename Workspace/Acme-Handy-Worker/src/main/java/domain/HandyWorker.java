@@ -2,6 +2,11 @@ package domain;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class HandyWorker extends Actor {
 
 	private String make;
@@ -11,6 +16,7 @@ public class HandyWorker extends Actor {
 	private Finder finder;
 	private Curriculum curriculum;
 
+	@NotBlank
 	public String getMake() {
 		return make;
 	}
@@ -19,6 +25,8 @@ public class HandyWorker extends Actor {
 		this.make = make;
 	}
 
+	@NotNull
+	@Valid
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -27,6 +35,8 @@ public class HandyWorker extends Actor {
 		this.endorsements = endorsements;
 	}
 
+	@NotNull
+	@Valid
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
 	}
@@ -35,6 +45,8 @@ public class HandyWorker extends Actor {
 		this.tutorial = tutorial;
 	}
 
+	@NotNull
+	@Valid
 	public Application getApplication() {
 		return application;
 	}
@@ -43,6 +55,8 @@ public class HandyWorker extends Actor {
 		this.application = application;
 	}
 
+	@NotNull
+	@Valid
 	public Finder getFinder() {
 		return finder;
 	}
@@ -51,6 +65,8 @@ public class HandyWorker extends Actor {
 		this.finder = finder;
 	}
 
+	@NotNull
+	@Valid
 	public Curriculum getCurriculum() {
 		return curriculum;
 	}
@@ -58,8 +74,8 @@ public class HandyWorker extends Actor {
 	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
-	
-	public Double score(int p, int n) {
+
+	public double score(int p, int n) {
 		return p - n;
 	}
 
