@@ -17,3 +17,5 @@
 -Tutorial- handyworker : doble flecha
 -handyworker-curriculum:falta multiplicidad handyworker
 -cambiar el patrón de curriculum por :"\\d{6}-[A-Z0-9]{6}" 
+-Quitar {NotBlank} del atributo publishedTime de la clase Report y añadirle {Past}, el atributo isFinal es boolean por lo que hay que quitarle el {NotNull}
+

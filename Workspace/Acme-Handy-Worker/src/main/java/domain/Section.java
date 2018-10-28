@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Collection;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -10,7 +12,7 @@ public class Section extends DomainEntity{
 	
 	private String tittle;
 	private String text;
-	private String picture;
+	private Collection<String> picture;
 	
 	
 	//Metodos
@@ -31,10 +33,10 @@ public class Section extends DomainEntity{
 		this.text = text;
 	}
 	@URL
-	public String getPicture() {
+	public Collection<String> getPicture() {
 		return picture;
 	}
-	public void setPicture(String picture) {
+	public void setPicture(Collection<String> picture) {
 		this.picture = picture;
 	}
 	
