@@ -31,10 +31,7 @@
 	<name>Acme Handy Worker</name>
 	<url>http://www.acme-handy-worker.com</url>
 
-	<description>This is Acme Certifications, Acme Handy Worker Project.</description>
-
-	<description>This is Acme Certifications, a sample project.</description>
-	
+	<description>This is Acme Handy Worker Project.</description>	
 	
 	<!-- Build commands -->
 
