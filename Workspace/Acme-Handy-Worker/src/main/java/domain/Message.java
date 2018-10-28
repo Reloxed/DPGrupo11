@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ public class Message extends DomainEntity{
 	private String body;
 	private Priority priority;
 	private String tags;
+	private Collection<MessageBox> messageBoxes;
+	
 	
 	
 	@NotNull
@@ -66,4 +69,13 @@ public class Message extends DomainEntity{
 		this.tags = tags;
 	}
 	
+	
+	@NotNull
+	@Valid
+	public Collection<MessageBox> getMessageBoxes() {
+		return messageBoxes;
+	}
+	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
+	}
 }
