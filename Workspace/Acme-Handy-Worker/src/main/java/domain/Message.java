@@ -3,6 +3,7 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,7 @@ public class Message extends DomainEntity{
 	
 	@NotNull
 	@Valid
+	@ElementCollection
 	public Priority getPriority() {
 		return priority;
 	}
