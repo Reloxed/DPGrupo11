@@ -11,3 +11,9 @@
 - actor isSuspicious es boolean
 - la clase countrycode no tiene sentido con el atrib en conf
 - meter el int CC en el string de phonenumber en el set?
+-Sponsor ->Sponsorship  poner flecha
+-Tutorial - SponsorShip tiene dos flechas quitar la de sponsorship
+-CreditCard: cambiar atributos Integer a int pues son no optional.
+-Tutorial- handyworker : doble flecha
+-handyworker-curriculum:falta multiplicidad handyworker
+-cambiar el patrón de curriculum por :"\\d{6}-[A-Z0-9]{6}" 
