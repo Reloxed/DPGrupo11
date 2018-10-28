@@ -7,7 +7,7 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Phase extends DomainEntity{
+public class Phase{
 
 	private String title;
 	private String description;
