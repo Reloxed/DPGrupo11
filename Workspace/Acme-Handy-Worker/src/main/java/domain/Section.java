@@ -1,47 +1,44 @@
+
 package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
-
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
-@Entity
 public class Section extends DomainEntity {
 
-	// Atributos
+	// Attributes
 
-	private String tittle;
-	private String text;
-	private Collection<String> picture;
+	private String				title;
+	private String				text;
+	private Collection<String>	picture;
 
-	// Metodos
+
+	// Methods
 
 	@NotBlank
-	public String getTittle() {
-		return tittle;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 
 	@NotBlank
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
-	@URL
 	public Collection<String> getPicture() {
-		return picture;
+		return this.picture;
 	}
 
-	public void setPicture(Collection<String> picture) {
+	public void setPicture(final Collection<String> picture) {
 		this.picture = picture;
 	}
 

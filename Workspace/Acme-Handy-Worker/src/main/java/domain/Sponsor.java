@@ -1,24 +1,23 @@
+
 package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Sponsor extends Actor {
 
-	// Atributos
+	// Attributes
 
-	private Collection<SponsorShip> sponsorChips;
+	private Collection<Sponsorship>	sponsorships;
+
 
 	// Metodos
 
-	public Collection<SponsorShip> getSponsorChips() {
-		return sponsorChips;
+	public Collection<Sponsorship> getSponsorships() {
+		return this.sponsorships;
 	}
 
-	public void setSponsorChips(Collection<SponsorShip> sponsorChips) {
-		this.sponsorChips = sponsorChips;
+	public void setSponsorships(final Collection<Sponsorship> sponsorships) {
+		this.sponsorships = sponsorships;
 	}
 
 }

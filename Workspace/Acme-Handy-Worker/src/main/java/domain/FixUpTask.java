@@ -1,116 +1,116 @@
+
 package domain;
 
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class FixUpTask extends DomainEntity {
 
-	private String ticker;
-	private Date publishedTime;
-	private String description;
-	private String address;
-	private Money maxPrice;
-	private Date startMoment;
-	private Date endMoment;
-	private Collection<Application> application;
-	private Category category;
-	private Warranty warranty;
+	private String					ticker;
+	private Date					publishedTime;
+	private String					description;
+	private String					address;
+	private Money					maxPrice;
+	private Date					startMoment;
+	private Date					endMoment;
+	private Collection<Application>	application;
+	private Category				category;
+	private Warranty				warranty;
+
 
 	@NotBlank
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
 	public String getTicker() {
-		return ticker;
+		return this.ticker;
 	}
 
-	public void setTicker(String ticker) {
+	public void setTicker(final String ticker) {
 		this.ticker = ticker;
 	}
 
 	@Past
 	public Date getPublishedTime() {
-		return publishedTime;
+		return this.publishedTime;
 	}
 
-	public void setPublishedTime(Date publishedTime) {
+	public void setPublishedTime(final Date publishedTime) {
 		this.publishedTime = publishedTime;
 	}
 
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	@NotBlank
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(final String address) {
 		this.address = address;
 	}
 
 	@NotNull
 	public Money getMaxPrice() {
-		return maxPrice;
+		return this.maxPrice;
 	}
 
-	public void setMaxPrice(Money maxPrice) {
+	public void setMaxPrice(final Money maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 
 	@NotNull
 	public Date getStartMoment() {
-		return startMoment;
+		return this.startMoment;
 	}
 
-	public void setStartMoment(Date startMoment) {
+	public void setStartMoment(final Date startMoment) {
 		this.startMoment = startMoment;
 	}
 
 	@NotNull
 	public Date getEndMoment() {
-		return endMoment;
+		return this.endMoment;
 	}
 
-	public void setEndMoment(Date endMoment) {
+	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
 
 	public Collection<Application> getApplication() {
-		return application;
+		return this.application;
 	}
 
-	public void setApplication(Collection<Application> application) {
+	public void setApplication(final Collection<Application> application) {
 		this.application = application;
 	}
 
 	@NotNull
 	public Category getCategory() {
-		return category;
+		return this.category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(final Category category) {
 		this.category = category;
 	}
 
 	@NotNull
 	public Warranty getWarranty() {
-		return warranty;
+		return this.warranty;
 	}
 
-	public void setWarranty(Warranty warranty) {
+	public void setWarranty(final Warranty warranty) {
 		this.warranty = warranty;
 	}
 

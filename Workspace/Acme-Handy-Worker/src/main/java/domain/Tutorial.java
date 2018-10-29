@@ -1,79 +1,77 @@
+
 package domain;
 
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
-@Entity
 public class Tutorial extends DomainEntity {
 
-	private String title;
-	private Date lastUpdated;
-	private String summary;
-	private String picture;
-	private HandyWorker writer;
-	private Collection<Section> sections;
+	private String				title;
+	private Date				lastUpdated;
+	private String				summary;
+	private Collection<String>	pictures;
+	private HandyWorker			writer;
+	private Collection<Section>	sections;
+
 
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	@Past
+	@NotNull
 	public Date getLastUpdated() {
-		return lastUpdated;
+		return this.lastUpdated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(final Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
 	@NotBlank
 	public String getSummary() {
-		return summary;
+		return this.summary;
 	}
 
-	public void setSummary(String summary) {
+	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
 
-	@URL
-	public String getPicture() {
-		return picture;
+	public Collection<String> getPictures() {
+		return this.pictures;
 	}
 
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setPictures(final Collection<String> pictures) {
+		this.pictures = pictures;
 	}
 
 	@NotNull
 	@Valid
 	public HandyWorker getWriter() {
-		return writer;
+		return this.writer;
 	}
 
-	public void setWriter(HandyWorker writer) {
+	public void setWriter(final HandyWorker writer) {
 		this.writer = writer;
 	}
 
 	@NotNull
-	@Valid
 	public Collection<Section> getSections() {
-		return sections;
+		return this.sections;
 	}
 
-	public void setSections(Collection<Section> sections) {
+	public void setSections(final Collection<Section> sections) {
 		this.sections = sections;
 	}
 

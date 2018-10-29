@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -10,11 +11,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class MessageBox extends DomainEntity {
 
-	private String name;
-	private boolean isPredefined;
+	private String				name;
+	private boolean				isPredefined;
 
-	private Collection<Message> messages;
-	private Actor actor;
+	private Collection<Message>	messages;
+
 
 	@NotBlank
 	public String getName() {
@@ -40,14 +41,5 @@ public class MessageBox extends DomainEntity {
 
 	public void setMessages(final Collection<Message> messages) {
 		this.messages = messages;
-	}
-
-	@NotNull
-	public Actor getActor() {
-		return this.actor;
-	}
-
-	public void setActor(final Actor actor) {
-		this.actor = actor;
 	}
 }
