@@ -1,11 +1,11 @@
 package domain;
 
-<<<<<<< HEAD
+
 
 import javax.persistence.Entity;
 
-=======
->>>>>>> 26df00516fec1a2872a2a638a5e57f733efd9b0e
+
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Law extends DomainEntity {
