@@ -1,21 +1,21 @@
-- Quitar abstract en MessageBox.
-- MessageBox: isPredefined es boolean porque no puede ser null, así nos evitamos poner la etiqueta NotNull.
-- Money: quantity es double.
-- SystemConfiguration no va unida a nada.
-- Me parece una tonter’a tener una relacion Referee-Report cuando ya podemos acceder a report a traves de Complaint.
-- La relacion Complaint - FixUpTask tiene una errata, pone 'correspoonds" y ser’a correspondsTo
-- Hay que poner overlapping en la partici—n de Actor en los distintos tipos de actores, tal y como pone en las diapositivas.
-- La relacion Note-HandyWorker no ser’a *-1? De momento en java voy a ponerlo as’.
-- Note: otherActorComment por otherActorComments
-- endDate de Finder
-- actor isSuspicious es boolean
-- la clase countrycode no tiene sentido con el atrib en conf
-- meter el int CC en el string de phonenumber en el set?
--Sponsor ->Sponsorship  poner flecha
--Tutorial - SponsorShip tiene dos flechas quitar la de sponsorship
--CreditCard: cambiar atributos Integer a int pues son no optional.
--Tutorial- handyworker : doble flecha
--handyworker-curriculum:falta multiplicidad handyworker
--cambiar el patrón de curriculum por :"\\d{6}-[A-Z0-9]{6}" 
--Quitar {NotBlank} del atributo publishedTime de la clase Report y añadirle {Past}, el atributo isFinal es boolean por lo que hay que quitarle el {NotNull}
-- Revisar relacion Message -- MessageBox
+- x Quitar abstract en MessageBox.
+- x MessageBox: isPredefined es boolean porque no puede ser null, así nos evitamos poner la etiqueta NotNull.
+- x Money: quantity es double.
+- x SystemConfiguration no va unida a nada.
+- x Me parece una tonter’a tener una relacion Referee-Report cuando ya podemos acceder a report a traves de Complaint.
+- x La relacion Complaint - FixUpTask tiene una errata, pone 'correspoonds" y ser’a correspondsTo
+- x Hay que poner overlapping en la partici—n de Actor en los distintos tipos de actores, tal y como pone en las diapositivas.
+- x La relacion Note-HandyWorker no ser’a *-1? De momento en java voy a ponerlo as’.
+- x Note: otherActorComment por otherActorComments
+- x endDate de Finder
+- x actor isSuspicious es boolean
+- x la clase countrycode no tiene sentido con el atrib en conf
+-  meter el int CC en el string de phonenumber en el set?
+- x Sponsor ->Sponsorship  poner flecha
+- x Tutorial - SponsorShip tiene dos flechas quitar la de sponsorship
+- x CreditCard: cambiar atributos Integer a int pues son no optional.
+- x Tutorial- handyworker : doble flecha
+- x handyworker-curriculum:falta multiplicidad handyworker
+- x cambiar el patrón de curriculum por :"\\d{6}-[A-Z0-9]{6}" 
+- x Quitar {NotBlank} del atributo publishedTime de la clase Report y añadirle {Past}, el atributo isFinal es boolean por lo que hay que quitarle el {NotNull}
+- x Revisar relacion Message -- MessageBox
