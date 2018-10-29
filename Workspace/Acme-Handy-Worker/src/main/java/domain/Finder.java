@@ -14,8 +14,8 @@ public class Finder extends DomainEntity {
 	private String keyWord;
 	private Money priceLow;
 	private Money priceHigh;
-	private Date startDate;
-	private Date endDate;
+	private Date startMoment;
+	private Date endMoment;
 	private Category category;
 	private Warranty warranty;
 	private Collection<FixUpTask> fixuptask;
@@ -45,29 +45,29 @@ public class Finder extends DomainEntity {
 	}
 
 	@Past
-	public Date getStartDate() {
-		return startDate;
+	public Date getStartMoment() {
+		return startMoment;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartMoment(Date startMoment) {
+		this.startMoment = startMoment;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getEndMoment() {
+		return endMoment;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndMoment(Date endMoment) {
+		this.endMoment = endMoment;
 	}
 
 	@NotNull
 	@Valid
-	public Categoria getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Categoria category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -13,8 +12,8 @@ public class Phase extends DomainEntity {
 
 	private String title;
 	private String description;
-	private Date startDate;
-	private Date endDate;
+	private Date startMoment;
+	private Date endMoment;
 
 	@NotBlank
 	public String getTitle() {
@@ -35,22 +34,21 @@ public class Phase extends DomainEntity {
 	}
 
 	@NotNull
-	@Past
-	public Date getStartDate() {
-		return startDate;
+	public Date getStartMoment() {
+		return startMoment;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartMoment(Date startMoment) {
+		this.startMoment = startMoment;
 	}
 
 	@NotNull
-	public Date getEndDate() {
-		return endDate;
+	public Date getEndMoment() {
+		return endMoment;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndMoment(Date endMoment) {
+		this.endMoment = endMoment;
 	}
 
 }

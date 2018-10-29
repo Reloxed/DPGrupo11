@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;

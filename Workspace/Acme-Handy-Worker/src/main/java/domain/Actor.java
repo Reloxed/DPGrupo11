@@ -26,6 +26,7 @@ public class Actor extends DomainEntity {
 	private Collection<SocialProfile> socialProfiles;
 	private Collection<MessageBox> messageBoxes;
 	private UserAccount userAccount;
+	private SystemConfiguration sC;
 
 	@NotBlank
 	public String getName() {
@@ -77,7 +78,7 @@ public class Actor extends DomainEntity {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = countryCode + phoneNumber;
+		this.phoneNumber =  sC.getCountryCode() + phoneNumber;
 	}
 
 	public String getAddress() {

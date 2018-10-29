@@ -13,14 +13,14 @@ public class Administrator extends Actor {
 
 
 	public Collection<Category> getCategories(){
-		this.categories;
+		return this.categories;
 	}
 	public void setCategories(final Collection<Category> categories) {
 		this.categories = categories;
 	}
 
 	public Collection<Warranty> getWarranties(){
-		this.warranties;
+		return this.warranties;
 	}
 	public void setWarranties(final Collection<Warranty> warranties) {
 		this.warranties = warranties;
