@@ -25,7 +25,7 @@ public class Complaint extends DomainEntity {
 
 	@Column(unique = true)
 	@NotBlank
-	@Pattern(regexp = "([1-12]^(0?[1-9]|[1-9][0-9])$)")
+	@Pattern(regexp = "\\d{6}-[A-Z0-9]{6}")
 	public String getTicker() {
 		return ticker;
 	}

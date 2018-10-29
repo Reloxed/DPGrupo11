@@ -1,5 +1,6 @@
 package domain;
 
+
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
