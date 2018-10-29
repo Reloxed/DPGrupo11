@@ -1,53 +1,53 @@
+
 package domain;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class Phase extends DomainEntity {
 
-	private String title;
-	private String description;
-	private Date startMoment;
-	private Date endMoment;
+	private String	title;
+	private String	description;
+	private Date	startMoment;
+	private Date	endMoment;
+
 
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	@NotNull
 	public Date getStartMoment() {
-		return startMoment;
+		return this.startMoment;
 	}
 
-	public void setStartMoment(Date startMoment) {
+	public void setStartMoment(final Date startMoment) {
 		this.startMoment = startMoment;
 	}
 
 	@NotNull
 	public Date getEndMoment() {
-		return endMoment;
+		return this.endMoment;
 	}
 
-	public void setEndMoment(Date endMoment) {
+	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
 

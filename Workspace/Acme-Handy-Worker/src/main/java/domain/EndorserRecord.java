@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -10,56 +11,57 @@ import org.hibernate.validator.constraints.URL;
 
 public class EndorserRecord extends DomainEntity {
 
-	private String fullName;
-	private String email;
-	private String phoneNumber;
-	private String linkedinLink;
-	private Collection<String> comments;
+	private String				fullName;
+	private String				email;
+	private String				phoneNumber;
+	private String				linkedinLink;
+	private Collection<String>	comments;
+
 
 	@NotBlank
 	public String getFullName() {
-		return fullName;
+		return this.fullName;
 	}
 
-	public void setFullName(String fullName) {
+	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
 
 	@NotBlank
-	@Email(regexp = "^([a-zA-Z0-9-.]+)@([a-zA-Z0-9-.]+).([a-zA-Z]{2,5})$")
+	@Email
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
 	@NotBlank
 	@Pattern(regexp = "+[0-9]{6}[0-9]{4,}")
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
 	@URL
 	@NotBlank
 	public String getLinkedinLink() {
-		return linkedinLink;
+		return this.linkedinLink;
 	}
 
-	public void setLinkedinLink(String linkedinLink) {
+	public void setLinkedinLink(final String linkedinLink) {
 		this.linkedinLink = linkedinLink;
 	}
 
 	public Collection<String> getComments() {
-		return comments;
+		return this.comments;
 	}
 
-	public void setComments(Collection<String> comments) {
+	public void setComments(final Collection<String> comments) {
 		this.comments = comments;
 	}
 
