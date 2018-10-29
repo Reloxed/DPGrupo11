@@ -3,11 +3,13 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class Note extends DomainEntity {
 
 	private Date publishedTime;
@@ -18,71 +20,70 @@ public class Note extends DomainEntity {
 	private Customer customer;
 	private HandyWorker handyWorker;
 
+	/* Atributtes */
 
-    /* Atributtes */
-
-    @Past
-    @NotNull
-	public Date getPublishedTime(){
+	@Past
+	@NotNull
+	public Date getPublishedTime() {
 		return this.publishedTime;
 	}
 
-	public void setPublishedTime(Date publishedTime){
+	public void setPublishedTime(Date publishedTime) {
 		this.publishedTime = publishedTime;
 	}
 
-    @NotBlank
-	public String getCreatorComment(){
+	@NotBlank
+	public String getCreatorComment() {
 		return this.creatorComment;
-    }
-    
-    public void setCreatorComment(String creatorComment){
-        this.creatorComment = creatorComment;
-    }
+	}
 
-    public Collection<String> getOtherActorComments(){
-        return this.otherActorComments;
-    }
+	public void setCreatorComment(String creatorComment) {
+		this.creatorComment = creatorComment;
+	}
 
-    public void setOtherActorComments(Collection<String> otherActorComments){
-        this.otherActorComments = otherActorComments;
-    }
+	public Collection<String> getOtherActorComments() {
+		return this.otherActorComments;
+	}
 
-    /* Relationships */
+	public void setOtherActorComments(Collection<String> otherActorComments) {
+		this.otherActorComments = otherActorComments;
+	}
 
-    @NotNull
-    public Report getReport(){
-        return this.report;
-    }
+	/* Relationships */
 
-    public void setReport(Report report){
-        this.report = report;
-    }
+	@NotNull
+	public Report getReport() {
+		return this.report;
+	}
 
-    @NotNull
-    public Referee getReferee(){
-        return this.referee;
-    }
+	public void setReport(Report report) {
+		this.report = report;
+	}
 
-    public void setReferee(Referee referee){
-        this.referee = referee;
-    }
+	@NotNull
+	public Referee getReferee() {
+		return this.referee;
+	}
 
-    @NotNull
-    public Customer getCustomer(){
-        return this.customer;
-    }
+	public void setReferee(Referee referee) {
+		this.referee = referee;
+	}
 
-    public void setCustomer(Customer customer){
-        this.customer = customer;
-    }
+	@NotNull
+	public Customer getCustomer() {
+		return this.customer;
+	}
 
-    @NotNull
-    public HandyWorker getHandyWorker(){
-        this.handyWorker = handyWorker;
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-    public void setHandyWorker(HandyWorker handyWorker){
-        this.handyWorker = handyWorker;
-    }
+	@NotNull
+	public HandyWorker getHandyWorker() {
+		return this.handyWorker;
+	}
+
+	public void setHandyWorker(HandyWorker handyWorker) {
+		this.handyWorker = handyWorker;
+	}
 }

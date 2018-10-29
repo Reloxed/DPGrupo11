@@ -1,12 +1,13 @@
-
 package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Referee extends Actor {
 
-	private Collection<Complaint>	complaints;
-
+	private Collection<Complaint> complaints;
 
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;

@@ -31,12 +31,10 @@ public abstract class DomainEntity {
 		super();
 	}
 
-
 	// Identification ---------------------------------------------------------
 
-	private int	id;
-	private int	version;
-
+	private int id;
+	private int version;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)

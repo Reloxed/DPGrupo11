@@ -3,18 +3,20 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-public class Finder {
+@Entity
+public class Finder extends DomainEntity {
 
 	private String keyWord;
 	private Money priceLow;
 	private Money priceHigh;
 	private Date startDate;
 	private Date endDate;
-	private Categoria category;
+	private Category category;
 	private Warranty warranty;
 	private Collection<FixUpTask> fixuptask;
 

@@ -1,21 +1,21 @@
-
 package domain;
 
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class MessageBox extends DomainEntity {
 
-	private String			name;
-	private boolean			isPredefined;
+	private String name;
+	private boolean isPredefined;
 
-	private Collection<Message>	messages;
-	private Actor			actor;
-
+	private Collection<Message> messages;
+	private Actor actor;
 
 	@NotBlank
 	public String getName() {

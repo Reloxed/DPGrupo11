@@ -3,6 +3,9 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Administrator extends Actor {
 
 	private Collection<Category>	categories;

@@ -2,13 +2,15 @@ package domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Endorsement {
+@Entity
+public class Endorsement extends DomainEntity {
 
 	private Date publishedDate;
 	private String comment;

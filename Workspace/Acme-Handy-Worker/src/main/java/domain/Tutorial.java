@@ -3,20 +3,23 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
-public class Tutorial {
+@Entity
+public class Tutorial extends DomainEntity {
 
 	private String title;
 	private Date lastUpdated;
 	private String summary;
 	private String picture;
 	private HandyWorker writer;
-	private Collection<Seccion> sections;
+	private Collection<Section> sections;
 
 	@NotBlank
 	public String getTitle() {
@@ -45,6 +48,7 @@ public class Tutorial {
 		this.summary = summary;
 	}
 
+	@URL
 	public String getPicture() {
 		return picture;
 	}
@@ -65,11 +69,11 @@ public class Tutorial {
 
 	@NotNull
 	@Valid
-	public Collection<Seccion> getSections() {
+	public Collection<Section> getSections() {
 		return sections;
 	}
 
-	public void setSections(Collection<Seccion> sections) {
+	public void setSections(Collection<Section> sections) {
 		this.sections = sections;
 	}
 

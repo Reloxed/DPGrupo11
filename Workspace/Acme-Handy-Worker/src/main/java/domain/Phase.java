@@ -2,12 +2,14 @@ package domain;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Phase{
+@Entity
+public class Phase extends DomainEntity {
 
 	private String title;
 	private String description;
@@ -37,7 +39,6 @@ public class Phase{
 	public Date getStartDate() {
 		return startDate;
 	}
-
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
