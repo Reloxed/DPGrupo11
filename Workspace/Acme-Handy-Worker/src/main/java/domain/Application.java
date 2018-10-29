@@ -3,26 +3,26 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-@Entity
 public class Application extends DomainEntity {
 
-	private Date registeredTime;
+	private Date registeredMoment;
 	private Status status;
 	private Money offeredPrice;
 	private Collection<String> comment;
 	private CreditCard creditCard;
 
+	@NotNull
 	@Past
 	public Date getRegisteredTime() {
-		return registeredTime;
+		return registeredMoment;
 	}
 
 	public void setRegisteredTime(Date registeredTime) {
-		this.registeredTime = registeredTime;
+		this.registeredMoment = registeredTime;
 	}
 
 	@NotNull
@@ -35,6 +35,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	public Money getOfferedPrice() {
 		return offeredPrice;
 	}
@@ -51,6 +52,7 @@ public class Application extends DomainEntity {
 		this.comment = comment;
 	}
 
+	@Valid
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}

@@ -1,70 +1,70 @@
+
 package domain;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-@Entity
 public class PersonalRecord extends DomainEntity {
 
-	// Atributos
+	// Attributes
 
-	private String fullName;
-	private String photo;
-	private String email;
-	private String phoneNumber;
-	private String linkedinLink;
+	private String	fullName;
+	private String	photo;
+	private String	email;
+	private String	phoneNumber;
+	private String	linkedinLink;
 
-	// Metodos
+
+	// Methods
 
 	@NotBlank
 	public String getFullName() {
-		return fullName;
+		return this.fullName;
 	}
 
-	public void setFullName(String fullName) {
+	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
 
 	@URL
 	public String getPhoto() {
-		return photo;
+		return this.photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
 
 	@NotBlank
-	@Email(regexp = "^([a-zA-Z0-9-.]+)@([a-zA-Z0-9-.]+).([a-zA-Z]{2,5})$")
+	@Email
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
 	@NotBlank
 	@Pattern(regexp = "+[0-9]{6}[0-9]{4,}")
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
 	@NotBlank
 	@URL
 	public String getLinkedinLink() {
-		return linkedinLink;
+		return this.linkedinLink;
 	}
 
-	public void setLinkedinLink(String linkedinLink) {
+	public void setLinkedinLink(final String linkedinLink) {
 		this.linkedinLink = linkedinLink;
 	}
 

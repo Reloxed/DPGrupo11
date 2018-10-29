@@ -2,7 +2,6 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +11,6 @@ import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
 
-@Entity
 public class Actor extends DomainEntity {
 
 	private String name;
@@ -78,7 +76,7 @@ public class Actor extends DomainEntity {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber =  sC.getCountryCode() + phoneNumber;
+		this.phoneNumber = sC.getCountryCode() + phoneNumber;
 	}
 
 	public String getAddress() {
@@ -97,7 +95,6 @@ public class Actor extends DomainEntity {
 		this.isSuspicious = isSuspicious;
 	}
 
-	@NotNull
 	@Valid
 	public Collection<SocialProfile> getSocialProfiles() {
 		return socialProfiles;
@@ -107,7 +104,6 @@ public class Actor extends DomainEntity {
 		this.socialProfiles = socialProfiles;
 	}
 
-	@NotNull
 	@Valid
 	public Collection<MessageBox> getMessageBoxes() {
 		return messageBoxes;

@@ -2,11 +2,10 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class Category extends DomainEntity {
 
 	private String spanishName;
@@ -32,6 +31,7 @@ public class Category extends DomainEntity {
 		this.englishName = englishName;
 	}
 
+	@Valid
 	public Category getParentCategory() {
 		return parentCategory;
 	}
@@ -40,6 +40,7 @@ public class Category extends DomainEntity {
 		this.parentCategory = parentCategory;
 	}
 
+	@Valid
 	public Collection<Category> getChildCategories() {
 		return childCategories;
 	}

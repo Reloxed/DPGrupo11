@@ -1,12 +1,9 @@
 package domain;
 
-import javax.persistence.Embeddable;
-
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
-@Embeddable
 public class CreditCard {
 
 	// Atributos

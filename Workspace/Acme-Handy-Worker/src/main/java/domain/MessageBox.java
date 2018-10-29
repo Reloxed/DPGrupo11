@@ -2,17 +2,15 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class MessageBox extends DomainEntity {
 
 	private String name;
 	private boolean isPredefined;
-
 	private Collection<Message> messages;
 	private Actor actor;
 
@@ -33,7 +31,6 @@ public class MessageBox extends DomainEntity {
 		this.isPredefined = isPredefined;
 	}
 
-	@NotNull
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}
@@ -43,6 +40,7 @@ public class MessageBox extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	public Actor getActor() {
 		return this.actor;
 	}
