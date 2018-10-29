@@ -2,13 +2,12 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class Curriculum extends DomainEntity {
 
 	// Atributos
@@ -23,8 +22,7 @@ public class Curriculum extends DomainEntity {
 	// Metodos
 
 	@NotBlank
-	@Column(unique = true)
-	@Pattern(regexp = "\\d{6}-[A-Z0-9]{6}")
+	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
 	public String getTicker() {
 		return ticker;
 	}
@@ -33,6 +31,8 @@ public class Curriculum extends DomainEntity {
 		this.ticker = ticker;
 	}
 
+	@Valid
+	@NotNull
 	public PersonalRecord getPersonalRecord() {
 		return personalRecord;
 	}
@@ -41,6 +41,7 @@ public class Curriculum extends DomainEntity {
 		this.personalRecord = personalRecord;
 	}
 
+	@NotNull
 	public Collection<EducationRecord> getEducationRecords() {
 		return educationRecords;
 	}
@@ -49,6 +50,7 @@ public class Curriculum extends DomainEntity {
 		this.educationRecords = educationRecords;
 	}
 
+	@NotNull
 	public Collection<ProfessionalRecord> getProfessionalRecords() {
 		return professionalRecords;
 	}
@@ -58,6 +60,7 @@ public class Curriculum extends DomainEntity {
 		this.professionalRecords = professionalRecords;
 	}
 
+	@NotNull
 	public Collection<EndorserRecord> getEndorserRecords() {
 		return endorserRecords;
 	}
@@ -66,6 +69,7 @@ public class Curriculum extends DomainEntity {
 		this.endorserRecords = endorserRecords;
 	}
 
+	@NotNull
 	public Collection<MiscellaneousRecord> getMiscellaneousRecords() {
 		return miscellaneousRecords;
 	}

@@ -3,17 +3,13 @@ package domain;
 import java.sql.Date;
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
-@Entity
 public class Complaint extends DomainEntity {
 
 	private String ticker;
@@ -23,9 +19,8 @@ public class Complaint extends DomainEntity {
 	private FixUpTask fixUpTask;
 	private Collection<Report> reports;
 
-	@Column(unique = true)
 	@NotBlank
-	@Pattern(regexp = "([1-12]^(0?[1-9]|[1-9][0-9])$)")
+	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9] {6}")
 	public String getTicker() {
 		return ticker;
 	}
@@ -53,7 +48,6 @@ public class Complaint extends DomainEntity {
 		this.description = description;
 	}
 
-	@URL
 	public Collection<String> getAttachements() {
 		return attachements;
 	}
@@ -62,6 +56,8 @@ public class Complaint extends DomainEntity {
 		this.attachements = attachements;
 	}
 
+	@Valid
+	@NotNull
 	public FixUpTask getFixUpTask() {
 		return fixUpTask;
 	}
@@ -70,8 +66,6 @@ public class Complaint extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 
-	@Valid
-	@NotNull
 	public Collection<Report> getReports() {
 		return reports;
 	}

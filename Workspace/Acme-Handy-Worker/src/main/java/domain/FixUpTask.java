@@ -3,18 +3,17 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class FixUpTask extends DomainEntity {
 
 	private String ticker;
-	private Date publishedTime;
+	private Date publishedMoment;
 	private String description;
 	private String address;
 	private Money maxPrice;
@@ -34,13 +33,14 @@ public class FixUpTask extends DomainEntity {
 		this.ticker = ticker;
 	}
 
+	@NotNull
 	@Past
-	public Date getPublishedTime() {
-		return publishedTime;
+	public Date getPublishedMoment() {
+		return publishedMoment;
 	}
 
-	public void setPublishedTime(Date publishedTime) {
-		this.publishedTime = publishedTime;
+	public void setPublishedTime(Date publishedMoment) {
+		this.publishedMoment = publishedMoment;
 	}
 
 	@NotBlank
@@ -61,6 +61,7 @@ public class FixUpTask extends DomainEntity {
 		this.address = address;
 	}
 
+	@Valid
 	@NotNull
 	public Money getMaxPrice() {
 		return maxPrice;
@@ -97,6 +98,7 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	public Category getCategory() {
 		return category;
 	}
@@ -106,6 +108,7 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	public Warranty getWarranty() {
 		return warranty;
 	}

@@ -3,14 +3,12 @@ package domain;
 import java.sql.Date;
 import java.util.Collection;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-@Entity
 public class EducationRecord extends DomainEntity {
 
 	private String diplomaTitle;

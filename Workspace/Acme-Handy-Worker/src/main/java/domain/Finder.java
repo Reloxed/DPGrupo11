@@ -3,12 +3,8 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
-@Entity
 public class Finder extends DomainEntity {
 
 	private String keyWord;
@@ -44,7 +40,6 @@ public class Finder extends DomainEntity {
 		this.priceHigh = priceHigh;
 	}
 
-	@Past
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -61,7 +56,6 @@ public class Finder extends DomainEntity {
 		this.endMoment = endMoment;
 	}
 
-	@NotNull
 	@Valid
 	public Category getCategory() {
 		return category;
@@ -71,7 +65,6 @@ public class Finder extends DomainEntity {
 		this.category = category;
 	}
 
-	@NotNull
 	@Valid
 	public Warranty getWarranty() {
 		return warranty;
@@ -81,8 +74,6 @@ public class Finder extends DomainEntity {
 		this.warranty = warranty;
 	}
 
-	@NotNull
-	@Valid
 	public Collection<FixUpTask> getFixuptask() {
 		return fixuptask;
 	}

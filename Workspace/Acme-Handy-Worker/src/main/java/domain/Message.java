@@ -3,32 +3,31 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class Message extends DomainEntity {
 
-	private Date sendDate;
+	private Date sendMoment;
 	private String subject;
 	private String body;
 	private Priority priority;
-	private String tags;
+	private Collection<String> tags;
 	private Collection<MessageBox> messageBoxes;
+	private Actor sender;
+	private Actor reciever;
 
 	@NotNull
 	@Past
-	public Date getSendDate() {
-		return sendDate;
+	public Date getSendMoment() {
+		return sendMoment;
 	}
 
-	public void setSendDate(Date sendDate) {
-		this.sendDate = sendDate;
+	public void setSendMoment(Date sendMoment) {
+		this.sendMoment = sendMoment;
 	}
 
 	@NotBlank
@@ -51,7 +50,6 @@ public class Message extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ElementCollection
 	public Priority getPriority() {
 		return priority;
 	}
@@ -60,16 +58,15 @@ public class Message extends DomainEntity {
 		this.priority = priority;
 	}
 
-	public String getTags() {
+	public Collection<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(String tags) {
+	public void setTags(Collection<String> tags) {
 		this.tags = tags;
 	}
 
 	@NotNull
-	@Valid
 	public Collection<MessageBox> getMessageBoxes() {
 		return messageBoxes;
 	}
@@ -77,4 +74,25 @@ public class Message extends DomainEntity {
 	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
 		this.messageBoxes = messageBoxes;
 	}
+
+	@Valid
+	@NotNull
+	public Actor getSender() {
+		return sender;
+	}
+
+	public void setSender(Actor sender) {
+		this.sender = sender;
+	}
+
+	@Valid
+	@NotNull
+	public Actor getReciever() {
+		return reciever;
+	}
+
+	public void setReciever(Actor reciever) {
+		this.reciever = reciever;
+	}
+
 }

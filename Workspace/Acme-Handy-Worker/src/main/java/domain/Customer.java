@@ -2,15 +2,14 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
-@Entity
 public class Customer extends Actor {
 
+	private double score;
 	private Collection<Endorsement> endorsements;
 	private Collection<Application> applications;
 	private Collection<FixUpTask> fixuptasks;
@@ -46,7 +45,11 @@ public class Customer extends Actor {
 	}
 
 	@Range(min = -1, max = 1)
-	public double score(int p, int n) {
-		return p - n;
+	public double getScore() {
+		return this.score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
 	}
 }

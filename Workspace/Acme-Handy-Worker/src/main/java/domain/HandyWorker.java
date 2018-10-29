@@ -2,19 +2,19 @@ package domain;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
 public class HandyWorker extends Actor {
 
+	private double score;
 	private String make;
 	private Collection<Endorsement> endorsements;
 	private Collection<Tutorial> tutorial;
-	private Application application;
+	private Collection<Note> notes;
+	private Collection<Application> applications;
 	private Finder finder;
 	private Curriculum curriculum;
 
@@ -27,8 +27,6 @@ public class HandyWorker extends Actor {
 		this.make = make;
 	}
 
-	@NotNull
-	@Valid
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -37,8 +35,6 @@ public class HandyWorker extends Actor {
 		this.endorsements = endorsements;
 	}
 
-	@NotNull
-	@Valid
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
 	}
@@ -47,14 +43,20 @@ public class HandyWorker extends Actor {
 		this.tutorial = tutorial;
 	}
 
-	@NotNull
-	@Valid
-	public Application getApplication() {
-		return application;
+	public Collection<Note> getNotes() {
+		return notes;
 	}
 
-	public void setApplication(Application application) {
-		this.application = application;
+	public void setNotes(Collection<Note> notes) {
+		this.notes = notes;
+	}
+
+	public Collection<Application> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(Collection<Application> applications) {
+		this.applications = applications;
 	}
 
 	@NotNull
@@ -77,8 +79,11 @@ public class HandyWorker extends Actor {
 		this.curriculum = curriculum;
 	}
 
-	public double score(int p, int n) {
-		return p - n;
+	public double getScore() {
+		return score;
 	}
 
+	public void setScore(double score) {
+		this.score = score;
+	}
 }
