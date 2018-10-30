@@ -29,7 +29,6 @@ public class DeserializeJSON {
 								"C:\\Documents and Settings\\Student\\Desktop\\FixUpTask.json"),
 						FixUpTask.class);
 
-		SchemaPrinter sp = new SchemaPrinter();
-		sp.print(f);
+		SchemaPrinter.print(f);
 	}
 }

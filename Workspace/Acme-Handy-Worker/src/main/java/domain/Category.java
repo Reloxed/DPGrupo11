@@ -49,4 +49,10 @@ public class Category extends DomainEntity {
 		this.childCategories = childCategories;
 	}
 
+	public String toString() {
+		return "spanishName: " + spanishName + ", englishName: " + englishName
+				+ ", parentCategory: " + parentCategory + ", childCategories: "
+				+ childCategories + ",[" + super.toString() + "]";
+	}
+
 }
