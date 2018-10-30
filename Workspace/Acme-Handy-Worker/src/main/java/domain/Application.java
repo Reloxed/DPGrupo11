@@ -10,9 +10,9 @@ import javax.validation.constraints.Past;
 public class Application extends DomainEntity {
 
 	private Date registeredMoment;
-	private Status status;
+	private String status;
 	private Money offeredPrice;
-	private Collection<String> comment;
+	private String comment;
 	private CreditCard creditCard;
 
 	@NotNull
@@ -26,11 +26,11 @@ public class Application extends DomainEntity {
 	}
 
 	@NotNull
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -44,11 +44,11 @@ public class Application extends DomainEntity {
 		this.offeredPrice = offeredPrice;
 	}
 
-	public Collection<String> getComment() {
+	public String getComment() {
 		return comment;
 	}
 
-	public void setComment(Collection<String> comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 

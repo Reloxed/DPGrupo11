@@ -2,6 +2,8 @@ package utilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.joda.time.LocalDate;
 
@@ -9,9 +11,11 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import domain.Application;
 import domain.Category;
 import domain.FixUpTask;
 import domain.Money;
+import domain.Status;
 import domain.Warranty;
 
 public class SerializeJSON {
@@ -70,6 +74,25 @@ public class SerializeJSON {
 		w.setIsFinal(false);
 
 		f.setWarranty(w);
+
+		Collection<Application> ls = new ArrayList<>();
+
+		Application ap0 = new Application();
+		ap0.setRegisteredTime(LocalDate.parse("2018-10-29").toDate());
+		ap0.setStatus(Status.PENDING);
+		ap0.setOfferedPrice(mn);
+		ap0.setComment("Comment");
+
+		Application ap1 = new Application();
+		ap1.setRegisteredTime(LocalDate.parse("2018-10-30").toDate());
+		ap1.setStatus(Status.PENDING);
+		ap1.setOfferedPrice(mn);
+		ap1.setComment("Comment");
+
+		ls.add(ap0);
+		ls.add(ap1);
+
+		f.setApplication(ls);
 
 		return f;
 
