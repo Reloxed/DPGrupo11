@@ -22,7 +22,7 @@ public class Money {
 	}
 
 	public String toString() {
-		return "Money [quantity=" + quantity + "]";
+		return "Quantity: " + quantity;
 	}
 
 }
