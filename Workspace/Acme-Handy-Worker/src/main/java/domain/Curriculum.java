@@ -41,7 +41,6 @@ public class Curriculum extends DomainEntity {
 		this.personalRecord = personalRecord;
 	}
 
-	@NotNull
 	public Collection<EducationRecord> getEducationRecords() {
 		return educationRecords;
 	}
@@ -50,7 +49,6 @@ public class Curriculum extends DomainEntity {
 		this.educationRecords = educationRecords;
 	}
 
-	@NotNull
 	public Collection<ProfessionalRecord> getProfessionalRecords() {
 		return professionalRecords;
 	}
@@ -60,7 +58,6 @@ public class Curriculum extends DomainEntity {
 		this.professionalRecords = professionalRecords;
 	}
 
-	@NotNull
 	public Collection<EndorserRecord> getEndorserRecords() {
 		return endorserRecords;
 	}
@@ -69,7 +66,6 @@ public class Curriculum extends DomainEntity {
 		this.endorserRecords = endorserRecords;
 	}
 
-	@NotNull
 	public Collection<MiscellaneousRecord> getMiscellaneousRecords() {
 		return miscellaneousRecords;
 	}
