@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.sql.Date;
@@ -9,11 +8,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Phase extends DomainEntity {
 
-	private String	title;
-	private String	description;
-	private Date	startMoment;
-	private Date	endMoment;
-
+	private String title;
+	private String description;
+	private Date startMoment;
+	private Date endMoment;
 
 	@NotBlank
 	public String getTitle() {

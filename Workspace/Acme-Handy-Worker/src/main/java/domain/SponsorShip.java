@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.validation.Valid;
@@ -11,11 +10,10 @@ public class Sponsorship extends DomainEntity {
 
 	// Attributes
 
-	private String		banner;
-	private String		targetPage;
-	private CreditCard	creditCard;
-	private Tutorial	tutorial;
-
+	private String banner;
+	private String targetPage;
+	private CreditCard creditCard;
+	private Tutorial tutorial;
 
 	// Methods
 

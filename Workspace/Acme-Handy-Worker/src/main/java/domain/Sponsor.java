@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -7,8 +6,7 @@ public class Sponsor extends Actor {
 
 	// Attributes
 
-	private Collection<Sponsorship>	sponsorships;
-
+	private Collection<Sponsorship> sponsorships;
 
 	// Metodos
 

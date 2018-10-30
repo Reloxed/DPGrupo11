@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.validation.constraints.Pattern;
@@ -11,12 +10,11 @@ public class PersonalRecord extends DomainEntity {
 
 	// Attributes
 
-	private String	fullName;
-	private String	photo;
-	private String	email;
-	private String	phoneNumber;
-	private String	linkedinLink;
-
+	private String fullName;
+	private String photo;
+	private String email;
+	private String phoneNumber;
+	private String linkedinLink;
 
 	// Methods
 

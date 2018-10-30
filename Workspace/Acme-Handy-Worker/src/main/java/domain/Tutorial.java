@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -12,13 +11,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Tutorial extends DomainEntity {
 
-	private String				title;
-	private Date				lastUpdated;
-	private String				summary;
-	private Collection<String>	pictures;
-	private HandyWorker			writer;
-	private Collection<Section>	sections;
-
+	private String title;
+	private Date lastUpdated;
+	private String summary;
+	private Collection<String> pictures;
+	private HandyWorker writer;
+	private Collection<Section> sections;
 
 	@NotBlank
 	public String getTitle() {

@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.sql.Date;
@@ -12,13 +11,12 @@ import org.hibernate.validator.constraints.URL;
 
 public class ProfessionalRecord extends DomainEntity {
 
-	private String				companyName;
-	private Date				startDate;
-	private Date				endDate;
-	private String				role;
-	private String				linkAttachment;
-	private Collection<String>	comments;
-
+	private String companyName;
+	private Date startDate;
+	private Date endDate;
+	private String role;
+	private String linkAttachment;
+	private Collection<String> comments;
 
 	@NotBlank
 	public String getCompanyName() {

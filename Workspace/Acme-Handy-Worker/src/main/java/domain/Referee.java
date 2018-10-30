@@ -1,13 +1,11 @@
-
 package domain;
 
 import java.util.Collection;
 
 public class Referee extends Actor {
 
-	private Collection<Complaint>	complaints;
-	private Collection<Note>		notes;
-
+	private Collection<Complaint> complaints;
+	private Collection<Note> notes;
 
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;

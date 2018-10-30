@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -12,12 +11,11 @@ import org.hibernate.validator.constraints.URL;
 
 public class Report extends DomainEntity {
 
-	private Date				publishedMoment;
-	private String				description;
-	private Collection<String>	attachments;
-	private boolean				isFinal;
-	private Collection<Note>	notes;
-
+	private Date publishedMoment;
+	private String description;
+	private Collection<String> attachments;
+	private boolean isFinal;
+	private Collection<Note> notes;
 
 	@Past
 	@NotNull

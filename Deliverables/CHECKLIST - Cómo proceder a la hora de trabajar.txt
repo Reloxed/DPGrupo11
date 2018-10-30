@@ -1,0 +1,8 @@
+[ ] Sincronizar cambios de master(si los hubiese).
+[ ] Checkout a la rama personal y actualizarla con los cambios de master.
+[ ] Avisar sobre lo que se va a trabajar para evitar conflictos.
+[ ] Activar el track time en Trello.
+[ ] Una vez terminado de trabajar, parar el track time y commitear los cambios a la rama personal.
+[ ] Actualizar Trllo si fuese necesario.
+[ ] Actualizar los cambios de la rama principal a la personal por si alguien hubiese commiteado a master mientras trabajaba.
+[ ] Una vez se está al día con master, commitear los cambios a master.

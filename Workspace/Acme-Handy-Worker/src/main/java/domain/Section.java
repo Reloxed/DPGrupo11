@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -9,10 +8,9 @@ public class Section extends DomainEntity {
 
 	// Attributes
 
-	private String				title;
-	private String				text;
-	private Collection<String>	picture;
-
+	private String title;
+	private String text;
+	private Collection<String> picture;
 
 	// Methods
 

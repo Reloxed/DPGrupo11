@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -13,19 +12,18 @@ import org.hibernate.validator.constraints.URL;
 
 public class SystemConfiguration extends DomainEntity {
 
-	private String				systemName;
-	private String				banner;
-	private String				welcomeEn;
-	private String				welcomeEs;
-	private double				VAT;
-	private Collection<String>	listCreditCardMakes;
-	private String				countryCode;
-	private Integer				timeResultsCached;
-	private Integer				maxResults;
-	private Collection<String>	spamWords;
-	private Collection<String>	positiveWords;
-	private Collection<String>	negativeWords;
-
+	private String systemName;
+	private String banner;
+	private String welcomeEn;
+	private String welcomeEs;
+	private double VAT;
+	private Collection<String> listCreditCardMakes;
+	private String countryCode;
+	private Integer timeResultsCached;
+	private Integer maxResults;
+	private Collection<String> spamWords;
+	private Collection<String> positiveWords;
+	private Collection<String> negativeWords;
 
 	@NotBlank
 	public String getSystemName() {
@@ -79,7 +77,8 @@ public class SystemConfiguration extends DomainEntity {
 		return this.listCreditCardMakes;
 	}
 
-	public void setListCreditCardMakes(final Collection<String> listCreditCardMakes) {
+	public void setListCreditCardMakes(
+			final Collection<String> listCreditCardMakes) {
 		this.listCreditCardMakes = listCreditCardMakes;
 	}
 

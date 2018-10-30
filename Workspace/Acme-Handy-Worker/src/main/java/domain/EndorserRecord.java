@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -11,12 +10,11 @@ import org.hibernate.validator.constraints.URL;
 
 public class EndorserRecord extends DomainEntity {
 
-	private String				fullName;
-	private String				email;
-	private String				phoneNumber;
-	private String				linkedinLink;
-	private Collection<String>	comments;
-
+	private String fullName;
+	private String email;
+	private String phoneNumber;
+	private String linkedinLink;
+	private Collection<String> comments;
 
 	@NotBlank
 	public String getFullName() {
