@@ -7,9 +7,9 @@ public class Money {
 
 	private double quantity;
 
-	public Money(double q) {
-		this.quantity = q;
-	}
+	// public Money(double q) {
+	// this.quantity = q;
+	// }
 
 	@Min(0)
 	@Digits(integer = 9, fraction = 2)
@@ -20,4 +20,9 @@ public class Money {
 	public void setQuantity(final double quantity) {
 		this.quantity = quantity;
 	}
+
+	public String toString() {
+		return "Money [quantity=" + quantity + "]";
+	}
+
 }

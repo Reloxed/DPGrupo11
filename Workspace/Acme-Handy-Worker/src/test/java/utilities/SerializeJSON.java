@@ -49,7 +49,12 @@ public class SerializeJSON {
 		f.setPublishedTime(LocalDate.now().toDate());
 		f.setDescription("Desciption");
 		f.setAddress("ETSII - Sevilla");
-		f.setMaxPrice(new Money(200.));
+
+		Money mn = new Money();
+		mn.setQuantity(200.);
+
+		f.setMaxPrice(mn);
+
 		f.setStartMoment(LocalDate.parse("2018-10-29").toDate());
 		f.setEndMoment(LocalDate.parse("2018-10-30").toDate());
 
