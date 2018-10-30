@@ -17,7 +17,7 @@ public class Complaint extends DomainEntity {
 	private String description;
 	private Collection<String> attachements;
 	private FixUpTask fixUpTask;
-	private Collection<Report> reports;
+	private Report report;
 
 	@NotBlank
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9] {6}")
@@ -66,12 +66,12 @@ public class Complaint extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 
-	public Collection<Report> getReports() {
-		return reports;
+	public Report getReport() {
+		return report;
 	}
 
-	public void setReports(Collection<Report> reports) {
-		this.reports = reports;
+	public void setReport(Report report) {
+		this.report = report;
 	}
 
 }

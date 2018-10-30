@@ -37,7 +37,6 @@ public class EducationRecord extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	public Date getEndDate() {
 		return endDate;
 	}

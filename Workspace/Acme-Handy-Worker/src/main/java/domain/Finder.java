@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 public class Finder extends DomainEntity {
 
@@ -12,6 +14,7 @@ public class Finder extends DomainEntity {
 	private Money priceHigh;
 	private Date startMoment;
 	private Date endMoment;
+	private Date searchMoment;
 	private Category category;
 	private Warranty warranty;
 	private Collection<FixUpTask> fixuptask;
@@ -80,6 +83,16 @@ public class Finder extends DomainEntity {
 
 	public void setFixuptask(Collection<FixUpTask> fixuptask) {
 		this.fixuptask = fixuptask;
+	}
+
+	@Past
+	@NotNull
+	public Date getSearchMoment() {
+		return searchMoment;
+	}
+
+	public void setSearchMoment(Date searchMoment) {
+		this.searchMoment = searchMoment;
 	}
 
 }

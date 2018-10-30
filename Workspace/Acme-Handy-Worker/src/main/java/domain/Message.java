@@ -15,7 +15,7 @@ public class Message extends DomainEntity {
 	private String subject;
 	private String body;
 	private Priority priority;
-	private Collection<String> tags;
+	private String tags;
 	private Collection<MessageBox> messageBoxes;
 	private Actor sender;
 	private Actor reciever;
@@ -58,11 +58,11 @@ public class Message extends DomainEntity {
 		this.priority = priority;
 	}
 
-	public Collection<String> getTags() {
+	public String getTags() {
 		return tags;
 	}
 
-	public void setTags(Collection<String> tags) {
+	public void setTags(String tags) {
 		this.tags = tags;
 	}
 

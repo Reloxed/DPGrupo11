@@ -1,11 +1,12 @@
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Application extends DomainEntity {
 
@@ -14,16 +15,7 @@ public class Application extends DomainEntity {
 	private Money offeredPrice;
 	private String comment;
 	private CreditCard creditCard;
-
-	@NotNull
-	@Past
-	public Date getRegisteredTime() {
-		return registeredMoment;
-	}
-
-	public void setRegisteredTime(Date registeredTime) {
-		this.registeredMoment = registeredTime;
-	}
+	private WorkPlan workPlan;
 
 	@NotNull
 	public String getStatus() {
@@ -44,6 +36,7 @@ public class Application extends DomainEntity {
 		this.offeredPrice = offeredPrice;
 	}
 
+	@NotBlank
 	public String getComment() {
 		return comment;
 	}
@@ -59,6 +52,25 @@ public class Application extends DomainEntity {
 
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
+	}
+	
+	@NotNull
+	@Past
+	public Date getRegisteredMoment() {
+		return registeredMoment;
+	}
+
+	public void setRegisteredMoment(Date registeredMoment) {
+		this.registeredMoment = registeredMoment;
+	}
+
+	@NotNull
+	public WorkPlan getWorkPlan() {
+		return workPlan;
+	}
+
+	public void setWorkPlan(WorkPlan workPlan) {
+		this.workPlan = workPlan;
 	}
 
 }
