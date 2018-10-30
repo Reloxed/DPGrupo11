@@ -45,4 +45,8 @@ public class Warranty extends DomainEntity {
 		this.laws = laws;
 	}
 
+	public String toString() {
+		return "title: " + title + ", terms: " + terms + ", isFinal: "
+				+ isFinal + ", laws: " + laws + ",[" + super.toString() + "]";
+	}
 }
