@@ -11,8 +11,9 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Note extends DomainEntity {
 
 	private Date publishedMoment;
-	private String creatorComment;
-	private Collection<String> otherActorComments;
+	private String refereeComment;
+	private String customerComment;
+	private String handyWorkerComment;
 
 	/* Atributtes */
 
@@ -26,21 +27,29 @@ public class Note extends DomainEntity {
 		this.publishedMoment = publishedMoment;
 	}
 
-	@NotBlank
-	public String getCreatorComment() {
-		return this.creatorComment;
+	public String getRefereeComment() {
+		return refereeComment;
 	}
 
-	public void setCreatorComment(final String creatorComment) {
-		this.creatorComment = creatorComment;
+	public void setRefereeComment(String refereeComment) {
+		this.refereeComment = refereeComment;
 	}
 
-	public Collection<String> getOtherActorComments() {
-		return this.otherActorComments;
+	public String getCustomerComment() {
+		return customerComment;
 	}
 
-	public void setOtherActorComments(
-			final Collection<String> otherActorComments) {
-		this.otherActorComments = otherActorComments;
+	public void setCustomerComment(String customerComment) {
+		this.customerComment = customerComment;
 	}
+
+	public String getHandyWorkerComment() {
+		return handyWorkerComment;
+	}
+
+	public void setHandyWorkerComment(String handyWorkerComment) {
+		this.handyWorkerComment = handyWorkerComment;
+	}
+
+	
 }

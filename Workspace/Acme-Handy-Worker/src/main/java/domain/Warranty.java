@@ -9,7 +9,7 @@ public class Warranty extends DomainEntity {
 	private String title;
 	private String terms;
 	private boolean isFinal;
-	private Collection<Law> laws;
+	private String laws;
 
 	@NotBlank
 	public String getTitle() {
@@ -37,11 +37,11 @@ public class Warranty extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	public Collection<Law> getLaws() {
+	public String getLaws() {
 		return this.laws;
 	}
 
-	public void setLaws(final Collection<Law> laws) {
+	public void setLaws(final String laws) {
 		this.laws = laws;
 	}
 
