@@ -37,7 +37,6 @@ public class ProfessionalRecord extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	public Date getEndDate() {
 		return this.endDate;
 	}

@@ -14,8 +14,6 @@ public class SystemConfiguration extends DomainEntity {
 
 	private String systemName;
 	private String banner;
-	private String welcomeEn;
-	private String welcomeEs;
 	private double VAT;
 	private Collection<String> listCreditCardMakes;
 	private String countryCode;
@@ -42,24 +40,6 @@ public class SystemConfiguration extends DomainEntity {
 
 	public void setBanner(final String banner) {
 		this.banner = banner;
-	}
-
-	@NotBlank
-	public String getWelcomeEn() {
-		return this.welcomeEn;
-	}
-
-	public void setWelcomeEn(final String welcomeEn) {
-		this.welcomeEn = welcomeEn;
-	}
-
-	@NotBlank
-	public String getWelcomeEs() {
-		return this.welcomeEs;
-	}
-
-	public void setWelcomeEs(final String welcomeEs) {
-		this.welcomeEs = welcomeEs;
 	}
 
 	@Digits(fraction = 2, integer = 3)
