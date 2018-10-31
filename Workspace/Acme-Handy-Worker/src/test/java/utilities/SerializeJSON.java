@@ -7,12 +7,15 @@ import java.util.Collection;
 
 import org.joda.time.LocalDate;
 
+import utilities.internal.SchemaPrinter;
+
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.Application;
 import domain.Category;
+import domain.Customer;
 import domain.FixUpTask;
 import domain.Money;
 import domain.Status;
@@ -42,7 +45,7 @@ public class SerializeJSON {
 
 		jsonInString = mapper.writerWithDefaultPrettyPrinter()
 				.writeValueAsString(f);
-		System.out.println(jsonInString);
+		SchemaPrinter.print(jsonInString);
 
 	}
 
@@ -78,13 +81,13 @@ public class SerializeJSON {
 		Collection<Application> ls = new ArrayList<>();
 
 		Application ap0 = new Application();
-		ap0.setRegisteredTime(LocalDate.parse("2018-10-29").toDate());
+		ap0.setRegisteredMoment(LocalDate.parse("2018-10-29").toDate());
 		ap0.setStatus(Status.PENDING);
 		ap0.setOfferedPrice(mn);
 		ap0.setComment("Comment");
 
 		Application ap1 = new Application();
-		ap1.setRegisteredTime(LocalDate.parse("2018-10-30").toDate());
+		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
 		ap1.setStatus(Status.PENDING);
 		ap1.setOfferedPrice(mn);
 		ap1.setComment("Comment");
@@ -93,6 +96,8 @@ public class SerializeJSON {
 		ls.add(ap1);
 
 		f.setApplication(ls);
+		
+		Customer cu = new Customer();
 
 		return f;
 
