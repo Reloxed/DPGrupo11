@@ -11,7 +11,6 @@ public class Customer extends Actor {
 
 	private double score;
 	private Collection<Endorsement> endorsements;
-	private Collection<Application> applications;
 	private Collection<FixUpTask> fixuptasks;
 
 	@NotNull
@@ -22,16 +21,6 @@ public class Customer extends Actor {
 
 	public void setEndorsements(Collection<Endorsement> endorsements) {
 		this.endorsements = endorsements;
-	}
-
-	@NotNull
-	@Valid
-	public Collection<Application> getApplications() {
-		return applications;
-	}
-
-	public void setApplications(Collection<Application> applications) {
-		this.applications = applications;
 	}
 
 	@NotNull
@@ -52,4 +41,6 @@ public class Customer extends Actor {
 	public void setScore(double score) {
 		this.score = score;
 	}
+	
+
 }

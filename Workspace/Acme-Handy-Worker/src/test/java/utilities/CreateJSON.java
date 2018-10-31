@@ -15,17 +15,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.Application;
 import domain.Category;
-import domain.Customer;
 import domain.FixUpTask;
 import domain.Money;
 import domain.Status;
 import domain.Warranty;
 
-public class SerializeJSON {
+public class CreateJSON {
 
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
-		final SerializeJSON object = new SerializeJSON();
+		final CreateJSON object = new CreateJSON();
 		object.run();
 	}
 
@@ -33,71 +32,71 @@ public class SerializeJSON {
 			IOException {
 		final ObjectMapper mapper = new ObjectMapper();
 
-		final FixUpTask f = this.createSample();
+		final FixUpTask fix = this.createSample();
 
 		mapper.writeValue(
 				new File(
 						"C:\\Documents and Settings\\Student\\Desktop\\FixUpTask.json"),
-				f);
+						fix);
 
-		String jsonInString = mapper.writeValueAsString(f);
+		String jsonInString = mapper.writeValueAsString(fix);
 		System.out.println(jsonInString);
 
 		jsonInString = mapper.writerWithDefaultPrettyPrinter()
-				.writeValueAsString(f);
+				.writeValueAsString(fix);
 		SchemaPrinter.print(jsonInString);
 
 	}
 
 	private FixUpTask createSample() {
-		final FixUpTask f = new FixUpTask();
-
-		f.setTicker("301018-1xlz3N");
-		f.setPublishedTime(LocalDate.now().toDate());
-		f.setDescription("Desciption");
-		f.setAddress("ETSII - Sevilla");
-
-		Money mn = new Money();
-		mn.setQuantity(200.);
-
-		f.setMaxPrice(mn);
-
-		f.setStartMoment(LocalDate.parse("2018-10-29").toDate());
-		f.setEndMoment(LocalDate.parse("2018-10-30").toDate());
-
+				
+		//Creacion de categoria, money, application y warranty
+		
 		Category c = new Category();
 		c.setEnglishName("Category");
 		c.setSpanishName("Categoría");
-
-		f.setCategory(c);
-
+		
+		Money mnfix = new Money();
+		mnfix.setQuantity(200.);
+		
+		Money mnhandy = new Money();
+		mnhandy.setQuantity(180.);
+		
+		Application ap1 = new Application();
+		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
+		ap1.setStatus(Status.PENDING);
+		ap1.setOfferedPrice(mnhandy);
+		ap1.setComment("Comment del handy");
+		
 		Warranty w = new Warranty();
 		w.setTitle("Warranty");
 		w.setTerms("Terms");
 		w.setIsFinal(false);
 
-		f.setWarranty(w);
-
-		Collection<Application> ls = new ArrayList<>();
-
-		Application ap0 = new Application();
-		ap0.setRegisteredMoment(LocalDate.parse("2018-10-29").toDate());
-		ap0.setStatus(Status.PENDING);
-		ap0.setOfferedPrice(mn);
-		ap0.setComment("Comment");
-
-		Application ap1 = new Application();
-		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
-		ap1.setStatus(Status.PENDING);
-		ap1.setOfferedPrice(mn);
-		ap1.setComment("Comment");
-
-		ls.add(ap0);
-		ls.add(ap1);
-
-		f.setApplication(ls);
 		
-		Customer cu = new Customer();
+		// Creacion de fixuptask
+		
+		Collection<FixUpTask> lsfix = new ArrayList<>();
+		
+		FixUpTask f = new FixUpTask();
+
+		f.setTicker("301018-1xlz3N");
+		f.setPublishedTime(LocalDate.now().toDate());
+		f.setDescription("Desciption");
+		f.setAddress("ETSII - Sevilla");
+		f.setMaxPrice(mnfix);
+		f.setStartMoment(LocalDate.parse("2018-10-29").toDate());
+		f.setEndMoment(LocalDate.parse("2018-10-30").toDate());
+		f.setCategory(c);
+		f.setWarranty(w);
+		
+		Collection<Application> fixApplications = new ArrayList<>();
+		fixApplications.add(ap1);
+		
+		f.setApplication(fixApplications);
+		
+		lsfix.add(f);
+
 
 		return f;
 
