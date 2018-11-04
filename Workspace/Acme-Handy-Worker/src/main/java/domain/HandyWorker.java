@@ -13,7 +13,6 @@ public class HandyWorker extends Actor {
 	private String make;
 	private Collection<Endorsement> endorsements;
 	private Collection<Tutorial> tutorial;
-	private Collection<Note> notes;
 	private Collection<Application> applications;
 	private Finder finder;
 	private Curriculum curriculum;
@@ -41,14 +40,6 @@ public class HandyWorker extends Actor {
 
 	public void setTutorial(Collection<Tutorial> tutorial) {
 		this.tutorial = tutorial;
-	}
-
-	public Collection<Note> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(Collection<Note> notes) {
-		this.notes = notes;
 	}
 
 	public Collection<Application> getApplications() {

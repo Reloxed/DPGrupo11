@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Collection;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Warranty extends DomainEntity {

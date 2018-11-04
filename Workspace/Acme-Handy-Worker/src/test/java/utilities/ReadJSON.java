@@ -11,11 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.FixUpTask;
 
-public class DeserializeJSON {
+public class ReadJSON {
 
 	public static void main(String[] args) throws JsonParseException,
 			JsonMappingException, IOException {
-		final DeserializeJSON object = new DeserializeJSON();
+		final ReadJSON object = new ReadJSON();
 		object.run();
 	}
 

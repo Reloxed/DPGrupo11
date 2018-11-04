@@ -65,6 +65,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	public WorkPlan getWorkPlan() {
 		return workPlan;
 	}
