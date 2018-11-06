@@ -1,0 +1,3 @@
+-En la clase endorsment se ha cambiado el tipo del atributo customer de Actor a tipo Customer. Sería un fallo de implementacion o al hacer pruebas durante el A+.
+
+-En la clase customer, el atributo colecciones de fixuptask tenia las anotaciones @NotNull y @Valid. Quizás es un fallo que se paso desde el principio de la implementacion ya que durante un tiempo se usaron incorrectamente dichas anotaciones en las colecciones.
