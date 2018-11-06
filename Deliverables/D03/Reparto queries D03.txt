@@ -5,10 +5,7 @@ Item 2--> Mismo reparto que para el otro entregable
 Querys estan en los requisitos 12.5 y 38.5
 
 Item 3-->
-C1,C2 -->Carlos
-C3,C4 -->Jesus
-C5,C6,C7-->Lucia
-C8,C9 --> Pablo
-
-C10,B1,B2 -->Antonio
-B3,B4,B5 --> Fran
+C1,C2,C8 -->Carlos
+C3,C4,C9 -->Jesus
+C5,C6,C7,C10-->Lucia
+B1,B2,B3,B4,B5 --> Fran
