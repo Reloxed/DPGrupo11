@@ -18,3 +18,17 @@
 - Customer Ñ> Complaint cambiar manages por writes (requisito 32)
 - Hay que poner en una nota lo que pone en el requisito 41 sobre los resultados que devuelve el Finder.
 - No veo la direccionalidad en la relaci—n HandyWorker <Ñ> Tutorial, yo lo pondr’a HandyWorker Ñ> Tutorial
+
+
+//Carlos
+-Otra solución a lo de workplan puede ser incluir workplan como atibuto de handyWorker
+(String: workPlan[0..1]). Siendo bidireccional handyworker-application, asi cada application
+de la coleccion tendra asignado su handyWorker junto a su workPlan si la application ha sido
+aceptada. Poniendo una relacion 1--1..* de application a phase, asi esa application que puede
+acceder al workplan del handyworker tiene una o multiples phases.
+
+-Relacion de finder a category oneToOne, en el requisito 31 especifica "a category to which the task must belong"
+
+
+-Relacion de complaint report oneToOne, en el requisito 33 "Referees write reports on the complanints"
+ 
