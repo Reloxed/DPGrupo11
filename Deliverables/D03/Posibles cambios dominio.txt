@@ -1,0 +1,20 @@
+-En la clase endorsment se ha cambiado el tipo del atributo customer de Actor a tipo Customer. Sería un fallo de implementacion o al hacer pruebas durante el A+.
+
+-En la clase customer, el atributo colecciones de fixuptask tenia las anotaciones @NotNull y @Valid. Quizás es un fallo que se paso desde el principio de la implementacion ya que durante un tiempo se usaron incorrectamente dichas anotaciones en las colecciones.
+
+// Luc’a
+
+- Hay que cambiar todos los 0..* por *
+- Rol receiver por recipient.
+- Cambiar datatype Priority por patr—n, lo mismo con Status. De hecho hemos creado el datatype Status pero luego no lo hemos llamado en Application.
+- En el patr—n del ticker sobra un \
+- Si Money va a tener solo un atributo llamado cantidad que es de tipo double, Àpor quŽ no eliminar el datatype y utilizar directamente double?
+- FixUpTask -> Category , cambiar areOrganisedIn por belongsTo que es el verbo utilizado en los requisitos.
+- Deber’amos quitar la clase WorkPlan ya que est‡ vac’a y que FixUpTask sea directamente una composici—n de Phase.
+- Hay que poner bien la nota del patr—n del telŽfono.
+- ÀCambiar CreditCard a entidad? En el requisito 24 pone que el sistema DEBE almacenar la informaci—n de las tarjetas de crŽdito, por lo tanto creo que deber’amos ponerlo como entidad y unirlo con relaciones a las entidades que la precisen (Sponsorship y Application)
+- ProfessionalRecord: cambiar link attachment por attachment, para que quede m‡s limpio.
+- En el Finder faltan los atributos warranty y category (requisito 31)
+- Customer Ñ> Complaint cambiar manages por writes (requisito 32)
+- Hay que poner en una nota lo que pone en el requisito 41 sobre los resultados que devuelve el Finder.
+- No veo la direccionalidad en la relaci—n HandyWorker <Ñ> Tutorial, yo lo pondr’a HandyWorker Ñ> Tutorial

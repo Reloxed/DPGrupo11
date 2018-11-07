@@ -1,0 +1,13 @@
+-- Querys --
+
+-- C5
+select (sum(case when a.status='PENDING' then 1.0 else 0 end)/count(*)) from Application a
+
+-- C6
+select (sum(case when a.status='ACCEPTED' then 1.0 else 0 end)/count(*)) from Application a
+
+-- C7
+select (sum(case when a.status='REJECTED' then 1.0 else 0 end)/count(*)) from Application a
+
+-- C10
+select h from HandyWorker h where h.applications.size/ (select avg(h1.applications.size) from HandyWorker h1)>=1.1 order by h.applications.size

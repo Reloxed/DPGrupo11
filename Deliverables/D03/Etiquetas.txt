@@ -1,0 +1,53 @@
+#ETIQUETAS DE DOMAINENTITY:
+
+--> @Entity se usa para indicar que la clase en la que se encuentra la anotación representa 
+a una entidad que se puede "persistir" (almacenar) en una base de datos.
+
+--> @Access(AccessType.PROPERTY) sirve para indicar a JPA (Java Persistence Architecture) que debe acceder
+a los atributos mediante getters&setters, porque por defecto, JPA tiene acceso directo a los atributos de
+objetos.
+
+--> @InheritanceType(strategy=InheritanceType.TABLE_PER_CLASS) se usa para indicar que todas las clases que
+extiendan a DomainEntity deben tener su propia tabla en la base de datos.
+
+--> @Id indica que atributo guarda el identificador de cada objeto entidad.
+
+--> @GeneratedValue(strategy=Generation.TABLE) genera un ID de manera automática mediante un método conocido como
+"table strategy".
+
+--> @Version indica que atributo guarda la versión del objeto entidad.
+
+--> @Override se usa para indicar que un atributo es único.
+
+#DATATYPES:
+
+--> @Embeddable se utiliza para indicar que una clase es un datatype.
+
+--> @AttributeOverrides({}) es un array de @AttributeOverride().
+
+--> @AttributeOverride(name="name", column=@Column("nameName")) especifica el nombre de la propiedad y
+su nombre en la columna en la base de datos.
+
+--> @ElementCollection se utiliza en las colecciones de datatypes para que se mapeen correctamente en la 
+base de datos.
+
+#RELACIONES UNIDIRECCIONALES:
+
+--> @OneToOne(optional=true/false) se usa para indicar que:
+	Si optional=true --> relación es 0..1
+	Si optional=false --> relación es 1
+
+--> @OneToMany se usa para las relaciones del tipo 0..* ó 1..*.
+	cascade=CascadeType.ALL --> se utiliza para "asignar" una clase a otra (así, si se elimina la root, es 
+				    decir, la que tiene el "1" en la relación, se eliminará la otra automáticamente).
+
+--> @ManyToOne(optional=true/false) se usa para indicar que:
+	Si optional=false --> para asegurar que todas las instancias de la case fuente está asociada a una 
+			     única instacia de la clase objetivo.
+	Si optional=true --> para asegurar que todas las instancias de la case fuente está asociada a una 
+			    única instacia de la clase objetivo, con la única diferencia que ahora la 
+			    foreingKey puede ser null.
+
+--> @ManyToMany se usa para las relaciones del tipo 0..* ó 1..* en ambos extremos de la relación.
+
+AÚN FALTAN ETIQUETAS
