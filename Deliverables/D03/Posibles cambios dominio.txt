@@ -1,5 +1,3 @@
-
-
 // Luc’a
 
 - Hay que cambiar todos los 0..* por *
@@ -19,12 +17,6 @@
 
 
 <<<<<<< HEAD
-// Pablo 
-
-- En la clase Customer hay anotaciones @NotNull en dos atributos que son collections
-- En la clase endorsment el atributo customer es de tipo actor en vez de de tipo customer.
-
-
 // Fran
 
 - Segun las diapositivas, en el uml los atributos de useraccount y authority deben llevar un +
@@ -72,4 +64,6 @@ acceder al workplan del handyworker tiene una o multiples phases.
 - las colecciones de String de SystemConfiguration tienenge que ser Strings --> de 0..* a 0..1
 - Sugerencia: cambiar listCreditCardMakes por listCreditCardBrands.
 - Status fuera --> poner como atributo en la clase que haga falta.
+- En la clase Customer hay anotaciones @NotNull en dos atributos que son collections
+- En la clase endorsment el atributo customer es de tipo actor en vez de de tipo customer.
 >>>>>>> master
