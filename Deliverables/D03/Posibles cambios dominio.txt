@@ -18,6 +18,7 @@
 - No veo la direccionalidad en la relaci—n HandyWorker <Ñ> Tutorial, yo lo pondr’a HandyWorker Ñ> Tutorial
 
 
+<<<<<<< HEAD
 // Pablo 
 
 - En la clase Customer hay anotaciones @NotNull en dos atributos que son collections
@@ -50,3 +51,25 @@
 - Los tickers deben ser únicos. Hay que planificar tareas de investigación para resolver este problema y el de los mensajes de bienvenida.
 - Que una palabra esté en plural no significa que sea una colección. Puede ser una cadena separada.
 - Hay que revisar las direcciones para navegar por ejemplo desde la clave ajena al contrario.
+=======
+//Carlos
+-Otra solución a lo de workplan puede ser incluir workplan como atibuto de handyWorker
+(String: workPlan[0..1]). Siendo bidireccional handyworker-application, asi cada application
+de la coleccion tendra asignado su handyWorker junto a su workPlan si la application ha sido
+aceptada. Poniendo una relacion 1--1..* de application a phase, asi esa application que puede
+acceder al workplan del handyworker tiene una o multiples phases.
+
+-Relacion de finder a category oneToOne, en el requisito 31 especifica "a category to which the task must belong"
+
+
+-Relacion de complaint report oneToOne, en el requisito 33 "Referees write reports on the complanints"
+
+
+//Pablo
+- WorkPlan fuera.
+- pictures de tutorial es 0..1 no 0..*
+- faltala 'd' de lastUpdated en tutorial.
+- las colecciones de String de SystemConfiguration tienenge que ser Strings --> de 0..* a 0..1
+- Sugerencia: cambiar listCreditCardMakes por listCreditCardBrands.
+- Status fuera --> poner como atributo en la clase que haga falta.
+>>>>>>> master
