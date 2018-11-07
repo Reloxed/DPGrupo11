@@ -31,4 +31,12 @@ acceder al workplan del handyworker tiene una o multiples phases.
 
 
 -Relacion de complaint report oneToOne, en el requisito 33 "Referees write reports on the complanints"
- 
+
+
+//Pablo
+- WorkPlan fuera.
+- pictures de tutorial es 0..1 no 0..*
+- faltala 'd' de lastUpdated en tutorial.
+- las colecciones de String de SystemConfiguration tienenge que ser Strings --> de 0..* a 0..1
+- Sugerencia: cambiar listCreditCardMakes por listCreditCardBrands.
+- Status fuera --> poner como atributo en la clase que haga falta.
