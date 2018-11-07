@@ -34,7 +34,7 @@ public class Actor extends DomainEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getMiddleName() {
 		return middleName;
 	}
