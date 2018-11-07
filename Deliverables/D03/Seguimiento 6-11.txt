@@ -1,0 +1,20 @@
+Seguimiento 06/11
+
+- No usar txt, ponerlo todo en el trello.
+
+MODELO DE DOMINIO UML:
+
+- Modelar los datatype como priority o status, como una simple cadena con un patrón.
+- Boolean hay que ponerlo en mayusculas, es decir, en UML no puede ser null y se pone con mayusculas.
+- Las fechas de fixuptask debe ser en un futuro forzosamente, es decir, una restriccion. Con que esté en el futuro es más que suficiente.
+- Workplan hay que quitarlo SOLO del modelo de dominio. En el conceptual puede estar bien.
+- Un numero de telefono debe cumplir un patron, Y SI NO, se le pide una confirmación al usuario y si dice que si, se guarda.
+- Hay que añadir un mensaje de bienvenida en el systemConfiguration.
+
+CONSEJOS GENERALES:
+
+- OJO: Dentro de poco nos preguntarán por el presupuesto consumido. En el primer tema hay una aproximación del coste por hora.
+- Los tickers deben ser únicos. Hay que planificar tareas de investigación para resolver este problema y el de los mensajes de bienvenida.
+- Que una palabra esté en plural no significa que sea una colección. Puede ser una cadena separada.
+- Hay que revisar las direcciones para navegar por ejemplo desde la clave ajena al contrario.
+- 
