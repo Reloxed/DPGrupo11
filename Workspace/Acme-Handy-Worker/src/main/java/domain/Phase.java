@@ -2,17 +2,23 @@ package domain;
 
 import java.sql.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Phase extends DomainEntity {
 
 	private String title;
 	private String description;
 	private Date startMoment;
 	private Date endMoment;
-	
 
 	@NotBlank
 	public String getTitle() {
@@ -33,6 +39,7 @@ public class Phase extends DomainEntity {
 	}
 
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartMoment() {
 		return this.startMoment;
 	}
@@ -42,6 +49,7 @@ public class Phase extends DomainEntity {
 	}
 
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndMoment() {
 		return this.endMoment;
 	}
@@ -50,5 +58,4 @@ public class Phase extends DomainEntity {
 		this.endMoment = endMoment;
 	}
 
-	
 }

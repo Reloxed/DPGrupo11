@@ -2,6 +2,9 @@ package domain;
 
 import java.util.Date;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -17,6 +20,7 @@ public class Endorsement extends DomainEntity {
 
 	@Past
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPublishedMoment() {
 		return publishedMoment;
 	}
@@ -36,6 +40,7 @@ public class Endorsement extends DomainEntity {
 
 	@NotNull
 	@Valid
+	@ManyToOne(optional = false)
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -46,6 +51,7 @@ public class Endorsement extends DomainEntity {
 
 	@NotNull
 	@Valid
+	@ManyToOne(optional = false)
 	public HandyWorker getHandyWorker() {
 		return handyWorker;
 	}

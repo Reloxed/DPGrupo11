@@ -3,10 +3,20 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
 	private String keyWord;
@@ -43,6 +53,7 @@ public class Finder extends DomainEntity {
 		this.priceHigh = priceHigh;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP) // DATE?
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -51,6 +62,7 @@ public class Finder extends DomainEntity {
 		this.startMoment = startMoment;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP) // DATE?
 	public Date getEndMoment() {
 		return endMoment;
 	}
@@ -60,6 +72,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
+	@OneToOne(optional = true)
 	public Category getCategory() {
 		return category;
 	}
@@ -69,6 +82,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
+	@OneToOne(optional = true)
 	public Warranty getWarranty() {
 		return warranty;
 	}
@@ -77,6 +91,9 @@ public class Finder extends DomainEntity {
 		this.warranty = warranty;
 	}
 
+	@Valid
+	@ElementCollection
+	@OneToMany
 	public Collection<FixUpTask> getFixuptask() {
 		return fixuptask;
 	}

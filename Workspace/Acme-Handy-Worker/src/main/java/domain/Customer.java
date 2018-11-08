@@ -2,11 +2,18 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
-
 
 import org.hibernate.validator.constraints.Range;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Customer extends Actor {
 
 	private double score;
@@ -14,18 +21,20 @@ public class Customer extends Actor {
 	private Collection<FixUpTask> fixUpTasks;
 	private Collection<Complaint> complaints;
 
-	
 	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL) // ¿?
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
-			
+
 	public void setEndorsements(Collection<Endorsement> endorsements) {
 		this.endorsements = endorsements;
 	}
 
-	
 	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL) // ¿?
 	public Collection<FixUpTask> getFixuptasks() {
 		return fixUpTasks;
 	}
@@ -44,6 +53,8 @@ public class Customer extends Actor {
 	}
 
 	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL) // ¿?
 	public Collection<Complaint> getComplaints() {
 		return complaints;
 	}
@@ -51,6 +62,5 @@ public class Customer extends Actor {
 	public void setComplaints(Collection<Complaint> complaints) {
 		this.complaints = complaints;
 	}
-	
 
 }

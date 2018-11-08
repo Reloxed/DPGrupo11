@@ -17,7 +17,6 @@ import domain.Application;
 import domain.Category;
 import domain.FixUpTask;
 import domain.Money;
-import domain.Status;
 import domain.Warranty;
 
 public class CreateJSON {
@@ -37,7 +36,7 @@ public class CreateJSON {
 		mapper.writeValue(
 				new File(
 						"C:\\Documents and Settings\\Student\\Desktop\\FixUpTask.json"),
-						fix);
+				fix);
 
 		String jsonInString = mapper.writeValueAsString(fix);
 		System.out.println(jsonInString);
@@ -49,35 +48,34 @@ public class CreateJSON {
 	}
 
 	private FixUpTask createSample() {
-				
-		//Creacion de categoria, money, application y warranty
-		
+
+		// Creacion de categoria, money, application y warranty
+
 		Category c = new Category();
 		c.setEnglishName("Category");
 		c.setSpanishName("Categoría");
-		
+
 		Money mnfix = new Money();
 		mnfix.setQuantity(200.);
-		
+
 		Money mnhandy = new Money();
 		mnhandy.setQuantity(180.);
-		
+
 		Application ap1 = new Application();
 		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
-		ap1.setStatus(Status.PENDING);
+		ap1.setStatus("PENDING");
 		ap1.setOfferedPrice(mnhandy);
 		ap1.setComment("Comment del handy");
-		
+
 		Warranty w = new Warranty();
 		w.setTitle("Warranty");
 		w.setTerms("Terms");
 		w.setIsFinal(false);
 
-		
 		// Creacion de fixuptask
-		
+
 		Collection<FixUpTask> lsfix = new ArrayList<>();
-		
+
 		FixUpTask f = new FixUpTask();
 
 		f.setTicker("301018-1xlz3N");
@@ -89,14 +87,13 @@ public class CreateJSON {
 		f.setEndMoment(LocalDate.parse("2018-10-30").toDate());
 		f.setCategory(c);
 		f.setWarranty(w);
-		
+
 		Collection<Application> fixApplications = new ArrayList<>();
 		fixApplications.add(ap1);
-		
-		f.setApplication(fixApplications);
-		
-		lsfix.add(f);
 
+		f.setApplication(fixApplications);
+
+		lsfix.add(f);
 
 		return f;
 
