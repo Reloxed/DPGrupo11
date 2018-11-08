@@ -36,7 +36,8 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -47,7 +48,8 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
 	}
@@ -58,7 +60,8 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Application> getApplications() {
 		return applications;
 	}

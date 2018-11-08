@@ -23,7 +23,8 @@ public class Customer extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -34,7 +35,8 @@ public class Customer extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<FixUpTask> getFixuptasks() {
 		return fixUpTasks;
 	}
@@ -54,7 +56,8 @@ public class Customer extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL) // ¿?
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Complaint> getComplaints() {
 		return complaints;
 	}

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -37,6 +39,7 @@ public class Finder extends DomainEntity {
 		this.keyWord = keyWord;
 	}
 
+	@AttributeOverride(name = "quantity", column = @Column(name = "priceLow"))
 	public Money getPriceLow() {
 		return priceLow;
 	}
@@ -45,6 +48,7 @@ public class Finder extends DomainEntity {
 		this.priceLow = priceLow;
 	}
 
+	@AttributeOverride(name = "quantity", column = @Column(name = "priceHigh"))
 	public Money getPriceHigh() {
 		return priceHigh;
 	}
@@ -53,7 +57,8 @@ public class Finder extends DomainEntity {
 		this.priceHigh = priceHigh;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP) // DATE?
+	@Temporal(TemporalType.TIMESTAMP)
+	// DATE?
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -62,7 +67,8 @@ public class Finder extends DomainEntity {
 		this.startMoment = startMoment;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP) // DATE?
+	@Temporal(TemporalType.TIMESTAMP)
+	// DATE?
 	public Date getEndMoment() {
 		return endMoment;
 	}
