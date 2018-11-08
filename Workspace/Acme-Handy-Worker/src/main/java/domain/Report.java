@@ -13,7 +13,7 @@ public class Report extends DomainEntity {
 
 	private Date publishedMoment;
 	private String description;
-	private Collection<String> attachments;
+	private String attachments;
 	private boolean isFinal;
 	private Collection<Note> notes;
 
@@ -37,11 +37,11 @@ public class Report extends DomainEntity {
 	}
 
 	@URL
-	public Collection<String> getAttachments() {
+	public String getAttachments() {
 		return this.attachments;
 	}
 
-	public void setAttachement(final Collection<String> attachments) {
+	public void setAttachement(final String attachments) {
 		this.attachments = attachments;
 	}
 

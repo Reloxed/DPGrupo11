@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -14,11 +15,11 @@ public class Message extends DomainEntity {
 	private Date sendMoment;
 	private String subject;
 	private String body;
-	private Priority priority;
+	private String priority;
 	private String tags;
 	private Collection<MessageBox> messageBoxes;
 	private Actor sender;
-	private Actor reciever;
+	private Actor recipient;
 
 	@NotNull
 	@Past
@@ -48,13 +49,13 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotNull
-	@Valid
-	public Priority getPriority() {
+	@NotBlank
+	@Pattern(regexp = "\b(HIGH|NEUTRAL|LOW)\b")
+	public String getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Priority priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 
@@ -88,11 +89,11 @@ public class Message extends DomainEntity {
 	@Valid
 	@NotNull
 	public Actor getReciever() {
-		return reciever;
+		return recipient;
 	}
 
-	public void setReciever(Actor reciever) {
-		this.reciever = reciever;
+	public void setReciever(Actor recipient) {
+		this.recipient= recipient;
 	}
 
 }

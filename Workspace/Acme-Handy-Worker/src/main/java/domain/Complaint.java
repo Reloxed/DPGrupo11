@@ -1,7 +1,7 @@
 package domain;
 
 import java.sql.Date;
-import java.util.Collection;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ public class Complaint extends DomainEntity {
 	private String ticker;
 	private Date moment;
 	private String description;
-	private Collection<String> attachements;
+	private String attachements;
 	private FixUpTask fixUpTask;
 	private Report report;
 
@@ -48,11 +48,11 @@ public class Complaint extends DomainEntity {
 		this.description = description;
 	}
 
-	public Collection<String> getAttachements() {
+	public String getAttachements() {
 		return attachements;
 	}
 
-	public void setAttachements(Collection<String> attachements) {
+	public void setAttachements(String attachements) {
 		this.attachements = attachements;
 	}
 
@@ -65,7 +65,9 @@ public class Complaint extends DomainEntity {
 	public void setFixUpTask(FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
-
+	
+	@Valid
+	
 	public Report getReport() {
 		return report;
 	}

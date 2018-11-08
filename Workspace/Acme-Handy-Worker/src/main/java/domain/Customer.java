@@ -3,7 +3,7 @@ package domain;
 import java.util.Collection;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+
 
 import org.hibernate.validator.constraints.Range;
 
@@ -11,26 +11,27 @@ public class Customer extends Actor {
 
 	private double score;
 	private Collection<Endorsement> endorsements;
-	private Collection<FixUpTask> fixuptasks;
+	private Collection<FixUpTask> fixUpTasks;
+	private Collection<Complaint> complaints;
 
-	@NotNull
+	
 	@Valid
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
-
+			
 	public void setEndorsements(Collection<Endorsement> endorsements) {
 		this.endorsements = endorsements;
 	}
 
-	@NotNull
+	
 	@Valid
 	public Collection<FixUpTask> getFixuptasks() {
-		return fixuptasks;
+		return fixUpTasks;
 	}
 
-	public void setFixuptasks(Collection<FixUpTask> fixuptasks) {
-		this.fixuptasks = fixuptasks;
+	public void setFixuptasks(Collection<FixUpTask> fixUpTasks) {
+		this.fixUpTasks = fixUpTasks;
 	}
 
 	@Range(min = -1, max = 1)
@@ -40,6 +41,15 @@ public class Customer extends Actor {
 
 	public void setScore(double score) {
 		this.score = score;
+	}
+
+	@Valid
+	public Collection<Complaint> getComplaints() {
+		return complaints;
+	}
+
+	public void setComplaints(Collection<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 	
 

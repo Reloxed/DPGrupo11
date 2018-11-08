@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.Collection;
+
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
@@ -15,13 +15,13 @@ public class SystemConfiguration extends DomainEntity {
 	private String systemName;
 	private String banner;
 	private double VAT;
-	private Collection<String> listCreditCardMakes;
+	private String listCreditCardMakes;
 	private String countryCode;
 	private Integer timeResultsCached;
 	private Integer maxResults;
-	private Collection<String> spamWords;
-	private Collection<String> positiveWords;
-	private Collection<String> negativeWords;
+	private String spamWords;
+	private String positiveWords;
+	private String negativeWords;
 
 	@NotBlank
 	public String getSystemName() {
@@ -53,12 +53,11 @@ public class SystemConfiguration extends DomainEntity {
 	}
 
 	@NotEmpty
-	public Collection<String> getListCreditCardMakes() {
+	public String getListCreditCardMakes() {
 		return this.listCreditCardMakes;
 	}
 
-	public void setListCreditCardMakes(
-			final Collection<String> listCreditCardMakes) {
+	public void setListCreditCardMakes(final String listCreditCardMakes) {
 		this.listCreditCardMakes = listCreditCardMakes;
 	}
 
@@ -90,27 +89,27 @@ public class SystemConfiguration extends DomainEntity {
 		this.maxResults = maxResults;
 	}
 
-	public Collection<String> getSpamWords() {
+	public String getSpamWords() {
 		return this.spamWords;
 	}
 
-	public void setSpamWords(final Collection<String> spamWords) {
+	public void setSpamWords(final String spamWords) {
 		this.spamWords = spamWords;
 	}
 
-	public Collection<String> getPositiveWords() {
+	public String getPositiveWords() {
 		return this.positiveWords;
 	}
 
-	public void setPositiveWords(final Collection<String> positiveWords) {
+	public void setPositiveWords(final String positiveWords) {
 		this.positiveWords = positiveWords;
 	}
 
-	public Collection<String> getNegativeWords() {
+	public String getNegativeWords() {
 		return this.negativeWords;
 	}
 
-	public void setNegativeWords(final Collection<String> negativeWords) {
+	public void setNegativeWords(final String negativeWords) {
 		this.negativeWords = negativeWords;
 	}
 

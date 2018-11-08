@@ -1,12 +1,16 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+
 
 public class Application extends DomainEntity {
 
@@ -15,9 +19,12 @@ public class Application extends DomainEntity {
 	private Money offeredPrice;
 	private String comment;
 	private CreditCard creditCard;
-	private WorkPlan workPlan;
+	private Collection<Phase> phases;
+	private FixUpTask fixUpTask;
+	
 
-	@NotNull
+	@NotBlank
+	@Pattern(regexp = "\b(PENDING|ACCEPTED|REJECTED)\b")
 	public String getStatus() {
 		return status;
 	}
@@ -36,7 +43,7 @@ public class Application extends DomainEntity {
 		this.offeredPrice = offeredPrice;
 	}
 
-	@NotBlank
+	
 	public String getComment() {
 		return comment;
 	}
@@ -45,6 +52,7 @@ public class Application extends DomainEntity {
 		this.comment = comment;
 	}
 
+	
 	@Valid
 	public CreditCard getCreditCard() {
 		return creditCard;
@@ -64,14 +72,26 @@ public class Application extends DomainEntity {
 		this.registeredMoment = registeredMoment;
 	}
 
-	@NotNull
 	@Valid
-	public WorkPlan getWorkPlan() {
-		return workPlan;
+	
+	public Collection<Phase> getPhases() {
+		return phases;
 	}
 
-	public void setWorkPlan(WorkPlan workPlan) {
-		this.workPlan = workPlan;
+	public void setPhases(Collection<Phase> phases) {
+		this.phases = phases;
 	}
 
+	@Valid
+	@NotNull
+	public FixUpTask getFixUpTask() {
+		return fixUpTask;
+	}
+
+	public void setFixUpTask(FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
+	}
+
+	
+	
 }

@@ -12,6 +12,7 @@ public class Phase extends DomainEntity {
 	private String description;
 	private Date startMoment;
 	private Date endMoment;
+	
 
 	@NotBlank
 	public String getTitle() {
@@ -49,4 +50,5 @@ public class Phase extends DomainEntity {
 		this.endMoment = endMoment;
 	}
 
+	
 }
