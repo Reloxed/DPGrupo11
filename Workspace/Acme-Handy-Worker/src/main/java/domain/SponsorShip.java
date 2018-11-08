@@ -48,6 +48,7 @@ public class Sponsorship extends DomainEntity {
 	}
 
 	@Valid
+	@NotNull
 	public Tutorial getTutorial() {
 		return this.tutorial;
 	}

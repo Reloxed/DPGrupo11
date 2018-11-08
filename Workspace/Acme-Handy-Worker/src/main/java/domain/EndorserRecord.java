@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.Collection;
+
 
 import javax.validation.constraints.Pattern;
 
@@ -14,7 +14,7 @@ public class EndorserRecord extends DomainEntity {
 	private String email;
 	private String phoneNumber;
 	private String linkedinLink;
-	private Collection<String> comments;
+	private String comments;
 
 	@NotBlank
 	public String getFullName() {
@@ -55,11 +55,11 @@ public class EndorserRecord extends DomainEntity {
 		this.linkedinLink = linkedinLink;
 	}
 
-	public Collection<String> getComments() {
+	public String getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final Collection<String> comments) {
+	public void setComments(final String comments) {
 		this.comments = comments;
 	}
 

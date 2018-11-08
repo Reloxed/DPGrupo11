@@ -12,7 +12,7 @@ public class Endorsement extends DomainEntity {
 
 	private Date publishedMoment;
 	private String comment;
-	private Actor customer;
+	private Customer customer;
 	private HandyWorker handyWorker;
 
 	@Past
@@ -36,11 +36,11 @@ public class Endorsement extends DomainEntity {
 
 	@NotNull
 	@Valid
-	public Actor getCustomer() {
+	public Customer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Actor customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 

@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.Collection;
+
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -10,7 +10,8 @@ public class Section extends DomainEntity {
 
 	private String title;
 	private String text;
-	private Collection<String> picture;
+	private String pictures;
+	private int number;
 
 	// Methods
 
@@ -32,12 +33,21 @@ public class Section extends DomainEntity {
 		this.text = text;
 	}
 
-	public Collection<String> getPicture() {
-		return this.picture;
+	public String getPicture() {
+		return this.pictures;
 	}
 
-	public void setPicture(final Collection<String> picture) {
-		this.picture = picture;
+	public void setPicture(final String pictures) {
+		this.pictures = pictures;
 	}
 
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	
 }

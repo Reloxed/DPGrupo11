@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Collection;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -9,7 +7,7 @@ public class MiscellaneousRecord extends DomainEntity {
 
 	private String title;
 	private String linkAttachement;
-	private Collection<String> comments;
+	private String comments;
 
 	@NotBlank
 	public String getTitle() {
@@ -29,11 +27,11 @@ public class MiscellaneousRecord extends DomainEntity {
 		this.linkAttachement = linkAttachement;
 	}
 
-	public Collection<String> getComments() {
+	public String getComments() {
 		return comments;
 	}
 
-	public void setComments(Collection<String> comments) {
+	public void setComments(String comments) {
 		this.comments = comments;
 	}
 

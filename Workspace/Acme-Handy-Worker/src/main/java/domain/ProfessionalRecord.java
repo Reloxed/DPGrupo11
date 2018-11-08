@@ -1,7 +1,6 @@
 package domain;
 
 import java.sql.Date;
-import java.util.Collection;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -15,8 +14,8 @@ public class ProfessionalRecord extends DomainEntity {
 	private Date startDate;
 	private Date endDate;
 	private String role;
-	private String linkAttachment;
-	private Collection<String> comments;
+	private String attachment;
+	private String comments;
 
 	@NotBlank
 	public String getCompanyName() {
@@ -56,18 +55,18 @@ public class ProfessionalRecord extends DomainEntity {
 
 	@URL
 	public String getLinkAttachment() {
-		return this.linkAttachment;
+		return this.attachment;
 	}
 
-	public void setLinkAttachment(final String linkAttachment) {
-		this.linkAttachment = linkAttachment;
+	public void setLinkAttachment(final String attachment) {
+		this.attachment = attachment;
 	}
 
-	public Collection<String> getComments() {
+	public String getComments() {
 		return this.comments;
 	}
 
-	public void setComments(final Collection<String> comments) {
+	public void setComments(final String comments) {
 		this.comments = comments;
 	}
 

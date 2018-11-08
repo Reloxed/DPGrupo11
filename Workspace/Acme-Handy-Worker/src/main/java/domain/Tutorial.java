@@ -3,7 +3,7 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.validation.Valid;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -12,10 +12,9 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Tutorial extends DomainEntity {
 
 	private String title;
-	private Date lastUpdated;
+	private Date lastUpdate;
 	private String summary;
-	private Collection<String> pictures;
-	private HandyWorker writer;
+	private String pictures;
 	private Collection<Section> sections;
 
 	@NotBlank
@@ -30,11 +29,11 @@ public class Tutorial extends DomainEntity {
 	@Past
 	@NotNull
 	public Date getLastUpdated() {
-		return this.lastUpdated;
+		return this.lastUpdate;
 	}
 
-	public void setLastUpdated(final Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setLastUpdated(final Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	@NotBlank
@@ -46,23 +45,15 @@ public class Tutorial extends DomainEntity {
 		this.summary = summary;
 	}
 
-	public Collection<String> getPictures() {
+	public String getPictures() {
 		return this.pictures;
 	}
 
-	public void setPictures(final Collection<String> pictures) {
+	public void setPictures(final String pictures) {
 		this.pictures = pictures;
 	}
 
-	@NotNull
-	@Valid
-	public HandyWorker getWriter() {
-		return this.writer;
-	}
-
-	public void setWriter(final HandyWorker writer) {
-		this.writer = writer;
-	}
+	
 
 	@NotNull
 	public Collection<Section> getSections() {
