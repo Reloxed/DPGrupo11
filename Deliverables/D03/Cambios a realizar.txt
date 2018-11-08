@@ -1,28 +1,25 @@
-- Rol receiver por recipient.
+*HECHO* - Rol receiver por recipient.
 - Cambiar datatype Priority por patr—n, lo mismo con Status. De hecho hemos creado el datatype Status pero luego no lo hemos llamado en Application.
 - FixUpTask -> Category , cambiar areOrganisedIn por belongsTo que es el verbo utilizado en los requisitos.
-- Deber’amos quitar la clase WorkPlan ya que est‡ vac’a y que Application sea directamente una composici—n de Phase. --> Lo dejamos en el conceptual y lo quitamos en el modelo de dominio y hay que cambiar la relaci—n de Application a Phase siendo m‡s claro. (compoundBy y la relaci—n ser’a 1 -- 0..*)
-- Hay que poner bien la nota del patr—n del telŽfono: "Phone numbers should adhere to the following patterns: Ò+CC (AC) PNÓ, "+CC PN", or "PN". Note that phone numbers should adhere to the previous patterns, but they are not required to."
+*HECHO* - Deber’amos quitar la clase WorkPlan ya que est‡ vac’a y que Application sea directamente una composici—n de Phase. --> Lo dejamos en el conceptual y lo quitamos en el modelo de dominio y hay que cambiar la relaci—n de Application a Phase siendo m‡s claro. (compoundBy y la relaci—n ser’a 1 -- 0..*)
+*HECHO* - Hay que poner bien la nota del patr—n del telŽfono: "Phone numbers should adhere to the following patterns: Ò+CC (AC) PNÓ, "+CC PN", or "PN". Note that phone numbers should adhere to the previous patterns, but they are not required to."
 - ÀCambiar CreditCard a entidad? En el requisito 24 pone que el sistema DEBE almacenar la informaci—n de las tarjetas de crŽdito, por lo tanto creo que deber’amos ponerlo como entidad y unirlo con relaciones a las entidades que la precisen (Sponsorship y Application). Relaciones. Sponsorship --> CreditCard (0..* --> 1) y Application --> CreditCard (0..* --> 0..1) 
-- ProfessionalRecord: cambiar link attachment por attachment, para que quede m‡s limpio.
-- Hay que poner en una nota lo que pone en el requisito 41 sobre los resultados que devuelve el Finder: Ponemos que por defecto son 10.
-- No veo la direccionalidad en la relaci—n HandyWorker <Ñ> Tutorial, yo lo pondr’a HandyWorker Ñ> Tutorial
-- Añadir el atributo number a section en el domain model.
-- Segun las diapositivas, en el uml los atributos de useraccount y authority deben llevar un +
-- En actor no hay get ni set para el atributo systemConfiguration? Es una clase suelta, no es ni atributo ni relaci—n con nada, hay que quitarlo todo
-- Si la relacion application-fixuptask es bidireccional, falta el atributo fixuptask en la clase application
-- En el uml -> application -> comment o ponemos [0..1] o {NotBlank}: SE PONE 0..1
-- En uml casi todos los String siguen como [0..*] y la mayoria se pueden poner como solo 1 string [0..1] y lo mismo con java y los collection<String>. Da igual que sean URL: SE PONEN STRING EN LUGAR COLLECTION<STRING>
-- En la clase complaint el atributo report falta la anotacion @Valid en el get.
-- En la clase customer falta un atributo collection<Complaint> y lo que ha dicho pablo de los @notnull. Revisar entera la clase
-- En la clase endorsment el atributo customer es de tipo actor en vez de de tipo customer.
-- En la clase messageBox sobra el atributo actor
-- En la clase sponsorship al get de tutorial le falta un @Valid
-- pictures de tutorial es 0..1 no 0..*
-- Sobra la 'd' en lastUpdated en tutorial
-- las colecciones de String de SystemConfiguration tienenge que ser Strings --> de 0..* a 0..1
-- En la clase Customer hay anotaciones @NotNull en dos atributos que son collections
-- Boolean hay que ponerlo en mayusculas, es decir, en UML no puede ser null y se pone con mayusculas.
-- Las fechas de fixuptask debe ser en un futuro forzosamente, es decir, una restriccion. Con que esté en el futuro es más que suficiente: @Future
-- Un numero de telefono debe cumplir un patron, Y SI NO, se le pide una confirmación al usuario y si dice que si, se guarda.: Poner nota
+*HECHO* - ProfessionalRecord: cambiar link attachment por attachment, para que quede m‡s limpio.
+*HECHO* - Hay que poner en una nota lo que pone en el requisito 41 sobre los resultados que devuelve el Finder: Ponemos que por defecto son 10.
+*HECHO* - No veo la direccionalidad en la relaci—n HandyWorker <Ñ> Tutorial, yo lo pondr’a HandyWorker Ñ> Tutorial
+*HECHO* - Añadir el atributo number a section en el domain model.
+*HECHO* - Segun las diapositivas, en el uml los atributos de useraccount y authority deben llevar un +
+*HECHO* - Si la relacion application-fixuptask es bidireccional, falta el atributo fixuptask en la clase application
+*HECHO* - En el uml -> application -> comment o ponemos [0..1] o {NotBlank}: SE PONE 0..1
+ - En uml casi todos los String siguen como [0..*] y la mayoria se pueden poner como solo 1 string [0..1] y lo mismo con java y los collection<String>. Da igual que sean URL: SE PONEN STRING EN LUGAR COLLECTION<STRING>
+*HECHO* - En la clase complaint el atributo report falta la anotacion @Valid en el get.
+*HECHO* - En la clase customer falta un atributo collection<Complaint> y lo que ha dicho pablo de los @notnull. Revisar entera la clase
+*HECHO* - En la clase endorsment el atributo customer es de tipo actor en vez de de tipo customer.
+*HECHO* - En la clase messageBox sobra el atributo actor
+*HECHO* - En la clase sponsorship al get de tutorial le falta un @NotNull
+*HECHO* - Sobra la 'd' en lastUpdated en tutorial
+*HECHO* - En la clase Customer hay anotaciones @NotNull en dos atributos que son collections
+*HECHO* - Boolean hay que ponerlo en mayusculas, es decir, en UML no puede ser null y se pone con mayusculas.
+*HECHO*- Las fechas de fixuptask debe ser en un futuro forzosamente, es decir, una restriccion. Con que esté en el futuro es más que suficiente: @Future
+*HECHO*- Un numero de telefono debe cumplir un patron, Y SI NO, se le pide una confirmación al usuario y si dice que si, se guarda.: Poner nota
 - Hay que revisar las direcciones para navegar por ejemplo desde la clave ajena al contrario.
