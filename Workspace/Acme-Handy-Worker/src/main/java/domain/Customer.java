@@ -23,8 +23,7 @@ public class Customer extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
-	// ¿?
+	@OneToMany(mappedBy = "customer")
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}

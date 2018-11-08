@@ -60,7 +60,7 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "handyWorker")
 	// ¿?
 	public Collection<Application> getApplications() {
 		return applications;
