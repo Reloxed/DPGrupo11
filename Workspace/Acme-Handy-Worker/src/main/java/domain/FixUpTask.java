@@ -3,13 +3,23 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class FixUpTask extends DomainEntity {
 
 	private String ticker;
@@ -34,12 +44,13 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
-	@Future
+	@Past
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPublishedMoment() {
 		return publishedMoment;
 	}
 
-	public void setPublishedTime(Date publishedMoment) {
+	public void setPublishedMoment(Date publishedMoment) {
 		this.publishedMoment = publishedMoment;
 	}
 
@@ -72,6 +83,8 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
+	@Future
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -81,6 +94,8 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
+	@Future
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndMoment() {
 		return endMoment;
 	}
@@ -89,6 +104,7 @@ public class FixUpTask extends DomainEntity {
 		this.endMoment = endMoment;
 	}
 
+	@OneToMany(mappedBy="fixUpTask")
 	public Collection<Application> getApplication() {
 		return application;
 	}
@@ -99,6 +115,7 @@ public class FixUpTask extends DomainEntity {
 
 	@NotNull
 	@Valid
+	@OneToOne(optional=false)
 	public Category getCategory() {
 		return category;
 	}
@@ -109,6 +126,7 @@ public class FixUpTask extends DomainEntity {
 
 	@NotNull
 	@Valid
+	@OneToOne(optional=false)
 	public Warranty getWarranty() {
 		return warranty;
 	}

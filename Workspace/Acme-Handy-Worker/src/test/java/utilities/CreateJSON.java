@@ -17,7 +17,6 @@ import domain.Application;
 import domain.Category;
 import domain.FixUpTask;
 import domain.Money;
-import domain.Status;
 import domain.Warranty;
 
 public class CreateJSON {
@@ -64,7 +63,7 @@ public class CreateJSON {
 		
 		Application ap1 = new Application();
 		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
-		ap1.setStatus(Status.PENDING);
+		ap1.setStatus("PENDING");
 		ap1.setOfferedPrice(mnhandy);
 		ap1.setComment("Comment del handy");
 		
@@ -81,7 +80,7 @@ public class CreateJSON {
 		FixUpTask f = new FixUpTask();
 
 		f.setTicker("301018-1xlz3N");
-		f.setPublishedTime(LocalDate.now().toDate());
+		f.setPublishedMoment(LocalDate.now().toDate());
 		f.setDescription("Desciption");
 		f.setAddress("ETSII - Sevilla");
 		f.setMaxPrice(mnfix);
