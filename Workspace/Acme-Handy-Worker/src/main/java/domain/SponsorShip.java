@@ -1,14 +1,19 @@
 package domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
-
+@Entity
+@Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
 
-	// Attributes
+	// Attributes 
 
 	private String banner;
 	private String targetPage;
@@ -39,6 +44,7 @@ public class Sponsorship extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@OneToOne(optional=false)
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
@@ -49,6 +55,7 @@ public class Sponsorship extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@OneToOne(optional=false)
 	public Tutorial getTutorial() {
 		return this.tutorial;
 	}
