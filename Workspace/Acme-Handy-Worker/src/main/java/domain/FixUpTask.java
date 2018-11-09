@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -105,6 +106,8 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@OneToMany(mappedBy="fixUpTask")
+	@Valid
+	@ElementCollection
 	public Collection<Application> getApplication() {
 		return application;
 	}
