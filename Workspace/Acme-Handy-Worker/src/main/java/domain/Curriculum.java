@@ -2,12 +2,19 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-
+@Entity
+@Access(AccessType.PROPERTY)
 public class Curriculum extends DomainEntity {
 
 	// Atributos
@@ -23,6 +30,7 @@ public class Curriculum extends DomainEntity {
 
 	@NotBlank
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
+	@Column(unique = true)
 	public String getTicker() {
 		return ticker;
 	}
@@ -33,6 +41,7 @@ public class Curriculum extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@OneToOne(optional=false)
 	public PersonalRecord getPersonalRecord() {
 		return personalRecord;
 	}
@@ -40,7 +49,7 @@ public class Curriculum extends DomainEntity {
 	public void setPersonalRecord(PersonalRecord personalRecord) {
 		this.personalRecord = personalRecord;
 	}
-
+	@OneToMany
 	public Collection<EducationRecord> getEducationRecords() {
 		return educationRecords;
 	}
@@ -48,7 +57,7 @@ public class Curriculum extends DomainEntity {
 	public void setEducationRecords(Collection<EducationRecord> educationRecords) {
 		this.educationRecords = educationRecords;
 	}
-
+	@OneToMany
 	public Collection<ProfessionalRecord> getProfessionalRecords() {
 		return professionalRecords;
 	}
@@ -57,7 +66,7 @@ public class Curriculum extends DomainEntity {
 			Collection<ProfessionalRecord> professionalRecords) {
 		this.professionalRecords = professionalRecords;
 	}
-
+	@OneToMany
 	public Collection<EndorserRecord> getEndorserRecords() {
 		return endorserRecords;
 	}
@@ -65,7 +74,7 @@ public class Curriculum extends DomainEntity {
 	public void setEndorserRecords(Collection<EndorserRecord> endorserRecords) {
 		this.endorserRecords = endorserRecords;
 	}
-
+	@OneToMany
 	public Collection<MiscellaneousRecord> getMiscellaneousRecords() {
 		return miscellaneousRecords;
 	}
