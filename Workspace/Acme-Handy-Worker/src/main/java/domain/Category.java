@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -50,6 +51,7 @@ public class Category extends DomainEntity {
 
 	@Valid
 	@OneToMany(mappedBy="parentCategory")
+	@ElementCollection
 	public Collection<Category> getChildCategories() {
 		return childCategories;
 	}
