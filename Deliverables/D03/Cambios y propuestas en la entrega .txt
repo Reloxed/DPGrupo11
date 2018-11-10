@@ -1,0 +1,5 @@
+@ElementCollection -> lo colocamos solo en datatypes ? eso pone en la teoría ...
+
+**Ojo** el ticker debe ser unico así que hay que ponerlo de anotación donde esté como en FixUpTask por ejemplo.
+
+Relación:[Costumer]1-->0..*[Application] ->Propuesta si en el caso de que no se pudiera ordenar 
