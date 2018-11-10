@@ -3,7 +3,12 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -28,6 +33,7 @@ public class Tutorial extends DomainEntity {
 
 	@Past
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getLastUpdated() {
 		return this.lastUpdate;
 	}
@@ -53,9 +59,10 @@ public class Tutorial extends DomainEntity {
 		this.pictures = pictures;
 	}
 
-	
-
 	@NotNull
+	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Section> getSections() {
 		return this.sections;
 	}

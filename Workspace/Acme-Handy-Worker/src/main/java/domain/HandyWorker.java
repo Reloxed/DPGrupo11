@@ -2,11 +2,19 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class HandyWorker extends Actor {
 
 	private double score;
@@ -26,6 +34,10 @@ public class HandyWorker extends Actor {
 		this.make = make;
 	}
 
+	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -34,6 +46,10 @@ public class HandyWorker extends Actor {
 		this.endorsements = endorsements;
 	}
 
+	@Valid
+	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL)
+	// ¿?
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
 	}
@@ -42,6 +58,10 @@ public class HandyWorker extends Actor {
 		this.tutorial = tutorial;
 	}
 
+	@Valid
+	@ElementCollection
+	@OneToMany(mappedBy = "handyWorker")
+	// ¿?
 	public Collection<Application> getApplications() {
 		return applications;
 	}
