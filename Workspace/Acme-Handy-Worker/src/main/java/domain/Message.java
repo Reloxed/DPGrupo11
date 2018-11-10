@@ -3,6 +3,13 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,6 +17,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
 	private Date sendMoment;
@@ -23,6 +32,7 @@ public class Message extends DomainEntity {
 
 	@NotNull
 	@Past
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getSendMoment() {
 		return sendMoment;
 	}
@@ -68,6 +78,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotNull
+	@ManyToMany
 	public Collection<MessageBox> getMessageBoxes() {
 		return messageBoxes;
 	}
@@ -78,6 +89,7 @@ public class Message extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@ManyToOne(optional=false)
 	public Actor getSender() {
 		return sender;
 	}
@@ -88,6 +100,7 @@ public class Message extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@ManyToOne(optional=false)
 	public Actor getReciever() {
 		return recipient;
 	}
