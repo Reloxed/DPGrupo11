@@ -2,7 +2,11 @@ package domain;
 
 import java.sql.Date;
 
-
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,6 +14,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
 	private String ticker;
@@ -55,7 +61,7 @@ public class Complaint extends DomainEntity {
 	public void setAttachements(String attachements) {
 		this.attachements = attachements;
 	}
-
+	@ManyToOne(optional = false)
 	@Valid
 	@NotNull
 	public FixUpTask getFixUpTask() {
@@ -66,8 +72,8 @@ public class Complaint extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 	
+	@OneToOne(optional = true)
 	@Valid
-	
 	public Report getReport() {
 		return report;
 	}

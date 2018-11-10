@@ -79,7 +79,7 @@ public class CreateJSON {
 		FixUpTask f = new FixUpTask();
 
 		f.setTicker("301018-1xlz3N");
-		f.setPublishedTime(LocalDate.now().toDate());
+		f.setPublishedMoment(LocalDate.now().toDate());
 		f.setDescription("Desciption");
 		f.setAddress("ETSII - Sevilla");
 		f.setMaxPrice(mnfix);

@@ -2,10 +2,18 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Category extends DomainEntity {
 
 	private String spanishName;
@@ -32,6 +40,7 @@ public class Category extends DomainEntity {
 	}
 
 	@Valid
+	@ManyToOne(optional=true)
 	public Category getParentCategory() {
 		return parentCategory;
 	}
@@ -41,6 +50,8 @@ public class Category extends DomainEntity {
 	}
 
 	@Valid
+	@OneToMany(mappedBy="parentCategory")
+	@ElementCollection
 	public Collection<Category> getChildCategories() {
 		return childCategories;
 	}

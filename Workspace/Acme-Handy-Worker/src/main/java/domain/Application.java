@@ -3,6 +3,15 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -10,8 +19,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-
-
+@Entity
+@Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
 	private Date registeredMoment;
@@ -54,6 +63,7 @@ public class Application extends DomainEntity {
 
 	
 	@Valid
+	@OneToOne(optional=true)
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
@@ -64,6 +74,7 @@ public class Application extends DomainEntity {
 	
 	@NotNull
 	@Past
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getRegisteredMoment() {
 		return registeredMoment;
 	}
@@ -73,7 +84,8 @@ public class Application extends DomainEntity {
 	}
 
 	@Valid
-	
+	@OneToMany
+	@ElementCollection
 	public Collection<Phase> getPhases() {
 		return phases;
 	}
@@ -84,6 +96,7 @@ public class Application extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@ManyToOne(optional=false)
 	public FixUpTask getFixUpTask() {
 		return fixUpTask;
 	}

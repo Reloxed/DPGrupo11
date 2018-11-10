@@ -2,6 +2,9 @@ package domain;
 
 
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 
@@ -10,6 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class SystemConfiguration extends DomainEntity {
 
 	private String systemName;
@@ -23,6 +28,7 @@ public class SystemConfiguration extends DomainEntity {
 	private String positiveWords;
 	private String negativeWords;
 
+	
 	@NotBlank
 	public String getSystemName() {
 		return this.systemName;

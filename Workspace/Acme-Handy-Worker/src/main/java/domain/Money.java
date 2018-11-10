@@ -1,8 +1,13 @@
 package domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 
+@Embeddable
+@Access(AccessType.PROPERTY)
 public class Money {
 
 	private double quantity;
