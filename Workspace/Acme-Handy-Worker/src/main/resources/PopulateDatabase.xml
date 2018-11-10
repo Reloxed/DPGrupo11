@@ -559,4 +559,93 @@
 		<property name="exam" ref="exam4" />
 	</bean>
 
+	<!-- Montaño -->
+	
+	<!-- Customers -->
+	
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Francisco" />
+		<property name="surname" value="Berrocal Ribas" />
+		<property name="email" value="frabelrib@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxCustomer1" />
+				<ref bean="outBoxCustomer1" />
+				<ref bean="spamBoxCustomer1" />
+				<ref bean="trashBoxCustomer1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userCustomer1" />
+	</bean>
+	
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Lorena" />
+		<property name="middleName" value="María" />
+		<property name="surname" value="Revuelta Berbel" />
+		<property name="photo" value="https://media.aweita.larepublica.pe/678x508/aweita/imagen/2018/02/08/noticia-persona-positiva.png" />
+		<property name="email" value="lorrevber@mail.com" />
+		<property name="phoneNumber" value="+34689945823" />
+		<property name="address" value="C/ Villa Crepúsculo, 1 (Dos Hermanas, Sevilla)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialCustomer2_1" />
+				<ref bean="socialCustomer2_2" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxCustomer2" />
+				<ref bean="outBoxCustomer2" />
+				<ref bean="spamBoxCustomer2" />
+				<ref bean="trashBoxCustomer2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userCustomer2" />
+	</bean>
+	
+	<!-- HandyWorkers -->
+	
+	<bean id="handyWorker1" class="domain.HandyWorker">
+		<property name="name" value="Rosa" />
+		<property name="surname" value="Santacruz Alejo" />
+		<property name="email" value="rossanale@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxHandyWorker1" />
+				<ref bean="outBoxHandyWorker1" />
+				<ref bean="spamBoxHandyWorker1" />
+				<ref bean="trashBoxHandyWorker1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userHandyWorker1" />
+	</bean>
+	
+	<bean id="handyWorker2" class="domain.HandyWorker">
+		<property name="name" value="Esteban" />
+		<property name="middleName" value="Coralino" />
+		<property name="surname" value="Riesco Motos" />
+		<property name="photo" value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="email" value="estriemot@mail.com" />
+		<property name="phoneNumber" value="+34653384191" />
+		<property name="address" value="C/ San Fransokyo, 83 (Espartinas, Sevilla)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialHandyWorker2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxHandyWorker2" />
+				<ref bean="outBoxHandyWorker2" />
+				<ref bean="spamBoxHandyWorker2" />
+				<ref bean="trashBoxHandyWorker2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userHandyWorker2" />
+	</bean>
+	
 </beans>
