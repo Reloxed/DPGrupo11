@@ -179,13 +179,13 @@
 
 	<!-- Sponsor2 -->
 	<bean id="socialSponsor2_1" class="domain.SocialProfile">
-		<property name="nick" value="socialSponsor1" />
+		<property name="nick" value="socialSponsor2" />
 		<property name="socialNetwork" value="VK" />
 		<property name="link" value="https://vk.com/" />
 	</bean>
 
-	<bean id="socialSponsor2_1" class="domain.SocialProfile">
-		<property name="nick" value="socialSponsor1" />
+	<bean id="socialSponsor2_2" class="domain.SocialProfile">
+		<property name="nick" value="socialSponsor2" />
 		<property name="socialNetwork" value="Reddit" />
 		<property name="link" value="https://reddit.com/" />
 	</bean>
@@ -1079,7 +1079,7 @@
 	<!-- COMPLAINTs -->
 
 	<!-- Complaint about the FUP 1 of the customer 2 -->
-	<bean id="complaintf1_2" class="domain.Complaint">
+<bean id="complaintf1_2" class="domain.Complaint">
 		<property name="ticker" value="" />
 		<property name="moment" value="11/11/2018 17:14" />
 		<property name="description" value="The replicant is even worse than before" />
@@ -1152,6 +1152,8 @@
 	</bean>
 	
 	<!-- Montaño -->
+
+	<!-- ACTORS -->
 	
 	<!-- Customers -->
 	
@@ -1169,6 +1171,19 @@
 			</list>
 		</property>
 		<property name="userAccount" ref="userCustomer1" />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementCustomer1_1" />
+				<ref bean="endorsementCustomer1_2" />
+			</list>
+		</property>
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask1_1" />
+				<ref bean="fixUpTask2_1" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="customer2" class="domain.Customer">
@@ -1195,6 +1210,17 @@
 			</list>
 		</property>
 		<property name="userAccount" ref="userCustomer2" />
+		<property name="score" value="0" />
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask1_2" />
+			</list>
+		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf1_2" />
+			</list>
+		</property>
 	</bean>
 	
 	<!-- HandyWorkers -->
@@ -1213,6 +1239,27 @@
 			</list>
 		</property>
 		<property name="userAccount" ref="userHandyWorker1" />
+		<property name="make" value="Handy Worker 1 S.A." />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementHandyWorker1_1" />
+			</list>
+		</property>
+		<property name="tutorial">
+			<list>
+				<ref bean="tutorialHandyWorker1_1" />
+				<ref bean="tutorialHandyWorker1_2" />
+			</list>
+		</property>
+		<property name="applications">
+			<list>
+				<ref bean="applicationf1_1_1" />
+				<ref bean="applicationf2_1_1" />
+			</list>
+		</property>
+		<property name="finder" ref="finder" />
+		<property name="curriculum" ref="curriculumHandyWorker1" />
 	</bean>
 	
 	<bean id="handyWorker2" class="domain.HandyWorker">
@@ -1238,6 +1285,123 @@
 			</list>
 		</property>
 		<property name="userAccount" ref="userHandyWorker2" />
+		<property name="make" value="Handy Worker 2 S.A." />
+		<property name="score" value="0" />
+		<property name="tutorial">
+			<list>
+				<ref bean="tutorialHandyWorker2_1" />
+			</list>
+		</property>
+		<property name="applications">
+			<list>
+				<ref bean="applicationf1_1_2" />
+				<ref bean="applicationf1_2_1" />
+			</list>
+		</property>
+		<property name="finder" ref="finder" />
+		<property name="curriculum" ref="curriculumHandyWorker2" />
+	</bean>
+	
+	<!-- Referees -->
+	
+	<bean id="referee1" class="domain.Referee">
+		<property name="name" value="Eugenio" />
+		<property name="surname" value="Mancera Viñas" />
+		<property name="email" value="eugmanvin@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee1" />
+				<ref bean="outBoxReferee1" />
+				<ref bean="spamBoxReferee1" />
+				<ref bean="trashBoxReferee1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userReferee1" />
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf1_2" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Referee2" class="domain.Referee">
+		<property name="name" value="Jose" />
+		<property name="middleName" value="Ramón" />
+		<property name="surname" value="Cañas Negrin" />
+		<property name="photo" value="http://pm1.narvii.com/6251/0f26bc6a5146516de97ce173531d5617d7e6f154_00.jpg" />
+		<property name="email" value="joscanneg@mail.com" />
+		<property name="phoneNumber" value="+34722691000" />
+		<property name="address" value="C/ Neverland, 23 (Mairena, Sevilla)" />
+		<property name="isSuspicious" value="false" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialReferee2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee2" />
+				<ref bean="outBoxReferee2" />
+				<ref bean="spamBoxReferee2" />
+				<ref bean="trashBoxReferee2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userReferee2" />
+	</bean>
+	
+	<!-- Sponsor -->
+	
+	<bean id="sponsor1" class="domain.Sponsor">
+		<property name="name" value="Rodrigo" />
+		<property name="surname" value="Salguero Benitez" />
+		<property name="email" value="rodsalben@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxSponsor1" />
+				<ref bean="outBoxSponsor1" />
+				<ref bean="spamBoxSponsor1" />
+				<ref bean="trashBoxSponsor1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userSponsor1" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship1_1" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="sponsor2" class="domain.Sponsor">
+		<property name="name" value="María" />
+		<property name="middleName" value="Rocío" />
+		<property name="surname" value="Álvarez Fraga" />
+		<property name="photo" value="https://vignette.wikia.nocookie.net/kingdomhearts/images/d/d6/KH2_Kairi.jpg/revision/latest?cb=20091011152155&path-prefix=es" />
+		<property name="email" value="maralvfra@mail.com" />
+		<property name="phoneNumber" value="+34651345852" />
+		<property name="address" value="C/ Recuerdos Lejanos, 7 (Groenlandia)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialSponsor2_1" />
+				<ref bean="socialSponsor2_2" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee2" />
+				<ref bean="outBoxReferee2" />
+				<ref bean="spamBoxReferee2" />
+				<ref bean="trashBoxReferee2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userSponsor2" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship2_1" />
+			</list>
+		</property>
 	</bean>
 	
 </beans>
