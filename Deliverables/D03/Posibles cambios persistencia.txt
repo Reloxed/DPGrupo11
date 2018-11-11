@@ -1,0 +1,15 @@
+/// Fran
+
+- Segun teoria, solo se debe usar @ElementCollection para las colecciones de datatype. Segun esto, sobran las anotaciones en las siguientes clases: Administrator, Application, Category, Customer, Finder, FixUpTask, HandyWorker, MessageBox, Referee y Tutorial.
+
+- En algunas clases no se ha puesto la anotacion @Temporal en los getters de atributos de tipo Date. Las clases son Complaint y Report.
+
+- En las clases Customer, HandyWorker, sobran los (cascade = ...) de los @OneToMany; "cascade" solo se pone cuando se trata de una composicion o agregacion.
+
+- A la clase Endorsment le faltan las anotaciones @Entity y @Access(AccessType.PROPERTY).
+
+- En la clase Finder falta un @Temporal en el getSearchMoment.
+
+- En la clase HandyWorker falta un @OneToOne en getfinder y getcurriculum.
+
+- Falta un "mappedBy" en la relacion MessageBox<->Message y creo que deberia ir en la clase MessageBox.

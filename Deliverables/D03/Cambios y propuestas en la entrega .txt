@@ -1,5 +1,24 @@
-@ElementCollection -> lo colocamos solo en datatypes ? eso pone en la teoría ...
+// Jesus
 
-**Ojo** el ticker debe ser unico así que hay que ponerlo de anotación donde esté como en FixUpTask por ejemplo.
+- @ElementCollection -> lo colocamos solo en datatypes ? eso pone en la teoría ...
 
-Relación:[Costumer]1-->0..*[Application] ->Propuesta si en el caso de que no se pudiera ordenar 
+- **Ojo** el ticker debe ser unico así que hay que ponerlo de anotación donde esté como en FixUpTask por ejemplo.
+
+- Relación:[Costumer]1-->0..*[Application] ->Propuesta si en el caso de que no se pudiera ordenar 
+
+
+// Fran
+
+- En el domain uml en useraccount debería llevar un {Unique}, en la clase java que nos dan ya lleva una anotacion @Unique y tambien viene en la teoria.
+
+- En los uml Authority deberia ser un datatype segun la teoria y las anotaciones de persistenca de su clase en java.
+
+- Lo que dice jesus del ticker tiene razon, las clases donde falta @Unique son Complaint y FixUpTask.
+
+- En la clase fixuptask, no tendria mas sentido poner los atributos startDate y endDate en vez de startMoment y endMoment? Tampoco vas a pedir que al crear una chapuza tengan que poner a que hora de que dia empieza y termina xD
+
+- En los uml messageBox aparece en cursiva pero creo que eso se quedo asi porque antes era una clase abstracta. Creo que ahora deberia ir con la fuente normal.
+
+- En la clase Section de java falta una anotacion @URL en el getPicture.
+
+- En la clase SystemConfiguration el getListCreditCaarMakes deberia tener un @NotBlank en vez del @NotEmpty que tiene.
