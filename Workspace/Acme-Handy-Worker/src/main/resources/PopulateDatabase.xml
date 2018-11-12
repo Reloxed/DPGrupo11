@@ -736,7 +736,7 @@
 
 	<!-- HandyWorker's 2 Credit card -->
 	<bean id="creditCardHW2" class="domain.Money">
-		<property name="cardHolder" value="" />
+		<property name="cardHolder" value="Esteban Coralino Riesco Motos" />
 		<property name="brandName" value="VISA" />
 		<property name="number" value="1498154736589586" />
 		<property name="expirationMonth" value="07" />
@@ -1383,7 +1383,7 @@
 		<property name="name" value="María" />
 		<property name="middleName" value="Rocío" />
 		<property name="surname" value="Álvarez Fraga" />
-		<property name="photo" value="https://vignette.wikia.nocookie.net/kingdomhearts/images/d/d6/KH2_Kairi.jpg/revision/latest?cb=20091011152155&path-prefix=es" />
+		<property name="photo" value="https://vignette.wikia.nocookie.net/kingdomhearts/images/2/22/Kairi_with_her_Keyblade_KHII.PNG/revision/latest?cb=20170207174847" />
 		<property name="email" value="maralvfra@mail.com" />
 		<property name="phoneNumber" value="+34651345852" />
 		<property name="address" value="C/ Recuerdos Lejanos, 7 (Groenlandia)" />
@@ -1445,7 +1445,7 @@
 		<property name="name" value="José" />
 		<property name="middleName" value="Carlos" />
 		<property name="surname" value="Gamiz Redondo" />
-		<property name="photo" value="https://vignette.wikia.nocookie.net/disney/images/9/90/Pirates4JackSparrowPosterCropped.jpg/revision/latest?cb=20170420003820&path-prefix=es" />
+		<property name="photo" value="https://ih1.redbubble.net/image.376305132.3400/flat,550x550,075,f.u1.jpg" />
 		<property name="email" value="josgamred@mail.com" />
 		<property name="phoneNumber" value="+34611987654" />
 		<property name="address" value="C/ Atlántica, 1 (Málaga)" />
@@ -1607,7 +1607,45 @@
 	</bean>
 	
 	<bean id="personalRecordHW1" class="domain.PersonalRecord">
-		<property name="fullName" value=""
+		<property name="fullName" value="Rosa Santacruz Alejo" />
+		<property name="photo" value="https://78.media.tumblr.com/1d9f32206edb6766e03a295125d2405c/tumblr_inline_pf0nx0qzki1uavfqy_540.png" />
+		<property name="email" value="rossanale@mail.com" />
+		<property name="phoneNumber" value="+34689367309" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+	</bean>
+	
+	<bean id="educationHW1_1" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Ingeniería Informática - Tecnologías Informáticas" />
+		<property name="startDate" value="20/09/2006" />
+		<property name="endDate" value="13/09/2014" />
+		<property name="institutionName" value="ETSII" />
+		<property name="linkAttachment" value="http://www.google.es" />
+		<property name="comments" value=" " />
+	</bean>
+	
+	<bean id="educationHW1_2" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Chapa y pintura" />
+		<property name="startDate" value="20/09/2018" />
+		<property name="institutionName" value="IES Almensilla" />
+		<property name="linkAttachment" value="http://www.google.es" />
+		<property name="comments" value=" " />
+	</bean>
+	
+	<bean id="professionalHW1_1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Bitnami" />
+		<property name="startDate" value="18/10/2014" />
+		<property name="endDate" value="19/10/2015" />
+		<property name="role" value="Desarrollador Junior" />
+		<property name="attachment" value="http://www.google.com" />
+		<property name="comments" value="Nice job!" />
+	</bean>
+	
+	<bean id="professionalHW1_2" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Hermanos Pernía" />
+		<property name="startDate" value="20/05/2016" />
+		<property name="role" value="Churrera" />
+		<property name="attachment" value="http://www.google.com" />
+		<property name="comments" value=" " />
 	</bean>
 	
 	<!-- Curriculum (full) of HandyWorker 2 -->
@@ -1617,16 +1655,52 @@
 		<property name="personalRecord" ref="personalRecordHW2" />
 		<property name="endorserRecords">
 			<list>
-				<ref bean="endorserHW1_1" />
-				<ref bean="endorserHW1_2" />
+				<ref bean="endorserHW2_1" />
+				<ref bean="endorserHW2_2" />
 			</list>
 		</property>
 		<property name="miscellaneousRecords">
 			<list>
-				<ref bean="miscellaneousHW1_1" />
-				<ref bean="miscellaneousHW1_2" />
+				<ref bean="miscellaneousHW2_1" />
+				<ref bean="miscellaneousHW2_2" />
 			</list>
 		</property>
+	</bean>
+	
+	<bean id="personalRecordHW2" class="domain.PersonalRecord">
+		<property name="fullName" value="Esteban Coralino Riesco Motos" />
+		<property name="photo" value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="email" value="estriemot@mail.es" />
+		<property name="phoneNumber" value="+34653384191" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+	</bean>
+	
+	<bean id="endorserRecordHW2_1" class="domain.EndorserRecord">
+		<property name="fullName" value="Eustaquio Ameba Gutiérrez" />
+		<property name="email" value="eusamegut@mail.com" />
+		<property name="phoneNumber" value="+34683571000" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+		<property name="comments" value="Nice guy bro!" />
+	</bean>
+	
+	<bean id="endorserRecordHW2_2" class="domain.EndorserRecord">
+		<property name="fullName" value="Alba Moreno Rubio" />
+		<property name="email" value="albmorrub@mail.com" />
+		<property name="phoneNumber" value="+34699888000" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+		<property name="comments" value="Nice guy working!" />
+	</bean>
+	
+	<bean id="miscellaneousRecordHW2_1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Desarrollo de apps en Android" />
+		<property name="linkAttachment" value="http://udacity.com" />
+		<property name="comments" value="WOW!" />
+	</bean>
+	
+	<bean id="miscellaneousRecordHW2_2" class="domain.MiscellaneousRecord">
+		<property name="title" value="Pintura Acrílica" />
+		<property name="linkAttachment" value="http://udacity.com" />
+		<property name="comments" value="WOW!" />
 	</bean>
 	
 </beans>
