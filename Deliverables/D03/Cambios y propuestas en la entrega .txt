@@ -22,3 +22,5 @@
 - En la clase Section de java falta una anotacion @URL en el getPicture.
 
 - En la clase SystemConfiguration el getListCreditCaarMakes deberia tener un @NotBlank en vez del @NotEmpty que tiene.
+
+- Segun el requisito 38.5.1 para hacer la query la relación que hay Complaint->FixUpTask deberia ser <->

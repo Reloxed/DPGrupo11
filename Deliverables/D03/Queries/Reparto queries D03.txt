@@ -1,7 +1,3 @@
-Item 1--> Mirar de manera individual (Miercoles 6 fecha maxima para mirarlo)
-Item 2--> Mismo reparto que para el otro entregable
-	
-
 Querys estan en los requisitos 12.5 y 38.5
 
 Item 3-->
