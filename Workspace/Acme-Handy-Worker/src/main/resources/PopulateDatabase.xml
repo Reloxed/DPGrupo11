@@ -732,7 +732,7 @@
 		<property name="endMoment" value="20:00" />
 	</bean>
 
-	<!-- CREDICTCARD -->
+	<!-- CREDITCARD -->
 
 	<!-- HandyWorker's 2 Credit card -->
 	<bean id="creditCardHW2" class="domain.Money">
@@ -1211,6 +1211,11 @@
 		</property>
 		<property name="userAccount" ref="userCustomer2" />
 		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementHandyWorker1_1" />
+			</list>
+		</property>
 		<property name="fixUpTasks">
 			<list>
 				<ref bean="fixUpTask1_2" />
@@ -1244,12 +1249,6 @@
 		<property name="endorsements">
 			<list>
 				<ref bean="endorsementHandyWorker1_1" />
-			</list>
-		</property>
-		<property name="tutorial">
-			<list>
-				<ref bean="tutorialHandyWorker1_1" />
-				<ref bean="tutorialHandyWorker1_2" />
 			</list>
 		</property>
 		<property name="applications">
@@ -1287,9 +1286,16 @@
 		<property name="userAccount" ref="userHandyWorker2" />
 		<property name="make" value="Handy Worker 2 S.A." />
 		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementCustomer1_1" />
+				<ref bean="endorsementCustomer1_2" />
+			</list>
+		</property>
 		<property name="tutorial">
 			<list>
-				<ref bean="tutorialHandyWorker2_1" />
+				<ref bean="tutorial2_1" />
+				<ref bean="tutorial2_2" />
 			</list>
 		</property>
 		<property name="applications">
@@ -1400,6 +1406,225 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship2_1" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Administrator -->
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Lucía" />
+		<property name="surname" value="Aparicio Bataller" />
+		<property name="email" value="lucapabat@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxAdministrator1" />
+				<ref bean="outBoxAdministrator1" />
+				<ref bean="spamBoxAdministrator1" />
+				<ref bean="trashBoxAdministrator1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAdministrator1" />
+		<property name="categories">
+			<list>
+				<ref bean="carpentry" />
+				<ref bean="ceilingRepair" />
+				<ref bean="doors" />
+			</list>
+		</property>
+		<property name="warranties">
+			<list>
+				<ref bean="warrantyf1_1" />
+				<ref bean="warrantyf2_1" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="administrator2" class="domain.Administrator">
+		<property name="name" value="José" />
+		<property name="middleName" value="Carlos" />
+		<property name="surname" value="Gamiz Redondo" />
+		<property name="photo" value="https://vignette.wikia.nocookie.net/disney/images/9/90/Pirates4JackSparrowPosterCropped.jpg/revision/latest?cb=20170420003820&path-prefix=es" />
+		<property name="email" value="josgamred@mail.com" />
+		<property name="phoneNumber" value="+34611987654" />
+		<property name="address" value="C/ Atlántica, 1 (Málaga)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialAdministrator2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxAdministrator2" />
+				<ref bean="outBoxAdministrator2" />
+				<ref bean="spamBoxAdministrator2" />
+				<ref bean="trashBoxAdministrator2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAdministrator2" />
+		<property name="categories">
+			<list>
+				<ref bean="cleaning" />
+				<ref bean="painting" />
+				<ref bean="moving" />
+			</list>
+		</property>
+		<property name="warranties">
+			<list>
+				<ref bean="warrantyf1_2" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Sponsorships -->
+	
+	<!-- Sponsorship 1 of sponsor 1 -->
+	
+	<bean id="sponsorship1_1" class="domain.Sponsorship">
+		<property name="banner" value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AAAAAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
+		<property name="targetPage" value="http://www.random.es" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_1" />
+	</bean>
+	
+	<!-- Sponsorship 1 of sponsor 2 -->
+	
+	<bean id="sponsorship2_1" class="domain.Sponsorship">
+		<property name="banner" value="https://img00.deviantart.net/9480/i/2011/046/4/a/random_banner_by_mobianangel11-d39nc1t.png" />
+		<property name="targetPage" value="http://www.random.com" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_2" />
+	</bean>
+	
+	<!-- Tutorials -->
+	
+	<!-- Tutorial 1 of HW2 -->
+	
+	<bean id="tutorial2_1" class="domain.Tutorial">
+		<property name="title" value="How to pass DP" />
+		<property name="lastUpdate" value="12/11/18 13:07" />
+		<property name="summary" value="Just that, how to pass DP" />
+		<property name="pictures" value="https://images-na.ssl-images-amazon.com/images/I/51FZh8lWu7L.jpg" />
+		<property name="sections">
+			<list>
+				<ref bean="section1tutorial2_1" />
+				<ref bean="section2tutorial2_1" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="tutorial2_2" class="domain.Tutorial">
+		<property name="title" value="How to build a house in a minute" />
+		<property name="lastUpdate" value="12/11/18 13:11" />
+		<property name="summary" value="Your house will be really fragile, but no worries, this tutorial will make me rich" />
+		<property name="pictures" value="https://static.ferienhausmiete.de/pictures/124668/bilder_original/124668_1458648726.jpg" />
+		<property name="sections">
+			<list>
+				<ref bean="section1tutorial2_2" />
+				<ref bean="section2tutorial2_2" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Sections -->
+	
+	<!-- Sections for tutorial2_1 -->
+	
+	<bean id="section1tutorial2_1" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text" value="This tutorial will let you know some advices about this subject, in order to avoid critical errors on the organization." />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
+	</bean>
+	
+	<bean id="section2tutorial2_1" class="domain.Section">
+		<property name="title" value="Passing DP" />
+		<property name="text" value="The first advice to pass DP? Brace yourselves, winter is coming :D" />
+		<property name="pictures" value="http://brodatyblog.pl/wp-content/uploads/2015/09/rund2.jpg" />
+		<property name="number" value="2" />
+	</bean>
+	
+	<!-- Sections for tutorial2_2 -->
+	
+	<bean id="section2tutorial2_2" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text" value="This tutorial will teach you how to build a house in a minute. Simple isn't it?" />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
+	</bean>
+	
+	<bean id="section2tutorial2_2" class="domain.Section">
+		<property name="title" value="Your best house" />
+		<property name="text" value="This tutorial is 100% trustable (no)" />
+		<property name="pictures" value=" " />
+		<property name="number" value="2" />
+	</bean>
+	
+	<!-- Endorsement -->
+	
+	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="11/11/18 12:26" />
+		<property name="comment" value="This customer is amazingly amazing" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+	
+	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
+		<property name="publishedMoment" value="05/11/18 15:56" />
+		<property name="comment" value="This customer is amazingly amazing 2" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+	
+	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="07/10/18 20:43" />
+		<property name="comment" value="This handy worker works so well that he can build a house in a minute" />
+		<property name="customer" ref="customer2" />
+		<property name="handyWorker" ref="handyWorker1" />
+	</bean>
+	
+	<!-- Curriculums -->
+	
+	<!-- Curriculum (full) of HandyWorker 1 -->
+	
+	<bean id="curriculumHandyWorker1" class="domain.Curriculum">
+		<property name="ticker" value="181105-1A2B3C" />
+		<property name="personalRecord" ref="personalRecordHW1" />
+		<property name="educationRecords">
+			<list>
+				<ref bean="educationHW1_1" />
+				<ref bean="educationHW1_2" />
+			</list>
+		</property>
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalHW1_1" />
+				<ref bean="professionalHW1_2" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="personalRecordHW1" class="domain.PersonalRecord">
+		<property name="fullName" value=""
+	</bean>
+	
+	<!-- Curriculum (full) of HandyWorker 2 -->
+	
+	<bean id="curriculumHandyWorker2" class="domain.Curriculum">
+		<property name="ticker" value="181023-9A2B3C" />
+		<property name="personalRecord" ref="personalRecordHW2" />
+		<property name="endorserRecords">
+			<list>
+				<ref bean="endorserHW1_1" />
+				<ref bean="endorserHW1_2" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousHW1_1" />
+				<ref bean="miscellaneousHW1_2" />
 			</list>
 		</property>
 	</bean>
