@@ -24,3 +24,23 @@
 - En la clase SystemConfiguration el getListCreditCaarMakes deberia tener un @NotBlank en vez del @NotEmpty que tiene.
 
 - Segun el requisito 38.5.1 para hacer la query la relación que hay Complaint->FixUpTask deberia ser <->
+
+//Carlos
+
+- Añadir anotacion @Temporal al atributo moment en la clase Complaint.
+
+- Atributos de la clase customer/handyWorker tienen anotacion cascadeType.ALL
+
+- @Temporal(TemporalType.TIMESTAMP) en el atributo getSearchMoment() en la clase Finder, para indicar a JPA que tiene que guardar una fecha junto a su hora.
+
+- Eliminar el mappedBy = "handyWorker" en el atributo getCollections() de la clase handyWorker, ya que no es una relacion bidireccional.
+
+- En la clase HandyWorker en el atributo getFinder() y getCurriculum() falta la anotacion @oneToOne
+
+- Añadir @Valid a getNOtes() y @Temporal en getPublishedMoment() en la clase Report
+
+- Añadir @Valid a getSponsorships() en la clase sponsor.
+
+- Añadir @URL a getPictures() en Tutorial.
+
+- Cambiar atributos laws por applicableLaws enl a clase Warranty o cambiar el nombre en el UML por laws.
