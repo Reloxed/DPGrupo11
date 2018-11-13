@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -16,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -55,7 +55,8 @@ public class Tutorial extends DomainEntity {
 	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-
+	
+	@URL
 	public String getPictures() {
 		return this.pictures;
 	}
@@ -66,7 +67,6 @@ public class Tutorial extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ElementCollection
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Section> getSections() {
 		return this.sections;

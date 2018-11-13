@@ -9,7 +9,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
@@ -58,7 +57,7 @@ public class SystemConfiguration extends DomainEntity {
 		this.VAT = vAT;
 	}
 
-	@NotEmpty
+	@NotBlank
 	public String getListCreditCardMakes() {
 		return this.listCreditCardMakes;
 	}

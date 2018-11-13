@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -15,7 +14,7 @@ public class Referee extends Actor {
 	private Collection<Complaint> complaints;
 
 	@OneToMany
-	@ElementCollection
+	
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;
 	}
