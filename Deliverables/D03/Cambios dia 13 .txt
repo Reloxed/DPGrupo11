@@ -1,0 +1,11 @@
+Cambios:
+1)Curriculum -> composicion(compuestos de record)
+2)Querys complejas maximo minimo desviacion tipica en una sola query
+3)se mantiene ticker unique 
+4)En el domain uml en useraccount debería llevar un {Unique}, en la clase java que nos dan ya lleva una anotacion @Unique y tambien viene en la teoria.
+5)poner bidireccional entre application fixuptask
+6)quitar elementcollection que se encuentran en un txt del item 2
+7)Documentar cambios
+8)Cambio futuro:Clase abstracta  endorsement(con sus atributos) con un  disjoint entre handyworker y customer
+9)bidireccional de application a fixuptask ponerlo.
+10)direccionalidad desde carpeta a mensaje -> multiplicidad está bien

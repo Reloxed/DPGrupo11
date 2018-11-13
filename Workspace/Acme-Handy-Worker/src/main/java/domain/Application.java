@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,7 +32,7 @@ public class Application extends DomainEntity {
 	
 
 	@NotBlank
-	@Pattern(regexp = "(PENDING|ACCEPTED|REJECTED)")
+	@Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$")
 	public String getStatus() {
 		return status;
 	}
@@ -85,7 +84,6 @@ public class Application extends DomainEntity {
 
 	@Valid
 	@OneToMany
-	@ElementCollection
 	public Collection<Phase> getPhases() {
 		return phases;
 	}
