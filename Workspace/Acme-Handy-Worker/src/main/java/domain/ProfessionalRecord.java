@@ -63,11 +63,11 @@ public class ProfessionalRecord extends DomainEntity {
 	}
 
 	@URL
-	public String getLinkAttachment() {
+	public String getAttachment() {
 		return this.attachment;
 	}
 
-	public void setLinkAttachment(final String attachment) {
+	public void setAttachment(final String attachment) {
 		this.attachment = attachment;
 	}
 

@@ -202,9 +202,9 @@
 	<bean id="sysConf" class="domain.SystemConfiguration">
 		<property name="systemName" value="Acme Handy Worker" />
 		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
-		<property name="VAT" value="21." />
+		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+034" />
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 		<property name="spamWords"
@@ -221,7 +221,7 @@
 	<bean id="creditCardHW2" class="domain.CreditCard">
 		<property name="holderName" value="Esteban Coralino Riesco Motos" />
 		<property name="brandName" value="VISA" />
-		<property name="number" value="1498154736589586" />
+		<property name="number" value="1234567891234567" />
 		<property name="expirationMonth" value="07" />
 		<property name="expirationYear" value="22" />
 		<property name="CVV" value="123" />
@@ -356,31 +356,6 @@
 		<property name="parentCategory">
 			<null />
 		</property>
-		<property name="childCategories">
-			<list>
-				<ref bean="carpentry" />
-				<ref bean="ceilingRepair" />
-				<ref bean="cleaning" />
-				<ref bean="concreteWork" />
-				<ref bean="doors" />
-				<ref bean="electricalWiring" />
-				<ref bean="fanInstallation" />
-				<ref bean="fenceFixing" />
-				<ref bean="homeSecuritySystem" />
-				<ref bean="insulationInstallation" />
-				<ref bean="lampRepairs" />
-				<ref bean="moving" />
-				<ref bean="painting" />
-				<ref bean="pestControl" />
-				<ref bean="plumbingRepairs" />
-				<ref bean="roofing" />
-				<ref bean="shelfInstallation" />
-				<ref bean="solarPanels" />
-				<ref bean="soundProofing" />
-				<ref bean="sprinklerRepair" />
-				<ref bean="windowRepair" />
-			</list>
-		</property>
 	</bean>
 
 	<!-- Carpentry -->
@@ -389,9 +364,6 @@
 		<property name="englishName" value="Carpentry" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -402,9 +374,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Cleaning -->
@@ -413,9 +382,6 @@
 		<property name="englishName" value="Cleaning" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -426,9 +392,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Doors -->
@@ -437,9 +400,6 @@
 		<property name="englishName" value="Doors" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -450,9 +410,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Fan installation -->
@@ -461,9 +418,6 @@
 		<property name="englishName" value="Fan installation" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -474,9 +428,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Home Security Systems -->
@@ -485,9 +436,6 @@
 		<property name="englishName" value="Home security systems" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -498,9 +446,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Lamp Repairs -->
@@ -509,9 +454,6 @@
 		<property name="englishName" value="Lamp repairs" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -522,9 +464,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Painting -->
@@ -533,9 +472,6 @@
 		<property name="englishName" value="Painting" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -546,9 +482,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Plumbing Repairs -->
@@ -557,9 +490,6 @@
 		<property name="englishName" value="Plumbing repairs" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -570,9 +500,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Shelf Installation -->
@@ -581,9 +508,6 @@
 		<property name="englishName" value="Shelf installation" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -594,9 +518,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Soundproofing -->
@@ -605,9 +526,6 @@
 		<property name="englishName" value="Soundproofing" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -618,9 +536,6 @@
 		<property name="parentCategory">
 			<ref bean="root" />
 		</property>
-		<property name="childCategories">
-			<null />
-		</property>
 	</bean>
 
 	<!-- Window Repair -->
@@ -629,9 +544,6 @@
 		<property name="englishName" value="Window repair" />
 		<property name="parentCategory">
 			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
 		</property>
 	</bean>
 
@@ -653,7 +565,7 @@
 		<property name="laws" value="law13,law54,law73" />
 	</bean>
 
-	<!-- WarrantyF2 for the customer 1 -->
+	<!-- WarrantyF1 for the customer 2 -->
 	<bean id="warrantyf1_2" class="domain.Warranty">
 		<property name="title" value="WarrantyF1 for the customer 2" />
 		<property name="terms" value="Terms and conditions" />
@@ -665,7 +577,7 @@
 
 	<!-- FixUpTask 1 del customer1 -->
 	<bean id="fixUpTask1_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
+		<property name="ticker" value="012345-ASDFGH" />
 		<property name="publishedMoment" value="08/11/2018 10:37" />
 		<property name="description"
 			value="Replace the window of my house because it broke" />
@@ -675,8 +587,8 @@
 				<property name="quantity" value="50" />
 			</bean>
 		</property>
-		<property name="startMoment" value="12/11/2018 17:30" />
-		<property name="endMoment" value="12/11/2018" />
+		<property name="startMoment" value="15/11/2018 17:30" />
+		<property name="endMoment" value="15/11/2018" />
 		<property name="application">
 			<list>
 				<ref bean="applicationf1_1_1" />
@@ -693,7 +605,7 @@
 
 	<!-- FixUpTask 2 del customer1 -->
 	<bean id="fixUpTask1_2" class="domain.FixUpTask">
-		<property name="ticker" value="" />
+		<property name="ticker" value="123456-ASDFGH" />
 		<property name="publishedMoment" value="08/11/2018 10:44" />
 		<property name="description"
 			value="Repair the toilet because water leaks from the deposit" />
@@ -703,8 +615,8 @@
 				<property name="quantity" value="30" />
 			</bean>
 		</property>
-		<property name="startMoment" value="12/11/2018 18:30" />
-		<property name="endMoment" value="12/11/2018" />
+		<property name="startMoment" value="15/11/2018 18:30" />
+		<property name="endMoment" value="15/11/2018" />
 		<property name="application">
 			<list>
 				<ref bean="applicationf2_1_1" />
@@ -720,7 +632,7 @@
 
 	<!-- FixUpTask 1 del customer2 -->
 	<bean id="fixUpTask2_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
+		<property name="ticker" value="234567-ASDFGH" />
 		<property name="publishedMoment" value="05/11/2018 13:31" />
 		<property name="description" value="Repair the replicant" />
 		<property name="address" value="c/Tyrellco, 19, Los Ángeles" />
@@ -729,8 +641,8 @@
 				<property name="quantity" value="4068" />
 			</bean>
 		</property>
-		<property name="startMoment" value="10/11/2018 20:19" />
-		<property name="endMoment" value="10/11/2018" />
+		<property name="startMoment" value="14/11/2018 20:19" />
+		<property name="endMoment" value="14/11/2018" />
 		<property name="application">
 			<list>
 				<ref bean="applicationf1_2_1" />
@@ -1080,7 +992,7 @@
 
 	<!-- Note for the report reportCFT1_2 -->
 	<bean id="noteRCFT1_2" class="domain.Note">
-		<property name="publishedMoment" value="12/11/2018 12:03" />
+		<property name="publishedMoment" value="10/11/2018 12:03" />
 		<property name="refereeComment" value="'None yet'" />
 		<property name="customerComment"
 			value="I don't agree with you, it acts weird when I am alone with it." />
@@ -1091,7 +1003,7 @@
 
 	<!-- Report for the cf1_2 -->
 	<bean id="reportCFT1_2" class="domain.Report">
-		<property name="publishedMoment" value="12/11/2018 10:38" />
+		<property name="publishedMoment" value="09/11/2018 10:38" />
 		<property name="description"
 			value="Evaluated the funcionality of the replicant, and it worked perfectly with no signs of malfunctioning." />
 		<property name="attachments" value="http://www.reports.es/replicant" />
@@ -1107,7 +1019,7 @@
 
 	<!-- Complaint about the FUP 1 of the customer 2 -->
 	<bean id="complaintf1_2" class="domain.Complaint">
-		<property name="ticker" value="" />
+		<property name="ticker" value="345678-ASDFGH" />
 		<property name="moment" value="11/11/2018 17:14" />
 		<property name="description" value="The replicant is even worse than before" />
 		<property name="attachements" value="http://www.imgur.com/replicant" />
@@ -1121,7 +1033,35 @@
 
 	<!-- FINDER -->
 
-	<bean id="finder" class="domain.Finder">
+	<bean id="finderHW1" class="domain.Finder">
+		<property name="keyWord" value="replicant" />
+		<property name="priceLow">
+			<null />
+		</property>
+		<property name="priceHigh">
+			<null />
+		</property>
+		<property name="startMoment">
+			<null />
+		</property>
+		<property name="endMoment">
+			<null />
+		</property>
+		<property name="searchMoment" value="10/11/2018 10:48" />
+		<property name="category">
+			<ref bean="concreteWork" />
+		</property>
+		<property name="warranty">
+			<null />
+		</property>
+		<property name="fixuptask">
+			<list>
+				<ref bean="fixUpTask2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="finderHW2" class="domain.Finder">
 		<property name="keyWord" value="replicant" />
 		<property name="priceLow">
 			<null />
@@ -1281,7 +1221,7 @@
 				<ref bean="applicationf2_1_1" />
 			</list>
 		</property>
-		<property name="finder" ref="finder" />
+		<property name="finder" ref="finderHW1" />
 		<property name="curriculum" ref="curriculumHandyWorker1" />
 	</bean>
 
@@ -1329,7 +1269,7 @@
 				<ref bean="applicationf1_2_1" />
 			</list>
 		</property>
-		<property name="finder" ref="finder" />
+		<property name="finder" ref="finderHW2" />
 		<property name="curriculum" ref="curriculumHandyWorker2" />
 	</bean>
 
@@ -1446,13 +1386,13 @@
 		<property name="isSuspicious" value="false" />
 		<property name="messageBoxes">
 			<list>
-				<ref bean="inBoxAdministrator1" />
-				<ref bean="outBoxAdministrator1" />
-				<ref bean="spamBoxAdministrator1" />
-				<ref bean="trashBoxAdministrator1" />
+				<ref bean="inBoxAdmin1" />
+				<ref bean="outBoxAdmin1" />
+				<ref bean="spamBoxAdmin1" />
+				<ref bean="trashBoxAdmin1" />
 			</list>
 		</property>
-		<property name="userAccount" ref="userAdministrator1" />
+		<property name="userAccount" ref="userAdmin1" />
 		<property name="categories">
 			<list>
 				<ref bean="carpentry" />
@@ -1485,13 +1425,13 @@
 		</property>
 		<property name="messageBoxes">
 			<list>
-				<ref bean="inBoxAdministrator2" />
-				<ref bean="outBoxAdministrator2" />
-				<ref bean="spamBoxAdministrator2" />
-				<ref bean="trashBoxAdministrator2" />
+				<ref bean="inBoxAdmin2" />
+				<ref bean="outBoxAdmin2" />
+				<ref bean="spamBoxAdmin2" />
+				<ref bean="trashBoxAdmin2" />
 			</list>
 		</property>
-		<property name="userAccount" ref="userAdministrator2" />
+		<property name="userAccount" ref="userAdmin2" />
 		<property name="categories">
 			<list>
 				<ref bean="cleaning" />
@@ -1550,7 +1490,7 @@
 
 	<bean id="tutorial2_1" class="domain.Tutorial">
 		<property name="title" value="How to pass DP" />
-		<property name="lastUpdate" value="12/11/18 13:07" />
+		<property name="lastUpdate" value="09/11/18 13:07" />
 		<property name="summary" value="Just that, how to pass DP" />
 		<property name="pictures"
 			value="https://images-na.ssl-images-amazon.com/images/I/51FZh8lWu7L.jpg" />
@@ -1564,7 +1504,7 @@
 
 	<bean id="tutorial2_2" class="domain.Tutorial">
 		<property name="title" value="How to build a house in a minute" />
-		<property name="lastUpdate" value="12/11/18 13:11" />
+		<property name="lastUpdate" value="09/11/18 13:11" />
 		<property name="summary"
 			value="Your house will be really fragile, but no worries, this tutorial will make me rich" />
 		<property name="pictures"
@@ -1632,8 +1572,8 @@
 	<bean id="educationHW1_1" class="domain.EducationRecord">
 		<property name="diplomaTitle"
 			value="Ingeniería Informática - Tecnologías Informáticas" />
-		<property name="startDate" value="20/09/2006" />
-		<property name="endDate" value="13/09/2014" />
+		<property name="startDate" value="09/09/2006" />
+		<property name="endDate" value="09/10/2014" />
 		<property name="institutionName" value="ETSII" />
 		<property name="linkAttachment" value="http://www.google.es" />
 		<property name="comments" value=" " />
@@ -1641,7 +1581,7 @@
 
 	<bean id="educationHW1_2" class="domain.EducationRecord">
 		<property name="diplomaTitle" value="Chapa y pintura" />
-		<property name="startDate" value="20/09/2018" />
+		<property name="startDate" value="09/09/2018" />
 		<property name="institutionName" value="IES Almensilla" />
 		<property name="linkAttachment" value="http://www.google.es" />
 		<property name="comments" value=" " />
@@ -1649,8 +1589,8 @@
 
 	<bean id="professionalHW1_1" class="domain.ProfessionalRecord">
 		<property name="companyName" value="Bitnami" />
-		<property name="startDate" value="18/10/2014" />
-		<property name="endDate" value="19/10/2015" />
+		<property name="startDate" value="09/10/2014" />
+		<property name="endDate" value="09/10/2015" />
 		<property name="role" value="Desarrollador Junior" />
 		<property name="attachment" value="http://www.google.com" />
 		<property name="comments" value="Nice job!" />
@@ -1658,7 +1598,7 @@
 
 	<bean id="professionalHW1_2" class="domain.ProfessionalRecord">
 		<property name="companyName" value="Hermanos Pernía" />
-		<property name="startDate" value="20/05/2016" />
+		<property name="startDate" value="09/05/2016" />
 		<property name="role" value="Churrera" />
 		<property name="attachment" value="http://www.google.com" />
 		<property name="comments" value=" " />

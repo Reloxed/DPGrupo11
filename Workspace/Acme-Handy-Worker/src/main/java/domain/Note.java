@@ -10,6 +10,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.jboss.logging.annotations.FormatWith;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Note extends DomainEntity {
