@@ -2,9 +2,9 @@ No hay presupuesto por parte del cliente.
 
 MODELO DE DOMINIO
 
-- Es mejor segun la teoria navegar desde phase a application, porque dice que se navega desde la relación débil a la fuerte.
+*HECHO* - Es mejor segun la teoria navegar desde phase a application, porque dice que se navega desde la relación débil a la fuerte.
 - Mirar también todas las navegabilidades, porque normalmente es desde el extremo "muchos" al extremo "uno". También
-ver cual es la entidad debil y la entidad fuerte. Por ejemplo, application y fixuptask.
+ver cual es la entidad debil y la entidad fuerte. Por ejemplo, application y fixuptask. 
 
 QUERIES
 
@@ -19,3 +19,12 @@ QUERIES
 DUDA 1 - Se registra sin sponsorship, 1 - 0..*
 
 DUDA 3 - Horas para el que ha hecho la tarea.
+
+
+CONCLUSIONES
+
+Ha puesto un ejemplo en la pizarra de una relacion Warranty<-FixUpTask y ha puesto una multiplicidad de 1<-0..* y en esa relacion warranty es la entidad fuerte y fixuptask la debil.
+
+Las queries con un top 3 que lo que haremos sera pedir toda la lista de elementos y luego en java elegiremos los 3 primeros. Solo en este caso hace falta codigo extra.
+
+El tiempo total se calcula tomando 10h a la semana de trabajo por cada integrante. Normalmente son 2 semanas, 20h y de ahi sacas el presupuesto.
