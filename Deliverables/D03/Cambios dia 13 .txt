@@ -8,3 +8,4 @@ Cambios:
 7)Documentar cambios
 8)Cambio futuro:Clase abstracta  endorsement(con sus atributos) con un  disjoint entre handyworker y customer
 9)bidireccional de application a fixuptask ponerlo.
+10)direccionalidad desde carpeta a mensaje -> multiplicidad está bien
