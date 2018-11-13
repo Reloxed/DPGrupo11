@@ -4,7 +4,9 @@
 
 - **Ojo** el ticker debe ser unico así que hay que ponerlo de anotación donde esté como en FixUpTask por ejemplo.
 
-- Relación:[Costumer]1-->0..*[Application] ->Propuesta si en el caso de que no se pudiera ordenar 
+- Relación:[Costumer]1-->0..*[Application] ->Propuesta si en el caso de que no se pudiera ordenar
+
+-Atributos de credit card En conjunto son unicos?para poner la anotación
 
 
 // Fran
