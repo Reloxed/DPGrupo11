@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -26,6 +29,7 @@ public class Complaint extends DomainEntity {
 	private Report report;
 
 	@NotBlank
+	@Column(unique = true)
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
 	public String getTicker() {
 		return ticker;
@@ -34,7 +38,8 @@ public class Complaint extends DomainEntity {
 	public void setTicker(String ticker) {
 		this.ticker = ticker;
 	}
-
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Past
 	@NotNull
 	public Date getMoment() {

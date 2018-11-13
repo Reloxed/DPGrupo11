@@ -12,9 +12,6 @@ public class Money {
 
 	private double quantity;
 
-	// public Money(double q) {
-	// this.quantity = q;
-	// }
 
 	@Min(0)
 	@Digits(integer = 9, fraction = 2)

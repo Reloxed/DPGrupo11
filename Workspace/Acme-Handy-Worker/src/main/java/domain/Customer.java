@@ -4,8 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -22,7 +20,6 @@ public class Customer extends Actor {
 	private Collection<Complaint> complaints;
 
 	@Valid
-	@ElementCollection
 	@OneToMany(mappedBy = "customer")
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
@@ -33,7 +30,6 @@ public class Customer extends Actor {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany
 	public Collection<FixUpTask> getFixUpTasks() {
 		return fixUpTasks;
@@ -53,7 +49,6 @@ public class Customer extends Actor {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany
 	public Collection<Complaint> getComplaints() {
 		return complaints;

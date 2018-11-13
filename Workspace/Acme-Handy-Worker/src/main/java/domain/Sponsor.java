@@ -6,6 +6,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -17,6 +18,7 @@ public class Sponsor extends Actor {
 
 	// Metodos
 	@OneToMany
+	@Valid
 	public Collection<Sponsorship> getSponsorships() {
 		return this.sponsorships;
 	}

@@ -4,8 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,7 +34,6 @@ public class HandyWorker extends Actor {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany(mappedBy = "handyWorker")
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
@@ -47,7 +44,6 @@ public class HandyWorker extends Actor {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
@@ -58,7 +54,6 @@ public class HandyWorker extends Actor {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany
 	public Collection<Application> getApplications() {
 		return applications;
@@ -81,7 +76,7 @@ public class HandyWorker extends Actor {
 
 	@NotNull
 	@Valid
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public Curriculum getCurriculum() {
 		return curriculum;
 	}

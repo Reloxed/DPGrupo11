@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
@@ -18,7 +17,7 @@ public class Administrator extends Actor {
 
 	@Valid
 	@ManyToMany
-	@ElementCollection
+	
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}
@@ -29,7 +28,7 @@ public class Administrator extends Actor {
 
 	@Valid
 	@ManyToMany
-	@ElementCollection
+	
 	public Collection<Warranty> getWarranties() {
 		return this.warranties;
 	}

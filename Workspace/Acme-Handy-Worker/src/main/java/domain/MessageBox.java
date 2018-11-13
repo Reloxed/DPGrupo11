@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
@@ -37,7 +36,7 @@ public class MessageBox extends DomainEntity {
 	}
 
 	@ManyToMany
-	@ElementCollection
+	
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}

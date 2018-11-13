@@ -7,7 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -58,7 +57,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	// DATE?
+	
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -68,7 +67,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	// DATE?
+	
 	public Date getEndMoment() {
 		return endMoment;
 	}
@@ -98,7 +97,6 @@ public class Finder extends DomainEntity {
 	}
 
 	@Valid
-	@ElementCollection
 	@OneToMany
 	public Collection<FixUpTask> getFixuptask() {
 		return fixuptask;
@@ -109,6 +107,7 @@ public class Finder extends DomainEntity {
 	}
 
 	@Past
+	@Temporal(TemporalType.TIME)
 	@NotNull
 	public Date getSearchMoment() {
 		return searchMoment;

@@ -5,8 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -35,6 +36,7 @@ public class FixUpTask extends DomainEntity {
 	private Warranty warranty;
 
 	@NotBlank
+	@Column(unique = true)
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
 	public String getTicker() {
 		return ticker;
@@ -107,7 +109,6 @@ public class FixUpTask extends DomainEntity {
 
 	@OneToMany(mappedBy="fixUpTask")
 	@Valid
-	@ElementCollection
 	public Collection<Application> getApplication() {
 		return application;
 	}
@@ -118,7 +119,7 @@ public class FixUpTask extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	public Category getCategory() {
 		return category;
 	}
