@@ -179,13 +179,13 @@
 
 	<!-- Sponsor2 -->
 	<bean id="socialSponsor2_1" class="domain.SocialProfile">
-		<property name="nick" value="socialSponsor1" />
+		<property name="nick" value="socialSponsor2" />
 		<property name="socialNetwork" value="VK" />
 		<property name="link" value="https://vk.com/" />
 	</bean>
 
-	<bean id="socialSponsor2_1" class="domain.SocialProfile">
-		<property name="nick" value="socialSponsor1" />
+	<bean id="socialSponsor2_2" class="domain.SocialProfile">
+		<property name="nick" value="socialSponsor2" />
 		<property name="socialNetwork" value="Reddit" />
 		<property name="link" value="https://reddit.com/" />
 	</bean>
@@ -202,9 +202,9 @@
 	<bean id="sysConf" class="domain.SystemConfiguration">
 		<property name="systemName" value="Acme Handy Worker" />
 		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
-		<property name="VAT" value="21." />
+		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+034" />
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 		<property name="spamWords"
@@ -215,401 +215,44 @@
 			value="bad,horrendous,horrible,disgusting,malo,horrendo,horroroso" />
 	</bean>
 
-	<!-- FIX UP TASKs -->
+	<!-- CREDITCARD -->
 
-	<!-- FixUpTask 1 del customer1 -->
-	<bean id="fixUpTask1_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="08/11/2018 10:37" />
+	<!-- HandyWorker's 2 Credit card -->
+	<bean id="creditCardHW2" class="domain.CreditCard">
+		<property name="holderName" value="Esteban Coralino Riesco Motos" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="expirationMonth" value="07" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="123" />
+	</bean>
+
+	<!-- PHASEs -->
+
+	<!-- Phase 1 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase1_f121" class="domain.Phase">
+		<property name="title" value="Examine the replicant" />
 		<property name="description"
-			value="Replace the window of my house because it broke" />
-		<property name="adress" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="50" />
-			</bean>
-		</property>
-		<property name="startMoment" value="12/11/2018 17:30" />
-		<property name="endMoment" value="12/11/2018" />
-		<property name="application">
-			<list>
-				<ref bean="applicationf1_1_1" />
-				<ref bean="applicationf1_1_2" />
-			</list>
-		</property>
-		<property name="category">
-			<ref bean="windowRepair" />
-		</property>
-		<property name="warranty">
-			<ref bean="warrantyf1_1" />
-		</property>
+			value="Full examination of the repplicant to determine how bad the damage is" />
+		<property name="startMoment" value="10/11/2018 08:00" />
+		<property name="endMoment" value="10/11/2018 11:00" />
 	</bean>
 
-	<!-- FixUpTask 2 del customer1 -->
-	<bean id="fixUpTask1_2" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="08/11/2018 10:44" />
+	<!-- Phase 2 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase2_f121" class="domain.Phase">
+		<property name="title" value="Repair the replicant" />
 		<property name="description"
-			value="Repair the toilet because water leaks from the deposit" />
-		<property name="adress" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="30" />
-			</bean>
-		</property>
-		<property name="startMoment" value="12/11/2018 18:30" />
-		<property name="endMoment" value="12/11/2018" />
-		<property name="application">
-			<list>
-				<ref bean="applicationf2_1_1" />
-			</list>
-		</property>
-		<property name="category">
-			<ref bean="plumbingRepairs" />
-		</property>
-		<property name="warranty">
-			<ref bean="warrantyf2_1" />
-		</property>
+			value="Once found all the imperfections, I will proceed to..." />
+		<property name="startMoment" value="10/11/2018 11:00" />
+		<property name="endMoment" value="10/11/2018 18:00" />
 	</bean>
 
-	<!-- FixUpTask 1 del customer2 -->
-	<bean id="fixUpTask2_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="05/11/2018 13:31" />
-		<property name="description" value="Repair the replicant" />
-		<property name="adress" value="c/Tyrellco, 19, Los Ángeles" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="4068" />
-			</bean>
-		</property>
-		<property name="startMoment" value="10/11/2018 20:19" />
-		<property name="endMoment" value="10/11/2018" />
-		<property name="application">
-			<list>
-				<ref bean="applicationf1_2_1" />
-			</list>
-		</property>
-		<property name="category">
-			<ref bean="cocreteWork" />
-		</property>
-		<property name="warranty">
-			<ref bean="warrantyf1_2" />
-		</property>
-	</bean>
-
-	<!-- CATEGORIES -->
-
-	<!-- Root -->
-	<bean id="root" class="domain.Category">
-		<property name="spanishName" value="raíz" />
-		<property name="englishName" value="root" />
-		<property name="parentCategory">
-			<null />
-		</property>
-		<property name="childCategories">
-			<list>
-				<ref bean="carpentry" />
-				<ref bean="ceilingRepair" />
-				<ref bean="cleaning" />
-				<ref bean="concreteWork" />
-				<ref bean="doors" />
-				<ref bean="electricalWiring" />
-				<ref bean="fanInstallation" />
-				<ref bean="fenceFixing" />
-				<ref bean="homeSecuritySystem" />
-				<ref bean="insulatationInstallation" />
-				<ref bean="lampRepairs" />
-				<ref bean="moving" />
-				<ref bean="painting" />
-				<ref bean="pestControl" />
-				<ref bean="plumbingRepairs" />
-				<ref bean="roofing" />
-				<ref bean="shelfInstallation" />
-				<ref bean="solarPanels" />
-				<ref bean="soundProofing" />
-				<ref bean="sprinklerRepair" />
-				<ref bean="windowRepair" />
-			</list>
-		</property>
-	</bean>
-
-	<!-- Carpentry -->
-	<bean id="carpentry" class="domain.Category">
-		<property name="spanishName" value="Carpintería" />
-		<property name="englishName" value="Carpentry" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Ceiling Repair -->
-	<bean id="ceilingRepair" class="domain.Category">
-		<property name="spanishName" value="Reparación de techo" />
-		<property name="englishName" value="Ceiling repair" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Cleaning -->
-	<bean id="cleaning" class="domain.Category">
-		<property name="spanishName" value="Limpieza" />
-		<property name="englishName" value="Cleaning" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Concrete work -->
-	<bean id="concreteWork" class="domain.Category">
-		<property name="spanishName" value="Trabajos especiales" />
-		<property name="englishName" value="Concrete work" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Doors -->
-	<bean id="doors" class="domain.Category">
-		<property name="spanishName" value="Puertas" />
-		<property name="englishName" value="Doors" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Electrical Wiring -->
-	<bean id="electricalWiring" class="domain.Category">
-		<property name="spanishName" value="Cableado eléctrico" />
-		<property name="englishName" value="Electrical wiring" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Fan installation -->
-	<bean id="fanInstallation" class="domain.Category">
-		<property name="spanishName" value="Instalación de aire acondicionado" />
-		<property name="englishName" value="Fan installation" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Fence fixing -->
-	<bean id="fenceFixing" class="domain.Category">
-		<property name="spanishName" value="Reparación de vallas" />
-		<property name="englishName" value="Fence fixing" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Home Security Systems -->
-	<bean id="homeSecuritySystems" class="domain.Category">
-		<property name="spanishName" value="Equipo de seguridad en casas" />
-		<property name="englishName" value="Home security systems" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Insulation Installation -->
-	<bean id="insulationInstallation" class="domain.Category">
-		<property name="spanishName" value="Aislamiento térmico" />
-		<property name="englishName" value="Insulation installation" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Lamp Repairs -->
-	<bean id="lampRepairs" class="domain.Category">
-		<property name="spanishName" value="Reparación de lámparas" />
-		<property name="englishName" value="Lamp repairs" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Moving -->
-	<bean id="moving" class="domain.Category">
-		<property name="spanishName" value="Mudanzas" />
-		<property name="englishName" value="Moving" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Painting -->
-	<bean id="painting" class="domain.Category">
-		<property name="spanishName" value="Pintura" />
-		<property name="englishName" value="Painting" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Pest Control -->
-	<bean id="pestControl" class="domain.Category">
-		<property name="spanishName" value="Control de plagas" />
-		<property name="englishName" value="Pest control" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Plumbing Repairs -->
-	<bean id="cleaning" class="domain.Category">
-		<property name="spanishName" value="Fontanería" />
-		<property name="englishName" value="Plumbing repairs" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Roofing -->
-	<bean id="roofing" class="domain.Category">
-		<property name="spanishName" value="Tejados" />
-		<property name="englishName" value="Roofing" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Shelf Installation -->
-	<bean id="shelfInstallation" class="domain.Category">
-		<property name="spanishName" value="Instalación de estanterías" />
-		<property name="englishName" value="Shelf installation" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Solar Panels -->
-	<bean id="solarPanels" class="domain.Category">
-		<property name="spanishName" value="Paneles solares" />
-		<property name="englishName" value="Solar panels" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Soundproofing -->
-	<bean id="soundproofing" class="domain.Category">
-		<property name="spanishName" value="Insonorización" />
-		<property name="englishName" value="Soundproofing" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Sprinkler Repair -->
-	<bean id="sprinklerRepair" class="domain.Category">
-		<property name="spanishName" value="Reparación de riego" />
-		<property name="englishName" value="Sprinkler repair" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- Window Repair -->
-	<bean id="windowRepair" class="domain.Category">
-		<property name="spanishName" value="Reparación de ventanas" />
-		<property name="englishName" value="Window repair" />
-		<property name="parentCategory">
-			<ref bean="root" />
-		</property>
-		<property name="childCategories">
-			<null />
-		</property>
-	</bean>
-
-	<!-- WARRANTIES -->
-
-	<!-- WarrantyF1 for the customer 1 -->
-	<bean id="warrantyf1_1" class="domain.Warranty">
-		<property name="title" value="WarrantyF1 for the customer 1" />
-		<property name="terms" value="Terms and conditions" />
-		<property name="isFinal" value="false" />
-		<property name="laws" value="law1,law4,law93" />
-	</bean>
-
-	<!-- WarrantyF2 for the customer 1 -->
-	<bean id="warrantyf2_1" class="domain.Warranty">
-		<property name="title" value="WarrantyF2 for the customer 1" />
-		<property name="terms" value="Terms and conditions" />
-		<property name="isFinal" value="false" />
-		<property name="laws" value="law13,law54,law73" />
-	</bean>
-
-	<!-- WarrantyF2 for the customer 1 -->
-	<bean id="warrantyf1_2" class="domain.Warranty">
-		<property name="title" value="WarrantyF1 for the customer 2" />
-		<property name="terms" value="Terms and conditions" />
-		<property name="isFinal" value="false" />
-		<property name="laws" value="law31,law45,law37" />
+	<!-- Phase 3 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase3_f121" class="domain.Phase">
+		<property name="title" value="Test replicant" />
+		<property name="description" value="Test the changes applied to the replicant" />
+		<property name="startMoment" value="10/11/2018 18:00" />
+		<property name="endMoment" value="10/11/2018 20:00" />
 	</bean>
 
 	<!-- APPLICATIONs -->
@@ -704,44 +347,313 @@
 		</property>
 	</bean>
 
-	<!-- PHASEs -->
+	<!-- CATEGORIES -->
 
-	<!-- Phase 1 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase1_f121" class="domain.Phase">
-		<property name="title" value="Examine the replicant" />
+	<!-- Root -->
+	<bean id="root" class="domain.Category">
+		<property name="spanishName" value="raíz" />
+		<property name="englishName" value="root" />
+		<property name="parentCategory">
+			<null />
+		</property>
+	</bean>
+
+	<!-- Carpentry -->
+	<bean id="carpentry" class="domain.Category">
+		<property name="spanishName" value="Carpintería" />
+		<property name="englishName" value="Carpentry" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Ceiling Repair -->
+	<bean id="ceilingRepair" class="domain.Category">
+		<property name="spanishName" value="Reparación de techo" />
+		<property name="englishName" value="Ceiling repair" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Cleaning -->
+	<bean id="cleaning" class="domain.Category">
+		<property name="spanishName" value="Limpieza" />
+		<property name="englishName" value="Cleaning" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Concrete work -->
+	<bean id="concreteWork" class="domain.Category">
+		<property name="spanishName" value="Trabajos especiales" />
+		<property name="englishName" value="Concrete work" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Doors -->
+	<bean id="doors" class="domain.Category">
+		<property name="spanishName" value="Puertas" />
+		<property name="englishName" value="Doors" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Electrical Wiring -->
+	<bean id="electricalWiring" class="domain.Category">
+		<property name="spanishName" value="Cableado eléctrico" />
+		<property name="englishName" value="Electrical wiring" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Fan installation -->
+	<bean id="fanInstallation" class="domain.Category">
+		<property name="spanishName" value="Instalación de aire acondicionado" />
+		<property name="englishName" value="Fan installation" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Fence fixing -->
+	<bean id="fenceFixing" class="domain.Category">
+		<property name="spanishName" value="Reparación de vallas" />
+		<property name="englishName" value="Fence fixing" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Home Security Systems -->
+	<bean id="homeSecuritySystem" class="domain.Category">
+		<property name="spanishName" value="Equipo de seguridad en casas" />
+		<property name="englishName" value="Home security systems" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Insulation Installation -->
+	<bean id="insulationInstallation" class="domain.Category">
+		<property name="spanishName" value="Aislamiento térmico" />
+		<property name="englishName" value="Insulation installation" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Lamp Repairs -->
+	<bean id="lampRepairs" class="domain.Category">
+		<property name="spanishName" value="Reparación de lámparas" />
+		<property name="englishName" value="Lamp repairs" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Moving -->
+	<bean id="moving" class="domain.Category">
+		<property name="spanishName" value="Mudanzas" />
+		<property name="englishName" value="Moving" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Painting -->
+	<bean id="painting" class="domain.Category">
+		<property name="spanishName" value="Pintura" />
+		<property name="englishName" value="Painting" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Pest Control -->
+	<bean id="pestControl" class="domain.Category">
+		<property name="spanishName" value="Control de plagas" />
+		<property name="englishName" value="Pest control" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Plumbing Repairs -->
+	<bean id="plumbingRepairs" class="domain.Category">
+		<property name="spanishName" value="Fontanería" />
+		<property name="englishName" value="Plumbing repairs" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Roofing -->
+	<bean id="roofing" class="domain.Category">
+		<property name="spanishName" value="Tejados" />
+		<property name="englishName" value="Roofing" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Shelf Installation -->
+	<bean id="shelfInstallation" class="domain.Category">
+		<property name="spanishName" value="Instalación de estanterías" />
+		<property name="englishName" value="Shelf installation" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Solar Panels -->
+	<bean id="solarPanels" class="domain.Category">
+		<property name="spanishName" value="Paneles solares" />
+		<property name="englishName" value="Solar panels" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Soundproofing -->
+	<bean id="soundProofing" class="domain.Category">
+		<property name="spanishName" value="Insonorización" />
+		<property name="englishName" value="Soundproofing" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Sprinkler Repair -->
+	<bean id="sprinklerRepair" class="domain.Category">
+		<property name="spanishName" value="Reparación de riego" />
+		<property name="englishName" value="Sprinkler repair" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- Window Repair -->
+	<bean id="windowRepair" class="domain.Category">
+		<property name="spanishName" value="Reparación de ventanas" />
+		<property name="englishName" value="Window repair" />
+		<property name="parentCategory">
+			<ref bean="root" />
+		</property>
+	</bean>
+
+	<!-- WARRANTIES -->
+
+	<!-- WarrantyF1 for the customer 1 -->
+	<bean id="warrantyf1_1" class="domain.Warranty">
+		<property name="title" value="WarrantyF1 for the customer 1" />
+		<property name="terms" value="Terms and conditions" />
+		<property name="isFinal" value="false" />
+		<property name="laws" value="law1,law4,law93" />
+	</bean>
+
+	<!-- WarrantyF2 for the customer 1 -->
+	<bean id="warrantyf2_1" class="domain.Warranty">
+		<property name="title" value="WarrantyF2 for the customer 1" />
+		<property name="terms" value="Terms and conditions" />
+		<property name="isFinal" value="false" />
+		<property name="laws" value="law13,law54,law73" />
+	</bean>
+
+	<!-- WarrantyF1 for the customer 2 -->
+	<bean id="warrantyf1_2" class="domain.Warranty">
+		<property name="title" value="WarrantyF1 for the customer 2" />
+		<property name="terms" value="Terms and conditions" />
+		<property name="isFinal" value="false" />
+		<property name="laws" value="law31,law45,law37" />
+	</bean>
+
+	<!-- FIX UP TASKs -->
+
+	<!-- FixUpTask 1 del customer1 -->
+	<bean id="fixUpTask1_1" class="domain.FixUpTask">
+		<property name="ticker" value="012345-ASDFGH" />
+		<property name="publishedMoment" value="08/11/2018 10:37" />
 		<property name="description"
-			value="Full examination of the repplicant to determine how bad the damage is" />
-		<property name="startMoment" value="10/11/2018 08:00" />
-		<property name="endMoment" value="10/11/2018 11:00" />
+			value="Replace the window of my house because it broke" />
+		<property name="address" value="c/Nostromo, 8, Seville" />
+		<property name="maxPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="50" />
+			</bean>
+		</property>
+		<property name="startMoment" value="15/11/2018 17:30" />
+		<property name="endMoment" value="15/11/2018" />
+		<property name="application">
+			<list>
+				<ref bean="applicationf1_1_1" />
+				<ref bean="applicationf1_1_2" />
+			</list>
+		</property>
+		<property name="category">
+			<ref bean="windowRepair" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf1_1" />
+		</property>
 	</bean>
 
-	<!-- Phase 2 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase2_f121" class="domain.Phase">
-		<property name="title" value="Repair the replicant" />
+	<!-- FixUpTask 2 del customer1 -->
+	<bean id="fixUpTask1_2" class="domain.FixUpTask">
+		<property name="ticker" value="123456-ASDFGH" />
+		<property name="publishedMoment" value="08/11/2018 10:44" />
 		<property name="description"
-			value="Once found all the imperfections, I will proceed to..." />
-		<property name="startMoment" value="11:00" />
-		<property name="endMoment" value="18:00" />
+			value="Repair the toilet because water leaks from the deposit" />
+		<property name="address" value="c/Nostromo, 8, Seville" />
+		<property name="maxPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="30" />
+			</bean>
+		</property>
+		<property name="startMoment" value="15/11/2018 18:30" />
+		<property name="endMoment" value="15/11/2018" />
+		<property name="application">
+			<list>
+				<ref bean="applicationf2_1_1" />
+			</list>
+		</property>
+		<property name="category">
+			<ref bean="plumbingRepairs" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf2_1" />
+		</property>
 	</bean>
 
-	<!-- Phase 3 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase3_f121" class="domain.Phase">
-		<property name="title" value="Test replicant" />
-		<property name="description" value="Test the changes applied to the replicant" />
-		<property name="startMoment" value="18:00" />
-		<property name="endMoment" value="20:00" />
-	</bean>
-
-	<!-- CREDICTCARD -->
-
-	<!-- HandyWorker's 2 Credit card -->
-	<bean id="creditCardHW2" class="domain.Money">
-		<property name="cardHolder" value="" />
-		<property name="brandName" value="VISA" />
-		<property name="number" value="1498154736589586" />
-		<property name="expirationMonth" value="07" />
-		<property name="expirationYear" value="22" />
-		<property name="CVV" value="123" />
+	<!-- FixUpTask 1 del customer2 -->
+	<bean id="fixUpTask2_1" class="domain.FixUpTask">
+		<property name="ticker" value="234567-ASDFGH" />
+		<property name="publishedMoment" value="05/11/2018 13:31" />
+		<property name="description" value="Repair the replicant" />
+		<property name="address" value="c/Tyrellco, 19, Los Ángeles" />
+		<property name="maxPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="4068" />
+			</bean>
+		</property>
+		<property name="startMoment" value="14/11/2018 20:19" />
+		<property name="endMoment" value="14/11/2018" />
+		<property name="application">
+			<list>
+				<ref bean="applicationf1_2_1" />
+			</list>
+		</property>
+		<property name="category">
+			<ref bean="concreteWork" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf1_2" />
+		</property>
 	</bean>
 
 	<!-- MESSAGE BOXes -->
@@ -1076,11 +988,38 @@
 		</property>
 	</bean>
 
+	<!-- NOTEs -->
+
+	<!-- Note for the report reportCFT1_2 -->
+	<bean id="noteRCFT1_2" class="domain.Note">
+		<property name="publishedMoment" value="10/11/2018 12:03" />
+		<property name="refereeComment" value="'None yet'" />
+		<property name="customerComment"
+			value="I don't agree with you, it acts weird when I am alone with it." />
+		<property name="handyWorkerComment" value="'None yet'" />
+	</bean>
+
+	<!-- REPORTs -->
+
+	<!-- Report for the cf1_2 -->
+	<bean id="reportCFT1_2" class="domain.Report">
+		<property name="publishedMoment" value="09/11/2018 10:38" />
+		<property name="description"
+			value="Evaluated the funcionality of the replicant, and it worked perfectly with no signs of malfunctioning." />
+		<property name="attachments" value="http://www.reports.es/replicant" />
+		<property name="isFinal" value="true" />
+		<property name="notes">
+			<list>
+				<ref bean="noteRCFT1_2" />
+			</list>
+		</property>
+	</bean>
+
 	<!-- COMPLAINTs -->
 
 	<!-- Complaint about the FUP 1 of the customer 2 -->
 	<bean id="complaintf1_2" class="domain.Complaint">
-		<property name="ticker" value="" />
+		<property name="ticker" value="345678-ASDFGH" />
 		<property name="moment" value="11/11/2018 17:14" />
 		<property name="description" value="The replicant is even worse than before" />
 		<property name="attachements" value="http://www.imgur.com/replicant" />
@@ -1088,40 +1027,13 @@
 			<ref bean="fixUpTask2_1" />
 		</property>
 		<property name="report">
-			<ref bean="reportc1_1" />
+			<ref bean="reportCFT1_2" />
 		</property>
-	</bean>
-
-	<!-- REPORTs -->
-
-	<!-- Report for the cf1_2 -->
-	<bean id="reportCFT1_2" class="domain.Report">
-		<property name="publishedMoment" value="12/11/2018 10:38" />
-		<property name="description"
-			value="Evaluated the funcionality of the replicant, and it worked perfectly with no signs of malfunctioning." />
-		<property name="attachments" value="http://www.reports.es/replicant" />
-		<property name="isFinal" value="true" />
-		<property name="notes">
-			<list>
-				<ref bean="noteRCTF1_2" />
-			</list>
-		</property>
-	</bean>
-
-	<!-- NOTEs -->
-
-	<!-- Note for the report reportCFT1_2 -->
-	<bean id="noteRCFT1_2" class="domain.Note">
-		<property name="publishedMoment" value="12/11/2018 12:03" />
-		<property name="refereeComment" value="'None yet'" />
-		<property name="customerComment"
-			value="I don't agree with you, it acts weird when I am alone with it. I am scared." />
-		<property name="handyWorkerComment" value="'None yet'" />
 	</bean>
 
 	<!-- FINDER -->
 
-	<bean id="finder" class="domain.Finder">
+	<bean id="finderHW1" class="domain.Finder">
 		<property name="keyWord" value="replicant" />
 		<property name="priceLow">
 			<null />
@@ -1129,7 +1041,7 @@
 		<property name="priceHigh">
 			<null />
 		</property>
-		<property name="startMoment" value="">
+		<property name="startMoment">
 			<null />
 		</property>
 		<property name="endMoment">
@@ -1148,4 +1060,604 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="finderHW2" class="domain.Finder">
+		<property name="keyWord" value="replicant" />
+		<property name="priceLow">
+			<null />
+		</property>
+		<property name="priceHigh">
+			<null />
+		</property>
+		<property name="startMoment">
+			<null />
+		</property>
+		<property name="endMoment">
+			<null />
+		</property>
+		<property name="searchMoment" value="10/11/2018 10:48" />
+		<property name="category">
+			<ref bean="concreteWork" />
+		</property>
+		<property name="warranty">
+			<null />
+		</property>
+		<property name="fixuptask">
+			<list>
+				<ref bean="fixUpTask2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Montaño -->
+
+	<!-- Endorsement -->
+
+	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="11/11/18 12:26" />
+		<property name="comment" value="This customer is amazingly amazing" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+
+	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
+		<property name="publishedMoment" value="05/11/18 15:56" />
+		<property name="comment" value="This customer is amazingly amazing 2" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+
+	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="07/10/18 20:43" />
+		<property name="comment"
+			value="This handy worker works so well that he can build a house in a minute" />
+		<property name="customer" ref="customer2" />
+		<property name="handyWorker" ref="handyWorker1" />
+	</bean>
+
+	<!-- ACTORS -->
+
+	<!-- Customers -->
+
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Francisco" />
+		<property name="surname" value="Berrocal Ribas" />
+		<property name="email" value="frabelrib@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxCustomer1" />
+				<ref bean="outBoxCustomer1" />
+				<ref bean="spamBoxCustomer1" />
+				<ref bean="trashBoxCustomer1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userCustomer1" />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementCustomer1_1" />
+				<ref bean="endorsementCustomer1_2" />
+			</list>
+		</property>
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask1_1" />
+				<ref bean="fixUpTask2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Lorena" />
+		<property name="middleName" value="María" />
+		<property name="surname" value="Revuelta Berbel" />
+		<property name="photo"
+			value="https://media.aweita.larepublica.pe/678x508/aweita/imagen/2018/02/08/noticia-persona-positiva.png" />
+		<property name="email" value="lorrevber@mail.com" />
+		<property name="phoneNumber" value="+34689945823" />
+		<property name="address"
+			value="C/ Villa Crepúsculo, 1 (Dos Hermanas, Sevilla)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialCustomer2_1" />
+				<ref bean="socialCustomer2_2" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxCustomer2" />
+				<ref bean="outBoxCustomer2" />
+				<ref bean="spamBoxCustomer2" />
+				<ref bean="trashBoxCustomer2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userCustomer2" />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementHandyWorker1_1" />
+			</list>
+		</property>
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask1_2" />
+			</list>
+		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf1_2" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- HandyWorkers -->
+
+	<bean id="handyWorker1" class="domain.HandyWorker">
+		<property name="name" value="Rosa" />
+		<property name="surname" value="Santacruz Alejo" />
+		<property name="email" value="rossanale@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxHandyWorker1" />
+				<ref bean="outBoxHandyWorker1" />
+				<ref bean="spamBoxHandyWorker1" />
+				<ref bean="trashBoxHandyWorker1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userHandyWorker1" />
+		<property name="make" value="Handy Worker 1 S.A." />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementHandyWorker1_1" />
+			</list>
+		</property>
+		<property name="applications">
+			<list>
+				<ref bean="applicationf1_1_1" />
+				<ref bean="applicationf2_1_1" />
+			</list>
+		</property>
+		<property name="finder" ref="finderHW1" />
+		<property name="curriculum" ref="curriculumHandyWorker1" />
+	</bean>
+
+	<bean id="handyWorker2" class="domain.HandyWorker">
+		<property name="name" value="Esteban" />
+		<property name="middleName" value="Coralino" />
+		<property name="surname" value="Riesco Motos" />
+		<property name="photo"
+			value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="email" value="estriemot@mail.com" />
+		<property name="phoneNumber" value="+34653384191" />
+		<property name="address" value="C/ San Fransokyo, 83 (Espartinas, Sevilla)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialHandyWorker2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxHandyWorker2" />
+				<ref bean="outBoxHandyWorker2" />
+				<ref bean="spamBoxHandyWorker2" />
+				<ref bean="trashBoxHandyWorker2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userHandyWorker2" />
+		<property name="make" value="Handy Worker 2 S.A." />
+		<property name="score" value="0" />
+		<property name="endorsements">
+			<list>
+				<ref bean="endorsementCustomer1_1" />
+				<ref bean="endorsementCustomer1_2" />
+			</list>
+		</property>
+		<property name="tutorial">
+			<list>
+				<ref bean="tutorial2_1" />
+				<ref bean="tutorial2_2" />
+			</list>
+		</property>
+		<property name="applications">
+			<list>
+				<ref bean="applicationf1_1_2" />
+				<ref bean="applicationf1_2_1" />
+			</list>
+		</property>
+		<property name="finder" ref="finderHW2" />
+		<property name="curriculum" ref="curriculumHandyWorker2" />
+	</bean>
+
+	<!-- Referees -->
+
+	<bean id="referee1" class="domain.Referee">
+		<property name="name" value="Eugenio" />
+		<property name="surname" value="Mancera Viñas" />
+		<property name="email" value="eugmanvin@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee1" />
+				<ref bean="outBoxReferee1" />
+				<ref bean="spamBoxReferee1" />
+				<ref bean="trashBoxReferee1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userReferee1" />
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf1_2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="Referee2" class="domain.Referee">
+		<property name="name" value="Jose" />
+		<property name="middleName" value="Ramón" />
+		<property name="surname" value="Cañas Negrin" />
+		<property name="photo"
+			value="http://pm1.narvii.com/6251/0f26bc6a5146516de97ce173531d5617d7e6f154_00.jpg" />
+		<property name="email" value="joscanneg@mail.com" />
+		<property name="phoneNumber" value="+34722691000" />
+		<property name="address" value="C/ Neverland, 23 (Mairena, Sevilla)" />
+		<property name="isSuspicious" value="false" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialReferee2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee2" />
+				<ref bean="outBoxReferee2" />
+				<ref bean="spamBoxReferee2" />
+				<ref bean="trashBoxReferee2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userReferee2" />
+	</bean>
+
+	<!-- Sponsor -->
+
+	<bean id="sponsor1" class="domain.Sponsor">
+		<property name="name" value="Rodrigo" />
+		<property name="surname" value="Salguero Benitez" />
+		<property name="email" value="rodsalben@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxSponsor1" />
+				<ref bean="outBoxSponsor1" />
+				<ref bean="spamBoxSponsor1" />
+				<ref bean="trashBoxSponsor1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userSponsor1" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship1_1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sponsor2" class="domain.Sponsor">
+		<property name="name" value="María" />
+		<property name="middleName" value="Rocío" />
+		<property name="surname" value="Álvarez Fraga" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/kingdomhearts/images/2/22/Kairi_with_her_Keyblade_KHII.PNG/revision/latest?cb=20170207174847" />
+		<property name="email" value="maralvfra@mail.com" />
+		<property name="phoneNumber" value="+34651345852" />
+		<property name="address" value="C/ Recuerdos Lejanos, 7 (Groenlandia)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialSponsor2_1" />
+				<ref bean="socialSponsor2_2" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxReferee2" />
+				<ref bean="outBoxReferee2" />
+				<ref bean="spamBoxReferee2" />
+				<ref bean="trashBoxReferee2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userSponsor2" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Administrator -->
+
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Lucía" />
+		<property name="surname" value="Aparicio Bataller" />
+		<property name="email" value="lucapabat@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxAdmin1" />
+				<ref bean="outBoxAdmin1" />
+				<ref bean="spamBoxAdmin1" />
+				<ref bean="trashBoxAdmin1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAdmin1" />
+		<property name="categories">
+			<list>
+				<ref bean="carpentry" />
+				<ref bean="ceilingRepair" />
+				<ref bean="doors" />
+			</list>
+		</property>
+		<property name="warranties">
+			<list>
+				<ref bean="warrantyf1_1" />
+				<ref bean="warrantyf2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="administrator2" class="domain.Administrator">
+		<property name="name" value="José" />
+		<property name="middleName" value="Carlos" />
+		<property name="surname" value="Gamiz Redondo" />
+		<property name="photo"
+			value="https://ih1.redbubble.net/image.376305132.3400/flat,550x550,075,f.u1.jpg" />
+		<property name="email" value="josgamred@mail.com" />
+		<property name="phoneNumber" value="+34611987654" />
+		<property name="address" value="C/ Atlántica, 1 (Málaga)" />
+		<property name="isSuspicious" value="true" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialAdministrator2_1" />
+			</list>
+		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxAdmin2" />
+				<ref bean="outBoxAdmin2" />
+				<ref bean="spamBoxAdmin2" />
+				<ref bean="trashBoxAdmin2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAdmin2" />
+		<property name="categories">
+			<list>
+				<ref bean="cleaning" />
+				<ref bean="painting" />
+				<ref bean="moving" />
+			</list>
+		</property>
+		<property name="warranties">
+			<list>
+				<ref bean="warrantyf1_2" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Sections -->
+
+	<!-- Sections for tutorial2_1 -->
+
+	<bean id="section1tutorial2_1" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text"
+			value="This tutorial will let you know some advices about this subject, in order to avoid critical errors on the organization." />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
+	</bean>
+
+	<bean id="section2tutorial2_1" class="domain.Section">
+		<property name="title" value="Passing DP" />
+		<property name="text"
+			value="The first advice to pass DP? Brace yourselves, winter is coming :D" />
+		<property name="pictures"
+			value="http://brodatyblog.pl/wp-content/uploads/2015/09/rund2.jpg" />
+		<property name="number" value="2" />
+	</bean>
+
+	<!-- Sections for tutorial2_2 -->
+
+	<bean id="section1tutorial2_2" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text"
+			value="This tutorial will teach you how to build a house in a minute. Simple isn't it?" />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
+	</bean>
+
+	<bean id="section2tutorial2_2" class="domain.Section">
+		<property name="title" value="Your best house" />
+		<property name="text" value="This tutorial is 100% trustable (no)" />
+		<property name="pictures" value=" " />
+		<property name="number" value="2" />
+	</bean>
+
+	<!-- Tutorials -->
+
+	<!-- Tutorial 1 of HW2 -->
+
+	<bean id="tutorial2_1" class="domain.Tutorial">
+		<property name="title" value="How to pass DP" />
+		<property name="lastUpdate" value="09/11/18 13:07" />
+		<property name="summary" value="Just that, how to pass DP" />
+		<property name="pictures"
+			value="https://images-na.ssl-images-amazon.com/images/I/51FZh8lWu7L.jpg" />
+		<property name="sections">
+			<list>
+				<ref bean="section1tutorial2_1" />
+				<ref bean="section2tutorial2_1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="tutorial2_2" class="domain.Tutorial">
+		<property name="title" value="How to build a house in a minute" />
+		<property name="lastUpdate" value="09/11/18 13:11" />
+		<property name="summary"
+			value="Your house will be really fragile, but no worries, this tutorial will make me rich" />
+		<property name="pictures"
+			value="https://static.ferienhausmiete.de/pictures/124668/bilder_original/124668_1458648726.jpg" />
+		<property name="sections">
+			<list>
+				<ref bean="section1tutorial2_2" />
+				<ref bean="section2tutorial2_2" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Sponsorships -->
+
+	<!-- Sponsorship 1 of sponsor 1 -->
+
+	<bean id="sponsorship1_1" class="domain.Sponsorship">
+		<property name="banner"
+			value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AAAAAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
+		<property name="targetPage" value="http://www.random.es" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_1" />
+	</bean>
+
+	<!-- Sponsorship 1 of sponsor 2 -->
+
+	<bean id="sponsorship2_1" class="domain.Sponsorship">
+		<property name="banner"
+			value="https://img00.deviantart.net/9480/i/2011/046/4/a/random_banner_by_mobianangel11-d39nc1t.png" />
+		<property name="targetPage" value="http://www.random.com" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_2" />
+	</bean>
+
+	<!-- Curriculums -->
+
+	<!-- Curriculum (full) of HandyWorker 1 -->
+
+	<bean id="curriculumHandyWorker1" class="domain.Curriculum">
+		<property name="ticker" value="181105-1A2B3C" />
+		<property name="personalRecord" ref="personalRecordHW1" />
+		<property name="educationRecords">
+			<list>
+				<ref bean="educationHW1_1" />
+				<ref bean="educationHW1_2" />
+			</list>
+		</property>
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalHW1_1" />
+				<ref bean="professionalHW1_2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="personalRecordHW1" class="domain.PersonalRecord">
+		<property name="fullName" value="Rosa Santacruz Alejo" />
+		<property name="photo"
+			value="https://78.media.tumblr.com/1d9f32206edb6766e03a295125d2405c/tumblr_inline_pf0nx0qzki1uavfqy_540.png" />
+		<property name="email" value="rossanale@mail.com" />
+		<property name="phoneNumber" value="+34689367309" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+	</bean>
+
+	<bean id="educationHW1_1" class="domain.EducationRecord">
+		<property name="diplomaTitle"
+			value="Ingeniería Informática - Tecnologías Informáticas" />
+		<property name="startDate" value="09/09/2006" />
+		<property name="endDate" value="09/10/2014" />
+		<property name="institutionName" value="ETSII" />
+		<property name="linkAttachment" value="http://www.google.es" />
+		<property name="comments" value=" " />
+	</bean>
+
+	<bean id="educationHW1_2" class="domain.EducationRecord">
+		<property name="diplomaTitle" value="Chapa y pintura" />
+		<property name="startDate" value="09/09/2018" />
+		<property name="institutionName" value="IES Almensilla" />
+		<property name="linkAttachment" value="http://www.google.es" />
+		<property name="comments" value=" " />
+	</bean>
+
+	<bean id="professionalHW1_1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Bitnami" />
+		<property name="startDate" value="09/10/2014" />
+		<property name="endDate" value="09/10/2015" />
+		<property name="role" value="Desarrollador Junior" />
+		<property name="attachment" value="http://www.google.com" />
+		<property name="comments" value="Nice job!" />
+	</bean>
+
+	<bean id="professionalHW1_2" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Hermanos Pernía" />
+		<property name="startDate" value="09/05/2016" />
+		<property name="role" value="Churrera" />
+		<property name="attachment" value="http://www.google.com" />
+		<property name="comments" value=" " />
+	</bean>
+
+	<!-- Curriculum (full) of HandyWorker 2 -->
+
+	<bean id="curriculumHandyWorker2" class="domain.Curriculum">
+		<property name="ticker" value="181023-9A2B3C" />
+		<property name="personalRecord" ref="personalRecordHW2" />
+		<property name="endorserRecords">
+			<list>
+				<ref bean="endorserHW2_1" />
+				<ref bean="endorserHW2_2" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousHW2_1" />
+				<ref bean="miscellaneousHW2_2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="personalRecordHW2" class="domain.PersonalRecord">
+		<property name="fullName" value="Esteban Coralino Riesco Motos" />
+		<property name="photo"
+			value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="email" value="estriemot@mail.es" />
+		<property name="phoneNumber" value="+34653384191" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+	</bean>
+
+	<bean id="endorserHW2_1" class="domain.EndorserRecord">
+		<property name="fullName" value="Eustaquio Ameba Gutiérrez" />
+		<property name="email" value="eusamegut@mail.com" />
+		<property name="phoneNumber" value="+34683571000" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+		<property name="comments" value="Nice guy bro!" />
+	</bean>
+
+	<bean id="endorserHW2_2" class="domain.EndorserRecord">
+		<property name="fullName" value="Alba Moreno Rubio" />
+		<property name="email" value="albmorrub@mail.com" />
+		<property name="phoneNumber" value="+34699888000" />
+		<property name="linkedinLink" value="http://www.linkedin.com" />
+		<property name="comments" value="Nice guy working!" />
+	</bean>
+
+	<bean id="miscellaneousHW2_1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Desarrollo de apps en Android" />
+		<property name="linkAttachment" value="http://udacity.com" />
+		<property name="comments" value="WOW!" />
+	</bean>
+
+	<bean id="miscellaneousHW2_2" class="domain.MiscellaneousRecord">
+		<property name="title" value="Pintura Acrílica" />
+		<property name="linkAttachment" value="http://udacity.com" />
+		<property name="comments" value="WOW!" />
+	</bean>
+
 </beans>

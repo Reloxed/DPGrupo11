@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -36,8 +37,7 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
-	// ¿?
+	@OneToMany(mappedBy = "handyWorker")
 	public Collection<Endorsement> getEndorsements() {
 		return endorsements;
 	}
@@ -48,8 +48,7 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
-	// ¿?
+	@OneToMany
 	public Collection<Tutorial> getTutorial() {
 		return tutorial;
 	}
@@ -60,8 +59,7 @@ public class HandyWorker extends Actor {
 
 	@Valid
 	@ElementCollection
-	@OneToMany(mappedBy = "handyWorker")
-	// ¿?
+	@OneToMany
 	public Collection<Application> getApplications() {
 		return applications;
 	}
@@ -72,6 +70,7 @@ public class HandyWorker extends Actor {
 
 	@NotNull
 	@Valid
+	@OneToOne(optional = false)
 	public Finder getFinder() {
 		return finder;
 	}
@@ -82,6 +81,7 @@ public class HandyWorker extends Actor {
 
 	@NotNull
 	@Valid
+	@OneToOne(optional = false)
 	public Curriculum getCurriculum() {
 		return curriculum;
 	}

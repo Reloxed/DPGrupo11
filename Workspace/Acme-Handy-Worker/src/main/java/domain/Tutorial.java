@@ -3,8 +3,11 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,6 +17,8 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Tutorial extends DomainEntity {
 
 	private String title;
@@ -34,11 +39,11 @@ public class Tutorial extends DomainEntity {
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLastUpdated() {
+	public Date getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdated(final Date lastUpdate) {
+	public void setLastUpdate(final Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

@@ -39,11 +39,11 @@ public class Section extends DomainEntity {
 		this.text = text;
 	}
 
-	public String getPicture() {
+	public String getPictures() {
 		return this.pictures;
 	}
 
-	public void setPicture(final String pictures) {
+	public void setPictures(final String pictures) {
 		this.pictures = pictures;
 	}
 

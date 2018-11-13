@@ -84,7 +84,7 @@ public class Actor extends DomainEntity {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = sC.getCountryCode() + phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getAddress() {
@@ -95,11 +95,11 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-	public boolean isSuspicious() {
+	public boolean getIsSuspicious() {
 		return isSuspicious;
 	}
 
-	public void setSuspicious(boolean isSuspicious) {
+	public void setIsSuspicious(boolean isSuspicious) {
 		this.isSuspicious = isSuspicious;
 	}
 

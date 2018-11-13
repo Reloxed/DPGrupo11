@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.URL;
 public class MiscellaneousRecord extends DomainEntity {
 
 	private String title;
-	private String linkAttachement;
+	private String linkAttachment;
 	private String comments;
 
 	@NotBlank
@@ -25,12 +25,12 @@ public class MiscellaneousRecord extends DomainEntity {
 	}
 
 	@URL
-	public String getLinkAttachement() {
-		return linkAttachement;
+	public String getLinkAttachment() {
+		return linkAttachment;
 	}
 
-	public void setLinkAttachement(String linkAttachement) {
-		this.linkAttachement = linkAttachement;
+	public void setLinkAttachment(String linkAttachment) {
+		this.linkAttachment = linkAttachment;
 	}
 
 	public String getComments() {
