@@ -46,3 +46,14 @@
 - Añadir @URL a getPictures() en Tutorial.
 
 - Cambiar atributos laws por applicableLaws enl a clase Warranty o cambiar el nombre en el UML por laws.
+
+//Lucia
+- El patrón de Status de Application es así : @Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$”). Como está puesto ahora mismo solo busca en el principio y en el final del texto, o sea, que valdría algo como ‘PENDING123’, y eso es erróneo. También hay que cambiarlo en el UML que no sé quién ha cambiado eso porque creo que estaba bien. Ocurre lo mismo con Priority en Message
+- En Money hay un método entero comentado.
+- En Complaint, si aún no hemos encontrado la solución a lo del Ticker, por qué no lo dejamos mientras con el @Column(unique=true)? Lo digo para tener algo al menos en lugar de nada. Por ejemplo, en Curriculum está.
+- En Customer hay un comentario con un interrogante. FixUpTask no es una composición y Complaint tampoco
+- El telefono de endorserRecord tiene un patrón pero el de actor no, creo que no debería tenerlo ninguno de los dos porque es opcional que siga ese patrón no?
+- En Finder hay comentarios con ?
+- Finder -> FixUpTask no es OneToMany
+- CreditCard - Sponsorship: el ‘has’ está orientado hacia el lado contrario.
+- Revisar relación Tutorial - Sponsor 
