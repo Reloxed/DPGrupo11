@@ -1,0 +1,21 @@
+No hay presupuesto por parte del cliente.
+
+MODELO DE DOMINIO
+
+- Es mejor segun la teoria navegar desde phase a application, porque dice que se navega desde la relación débil a la fuerte.
+- Mirar también todas las navegabilidades, porque normalmente es desde el extremo "muchos" al extremo "uno". También
+ver cual es la entidad debil y la entidad fuerte. Por ejemplo, application y fixuptask.
+
+QUERIES
+
+- Eficiencia en una sola consulta en el C/3 en lugar de hacer 4 consultas distintas.
+- En las queries existe un operador que te devuelve la desviación estandar directamente (stdev)
+- Introduce fixuptask f que no vale para nada en donde la propuesta 1 y propuesta 2.
+- C5 mejor select count.
+- Consulta anidada en varias querys
+- Query B/3 en un solo select.
+- Query B/4 esta mal directamente.
+
+DUDA 1 - Se registra sin sponsorship, 1 - 0..*
+
+DUDA 3 - Horas para el que ha hecho la tarea.
