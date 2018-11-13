@@ -26,7 +26,7 @@ public class Complaint extends DomainEntity {
 	private Report report;
 
 	@NotBlank
-	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9] {6}")
+	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
 	public String getTicker() {
 		return ticker;
 	}

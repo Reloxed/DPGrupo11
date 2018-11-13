@@ -84,7 +84,7 @@ public class Actor extends DomainEntity {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = sC.getCountryCode() + phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getAddress() {

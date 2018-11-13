@@ -1,7 +1,5 @@
 package domain;
 
-
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -41,7 +39,6 @@ public class EndorserRecord extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "+[0-9]{6}[0-9]{4,}")
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}

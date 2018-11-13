@@ -52,7 +52,6 @@ public class PersonalRecord extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "+[0-9]{6}[0-9]{4,}")
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}

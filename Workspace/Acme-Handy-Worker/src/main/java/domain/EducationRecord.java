@@ -21,7 +21,7 @@ public class EducationRecord extends DomainEntity {
 	private Date startDate;
 	private Date endDate;
 	private String institutionName;
-	private String linkAttachement;
+	private String linkAttachment;
 	private String comments;
 
 	@NotBlank
@@ -63,12 +63,12 @@ public class EducationRecord extends DomainEntity {
 	}
 
 	@URL
-	public String getLinkAttachement() {
-		return linkAttachement;
+	public String getLinkAttachment() {
+		return linkAttachment;
 	}
 
-	public void setLinkAttachement(String linkAttachement) {
-		this.linkAttachement = linkAttachement;
+	public void setLinkAttachment(String linkAttachment) {
+		this.linkAttachment = linkAttachment;
 	}
 
 	public String getComments() {
