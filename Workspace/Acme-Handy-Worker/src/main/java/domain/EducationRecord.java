@@ -1,6 +1,6 @@
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -70,7 +70,7 @@ public class EducationRecord extends DomainEntity {
 	public void setLinkAttachement(String linkAttachement) {
 		this.linkAttachement = linkAttachement;
 	}
-	
+
 	public String getComments() {
 		return comments;
 	}

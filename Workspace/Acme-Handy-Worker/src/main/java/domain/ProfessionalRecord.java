@@ -1,6 +1,6 @@
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -32,7 +32,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setCompanyName(final String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	@Temporal(TemporalType.DATE)
 	@Past
 	@NotNull
@@ -43,7 +43,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	@Temporal(TemporalType.DATE)
 	public Date getEndDate() {
 		return this.endDate;

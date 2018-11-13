@@ -47,17 +47,18 @@ public class Report extends DomainEntity {
 		return this.attachments;
 	}
 
-	public void setAttachement(final String attachments) {
+	public void setAttachments(final String attachments) {
 		this.attachments = attachments;
 	}
 
-	public boolean isFinal() {
+	public boolean getIsFinal() {
 		return this.isFinal;
 	}
 
-	public void setFinal(final boolean isFinal) {
+	public void setIsFinal(final boolean isFinal) {
 		this.isFinal = isFinal;
 	}
+
 	@OneToMany
 	public Collection<Note> getNotes() {
 		return this.notes;

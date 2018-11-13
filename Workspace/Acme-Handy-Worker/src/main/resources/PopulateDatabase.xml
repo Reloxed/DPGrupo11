@@ -215,86 +215,135 @@
 			value="bad,horrendous,horrible,disgusting,malo,horrendo,horroroso" />
 	</bean>
 
-	<!-- FIX UP TASKs -->
+	<!-- CREDITCARD -->
 
-	<!-- FixUpTask 1 del customer1 -->
-	<bean id="fixUpTask1_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="08/11/2018 10:37" />
+	<!-- HandyWorker's 2 Credit card -->
+	<bean id="creditCardHW2" class="domain.CreditCard">
+		<property name="holderName" value="Esteban Coralino Riesco Motos" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="1498154736589586" />
+		<property name="expirationMonth" value="07" />
+		<property name="expirationYear" value="22" />
+		<property name="CVV" value="123" />
+	</bean>
+
+	<!-- PHASEs -->
+
+	<!-- Phase 1 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase1_f121" class="domain.Phase">
+		<property name="title" value="Examine the replicant" />
 		<property name="description"
-			value="Replace the window of my house because it broke" />
-		<property name="adress" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
+			value="Full examination of the repplicant to determine how bad the damage is" />
+		<property name="startMoment" value="10/11/2018 08:00" />
+		<property name="endMoment" value="10/11/2018 11:00" />
+	</bean>
+
+	<!-- Phase 2 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase2_f121" class="domain.Phase">
+		<property name="title" value="Repair the replicant" />
+		<property name="description"
+			value="Once found all the imperfections, I will proceed to..." />
+		<property name="startMoment" value="10/11/2018 11:00" />
+		<property name="endMoment" value="10/11/2018 18:00" />
+	</bean>
+
+	<!-- Phase 3 of the application 1 of the FUP 1 of the customer 2 -->
+	<bean id="phase3_f121" class="domain.Phase">
+		<property name="title" value="Test replicant" />
+		<property name="description" value="Test the changes applied to the replicant" />
+		<property name="startMoment" value="10/11/2018 18:00" />
+		<property name="endMoment" value="10/11/2018 20:00" />
+	</bean>
+
+	<!-- APPLICATIONs -->
+
+	<!-- Application 1 for the FUP1 of the customer 1 -->
+	<bean id="applicationf1_1_1" class="domain.Application">
+		<property name="registeredMoment" value="08/11/2018 17:55" />
+		<property name="status" value="PENDING" />
+		<property name="offeredPrice">
 			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="50" />
+				<property name="quantity" value="40" />
 			</bean>
 		</property>
-		<property name="startMoment" value="12/11/2018 17:30" />
-		<property name="endMoment" value="12/11/2018" />
-		<property name="application">
-			<list>
-				<ref bean="applicationf1_1_1" />
-				<ref bean="applicationf1_1_2" />
-			</list>
+		<property name="comment"
+			value="I am experienced in window reparation because..." />
+		<property name="creditCard">
+			<ref bean="creditCardHW2" />
 		</property>
-		<property name="category">
-			<ref bean="windowRepair" />
+		<property name="phases">
+			<null />
 		</property>
-		<property name="warranty">
-			<ref bean="warrantyf1_1" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_1" />
 		</property>
 	</bean>
 
-	<!-- FixUpTask 2 del customer1 -->
-	<bean id="fixUpTask1_2" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="08/11/2018 10:44" />
-		<property name="description"
-			value="Repair the toilet because water leaks from the deposit" />
-		<property name="adress" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
+	<!-- Application 2 for the FUP1 of the customer 1 -->
+	<bean id="applicationf1_1_2" class="domain.Application">
+		<property name="registeredMoment" value="08/11/2018 18:43" />
+		<property name="status" value="PENDING" />
+		<property name="offeredPrice">
 			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="30" />
+				<property name="quantity" value="43" />
 			</bean>
 		</property>
-		<property name="startMoment" value="12/11/2018 18:30" />
-		<property name="endMoment" value="12/11/2018" />
-		<property name="application">
-			<list>
-				<ref bean="applicationf2_1_1" />
-			</list>
+		<property name="comment"
+			value="I am better than other Handy Workers because..." />
+		<property name="creditCard">
+			<ref bean="creditCardHW2" />
 		</property>
-		<property name="category">
-			<ref bean="plumbingRepairs" />
+		<property name="phases">
+			<null />
 		</property>
-		<property name="warranty">
-			<ref bean="warrantyf2_1" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_1" />
 		</property>
 	</bean>
 
-	<!-- FixUpTask 1 del customer2 -->
-	<bean id="fixUpTask2_1" class="domain.FixUpTask">
-		<property name="ticker" value="" />
-		<property name="publishedMoment" value="05/11/2018 13:31" />
-		<property name="description" value="Repair the replicant" />
-		<property name="adress" value="c/Tyrellco, 19, Los Ángeles" />
-		<property name="maxPrice">
+	<!-- Application 1 for the FUP2 of the customer 1 -->
+	<bean id="applicationf2_1_1" class="domain.Application">
+		<property name="registeredMoment" value="09/11/2018 15:27" />
+		<property name="status" value="REJECTED" />
+		<property name="offeredPrice">
 			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="4068" />
+				<property name="quantity" value="80" />
 			</bean>
 		</property>
-		<property name="startMoment" value="10/11/2018 20:19" />
-		<property name="endMoment" value="10/11/2018" />
-		<property name="application">
+		<property name="comment" value="I can fix it" />
+		<property name="creditCard">
+			<ref bean="creditCardHW2" />
+		</property>
+		<property name="phases">
+			<null />
+		</property>
+		<property name="fixUpTask">
+			<ref bean="fixUpTask2_1" />
+		</property>
+	</bean>
+
+	<!-- Application 1 for the FUP1 of the customer 2 -->
+	<bean id="applicationf1_2_1" class="domain.Application">
+		<property name="registeredMoment" value="07/11/2018 20:49" />
+		<property name="status" value="ACCEPTED" />
+		<property name="offeredPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="3800" />
+			</bean>
+		</property>
+		<property name="comment" value="Expert in repairing any robotic machine..." />
+		<property name="creditCard">
+			<ref bean="creditCardHW2" />
+		</property>
+		<property name="phases">
 			<list>
-				<ref bean="applicationf1_2_1" />
+				<ref bean="phase1_f121" />
+				<ref bean="phase2_f121" />
+				<ref bean="phase3_f121" />
 			</list>
 		</property>
-		<property name="category">
-			<ref bean="cocreteWork" />
-		</property>
-		<property name="warranty">
-			<ref bean="warrantyf1_2" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask2_1" />
 		</property>
 	</bean>
 
@@ -318,7 +367,7 @@
 				<ref bean="fanInstallation" />
 				<ref bean="fenceFixing" />
 				<ref bean="homeSecuritySystem" />
-				<ref bean="insulatationInstallation" />
+				<ref bean="insulationInstallation" />
 				<ref bean="lampRepairs" />
 				<ref bean="moving" />
 				<ref bean="painting" />
@@ -431,7 +480,7 @@
 	</bean>
 
 	<!-- Home Security Systems -->
-	<bean id="homeSecuritySystems" class="domain.Category">
+	<bean id="homeSecuritySystem" class="domain.Category">
 		<property name="spanishName" value="Equipo de seguridad en casas" />
 		<property name="englishName" value="Home security systems" />
 		<property name="parentCategory">
@@ -503,7 +552,7 @@
 	</bean>
 
 	<!-- Plumbing Repairs -->
-	<bean id="cleaning" class="domain.Category">
+	<bean id="plumbingRepairs" class="domain.Category">
 		<property name="spanishName" value="Fontanería" />
 		<property name="englishName" value="Plumbing repairs" />
 		<property name="parentCategory">
@@ -551,7 +600,7 @@
 	</bean>
 
 	<!-- Soundproofing -->
-	<bean id="soundproofing" class="domain.Category">
+	<bean id="soundProofing" class="domain.Category">
 		<property name="spanishName" value="Insonorización" />
 		<property name="englishName" value="Soundproofing" />
 		<property name="parentCategory">
@@ -612,136 +661,87 @@
 		<property name="laws" value="law31,law45,law37" />
 	</bean>
 
-	<!-- APPLICATIONs -->
+	<!-- FIX UP TASKs -->
 
-	<!-- Application 1 for the FUP1 of the customer 1 -->
-	<bean id="applicationf1_1_1" class="domain.Application">
-		<property name="registeredMoment" value="08/11/2018 17:55" />
-		<property name="status" value="PENDING" />
-		<property name="offeredPrice">
+	<!-- FixUpTask 1 del customer1 -->
+	<bean id="fixUpTask1_1" class="domain.FixUpTask">
+		<property name="ticker" value="" />
+		<property name="publishedMoment" value="08/11/2018 10:37" />
+		<property name="description"
+			value="Replace the window of my house because it broke" />
+		<property name="address" value="c/Nostromo, 8, Seville" />
+		<property name="maxPrice">
 			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="40" />
+				<property name="quantity" value="50" />
 			</bean>
 		</property>
-		<property name="comment"
-			value="I am experienced in window reparation because..." />
-		<property name="creditCard">
-			<ref bean="creditCardHW2" />
-		</property>
-		<property name="phases">
-			<null />
-		</property>
-		<property name="fixUpTask">
-			<ref bean="fixUpTask1_1" />
-		</property>
-	</bean>
-
-	<!-- Application 2 for the FUP1 of the customer 1 -->
-	<bean id="applicationf1_1_2" class="domain.Application">
-		<property name="registeredMoment" value="08/11/2018 18:43" />
-		<property name="status" value="PENDING" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="43" />
-			</bean>
-		</property>
-		<property name="comment"
-			value="I am better than other Handy Workers because..." />
-		<property name="creditCard">
-			<ref bean="creditCardHW2" />
-		</property>
-		<property name="phases">
-			<null />
-		</property>
-		<property name="fixUpTask">
-			<ref bean="fixUpTask1_1" />
-		</property>
-	</bean>
-
-	<!-- Application 1 for the FUP2 of the customer 1 -->
-	<bean id="applicationf2_1_1" class="domain.Application">
-		<property name="registeredMoment" value="09/11/2018 15:27" />
-		<property name="status" value="REJECTED" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="80" />
-			</bean>
-		</property>
-		<property name="comment" value="I can fix it" />
-		<property name="creditCard">
-			<ref bean="creditCardHW2" />
-		</property>
-		<property name="phases">
-			<null />
-		</property>
-		<property name="fixUpTask">
-			<ref bean="fixUpTask2_1" />
-		</property>
-	</bean>
-
-	<!-- Application 1 for the FUP1 of the customer 2 -->
-	<bean id="applicationf1_2_1" class="domain.Application">
-		<property name="registeredMoment" value="07/11/2018 20:49" />
-		<property name="status" value="ACCEPTED" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="3800" />
-			</bean>
-		</property>
-		<property name="comment" value="Expert in repairing any robotic machine..." />
-		<property name="creditCard">
-			<ref bean="creditCardHW2" />
-		</property>
-		<property name="phases">
+		<property name="startMoment" value="12/11/2018 17:30" />
+		<property name="endMoment" value="12/11/2018" />
+		<property name="application">
 			<list>
-				<ref bean="phase1_f121" />
-				<ref bean="phase2_f121" />
-				<ref bean="phase3_f121" />
+				<ref bean="applicationf1_1_1" />
+				<ref bean="applicationf1_1_2" />
 			</list>
 		</property>
-		<property name="fixUpTask">
-			<ref bean="fixUpTask2_1" />
+		<property name="category">
+			<ref bean="windowRepair" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf1_1" />
 		</property>
 	</bean>
 
-	<!-- PHASEs -->
-
-	<!-- Phase 1 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase1_f121" class="domain.Phase">
-		<property name="title" value="Examine the replicant" />
+	<!-- FixUpTask 2 del customer1 -->
+	<bean id="fixUpTask1_2" class="domain.FixUpTask">
+		<property name="ticker" value="" />
+		<property name="publishedMoment" value="08/11/2018 10:44" />
 		<property name="description"
-			value="Full examination of the repplicant to determine how bad the damage is" />
-		<property name="startMoment" value="10/11/2018 08:00" />
-		<property name="endMoment" value="10/11/2018 11:00" />
+			value="Repair the toilet because water leaks from the deposit" />
+		<property name="address" value="c/Nostromo, 8, Seville" />
+		<property name="maxPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="30" />
+			</bean>
+		</property>
+		<property name="startMoment" value="12/11/2018 18:30" />
+		<property name="endMoment" value="12/11/2018" />
+		<property name="application">
+			<list>
+				<ref bean="applicationf2_1_1" />
+			</list>
+		</property>
+		<property name="category">
+			<ref bean="plumbingRepairs" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf2_1" />
+		</property>
 	</bean>
 
-	<!-- Phase 2 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase2_f121" class="domain.Phase">
-		<property name="title" value="Repair the replicant" />
-		<property name="description"
-			value="Once found all the imperfections, I will proceed to..." />
-		<property name="startMoment" value="11:00" />
-		<property name="endMoment" value="18:00" />
-	</bean>
-
-	<!-- Phase 3 of the applicatin 1 of the FUP 1 of the customer 2 -->
-	<bean id="phase3_f121" class="domain.Phase">
-		<property name="title" value="Test replicant" />
-		<property name="description" value="Test the changes applied to the replicant" />
-		<property name="startMoment" value="18:00" />
-		<property name="endMoment" value="20:00" />
-	</bean>
-
-	<!-- CREDITCARD -->
-
-	<!-- HandyWorker's 2 Credit card -->
-	<bean id="creditCardHW2" class="domain.Money">
-		<property name="cardHolder" value="Esteban Coralino Riesco Motos" />
-		<property name="brandName" value="VISA" />
-		<property name="number" value="1498154736589586" />
-		<property name="expirationMonth" value="07" />
-		<property name="expirationYear" value="22" />
-		<property name="CVV" value="123" />
+	<!-- FixUpTask 1 del customer2 -->
+	<bean id="fixUpTask2_1" class="domain.FixUpTask">
+		<property name="ticker" value="" />
+		<property name="publishedMoment" value="05/11/2018 13:31" />
+		<property name="description" value="Repair the replicant" />
+		<property name="address" value="c/Tyrellco, 19, Los Ángeles" />
+		<property name="maxPrice">
+			<bean id="maxPrice" class="domain.Money">
+				<property name="quantity" value="4068" />
+			</bean>
+		</property>
+		<property name="startMoment" value="10/11/2018 20:19" />
+		<property name="endMoment" value="10/11/2018" />
+		<property name="application">
+			<list>
+				<ref bean="applicationf1_2_1" />
+			</list>
+		</property>
+		<property name="category">
+			<ref bean="concreteWork" />
+		</property>
+		<property name="warranty">
+			<ref bean="warrantyf1_2" />
+		</property>
 	</bean>
 
 	<!-- MESSAGE BOXes -->
@@ -1076,20 +1076,15 @@
 		</property>
 	</bean>
 
-	<!-- COMPLAINTs -->
+	<!-- NOTEs -->
 
-	<!-- Complaint about the FUP 1 of the customer 2 -->
-<bean id="complaintf1_2" class="domain.Complaint">
-		<property name="ticker" value="" />
-		<property name="moment" value="11/11/2018 17:14" />
-		<property name="description" value="The replicant is even worse than before" />
-		<property name="attachements" value="http://www.imgur.com/replicant" />
-		<property name="fixUpTask">
-			<ref bean="fixUpTask2_1" />
-		</property>
-		<property name="report">
-			<ref bean="reportc1_1" />
-		</property>
+	<!-- Note for the report reportCFT1_2 -->
+	<bean id="noteRCFT1_2" class="domain.Note">
+		<property name="publishedMoment" value="12/11/2018 12:03" />
+		<property name="refereeComment" value="'None yet'" />
+		<property name="customerComment"
+			value="I don't agree with you, it acts weird when I am alone with it." />
+		<property name="handyWorkerComment" value="'None yet'" />
 	</bean>
 
 	<!-- REPORTs -->
@@ -1103,24 +1098,27 @@
 		<property name="isFinal" value="true" />
 		<property name="notes">
 			<list>
-				<ref bean="noteRCTF1_2" />
+				<ref bean="noteRCFT1_2" />
 			</list>
 		</property>
 	</bean>
 
-	<!-- NOTEs -->
+	<!-- COMPLAINTs -->
 
-	<!-- Note for the report reportCFT1_2 -->
-	<bean id="noteRCFT1_2" class="domain.Note">
-		<property name="publishedMoment" value="12/11/2018 12:03" />
-		<property name="refereeComment" value="'None yet'" />
-		<property name="customerComment"
-			value="I don't agree with you, it acts weird when I am alone with it. I am scared." />
-		<property name="handyWorkerComment" value="'None yet'" />
+	<!-- Complaint about the FUP 1 of the customer 2 -->
+	<bean id="complaintf1_2" class="domain.Complaint">
+		<property name="ticker" value="" />
+		<property name="moment" value="11/11/2018 17:14" />
+		<property name="description" value="The replicant is even worse than before" />
+		<property name="attachements" value="http://www.imgur.com/replicant" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask2_1" />
+		</property>
+		<property name="report">
+			<ref bean="reportCFT1_2" />
+		</property>
 	</bean>
-	
-	
-	
+
 	<!-- FINDER -->
 
 	<bean id="finder" class="domain.Finder">
@@ -1131,7 +1129,7 @@
 		<property name="priceHigh">
 			<null />
 		</property>
-		<property name="startMoment" value="">
+		<property name="startMoment">
 			<null />
 		</property>
 		<property name="endMoment">
@@ -1150,13 +1148,37 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Montaño -->
 
+	<!-- Endorsement -->
+
+	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="11/11/18 12:26" />
+		<property name="comment" value="This customer is amazingly amazing" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+
+	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
+		<property name="publishedMoment" value="05/11/18 15:56" />
+		<property name="comment" value="This customer is amazingly amazing 2" />
+		<property name="customer" ref="customer1" />
+		<property name="handyWorker" ref="handyWorker2" />
+	</bean>
+
+	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
+		<property name="publishedMoment" value="07/10/18 20:43" />
+		<property name="comment"
+			value="This handy worker works so well that he can build a house in a minute" />
+		<property name="customer" ref="customer2" />
+		<property name="handyWorker" ref="handyWorker1" />
+	</bean>
+
 	<!-- ACTORS -->
-	
+
 	<!-- Customers -->
-	
+
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="Francisco" />
 		<property name="surname" value="Berrocal Ribas" />
@@ -1185,15 +1207,17 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="customer2" class="domain.Customer">
 		<property name="name" value="Lorena" />
 		<property name="middleName" value="María" />
 		<property name="surname" value="Revuelta Berbel" />
-		<property name="photo" value="https://media.aweita.larepublica.pe/678x508/aweita/imagen/2018/02/08/noticia-persona-positiva.png" />
+		<property name="photo"
+			value="https://media.aweita.larepublica.pe/678x508/aweita/imagen/2018/02/08/noticia-persona-positiva.png" />
 		<property name="email" value="lorrevber@mail.com" />
 		<property name="phoneNumber" value="+34689945823" />
-		<property name="address" value="C/ Villa Crepúsculo, 1 (Dos Hermanas, Sevilla)" />
+		<property name="address"
+			value="C/ Villa Crepúsculo, 1 (Dos Hermanas, Sevilla)" />
 		<property name="isSuspicious" value="true" />
 		<property name="socialProfiles">
 			<list>
@@ -1227,9 +1251,9 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- HandyWorkers -->
-	
+
 	<bean id="handyWorker1" class="domain.HandyWorker">
 		<property name="name" value="Rosa" />
 		<property name="surname" value="Santacruz Alejo" />
@@ -1260,12 +1284,13 @@
 		<property name="finder" ref="finder" />
 		<property name="curriculum" ref="curriculumHandyWorker1" />
 	</bean>
-	
+
 	<bean id="handyWorker2" class="domain.HandyWorker">
 		<property name="name" value="Esteban" />
 		<property name="middleName" value="Coralino" />
 		<property name="surname" value="Riesco Motos" />
-		<property name="photo" value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="photo"
+			value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
 		<property name="email" value="estriemot@mail.com" />
 		<property name="phoneNumber" value="+34653384191" />
 		<property name="address" value="C/ San Fransokyo, 83 (Espartinas, Sevilla)" />
@@ -1307,9 +1332,9 @@
 		<property name="finder" ref="finder" />
 		<property name="curriculum" ref="curriculumHandyWorker2" />
 	</bean>
-	
+
 	<!-- Referees -->
-	
+
 	<bean id="referee1" class="domain.Referee">
 		<property name="name" value="Eugenio" />
 		<property name="surname" value="Mancera Viñas" />
@@ -1330,12 +1355,13 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="Referee2" class="domain.Referee">
 		<property name="name" value="Jose" />
 		<property name="middleName" value="Ramón" />
 		<property name="surname" value="Cañas Negrin" />
-		<property name="photo" value="http://pm1.narvii.com/6251/0f26bc6a5146516de97ce173531d5617d7e6f154_00.jpg" />
+		<property name="photo"
+			value="http://pm1.narvii.com/6251/0f26bc6a5146516de97ce173531d5617d7e6f154_00.jpg" />
 		<property name="email" value="joscanneg@mail.com" />
 		<property name="phoneNumber" value="+34722691000" />
 		<property name="address" value="C/ Neverland, 23 (Mairena, Sevilla)" />
@@ -1355,9 +1381,9 @@
 		</property>
 		<property name="userAccount" ref="userReferee2" />
 	</bean>
-	
+
 	<!-- Sponsor -->
-	
+
 	<bean id="sponsor1" class="domain.Sponsor">
 		<property name="name" value="Rodrigo" />
 		<property name="surname" value="Salguero Benitez" />
@@ -1378,12 +1404,13 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="sponsor2" class="domain.Sponsor">
 		<property name="name" value="María" />
 		<property name="middleName" value="Rocío" />
 		<property name="surname" value="Álvarez Fraga" />
-		<property name="photo" value="https://vignette.wikia.nocookie.net/kingdomhearts/images/2/22/Kairi_with_her_Keyblade_KHII.PNG/revision/latest?cb=20170207174847" />
+		<property name="photo"
+			value="https://vignette.wikia.nocookie.net/kingdomhearts/images/2/22/Kairi_with_her_Keyblade_KHII.PNG/revision/latest?cb=20170207174847" />
 		<property name="email" value="maralvfra@mail.com" />
 		<property name="phoneNumber" value="+34651345852" />
 		<property name="address" value="C/ Recuerdos Lejanos, 7 (Groenlandia)" />
@@ -1409,9 +1436,9 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Administrator -->
-	
+
 	<bean id="administrator1" class="domain.Administrator">
 		<property name="name" value="Lucía" />
 		<property name="surname" value="Aparicio Bataller" />
@@ -1440,12 +1467,13 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="administrator2" class="domain.Administrator">
 		<property name="name" value="José" />
 		<property name="middleName" value="Carlos" />
 		<property name="surname" value="Gamiz Redondo" />
-		<property name="photo" value="https://ih1.redbubble.net/image.376305132.3400/flat,550x550,075,f.u1.jpg" />
+		<property name="photo"
+			value="https://ih1.redbubble.net/image.376305132.3400/flat,550x550,075,f.u1.jpg" />
 		<property name="email" value="josgamred@mail.com" />
 		<property name="phoneNumber" value="+34611987654" />
 		<property name="address" value="C/ Atlántica, 1 (Málaga)" />
@@ -1477,36 +1505,55 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- Sponsorships -->
-	
-	<!-- Sponsorship 1 of sponsor 1 -->
-	
-	<bean id="sponsorship1_1" class="domain.Sponsorship">
-		<property name="banner" value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AAAAAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
-		<property name="targetPage" value="http://www.random.es" />
-		<property name="creditCard" ref="creditCardHW2" />
-		<property name="tutorial" ref="tutorial2_1" />
+
+	<!-- Sections -->
+
+	<!-- Sections for tutorial2_1 -->
+
+	<bean id="section1tutorial2_1" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text"
+			value="This tutorial will let you know some advices about this subject, in order to avoid critical errors on the organization." />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
 	</bean>
-	
-	<!-- Sponsorship 1 of sponsor 2 -->
-	
-	<bean id="sponsorship2_1" class="domain.Sponsorship">
-		<property name="banner" value="https://img00.deviantart.net/9480/i/2011/046/4/a/random_banner_by_mobianangel11-d39nc1t.png" />
-		<property name="targetPage" value="http://www.random.com" />
-		<property name="creditCard" ref="creditCardHW2" />
-		<property name="tutorial" ref="tutorial2_2" />
+
+	<bean id="section2tutorial2_1" class="domain.Section">
+		<property name="title" value="Passing DP" />
+		<property name="text"
+			value="The first advice to pass DP? Brace yourselves, winter is coming :D" />
+		<property name="pictures"
+			value="http://brodatyblog.pl/wp-content/uploads/2015/09/rund2.jpg" />
+		<property name="number" value="2" />
 	</bean>
-	
+
+	<!-- Sections for tutorial2_2 -->
+
+	<bean id="section1tutorial2_2" class="domain.Section">
+		<property name="title" value="Introduction" />
+		<property name="text"
+			value="This tutorial will teach you how to build a house in a minute. Simple isn't it?" />
+		<property name="pictures" value=" " />
+		<property name="number" value="1" />
+	</bean>
+
+	<bean id="section2tutorial2_2" class="domain.Section">
+		<property name="title" value="Your best house" />
+		<property name="text" value="This tutorial is 100% trustable (no)" />
+		<property name="pictures" value=" " />
+		<property name="number" value="2" />
+	</bean>
+
 	<!-- Tutorials -->
-	
+
 	<!-- Tutorial 1 of HW2 -->
-	
+
 	<bean id="tutorial2_1" class="domain.Tutorial">
 		<property name="title" value="How to pass DP" />
 		<property name="lastUpdate" value="12/11/18 13:07" />
 		<property name="summary" value="Just that, how to pass DP" />
-		<property name="pictures" value="https://images-na.ssl-images-amazon.com/images/I/51FZh8lWu7L.jpg" />
+		<property name="pictures"
+			value="https://images-na.ssl-images-amazon.com/images/I/51FZh8lWu7L.jpg" />
 		<property name="sections">
 			<list>
 				<ref bean="section1tutorial2_1" />
@@ -1514,12 +1561,14 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="tutorial2_2" class="domain.Tutorial">
 		<property name="title" value="How to build a house in a minute" />
 		<property name="lastUpdate" value="12/11/18 13:11" />
-		<property name="summary" value="Your house will be really fragile, but no worries, this tutorial will make me rich" />
-		<property name="pictures" value="https://static.ferienhausmiete.de/pictures/124668/bilder_original/124668_1458648726.jpg" />
+		<property name="summary"
+			value="Your house will be really fragile, but no worries, this tutorial will make me rich" />
+		<property name="pictures"
+			value="https://static.ferienhausmiete.de/pictures/124668/bilder_original/124668_1458648726.jpg" />
 		<property name="sections">
 			<list>
 				<ref bean="section1tutorial2_2" />
@@ -1528,67 +1577,32 @@
 		</property>
 	</bean>
 
-	<!-- Sections -->
-	
-	<!-- Sections for tutorial2_1 -->
-	
-	<bean id="section1tutorial2_1" class="domain.Section">
-		<property name="title" value="Introduction" />
-		<property name="text" value="This tutorial will let you know some advices about this subject, in order to avoid critical errors on the organization." />
-		<property name="pictures" value=" " />
-		<property name="number" value="1" />
+	<!-- Sponsorships -->
+
+	<!-- Sponsorship 1 of sponsor 1 -->
+
+	<bean id="sponsorship1_1" class="domain.Sponsorship">
+		<property name="banner"
+			value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AAAAAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
+		<property name="targetPage" value="http://www.random.es" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_1" />
 	</bean>
-	
-	<bean id="section2tutorial2_1" class="domain.Section">
-		<property name="title" value="Passing DP" />
-		<property name="text" value="The first advice to pass DP? Brace yourselves, winter is coming :D" />
-		<property name="pictures" value="http://brodatyblog.pl/wp-content/uploads/2015/09/rund2.jpg" />
-		<property name="number" value="2" />
+
+	<!-- Sponsorship 1 of sponsor 2 -->
+
+	<bean id="sponsorship2_1" class="domain.Sponsorship">
+		<property name="banner"
+			value="https://img00.deviantart.net/9480/i/2011/046/4/a/random_banner_by_mobianangel11-d39nc1t.png" />
+		<property name="targetPage" value="http://www.random.com" />
+		<property name="creditCard" ref="creditCardHW2" />
+		<property name="tutorial" ref="tutorial2_2" />
 	</bean>
-	
-	<!-- Sections for tutorial2_2 -->
-	
-	<bean id="section2tutorial2_2" class="domain.Section">
-		<property name="title" value="Introduction" />
-		<property name="text" value="This tutorial will teach you how to build a house in a minute. Simple isn't it?" />
-		<property name="pictures" value=" " />
-		<property name="number" value="1" />
-	</bean>
-	
-	<bean id="section2tutorial2_2" class="domain.Section">
-		<property name="title" value="Your best house" />
-		<property name="text" value="This tutorial is 100% trustable (no)" />
-		<property name="pictures" value=" " />
-		<property name="number" value="2" />
-	</bean>
-	
-	<!-- Endorsement -->
-	
-	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
-		<property name="publishedMoment" value="11/11/18 12:26" />
-		<property name="comment" value="This customer is amazingly amazing" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
-	</bean>
-	
-	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
-		<property name="publishedMoment" value="05/11/18 15:56" />
-		<property name="comment" value="This customer is amazingly amazing 2" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
-	</bean>
-	
-	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
-		<property name="publishedMoment" value="07/10/18 20:43" />
-		<property name="comment" value="This handy worker works so well that he can build a house in a minute" />
-		<property name="customer" ref="customer2" />
-		<property name="handyWorker" ref="handyWorker1" />
-	</bean>
-	
+
 	<!-- Curriculums -->
-	
+
 	<!-- Curriculum (full) of HandyWorker 1 -->
-	
+
 	<bean id="curriculumHandyWorker1" class="domain.Curriculum">
 		<property name="ticker" value="181105-1A2B3C" />
 		<property name="personalRecord" ref="personalRecordHW1" />
@@ -1605,24 +1619,26 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="personalRecordHW1" class="domain.PersonalRecord">
 		<property name="fullName" value="Rosa Santacruz Alejo" />
-		<property name="photo" value="https://78.media.tumblr.com/1d9f32206edb6766e03a295125d2405c/tumblr_inline_pf0nx0qzki1uavfqy_540.png" />
+		<property name="photo"
+			value="https://78.media.tumblr.com/1d9f32206edb6766e03a295125d2405c/tumblr_inline_pf0nx0qzki1uavfqy_540.png" />
 		<property name="email" value="rossanale@mail.com" />
 		<property name="phoneNumber" value="+34689367309" />
 		<property name="linkedinLink" value="http://www.linkedin.com" />
 	</bean>
-	
+
 	<bean id="educationHW1_1" class="domain.EducationRecord">
-		<property name="diplomaTitle" value="Ingeniería Informática - Tecnologías Informáticas" />
+		<property name="diplomaTitle"
+			value="Ingeniería Informática - Tecnologías Informáticas" />
 		<property name="startDate" value="20/09/2006" />
 		<property name="endDate" value="13/09/2014" />
 		<property name="institutionName" value="ETSII" />
 		<property name="linkAttachment" value="http://www.google.es" />
 		<property name="comments" value=" " />
 	</bean>
-	
+
 	<bean id="educationHW1_2" class="domain.EducationRecord">
 		<property name="diplomaTitle" value="Chapa y pintura" />
 		<property name="startDate" value="20/09/2018" />
@@ -1630,7 +1646,7 @@
 		<property name="linkAttachment" value="http://www.google.es" />
 		<property name="comments" value=" " />
 	</bean>
-	
+
 	<bean id="professionalHW1_1" class="domain.ProfessionalRecord">
 		<property name="companyName" value="Bitnami" />
 		<property name="startDate" value="18/10/2014" />
@@ -1639,7 +1655,7 @@
 		<property name="attachment" value="http://www.google.com" />
 		<property name="comments" value="Nice job!" />
 	</bean>
-	
+
 	<bean id="professionalHW1_2" class="domain.ProfessionalRecord">
 		<property name="companyName" value="Hermanos Pernía" />
 		<property name="startDate" value="20/05/2016" />
@@ -1647,9 +1663,9 @@
 		<property name="attachment" value="http://www.google.com" />
 		<property name="comments" value=" " />
 	</bean>
-	
+
 	<!-- Curriculum (full) of HandyWorker 2 -->
-	
+
 	<bean id="curriculumHandyWorker2" class="domain.Curriculum">
 		<property name="ticker" value="181023-9A2B3C" />
 		<property name="personalRecord" ref="personalRecordHW2" />
@@ -1666,41 +1682,42 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="personalRecordHW2" class="domain.PersonalRecord">
 		<property name="fullName" value="Esteban Coralino Riesco Motos" />
-		<property name="photo" value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
+		<property name="photo"
+			value="http://s1.1zoom.me/b5050/425/GTA_5_Men_Trevor_Philips_Formal_shirt_518191_1920x1080.jpg" />
 		<property name="email" value="estriemot@mail.es" />
 		<property name="phoneNumber" value="+34653384191" />
 		<property name="linkedinLink" value="http://www.linkedin.com" />
 	</bean>
-	
-	<bean id="endorserRecordHW2_1" class="domain.EndorserRecord">
+
+	<bean id="endorserHW2_1" class="domain.EndorserRecord">
 		<property name="fullName" value="Eustaquio Ameba Gutiérrez" />
 		<property name="email" value="eusamegut@mail.com" />
 		<property name="phoneNumber" value="+34683571000" />
 		<property name="linkedinLink" value="http://www.linkedin.com" />
 		<property name="comments" value="Nice guy bro!" />
 	</bean>
-	
-	<bean id="endorserRecordHW2_2" class="domain.EndorserRecord">
+
+	<bean id="endorserHW2_2" class="domain.EndorserRecord">
 		<property name="fullName" value="Alba Moreno Rubio" />
 		<property name="email" value="albmorrub@mail.com" />
 		<property name="phoneNumber" value="+34699888000" />
 		<property name="linkedinLink" value="http://www.linkedin.com" />
 		<property name="comments" value="Nice guy working!" />
 	</bean>
-	
-	<bean id="miscellaneousRecordHW2_1" class="domain.MiscellaneousRecord">
+
+	<bean id="miscellaneousHW2_1" class="domain.MiscellaneousRecord">
 		<property name="title" value="Desarrollo de apps en Android" />
 		<property name="linkAttachment" value="http://udacity.com" />
 		<property name="comments" value="WOW!" />
 	</bean>
-	
-	<bean id="miscellaneousRecordHW2_2" class="domain.MiscellaneousRecord">
+
+	<bean id="miscellaneousHW2_2" class="domain.MiscellaneousRecord">
 		<property name="title" value="Pintura Acrílica" />
 		<property name="linkAttachment" value="http://udacity.com" />
 		<property name="comments" value="WOW!" />
 	</bean>
-	
+
 </beans>
