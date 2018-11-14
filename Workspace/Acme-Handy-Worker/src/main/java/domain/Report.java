@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -15,20 +16,23 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Report extends DomainEntity {
 
-	private Date publishedMoment;
-	private String description;
-	private String attachments;
-	private boolean isFinal;
-	private Collection<Note> notes;
+	private Date				publishedMoment;
+	private String				description;
+	private String				attachments;
+	private boolean				isFinal;
+	private Collection<Note>	notes;
+
 
 	@Past
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getPublishedMoment() {
 		return this.publishedMoment;
 	}
