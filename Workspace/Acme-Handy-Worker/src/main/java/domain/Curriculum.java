@@ -42,7 +42,7 @@ public class Curriculum extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
 	public PersonalRecord getPersonalRecord() {
 		return personalRecord;
 	}
