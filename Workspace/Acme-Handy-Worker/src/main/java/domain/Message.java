@@ -1,10 +1,12 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,6 +16,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -25,7 +28,7 @@ public class Message extends DomainEntity {
 	private String priority;
 	private String tags;
 	private Actor sender;
-	private Actor recipient;
+	private Collection<Actor> recipients;
 	private boolean isSpam;
 	
 	
@@ -89,22 +92,22 @@ public class Message extends DomainEntity {
 	}
 
 	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public Actor getReciever() {
-		return recipient;
+	@NotEmpty
+	@ManyToMany
+	public Collection<Actor> getRecipients() {
+		return recipients;
 	}
 
-	public void setReciever(Actor recipient) {
-		this.recipient= recipient;
+	public void setRecipients(Collection<Actor> recipients) {
+		this.recipients= recipients;
 	}
 	
 	
-	public boolean isSpam() {
+	public boolean getIsSpam() {
 		return isSpam;
 	}
 
-	public void setSpam(boolean isSpam) {
+	public void setIsSpam(boolean isSpam) {
 		this.isSpam = isSpam;
 	}
 
