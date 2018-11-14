@@ -36,7 +36,6 @@ public class FixUpTask extends DomainEntity {
 	private Category				category;
 	private Warranty				warranty;
 
-
 	@NotBlank
 	@Column(unique = true)
 	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")

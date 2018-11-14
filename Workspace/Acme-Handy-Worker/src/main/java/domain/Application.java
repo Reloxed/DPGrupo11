@@ -1,14 +1,12 @@
 
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +27,6 @@ public class Application extends DomainEntity {
 	private Money				offeredPrice;
 	private String				comment;
 	private CreditCard			creditCard;
-	private Collection<Phase>	phases;
 	private FixUpTask			fixUpTask;
 	private HandyWorker			applicant;
 
@@ -83,16 +80,6 @@ public class Application extends DomainEntity {
 
 	public void setRegisteredMoment(final Date registeredMoment) {
 		this.registeredMoment = registeredMoment;
-	}
-
-	@Valid
-	@OneToMany
-	public Collection<Phase> getPhases() {
-		return this.phases;
-	}
-
-	public void setPhases(final Collection<Phase> phases) {
-		this.phases = phases;
 	}
 
 	@Valid
