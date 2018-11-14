@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -11,10 +12,10 @@ import javax.persistence.OneToMany;
 @Access(AccessType.PROPERTY)
 public class Referee extends Actor {
 
-	private Collection<Complaint> complaints;
+	private Collection<Complaint>	complaints;
+
 
 	@OneToMany
-	
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;
 	}

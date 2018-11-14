@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -14,99 +15,98 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date sendMoment;
-	private String subject;
-	private String body;
-	private String priority;
-	private String tags;
-	private Actor sender;
-	private Actor recipient;
-	private boolean isSpam;
-	
-	
+	private Date	sendMoment;
+	private String	subject;
+	private String	body;
+	private String	priority;
+	private String	tags;
+	private Actor	sender;
+	private Actor	recipient;
+	private boolean	isSpam;
+
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getSendMoment() {
-		return sendMoment;
+		return this.sendMoment;
 	}
 
-	public void setSendMoment(Date sendMoment) {
+	public void setSendMoment(final Date sendMoment) {
 		this.sendMoment = sendMoment;
 	}
 
 	@NotBlank
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	@NotBlank
 	public String getBody() {
-		return body;
+		return this.body;
 	}
 
-	public void setBody(String body) {
+	public void setBody(final String body) {
 		this.body = body;
 	}
 
 	@NotBlank
 	@Pattern(regexp = "^HIGH|NEUTRAL|LOW$")
 	public String getPriority() {
-		return priority;
+		return this.priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(final String priority) {
 		this.priority = priority;
 	}
 
 	public String getTags() {
-		return tags;
+		return this.tags;
 	}
 
-	public void setTags(String tags) {
+	public void setTags(final String tags) {
 		this.tags = tags;
 	}
 
-	
 	@Valid
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getSender() {
-		return sender;
+		return this.sender;
 	}
 
-	public void setSender(Actor sender) {
+	public void setSender(final Actor sender) {
 		this.sender = sender;
 	}
 
 	@Valid
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getReciever() {
-		return recipient;
+		return this.recipient;
 	}
 
-	public void setReciever(Actor recipient) {
-		this.recipient= recipient;
+	public void setReciever(final Actor recipient) {
+		this.recipient = recipient;
 	}
-	
-	
+
 	public boolean isSpam() {
-		return isSpam;
+		return this.isSpam;
 	}
 
-	public void setSpam(boolean isSpam) {
+	public void setSpam(final boolean isSpam) {
 		this.isSpam = isSpam;
 	}
 
-	
 }

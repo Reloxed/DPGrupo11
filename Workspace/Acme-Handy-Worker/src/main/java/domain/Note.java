@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -10,20 +11,24 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Note extends DomainEntity {
 
-	private Date publishedMoment;
-	private String refereeComment;
-	private String customerComment;
-	private String handyWorkerComment;
+	private Date	publishedMoment;
+	private String	refereeComment;
+	private String	customerComment;
+	private String	handyWorkerComment;
+
 
 	/* Atributtes */
 
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getPublishedMoment() {
 		return this.publishedMoment;
 	}
@@ -33,28 +38,27 @@ public class Note extends DomainEntity {
 	}
 
 	public String getRefereeComment() {
-		return refereeComment;
+		return this.refereeComment;
 	}
 
-	public void setRefereeComment(String refereeComment) {
+	public void setRefereeComment(final String refereeComment) {
 		this.refereeComment = refereeComment;
 	}
 
 	public String getCustomerComment() {
-		return customerComment;
+		return this.customerComment;
 	}
 
-	public void setCustomerComment(String customerComment) {
+	public void setCustomerComment(final String customerComment) {
 		this.customerComment = customerComment;
 	}
 
 	public String getHandyWorkerComment() {
-		return handyWorkerComment;
+		return this.handyWorkerComment;
 	}
 
-	public void setHandyWorkerComment(String handyWorkerComment) {
+	public void setHandyWorkerComment(final String handyWorkerComment) {
 		this.handyWorkerComment = handyWorkerComment;
 	}
 
-	
 }

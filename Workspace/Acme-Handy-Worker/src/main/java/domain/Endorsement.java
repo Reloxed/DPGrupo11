@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -13,33 +14,36 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Endorsement extends DomainEntity {
 
-	private Date publishedMoment;
-	private String comment;
-	private Customer customer;
-	private HandyWorker handyWorker;
+	private Date		publishedMoment;
+	private String		comment;
+	private Customer	customer;
+	private HandyWorker	handyWorker;
+
 
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getPublishedMoment() {
-		return publishedMoment;
+		return this.publishedMoment;
 	}
 
-	public void setPublishedMoment(Date publishedMoment) {
+	public void setPublishedMoment(final Date publishedMoment) {
 		this.publishedMoment = publishedMoment;
 	}
 
 	@NotBlank
 	public String getComment() {
-		return comment;
+		return this.comment;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(final String comment) {
 		this.comment = comment;
 	}
 
@@ -47,10 +51,10 @@ public class Endorsement extends DomainEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	public Customer getCustomer() {
-		return customer;
+		return this.customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(final Customer customer) {
 		this.customer = customer;
 	}
 
@@ -58,10 +62,10 @@ public class Endorsement extends DomainEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	public HandyWorker getHandyWorker() {
-		return handyWorker;
+		return this.handyWorker;
 	}
 
-	public void setHandyWorker(HandyWorker handyWorker) {
+	public void setHandyWorker(final HandyWorker handyWorker) {
 		this.handyWorker = handyWorker;
 	}
 
