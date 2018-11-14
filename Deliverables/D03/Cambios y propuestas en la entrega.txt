@@ -11,3 +11,6 @@
 - Se han cambiado las multiplicidades de las relaciones FixUpTask --> Warranty y FixUpTask --> Category. Ahora FixUpTask en ambos casos tiene multiplicidad 0..*->DONE
 - Se ha eliminado la relación Application - Phase y se ha añadido la relaciíon FixUpTask <-- Phase ya que las fases corresponden a una chapuza, a pesar de que se creen cuando una solicitud es aceptada.->DONE
 - Se ha cambiado la direccionalidad MessageBox <-> Message a MessageBox --> Message->DONE
+- Se ha cambiado la multiplicidad de la relación Actor - Message siendo actor recipient. Ahora es 1..* ya que un mismo mensaje puede ser recibido por varios actores.
+- Se han eliminado las relaciones Administrator-Warranty y Administrator-Category, ya que es el que tiene acceso a ellas en la web pero no son propias de cada administrador.
+- Se ha cambiado la direccionalidad de Application-HandyWorker. Ahora es bidireccional ya que una solicitud requiere saber quién es el solicitante.

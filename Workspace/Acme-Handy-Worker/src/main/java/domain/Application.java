@@ -29,6 +29,7 @@ public class Application extends DomainEntity {
 	private CreditCard creditCard;
 	private Collection<Phase> phases;
 	private FixUpTask fixUpTask;
+	private HandyWorker applicant;
 	
 
 	@NotBlank
@@ -51,7 +52,7 @@ public class Application extends DomainEntity {
 		this.offeredPrice = offeredPrice;
 	}
 
-	
+	@NotNull
 	public String getComment() {
 		return comment;
 	}
@@ -103,6 +104,14 @@ public class Application extends DomainEntity {
 		this.fixUpTask = fixUpTask;
 	}
 
-	
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public HandyWorker getApplicant() {
+		return this.applicant;
+	}
+	public void setApplicant(final HandyWorker applicant) {
+		this.applicant = applicant;
+	}
 	
 }
