@@ -54,7 +54,7 @@ public class HandyWorker extends Actor {
 	}
 
 	@Valid
-	@OneToMany
+	@OneToMany(mappedBy="applicant")
 	public Collection<Application> getApplications() {
 		return applications;
 	}

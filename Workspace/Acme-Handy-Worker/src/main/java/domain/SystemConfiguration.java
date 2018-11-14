@@ -17,6 +17,8 @@ import org.hibernate.validator.constraints.URL;
 public class SystemConfiguration extends DomainEntity {
 
 	private String systemName;
+	private String welcomeMessageEn;
+	private String welcomeMessageEs;
 	private String banner;
 	private double VAT;
 	private String listCreditCardMakes;
@@ -35,6 +37,24 @@ public class SystemConfiguration extends DomainEntity {
 
 	public void setSystemName(final String systemName) {
 		this.systemName = systemName;
+	}
+
+	@NotBlank
+	public String getWelcomeMessageEn() {
+		return this.welcomeMessageEn;
+	}
+
+	public void setWelcomeMessageEn(final String welcomeMessageEn) {
+		this.welcomeMessageEn = welcomeMessageEn;
+	}
+
+	@NotBlank
+	public String getWelcomeMessageEs() {
+		return this.welcomeMessageEs;
+	}
+
+	public void setWelcomeMessageEs(final String welcomeMessageEs) {
+		this.welcomeMessageEs = welcomeMessageEs;
 	}
 
 	@URL
@@ -66,7 +86,7 @@ public class SystemConfiguration extends DomainEntity {
 		this.listCreditCardMakes = listCreditCardMakes;
 	}
 
-	@Pattern(regexp = "\\+[0-9]{3}")
+	@Pattern(regexp = "^\\+[1-9]\\d{0,2}$")
 	@NotBlank
 	public String getCountryCode() {
 		return this.countryCode;

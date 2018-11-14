@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -5,20 +6,25 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Phase extends DomainEntity {
 
-	private String title;
-	private String description;
-	private Date startMoment;
-	private Date endMoment;
+	private String		title;
+	private String		description;
+	private Date		startMoment;
+	private Date		endMoment;
+	private FixUpTask	fixUpTask;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -40,6 +46,7 @@ public class Phase extends DomainEntity {
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartMoment() {
 		return this.startMoment;
 	}
@@ -50,12 +57,24 @@ public class Phase extends DomainEntity {
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndMoment() {
 		return this.endMoment;
 	}
 
 	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
+	}
+
+	@ManyToOne(optional = false)
+	@NotNull
+	@Valid
+	public FixUpTask getFixUpTask() {
+		return this.fixUpTask;
+	}
+
+	public void setFixUpTask(final FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
 	}
 
 }

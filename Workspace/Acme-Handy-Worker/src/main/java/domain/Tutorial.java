@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -15,17 +16,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Tutorial extends DomainEntity {
 
-	private String title;
-	private Date lastUpdate;
-	private String summary;
-	private String pictures;
-	private Collection<Section> sections;
+	private String				title;
+	private Date				lastUpdate;
+	private String				summary;
+	private String				pictures;
+	private Collection<Section>	sections;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -39,6 +43,7 @@ public class Tutorial extends DomainEntity {
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getLastUpdate() {
 		return this.lastUpdate;
 	}
@@ -55,7 +60,7 @@ public class Tutorial extends DomainEntity {
 	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
-	
+
 	@URL
 	public String getPictures() {
 		return this.pictures;
@@ -65,7 +70,7 @@ public class Tutorial extends DomainEntity {
 		this.pictures = pictures;
 	}
 
-	@NotNull
+	@NotEmpty
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Section> getSections() {

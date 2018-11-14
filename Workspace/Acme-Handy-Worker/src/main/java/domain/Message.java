@@ -1,12 +1,10 @@
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,97 +14,98 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date sendMoment;
-	private String subject;
-	private String body;
-	private String priority;
-	private String tags;
-	private Collection<MessageBox> messageBoxes;
-	private Actor sender;
-	private Actor recipient;
+ private Date sendMoment;
+ private String subject;
+ private String body;
+ private String priority;
+ private String tags;
+ private Actor sender;
+ private Actor recipient;
+ private boolean isSpam;
 
-	@NotNull
-	@Past
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getSendMoment() {
-		return sendMoment;
-	}
 
-	public void setSendMoment(Date sendMoment) {
-		this.sendMoment = sendMoment;
-	}
+ @NotNull
+ @Past
+ @Temporal(TemporalType.TIMESTAMP)
+ @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+ public Date getSendMoment() {
+  return this.sendMoment;
+ }
 
-	@NotBlank
-	public String getSubject() {
-		return subject;
-	}
+ public void setSendMoment(final Date sendMoment) {
+  this.sendMoment = sendMoment;
+ }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+ @NotBlank
+ public String getSubject() {
+  return this.subject;
+ }
 
-	@NotBlank
-	public String getBody() {
-		return body;
-	}
+ public void setSubject(final String subject) {
+  this.subject = subject;
+ }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+ @NotBlank
+ public String getBody() {
+  return this.body;
+ }
 
-	@NotBlank
-	@Pattern(regexp = "^HIGH|NEUTRAL|LOW$")
-	public String getPriority() {
-		return priority;
-	}
+ public void setBody(final String body) {
+  this.body = body;
+ }
 
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
+ @NotBlank
+ @Pattern(regexp = "^HIGH|NEUTRAL|LOW$")
+ public String getPriority() {
+  return this.priority;
+ }
 
-	public String getTags() {
-		return tags;
-	}
+ public void setPriority(final String priority) {
+  this.priority = priority;
+ }
 
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
+ public String getTags() {
+  return this.tags;
+ }
 
-	@NotNull
-	@ManyToMany
-	public Collection<MessageBox> getMessageBoxes() {
-		return messageBoxes;
-	}
+ public void setTags(final String tags) {
+  this.tags = tags;
+ }
 
-	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
-		this.messageBoxes = messageBoxes;
-	}
+ @Valid
+ @NotNull
+ @ManyToOne(optional = false)
+ public Actor getSender() {
+  return this.sender;
+ }
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public Actor getSender() {
-		return sender;
-	}
+ public void setSender(final Actor sender) {
+  this.sender = sender;
+ }
 
-	public void setSender(Actor sender) {
-		this.sender = sender;
-	}
+ @Valid
+ @NotNull
+ @ManyToOne(optional = false)
+ public Actor getReciever() {
+  return this.recipient;
+ }
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public Actor getReciever() {
-		return recipient;
-	}
+ public void setReciever(final Actor recipient) {
+  this.recipient = recipient;
+ }
 
-	public void setReciever(Actor recipient) {
-		this.recipient= recipient;
-	}
+ public boolean isSpam() {
+  return this.isSpam;
+ }
+
+ public void setSpam(final boolean isSpam) {
+  this.isSpam = isSpam;
+ }
 
 }

@@ -36,7 +36,6 @@ public class MessageBox extends DomainEntity {
 	}
 
 	@ManyToMany
-	
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}

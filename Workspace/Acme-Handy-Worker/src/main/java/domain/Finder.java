@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -16,104 +17,108 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
-	private String keyWord;
-	private Money priceLow;
-	private Money priceHigh;
-	private Date startMoment;
-	private Date endMoment;
-	private Date searchMoment;
-	private Category category;
-	private Warranty warranty;
-	private Collection<FixUpTask> fixuptask;
+	private String					keyWord;
+	private Money					priceLow;
+	private Money					priceHigh;
+	private Date					startMoment;
+	private Date					endMoment;
+	private Date					searchMoment;
+	private Category				category;
+	private Warranty				warranty;
+	private Collection<FixUpTask>	fixuptask;
+
 
 	public String getKeyWord() {
-		return keyWord;
+		return this.keyWord;
 	}
 
-	public void setKeyWord(String keyWord) {
+	public void setKeyWord(final String keyWord) {
 		this.keyWord = keyWord;
 	}
 
 	@AttributeOverride(name = "quantity", column = @Column(name = "priceLow"))
 	public Money getPriceLow() {
-		return priceLow;
+		return this.priceLow;
 	}
 
-	public void setPriceLow(Money priceLow) {
+	public void setPriceLow(final Money priceLow) {
 		this.priceLow = priceLow;
 	}
 
 	@AttributeOverride(name = "quantity", column = @Column(name = "priceHigh"))
 	public Money getPriceHigh() {
-		return priceHigh;
+		return this.priceHigh;
 	}
 
-	public void setPriceHigh(Money priceHigh) {
+	public void setPriceHigh(final Money priceHigh) {
 		this.priceHigh = priceHigh;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartMoment() {
-		return startMoment;
+		return this.startMoment;
 	}
 
-	public void setStartMoment(Date startMoment) {
+	public void setStartMoment(final Date startMoment) {
 		this.startMoment = startMoment;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndMoment() {
-		return endMoment;
+		return this.endMoment;
 	}
 
-	public void setEndMoment(Date endMoment) {
+	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
 
 	@Valid
 	@OneToOne(optional = true)
 	public Category getCategory() {
-		return category;
+		return this.category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(final Category category) {
 		this.category = category;
 	}
 
 	@Valid
 	@OneToOne(optional = true)
 	public Warranty getWarranty() {
-		return warranty;
+		return this.warranty;
 	}
 
-	public void setWarranty(Warranty warranty) {
+	public void setWarranty(final Warranty warranty) {
 		this.warranty = warranty;
 	}
 
 	@Valid
 	@OneToMany
 	public Collection<FixUpTask> getFixuptask() {
-		return fixuptask;
+		return this.fixuptask;
 	}
 
-	public void setFixuptask(Collection<FixUpTask> fixuptask) {
+	public void setFixuptask(final Collection<FixUpTask> fixuptask) {
 		this.fixuptask = fixuptask;
 	}
 
 	@Past
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
 	public Date getSearchMoment() {
-		return searchMoment;
+		return this.searchMoment;
 	}
 
-	public void setSearchMoment(Date searchMoment) {
+	public void setSearchMoment(final Date searchMoment) {
 		this.searchMoment = searchMoment;
 	}
 

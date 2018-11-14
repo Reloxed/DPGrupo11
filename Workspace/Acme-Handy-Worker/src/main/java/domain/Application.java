@@ -1,13 +1,12 @@
+
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,92 +16,91 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	private Date registeredMoment;
-	private String status;
-	private Money offeredPrice;
-	private String comment;
-	private CreditCard creditCard;
-	private Collection<Phase> phases;
-	private FixUpTask fixUpTask;
-	
+	private Date				registeredMoment;
+	private String				status;
+	private Money				offeredPrice;
+	private String				comment;
+	private CreditCard			creditCard;
+	private FixUpTask			fixUpTask;
+	private HandyWorker			applicant;
+
 
 	@NotBlank
 	@Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$")
 	public String getStatus() {
-		return status;
+		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 
 	@NotNull
 	@Valid
 	public Money getOfferedPrice() {
-		return offeredPrice;
+		return this.offeredPrice;
 	}
 
-	public void setOfferedPrice(Money offeredPrice) {
+	public void setOfferedPrice(final Money offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
 
-	
+	@NotNull
 	public String getComment() {
-		return comment;
+		return this.comment;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(final String comment) {
 		this.comment = comment;
 	}
 
-	
 	@Valid
-	@OneToOne(optional=true)
+	@OneToOne(optional = true)
 	public CreditCard getCreditCard() {
-		return creditCard;
+		return this.creditCard;
 	}
 
-	public void setCreditCard(CreditCard creditCard) {
+	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
-	
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getRegisteredMoment() {
-		return registeredMoment;
+		return this.registeredMoment;
 	}
 
-	public void setRegisteredMoment(Date registeredMoment) {
+	public void setRegisteredMoment(final Date registeredMoment) {
 		this.registeredMoment = registeredMoment;
 	}
 
 	@Valid
-	@OneToMany
-	public Collection<Phase> getPhases() {
-		return phases;
-	}
-
-	public void setPhases(Collection<Phase> phases) {
-		this.phases = phases;
-	}
-
-	@Valid
 	@NotNull
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public FixUpTask getFixUpTask() {
-		return fixUpTask;
+		return this.fixUpTask;
 	}
 
-	public void setFixUpTask(FixUpTask fixUpTask) {
+	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
 	}
 
-	
-	
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public HandyWorker getApplicant() {
+		return this.applicant;
+	}
+	public void setApplicant(final HandyWorker applicant) {
+		this.applicant = applicant;
+	}
+
 }

@@ -3,11 +3,15 @@
 - En los uml messageBox aparece en cursiva pero creo que eso se quedo asi porque antes era una clase abstracta. Creo que ahora deberia ir con la fuente normal. --> Arreglado
 - Añadir @Valid a getNotes() en la clase Report
 - Añadir @Valid a getSponsorships() en la clase sponsor.
-- Añadir @URL a getPictures() en Tutorial.
-- Cambiar en clase Warranty o cambiar el nombre en el UML por laws.
-- El patrón de Status de Application es así : @Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$”). Se ha cambiado para Status y Priority, en Message y en Application.
-- Finder -> FixUpTask no es OneToMany --> DEBE SERLO, SE HA CAMBIADO EN EL UML
-- CreditCard - Sponsorship: el ‘has’ está orientado hacia el lado contrario. --> Se ha cambiado 
-- Se han cambiado las multiplicidades de las relaciones FixUpTask --> Warranty y FixUpTask --> Category. Ahora FixUpTask en ambos casos tiene multiplicidad 0..*
-- Se ha eliminado la relación Application - Phase y se ha añadido la relaciíon FixUpTask <-- Phase ya que las fases corresponden a una chapuza, a pesar de que se creen cuando una solicitud es aceptada.
-- Se ha cambiado la direccionalidad MessageBox <-> Message a MessageBox --> Message
+- Añadir @URL a getPictures() en Tutorial.->DONE
+- Cambiar en clase Warranty o cambiar el nombre en el UML por laws.->DONE
+- El patrón de Status de Application es así : @Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$”). Se ha cambiado para Status y Priority, en Message y en Application.->DONE
+- Finder -> FixUpTask no es OneToMany --> DEBE SERLO, SE HA CAMBIADO EN EL UML->DONE
+- CreditCard - Sponsorship: el ‘has’ está orientado hacia el lado contrario. --> Se ha cambiado ->DONE
+- Se han cambiado las multiplicidades de las relaciones FixUpTask --> Warranty y FixUpTask --> Category. Ahora FixUpTask en ambos casos tiene multiplicidad 0..*->DONE
+- Se ha eliminado la relación Application - Phase y se ha añadido la relaciíon FixUpTask <-- Phase ya que las fases corresponden a una chapuza, a pesar de que se creen cuando una solicitud es aceptada.->DONE
+- Se ha cambiado la direccionalidad MessageBox <-> Message a MessageBox --> Message->DONE
+- Se ha cambiado la multiplicidad de la relación Actor - Message siendo actor recipient. Ahora es 1..* ya que un mismo mensaje puede ser recibido por varios actores.
+- Se han eliminado las relaciones Administrator-Warranty y Administrator-Category, ya que es el que tiene acceso a ellas en la web pero no son propias de cada administrador.
+- Se ha cambiado la direccionalidad de Application-HandyWorker. Ahora es bidireccional ya que una solicitud requiere saber quién es el solicitante.
+- Se ha añadido en la clase SystemConfiguration dos nuevos atributos: welcomeMessageEs y welcomeMessageEn, es decir, el mensaje de bienvenida del sitio tanto en inglés como en español.
