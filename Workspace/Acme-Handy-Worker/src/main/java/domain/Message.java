@@ -1,12 +1,10 @@
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,10 +24,11 @@ public class Message extends DomainEntity {
 	private String body;
 	private String priority;
 	private String tags;
-	private Collection<MessageBox> messageBoxes;
 	private Actor sender;
 	private Actor recipient;
-
+	private boolean isSpam;
+	
+	
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -77,16 +76,7 @@ public class Message extends DomainEntity {
 		this.tags = tags;
 	}
 
-	@NotNull
-	@ManyToMany
-	public Collection<MessageBox> getMessageBoxes() {
-		return messageBoxes;
-	}
-
-	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
-		this.messageBoxes = messageBoxes;
-	}
-
+	
 	@Valid
 	@NotNull
 	@ManyToOne(optional=false)
@@ -108,5 +98,15 @@ public class Message extends DomainEntity {
 	public void setReciever(Actor recipient) {
 		this.recipient= recipient;
 	}
+	
+	
+	public boolean isSpam() {
+		return isSpam;
+	}
 
+	public void setSpam(boolean isSpam) {
+		this.isSpam = isSpam;
+	}
+
+	
 }

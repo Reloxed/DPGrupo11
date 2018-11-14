@@ -5,8 +5,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,6 +21,7 @@ public class Phase extends DomainEntity {
 	private String description;
 	private Date startMoment;
 	private Date endMoment;
+	private FixUpTask fixUpTask;
 
 	@NotBlank
 	public String getTitle() {
@@ -57,5 +60,18 @@ public class Phase extends DomainEntity {
 	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
+
+	@ManyToOne(optional = false)
+	@NotNull
+	@Valid
+	public FixUpTask getFixUpTask() {
+		return fixUpTask;
+	}
+
+	public void setFixUpTask(FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
+	}
+	
+	
 
 }
