@@ -106,7 +106,7 @@
 			<ref bean="fixUpTask1_1" />
 		</property>
 		<property name="applicant">
-			<ref bean="handyWorker2"/>
+			<ref bean="handyWorker2" />
 		</property>
 	</bean>
 
@@ -127,7 +127,7 @@
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>
-		<property name="applicant" ref="handyWorker1"/>
+		<property name="applicant" ref="handyWorker1" />
 	</bean>
 
 	<!-- Application 1 for the FUP2 of the customer 1 -->
@@ -147,7 +147,7 @@
 			<ref bean="fixUpTask1_2" />
 		</property>
 		<property name="applicant">
-			<ref bean="handyWorker1"/>
+			<ref bean="handyWorker1" />
 		</property>
 	</bean>
 
@@ -167,7 +167,7 @@
 			<ref bean="fixUpTask1_2" />
 		</property>
 		<property name="applicant">
-			<ref bean="handyWorker1"/>
+			<ref bean="handyWorker1" />
 		</property>
 	</bean>
 	<!-- HandyWorkers -->
@@ -1185,7 +1185,7 @@
 			</bean>
 		</property>
 		<property name="startMoment" value="15/11/2018 17:30" />
-		<property name="endMoment" value="15/11/2018" />
+		<property name="endMoment" value="15/11/2018 18:30" />
 		<property name="application">
 			<list>
 				<ref bean="applicationf1_1_1" />
@@ -1197,6 +1197,12 @@
 		</property>
 		<property name="warranty">
 			<ref bean="warrantyf1_1" />
+		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf1_1" />
+				<ref bean="complaintf1_2" />
+			</list>
 		</property>
 	</bean>
 
@@ -1213,7 +1219,7 @@
 			</bean>
 		</property>
 		<property name="startMoment" value="15/11/2018 18:30" />
-		<property name="endMoment" value="15/11/2018" />
+		<property name="endMoment" value="15/11/2018 19:00" />
 		<property name="application">
 			<list>
 				<ref bean="applicationf2_1_1" />
@@ -1225,8 +1231,13 @@
 		<property name="warranty">
 			<ref bean="warrantyf2_1" />
 		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaintf2_1" />
+			</list>
+		</property>
 	</bean>
-	
+
 	<bean id="fixUpTask2_1" class="domain.FixUpTask">
 		<property name="ticker" value="234567-ASDFGH" />
 		<property name="publishedMoment" value="05/11/2018 13:31" />
@@ -1252,7 +1263,7 @@
 		</property>
 	</bean>
 
-	
+
 	<!-- CATEGORIES -->
 
 	<!-- CATEGORY -->
@@ -1261,6 +1272,24 @@
 		<property name="englishName" value="CATEGORY" />
 		<property name="parentCategory">
 			<null />
+		</property>
+	</bean>
+	
+	<!-- REPAIRS -->
+	<bean id="repairs" class="domain.Category">
+		<property name="spanishName" value="Reparaciones" />
+		<property name="englishName" value="Repairs" />
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+	</bean>
+	
+	<!-- HOUSING -->
+	<bean id="housing" class="domain.Category">
+		<property name="spanishName" value="Hogar" />
+		<property name="englishName" value="Housing" />
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
 		</property>
 	</bean>
 
@@ -1278,7 +1307,7 @@
 		<property name="spanishName" value="Reparación de techo" />
 		<property name="englishName" value="Ceiling repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1287,7 +1316,7 @@
 		<property name="spanishName" value="Limpieza" />
 		<property name="englishName" value="Cleaning" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1296,7 +1325,7 @@
 		<property name="spanishName" value="Trabajos especiales" />
 		<property name="englishName" value="Concrete work" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1305,7 +1334,7 @@
 		<property name="spanishName" value="Puertas" />
 		<property name="englishName" value="Doors" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1314,7 +1343,7 @@
 		<property name="spanishName" value="Cableado eléctrico" />
 		<property name="englishName" value="Electrical wiring" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1323,7 +1352,7 @@
 		<property name="spanishName" value="Instalación de aire acondicionado" />
 		<property name="englishName" value="Fan installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1332,7 +1361,7 @@
 		<property name="spanishName" value="Reparación de vallas" />
 		<property name="englishName" value="Fence fixing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1341,7 +1370,7 @@
 		<property name="spanishName" value="Equipo de seguridad en casas" />
 		<property name="englishName" value="Home security systems" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1350,7 +1379,7 @@
 		<property name="spanishName" value="Aislamiento térmico" />
 		<property name="englishName" value="Insulation installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1359,7 +1388,7 @@
 		<property name="spanishName" value="Reparación de lámparas" />
 		<property name="englishName" value="Lamp repairs" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1368,7 +1397,7 @@
 		<property name="spanishName" value="Mudanzas" />
 		<property name="englishName" value="Moving" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1377,7 +1406,7 @@
 		<property name="spanishName" value="Pintura" />
 		<property name="englishName" value="Painting" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1386,7 +1415,7 @@
 		<property name="spanishName" value="Control de plagas" />
 		<property name="englishName" value="Pest control" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1395,7 +1424,7 @@
 		<property name="spanishName" value="Fontanería" />
 		<property name="englishName" value="Plumbing repairs" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1404,7 +1433,7 @@
 		<property name="spanishName" value="Tejados" />
 		<property name="englishName" value="Roofing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1413,7 +1442,7 @@
 		<property name="spanishName" value="Instalación de estanterías" />
 		<property name="englishName" value="Shelf installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1422,7 +1451,7 @@
 		<property name="spanishName" value="Paneles solares" />
 		<property name="englishName" value="Solar panels" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1431,7 +1460,7 @@
 		<property name="spanishName" value="Insonorización" />
 		<property name="englishName" value="Soundproofing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1440,7 +1469,7 @@
 		<property name="spanishName" value="Reparación de riego" />
 		<property name="englishName" value="Sprinkler repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1449,7 +1478,7 @@
 		<property name="spanishName" value="Reparación de ventanas" />
 		<property name="englishName" value="Window repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1487,7 +1516,7 @@
 			value="Full examination of the repplicant to determine how bad the damage is" />
 		<property name="startMoment" value="10/11/2018 08:00" />
 		<property name="endMoment" value="10/11/2018 11:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2"/>
+		<property name="fixUpTask" ref="fixUpTask1_2" />
 	</bean>
 
 	<!-- Phase 2 of the application 1 of the FUP 1 of the customer 2 -->
@@ -1497,7 +1526,7 @@
 			value="Once found all the imperfections, I will proceed to..." />
 		<property name="startMoment" value="10/11/2018 11:00" />
 		<property name="endMoment" value="10/11/2018 18:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2"/>
+		<property name="fixUpTask" ref="fixUpTask1_2" />
 	</bean>
 
 	<!-- Phase 3 of the application 1 of the FUP 1 of the customer 2 -->
@@ -1506,7 +1535,7 @@
 		<property name="description" value="Test the changes applied to the replicant" />
 		<property name="startMoment" value="10/11/2018 18:00" />
 		<property name="endMoment" value="10/11/2018 20:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2"/>
+		<property name="fixUpTask" ref="fixUpTask1_2" />
 	</bean>
 
 	<!-- FINDER -->
@@ -1575,10 +1604,35 @@
 		<property name="description" value="The replicant is even worse than before" />
 		<property name="attachements" value="http://www.imgur.com/replicant" />
 		<property name="fixUpTask">
-			<ref bean="fixUpTask1_2" />
+			<ref bean="fixUpTask1_1" />
 		</property>
 		<property name="report">
 			<ref bean="reportCFT1_2" />
+		</property>
+	</bean>
+	<bean id="complaintf1_1" class="domain.Complaint">
+		<property name="ticker" value="346408-ASDFGP" />
+		<property name="moment" value="11/11/2018 17:14" />
+		<property name="description" value="The replicant is even better than before" />
+		<property name="attachements" value="http://www.imgur.com/replicant2" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_1" />
+		</property>
+		<property name="report">
+			<ref bean="reportCFT1_1" />
+		</property>
+	</bean>
+
+	<bean id="complaintf2_1" class="domain.Complaint">
+		<property name="ticker" value="345673-ASDFLH" />
+		<property name="moment" value="11/11/2018 17:14" />
+		<property name="description" value="The replicant is worse than before" />
+		<property name="attachements" value="http://www.imgur.com/replicant3" />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_2" />
+		</property>
+		<property name="report">
+			<ref bean="reportCFT2_1" />
 		</property>
 	</bean>
 	<!-- REPORTs -->
@@ -1595,6 +1649,20 @@
 				<ref bean="noteRCFT1_2" />
 			</list>
 		</property>
+	</bean>
+	<bean id="reportCFT1_1" class="domain.Report">
+		<property name="publishedMoment" value="09/11/2018 10:38" />
+		<property name="description"
+			value="Evaluated the funcionality of one replicant, and it worked perfectly with no signs of malfunctioning." />
+		<property name="attachments" value="http://www.reports.es/replicant" />
+		<property name="isFinal" value="true" />
+	</bean>
+	<bean id="reportCFT2_1" class="domain.Report">
+		<property name="publishedMoment" value="09/11/2018 10:38" />
+		<property name="description"
+			value="Evaluated the funcionality of the replicants, and it worked perfectly with no signs of malfunctioning." />
+		<property name="attachments" value="http://www.reports.es/replicant" />
+		<property name="isFinal" value="true" />
 	</bean>
 
 	<!-- NOTEs -->
