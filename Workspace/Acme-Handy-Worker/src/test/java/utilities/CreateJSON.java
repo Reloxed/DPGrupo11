@@ -91,7 +91,7 @@ public class CreateJSON {
 		Collection<Application> fixApplications = new ArrayList<>();
 		fixApplications.add(ap1);
 
-		f.setApplication(fixApplications);
+		f.setApplications(fixApplications);
 
 		lsfix.add(f);
 
