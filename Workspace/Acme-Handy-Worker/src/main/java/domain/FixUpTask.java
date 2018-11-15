@@ -32,7 +32,7 @@ public class FixUpTask extends DomainEntity {
 	private Money					maxPrice;
 	private Date					startMoment;
 	private Date					endMoment;
-	private Collection<Application>	application;
+	private Collection<Application>	applications;
 	private Category				category;
 	private Warranty				warranty;
 	private Collection<Complaint>	complaints;
@@ -102,7 +102,6 @@ public class FixUpTask extends DomainEntity {
 	}
 
 	@NotNull
-	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndMoment() {
@@ -115,12 +114,12 @@ public class FixUpTask extends DomainEntity {
 
 	@OneToMany(mappedBy = "fixUpTask")
 	@Valid
-	public Collection<Application> getApplication() {
-		return this.application;
+	public Collection<Application> getApplications() {
+		return this.applications;
 	}
 
-	public void setApplication(final Collection<Application> application) {
-		this.application = application;
+	public void setApplications(final Collection<Application> applications) {
+		this.applications = applications;
 	}
 
 	@NotNull
