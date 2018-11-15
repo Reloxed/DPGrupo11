@@ -3,11 +3,58 @@
 -- C5
 select (sum(case when a.status='PENDING' then 1.0 else 0 end)/count(*)) from Application a
 
+
 -- C6
 select (sum(case when a.status='ACCEPTED' then 1.0 else 0 end)/count(*)) from Application a
+
 
 -- C7
 select (sum(case when a.status='REJECTED' then 1.0 else 0 end)/count(*)) from Application a
 
+
 -- C10
 select h from HandyWorker h where h.applications.size/ (select avg(h1.applications.size) from HandyWorker h1)>=1.1 order by h.applications.size
+
+
+domain.Customer{id=1819, version=0}
+	domain.DomainEntity::id: int = 1819
+	domain.DomainEntity::version: int = 0
+	domain.Actor::name: java.lang.String = "Lorena"
+	domain.Actor::middleName: java.lang.String = "María"
+	domain.Actor::surname: java.lang.String = "Revuelta Berbel"
+	domain.Actor::photo: java.lang.String = "https://media.aweita.larepublica.pe/678x508/aweita/imagen/2018/02/08/noticia-p
+ersona-positiva.png"
+	domain.Actor::email: java.lang.String = "lorrevber@mail.com"
+	domain.Actor::phoneNumber: java.lang.String = "+34689945823"
+	domain.Actor::address: java.lang.String = "C/ Villa Crepúsculo, 1 (Dos Hermanas, Sevilla)"
+	domain.Actor::isSuspicious: boolean = true
+	domain.Actor::socialProfiles: java.util.Collection = [domain.SocialProfile{id=1895, version=0}, domain.SocialProfile{id
+=1896, version=0}]
+	domain.Actor::messageBoxes: java.util.Collection = [domain.MessageBox{id=1864, version=0}, domain.MessageBox{id=1865, v
+ersion=0}, domain.MessageBox{id=1866, version=0}, domain.MessageBox{id=1867, version=0}]
+	domain.Actor::userAccount: security.UserAccount = security.UserAccount{id=1820, version=0}
+	domain.Customer::score: double = 0.0
+	domain.Customer::endorsements: java.util.Collection = [domain.Endorsement{id=1940, version=0}]
+	domain.Customer::fixUpTasks: java.util.Collection = [domain.FixUpTask{id=1943, version=0}]
+	domain.Customer::complaints: java.util.Collection = [domain.Complaint{id=1947, version=0}]
+domain.Customer{id=1817, version=0}
+	domain.DomainEntity::id: int = 1817
+	domain.DomainEntity::version: int = 0
+	domain.Actor::name: java.lang.String = "Francisco"
+	domain.Actor::middleName: java.lang.String = null
+	domain.Actor::surname: java.lang.String = "Berrocal Ribas"
+	domain.Actor::photo: java.lang.String = null
+	domain.Actor::email: java.lang.String = "frabelrib@mail.com"
+	domain.Actor::phoneNumber: java.lang.String = null
+	domain.Actor::address: java.lang.String = null
+	domain.Actor::isSuspicious: boolean = false
+	domain.Actor::socialProfiles: java.util.Collection = []
+	domain.Actor::messageBoxes: java.util.Collection = [domain.MessageBox{id=1860, version=0}, domain.MessageBox{id=1861, v
+ersion=0}, domain.MessageBox{id=1862, version=0}, domain.MessageBox{id=1863, version=0}]
+	domain.Actor::userAccount: security.UserAccount = security.UserAccount{id=1818, version=0}
+	domain.Customer::score: double = 0.0
+	domain.Customer::endorsements: java.util.Collection = [domain.Endorsement{id=1938, version=0}, domain.Endorsement{id=19
+39, version=0}]
+	domain.Customer::fixUpTasks: java.util.Collection = [domain.FixUpTask{id=1941, version=0}, domain.FixUpTask{id=1942, ve
+rsion=0}]
+	domain.Customer::complaints: java.util.Collection = []
