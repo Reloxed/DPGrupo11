@@ -48,15 +48,6 @@ public class Category extends DomainEntity {
 		this.parentCategory = parentCategory;
 	}
 	
-	@OneToMany(mappedBy="parentCategory")
-	public Collection<Category> getChildCategories() {
-		return childCategories;
-	}
-
-	public void setChildCategories(Collection<Category> childCategories) {
-		this.childCategories = childCategories;
-	}
-	
 	public String toString() {
 		return "spanishName: " + spanishName + ", englishName: " + englishName
 				+ ", parentCategory: " + parentCategory + ", childCategories: "
