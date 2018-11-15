@@ -1219,7 +1219,7 @@
 			</bean>
 		</property>
 		<property name="startMoment" value="15/11/2018 18:30" />
-		<property name="endMoment" value="15/11/2016" />
+		<property name="endMoment" value="18/11/2018" />
 		<property name="applications">
 			<list>
 				<ref bean="applicationf2_1_1" />
