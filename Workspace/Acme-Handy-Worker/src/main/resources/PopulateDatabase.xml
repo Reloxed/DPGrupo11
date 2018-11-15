@@ -1185,8 +1185,13 @@
 			</bean>
 		</property>
 		<property name="startMoment" value="15/11/2018 17:30" />
+<<<<<<< HEAD
 		<property name="endMoment" value="15/11/2016" />
 		<property name="applications">
+=======
+		<property name="endMoment" value="15/11/2018 18:30" />
+		<property name="application">
+>>>>>>> refs/remotes/origin/master
 			<list>
 				<ref bean="applicationf1_1_1" />
 				<ref bean="applicationf1_1_2" />
@@ -1219,8 +1224,13 @@
 			</bean>
 		</property>
 		<property name="startMoment" value="15/11/2018 18:30" />
+<<<<<<< HEAD
 		<property name="endMoment" value="18/11/2018" />
 		<property name="applications">
+=======
+		<property name="endMoment" value="15/11/2018 19:00" />
+		<property name="application">
+>>>>>>> refs/remotes/origin/master
 			<list>
 				<ref bean="applicationf2_1_1" />
 			</list>
@@ -1274,6 +1284,24 @@
 			<null />
 		</property>
 	</bean>
+	
+	<!-- REPAIRS -->
+	<bean id="repairs" class="domain.Category">
+		<property name="spanishName" value="Reparaciones" />
+		<property name="englishName" value="Repairs" />
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+	</bean>
+	
+	<!-- HOUSING -->
+	<bean id="housing" class="domain.Category">
+		<property name="spanishName" value="Hogar" />
+		<property name="englishName" value="Housing" />
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+	</bean>
 
 	<!-- Carpentry -->
 	<bean id="carpentry" class="domain.Category">
@@ -1289,7 +1317,7 @@
 		<property name="spanishName" value="Reparación de techo" />
 		<property name="englishName" value="Ceiling repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1298,7 +1326,7 @@
 		<property name="spanishName" value="Limpieza" />
 		<property name="englishName" value="Cleaning" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1307,7 +1335,7 @@
 		<property name="spanishName" value="Trabajos especiales" />
 		<property name="englishName" value="Concrete work" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1316,7 +1344,7 @@
 		<property name="spanishName" value="Puertas" />
 		<property name="englishName" value="Doors" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1325,7 +1353,7 @@
 		<property name="spanishName" value="Cableado eléctrico" />
 		<property name="englishName" value="Electrical wiring" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1334,7 +1362,7 @@
 		<property name="spanishName" value="Instalación de aire acondicionado" />
 		<property name="englishName" value="Fan installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1343,7 +1371,7 @@
 		<property name="spanishName" value="Reparación de vallas" />
 		<property name="englishName" value="Fence fixing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1352,7 +1380,7 @@
 		<property name="spanishName" value="Equipo de seguridad en casas" />
 		<property name="englishName" value="Home security systems" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1361,7 +1389,7 @@
 		<property name="spanishName" value="Aislamiento térmico" />
 		<property name="englishName" value="Insulation installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1370,7 +1398,7 @@
 		<property name="spanishName" value="Reparación de lámparas" />
 		<property name="englishName" value="Lamp repairs" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1379,7 +1407,7 @@
 		<property name="spanishName" value="Mudanzas" />
 		<property name="englishName" value="Moving" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1388,7 +1416,7 @@
 		<property name="spanishName" value="Pintura" />
 		<property name="englishName" value="Painting" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1397,7 +1425,7 @@
 		<property name="spanishName" value="Control de plagas" />
 		<property name="englishName" value="Pest control" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1406,7 +1434,7 @@
 		<property name="spanishName" value="Fontanería" />
 		<property name="englishName" value="Plumbing repairs" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1415,7 +1443,7 @@
 		<property name="spanishName" value="Tejados" />
 		<property name="englishName" value="Roofing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1424,7 +1452,7 @@
 		<property name="spanishName" value="Instalación de estanterías" />
 		<property name="englishName" value="Shelf installation" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1433,7 +1461,7 @@
 		<property name="spanishName" value="Paneles solares" />
 		<property name="englishName" value="Solar panels" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1442,7 +1470,7 @@
 		<property name="spanishName" value="Insonorización" />
 		<property name="englishName" value="Soundproofing" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="housing" />
 		</property>
 	</bean>
 
@@ -1451,7 +1479,7 @@
 		<property name="spanishName" value="Reparación de riego" />
 		<property name="englishName" value="Sprinkler repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 
@@ -1460,7 +1488,7 @@
 		<property name="spanishName" value="Reparación de ventanas" />
 		<property name="englishName" value="Window repair" />
 		<property name="parentCategory">
-			<ref bean="CATEGORY" />
+			<ref bean="repairs" />
 		</property>
 	</bean>
 

@@ -107,7 +107,7 @@ public class FixUpTask extends DomainEntity {
 	public Date getEndMoment() {
 		return this.endMoment;
 	}
-
+	
 	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
