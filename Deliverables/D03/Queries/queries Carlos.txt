@@ -1,0 +1,28 @@
+Query C/1: The average, the minimum, the maximum, and the standard deviation of the number of fix-up tasks per user.
+
+	JPQL Query: select max(c.fixUpTasks.size), min(c.fixUpTasks.size), avg(c.fixUpTasks.size), sqrt(sum(c.fixUpTasks.size * c.fixUpTasks.size) / count(c.fixUpTasks.size) -(avg(c.fixUpTasks.size) * avg(c.fixUpTasks.size))) from Customer c;
+	
+	Se ha calculado las operaciones mencionadas en el enunciado para las chapuzas que tiene asignada cada usuario del sistema.
+	
+	Resultado: 1 object selected
+		[2, 1, 1.5, 0.5]
+Query C/2: The average, the minimum, the maximum, and the standard deviation of the number of applications per fix-up task.
+	
+	JPQL Query: select max(f.applications.size), min(f.applications.size), avg(f.applications.size), sqrt(sum(f.applications.size * f.applications.size) / count(f.applications.size) -(avg(f.applications.size) * avg(f.applications.size))) from FixUpTask f;
+	
+	Se ha calculado las operaciones mencionadas en el enunciado para las solicitudes que tiene asignada una chapuza.
+	
+	Resultado: 1 object selected
+		[2, 0, 1.3333, 0.9428090416999145]
+
+Query C/8: The ratio of pending applications that cannot change its status because their time period’s elapsed.
+
+	JPQL Query: select count(a)/(select count(a) from Application a where a.fixUpTask.endMoment 
+			< CURRENT_DATE and a.status='PENDING')*1.0 from Application a where a.status='PENDING';
+	
+	En el nominador se calcula el total de solicitudes cuyo estado es pendiente. En la parte del denominador
+	se obtiene de las solicitudes con estado pendiente, aquellas que la fecha de fin de su chapuza sea anterior a la fecha actual. Obteniendo
+	como resultado la proporción.
+	
+	Resultado: 1 object selected
+		1.5
