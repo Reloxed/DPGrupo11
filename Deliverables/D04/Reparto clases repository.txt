@@ -6,7 +6,7 @@ Lucia - Complaint.java
 Fran - CreditCard.java
 Fran - Curriculum.java
 Fran - Customer.java
-Fran - DomainEntity.java
+Fran - UserAccount.java
 Fran - EducationRecord.java
 Jesus - Endorsement.java
 Jesus - EndorserRecord.java
@@ -18,16 +18,15 @@ Carlos - MessageBox.java
 Carlos - MiscellaneousRecord.java
 Carlos - Money.java
 Carlos - Note.java
-Carlos - PersonalRecord.java
+Pablo - PersonalRecord.java
 Pablo - Phase.java
 Pablo - ProfessionalRecord.java
 Pablo - Referee.java
 Pablo - Report.java
 Pablo - Section.java
-Pablo - SocialProfile.java
+Montaño - SocialProfile.java
 Montaño - Sponsor.java
 Montaño - Sponsorship.java
 Montaño - SystemConfiguration.java
 Montaño - Tutorial.java
 Montaño - Warranty.java
-Montaño - UserAccount.java
