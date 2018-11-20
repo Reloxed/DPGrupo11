@@ -1,12 +1,16 @@
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import domain.PersonalRecord;
+import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
+import security.LoginService;
+import domain.HandyWorker;
+import domain.PersonalRecord;
 
 @Service
 @Transactional
@@ -19,11 +23,32 @@ public class PersonalRecordService {
 
 	// Supporting services -----------------------------------
 
-	/* NONE REQUIRED */
+	@Autowired
+	private HandyWorkerService handyWorkerService;
 
 	// Simple CRUD methods -----------------------------------
 
 	public PersonalRecord create() {
 		return new PersonalRecord();
 	}
+
+	public Collection<PersonalRecord> findAll() {
+		return personalRecordRepository.findAll();
+	}
+
+	public PersonalRecord findOne(int personalRecordId) {
+		return personalRecordRepository.findOne(personalRecordId);
+	}
+
+	public PersonalRecord save(PersonalRecord p) {
+		return personalRecordRepository.save(p);
+	}
+
+	// TODO
+	public void delete(PersonalRecord p) {
+		personalRecordRepository.delete(p);
+	}
+
+	// TODO
+	// Other business methods -------------------------------
 }
