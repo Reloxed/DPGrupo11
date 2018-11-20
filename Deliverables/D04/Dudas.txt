@@ -1,0 +1,5 @@
+-Query C/2:(misma dudas para todas las consultas complejas de FixUpTask)
+Devuelve un array de tipo Double.En el repositorio de que tipo es el método de la query C/2 ( clase FixUpTaskRepository.java)
+Lo pongo de tipo array Double?
+-Las consultas explicitas realizadas tienen que estar tal cual en el repositorio?
+Se pueden hacer en consultas más simples...
