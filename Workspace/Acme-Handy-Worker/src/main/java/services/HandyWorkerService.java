@@ -11,8 +11,23 @@ import domain.HandyWorker;
 
 public class HandyWorkerService {
 
+	//Managed repository-----------
+	
+	
 	@Autowired
 	private HandyWorkerRepository	handyWorkerRepository;
+	
+	
+	
+	//Supporting services ----------
+	
+	
+	
+	//Simple CRUD methods-------
+	
+	
+	
+	//Other business methods--------
 
 
 	public HandyWorker findByPrincipal() {
