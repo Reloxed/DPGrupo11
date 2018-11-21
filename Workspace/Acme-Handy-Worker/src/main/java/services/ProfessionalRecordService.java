@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.ProfessionalRecordRepository;
-import domain.PersonalRecord;
 import domain.ProfessionalRecord;
 
 @Service
@@ -31,20 +30,20 @@ public class ProfessionalRecordService {
 	}
 
 	public Collection<ProfessionalRecord> findAll() {
-		return professionalRecordRepository.findAll();
+		return this.professionalRecordRepository.findAll();
 	}
 
 	public ProfessionalRecord findOne(int professionalRecordId) {
-		return professionalRecordRepository.findOne(professionalRecordId);
+		return this.professionalRecordRepository.findOne(professionalRecordId);
 	}
 
 	public ProfessionalRecord save(ProfessionalRecord p) {
-		return professionalRecordRepository.save(p);
+		return this.professionalRecordRepository.save(p);
 	}
 
 	// TODO
 	public void delete(ProfessionalRecord p) {
-		professionalRecordRepository.delete(p);
+		this.professionalRecordRepository.delete(p);
 	}
 
 	// TODO

@@ -33,20 +33,20 @@ public class ReportService {
 	}
 
 	public Collection<Report> findAll() {
-		return reportRepository.findAll();
+		return this.reportRepository.findAll();
 	}
 
 	public Report findOne(int reportId) {
-		return reportRepository.findOne(reportId);
+		return this.reportRepository.findOne(reportId);
 	}
 
 	public Report save(Report r) {
-		return reportRepository.save(r);
+		return this.reportRepository.save(r);
 	}
 
 	// TODO
 	public void delete(Report r) {
-		reportRepository.delete(r);
+		this.reportRepository.delete(r);
 	}
 
 	// TODO

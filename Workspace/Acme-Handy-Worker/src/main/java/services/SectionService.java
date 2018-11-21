@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import repositories.SectionRepository;
 import domain.Section;
@@ -31,17 +30,17 @@ public class SectionService {
 	}
 
 	public Collection<Section> findAll() {
-		return sectionRepository.findAll();
+		return this.sectionRepository.findAll();
 	}
 
 	public Section save(Section s) {
 		// Assert.isTrue(s.getNumber() >= 0);
-		return sectionRepository.save(s);
+		return this.sectionRepository.save(s);
 	}
 
 	// TODO
 	public void delete(Section s) {
-		sectionRepository.delete(s);
+		this.sectionRepository.delete(s);
 	}
 
 	// TODO

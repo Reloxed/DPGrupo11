@@ -28,20 +28,20 @@ public class RefereeService {
 	}
 
 	public Collection<Referee> findAll() {
-		return refereeRepository.findAll();
+		return this.refereeRepository.findAll();
 	}
 
 	public Referee findOne(int refereeId) {
-		return refereeRepository.findOne(refereeId);
+		return this.refereeRepository.findOne(refereeId);
 	}
 
 	public Referee save(Referee r) {
-		return refereeRepository.save(r);
+		return this.refereeRepository.save(r);
 	}
 
 	// TODO
 	public void delete(Referee r) {
-		refereeRepository.delete(r);
+		this.refereeRepository.delete(r);
 	}
 
 	// TODO

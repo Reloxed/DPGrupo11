@@ -30,20 +30,20 @@ public class PersonalRecordService {
 	}
 
 	public Collection<PersonalRecord> findAll() {
-		return personalRecordRepository.findAll();
+		return this.personalRecordRepository.findAll();
 	}
 
 	public PersonalRecord findOne(int personalRecordId) {
-		return personalRecordRepository.findOne(personalRecordId);
+		return this.personalRecordRepository.findOne(personalRecordId);
 	}
 
 	public PersonalRecord save(PersonalRecord p) {
-		return personalRecordRepository.save(p);
+		return this.personalRecordRepository.save(p);
 	}
 
 	// TODO
 	public void delete(PersonalRecord p) {
-		personalRecordRepository.delete(p);
+		this.personalRecordRepository.delete(p);
 	}
 
 	// TODO

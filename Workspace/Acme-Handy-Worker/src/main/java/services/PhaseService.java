@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.PhaseRepository;
-import domain.PersonalRecord;
 import domain.Phase;
 
 @Service
@@ -31,20 +30,20 @@ public class PhaseService {
 	}
 
 	public Collection<Phase> findAll() {
-		return phaseRepository.findAll();
+		return this.phaseRepository.findAll();
 	}
 
 	public Phase findOne(int phaseId) {
-		return phaseRepository.findOne(phaseId);
+		return this.phaseRepository.findOne(phaseId);
 	}
 
 	public Phase save(Phase p) {
-		return phaseRepository.save(p);
+		return this.phaseRepository.save(p);
 	}
 
 	// TODO
 	public void delete(Phase p) {
-		phaseRepository.delete(p);
+		this.phaseRepository.delete(p);
 	}
 
 	// TODO
