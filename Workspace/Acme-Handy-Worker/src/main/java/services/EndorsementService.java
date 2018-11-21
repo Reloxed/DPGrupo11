@@ -4,25 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.CurriculumRepository;
+import repositories.EndorsementRepository;
 
 @Service
 @Transactional
-public class CurriculumService {
-	
-	// Managed Repository
+public class EndorsementService {
+
+	//Managed repository-----------
 	
 	@Autowired
-	private CurriculumRepository curriculumRepository;
-	
-	// Supporting Services
-
+	private EndorsementRepository endorsementRepository;
 	
 	
-	// Simple CRUD Methods
+	//Supporting services ----------
 	
 	
 	
-	// Other business methods
+	
+	
+	
 }
-

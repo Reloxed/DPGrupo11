@@ -1,28 +1,27 @@
-package services;
+package security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.CurriculumRepository;
-
 @Service
 @Transactional
-public class CurriculumService {
-	
+public class UserAccountService {
+
 	// Managed Repository
 	
 	@Autowired
-	private CurriculumRepository curriculumRepository;
-	
+	private UserAccountRepository userAccountRepository;
+		
+		
 	// Supporting Services
 
-	
-	
+		
+		
 	// Simple CRUD Methods
 	
 	
 	
 	// Other business methods
+	
 }
-
