@@ -1,6 +1,9 @@
 package services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
@@ -21,18 +24,42 @@ public class CreditCardService {
 	@Autowired
 	private CreditCardRepository creditCardRepository;
 	
-	// Supporting Repositories
+	// Supporting Services
+	
+	@Autowired
+	//private SponsorshipService sponsorshipService;
+	
 	
 	// Simple CRUD Methods
 	
-	public CreditCard create(String holderName, String brandName, String number, int expirationMonth, int expirationYear, int CVV) {
-		String monthYear = expirationMonth + " " + expirationYear;
+	public CreditCard create() {
+		return new CreditCard();
+	}
+	
+	public Collection<CreditCard> findAll(){
+		Collection<CreditCard> collCC = new ArrayList<>(creditCardRepository.findAll());
+		return collCC;
+	}
+	
+	public CreditCard findOne(int creditCardId){
+		return creditCardRepository.findOne(creditCardId);
+	}
+	
+	public CreditCard save (CreditCard creditCard) throws ParseException{
+		Assert.notNull(creditCard);
+		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
 		Date expiration = formato.parse(monthYear);
 		Assert.isTrue(expiration.after(LocalDate.now().toDate()));
-		
-		**return Creditcard;
+		return creditCardRepository.save(creditCard);
 	}
+	
+	public void delete(CreditCard creditCard) {
+		//Assert.isTrue(!(Assert.notEmpty(sponsorshipService.find))
+	}
+	
+	
+	// Other business methods
 	
 
 }
