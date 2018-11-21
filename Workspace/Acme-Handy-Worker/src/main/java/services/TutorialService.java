@@ -31,7 +31,6 @@ public class TutorialService {
 		Collection<Tutorial> tutorials;
 		
 		tutorials = this.tr.findAll();
-		Assert.notNull(tutorials);
 		
 		return tutorials;
 	}
@@ -43,7 +42,6 @@ public class TutorialService {
 	public Tutorial findOne(int tutorialId){
 		Tutorial result;
 		
-		Assert.isTrue(tutorialId != 0);
 		result = this.tr.findOne(tutorialId);
 		
 		return result;
@@ -54,8 +52,6 @@ public class TutorialService {
 		
 		Tutorial result;
 		result = this.tr.save(t);
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
 		
 		return result;
 	}

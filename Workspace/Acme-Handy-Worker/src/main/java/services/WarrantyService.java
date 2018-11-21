@@ -31,7 +31,6 @@ public class WarrantyService {
 		Collection<Warranty> warranties;
 		
 		warranties = this.wr.findAll();
-		Assert.notNull(warranties);
 		
 		return warranties;
 	}
@@ -43,7 +42,6 @@ public class WarrantyService {
 	public Warranty findOne(int warrantyId){
 		Warranty result;
 		
-		Assert.isTrue(warrantyId != 0);
 		result = this.wr.findOne(warrantyId);
 		
 		return result;
@@ -54,8 +52,6 @@ public class WarrantyService {
 		
 		Warranty result;
 		result = this.wr.save(w);
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
 		
 		return result;
 	}

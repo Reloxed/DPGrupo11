@@ -31,7 +31,6 @@ public class SponsorService {
 		Collection<Sponsor> sponsors;
 		
 		sponsors = this.sr.findAll();
-		Assert.notNull(sponsors);
 		
 		return sponsors;
 	}
@@ -43,7 +42,6 @@ public class SponsorService {
 	public Sponsor findOne(int sponsorId){
 		Sponsor result;
 		
-		Assert.isTrue(sponsorId != 0);
 		result = this.sr.findOne(sponsorId);
 		
 		return result;
@@ -54,8 +52,6 @@ public class SponsorService {
 		
 		Sponsor result;
 		result = this.sr.save(s);
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
 		
 		return result;
 	}
