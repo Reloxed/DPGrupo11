@@ -31,7 +31,6 @@ public class SocialProfileService {
 		Collection<SocialProfile> socialProfiles;
 		
 		socialProfiles = this.spr.findAll();
-		Assert.notNull(socialProfiles);
 		
 		return socialProfiles;
 	}
@@ -41,10 +40,8 @@ public class SocialProfileService {
 //	}
 	
 	public SocialProfile findOne(int socialProfileId){
-		Assert.isTrue(socialProfileId != 0);
 		SocialProfile result;
 		result = this.spr.findOne(socialProfileId);
-		Assert.notNull(result);
 		return result;
 	}
 	
@@ -52,8 +49,6 @@ public class SocialProfileService {
 		Assert.notNull(socialProfile);
 		SocialProfile result;
 		result = this.spr.save(socialProfile);
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
 		return result;
 	}
 	

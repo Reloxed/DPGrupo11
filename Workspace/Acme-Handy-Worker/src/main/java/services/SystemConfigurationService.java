@@ -31,7 +31,6 @@ public class SystemConfigurationService {
 		Collection<SystemConfiguration> systemConfigurations;
 		
 		systemConfigurations = this.scr.findAll();
-		Assert.notNull(systemConfigurations);
 		
 		return systemConfigurations;
 	}
@@ -43,7 +42,6 @@ public class SystemConfigurationService {
 	public SystemConfiguration findOne(int systemConfigurationId){
 		SystemConfiguration result;
 		
-		Assert.isTrue(systemConfigurationId != 0);
 		result = this.scr.findOne(systemConfigurationId);
 		
 		return result;
@@ -54,8 +52,6 @@ public class SystemConfigurationService {
 		
 		SystemConfiguration result;
 		result = this.scr.save(sc);
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
 		
 		return result;
 	}
