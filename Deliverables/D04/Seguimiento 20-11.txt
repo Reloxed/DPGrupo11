@@ -1,0 +1,18 @@
+DOMAIN MODEL
+
+- Endorsement, falta indicar quien es el endorser y el "endorsed". Se podría implementar como una clase abstract y luego una clase endorser y otra para el receptor del endorsement.
+- number debe ser Integer en Section y un boolean en minuscula por ahi arriba (textual). Varias en minusculas.
+- El atributo money es opcional en Finder, pero sin embargo quantity es obligatorio. Valorar donde usar money o no.
+- Investigar una solucion para los idiomas de welcomeMessage, systemName y Category.
+- Investigar la direccionalidad.
+
+Servicios
+
+- En el servicio, los create y tal no tienen ningún parámetro, es decir, están en blanco y se mandan a un formulario para que el cliente las rellene.
+- Es en el save donde se ponen las restricciones.
+
+Cuestiones generales
+
+- Money entonces, Datatype o entidad?????
+- Generalmente, el método create no necesita parámetros.
+- 
