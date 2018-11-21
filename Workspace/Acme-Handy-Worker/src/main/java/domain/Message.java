@@ -90,11 +90,11 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 
-	public boolean isSpam() {
+	public boolean getIsSpam() {
 		return this.isSpam;
 	}
 
-	public void setSpam(final boolean isSpam) {
+	public void setIsSpam(final boolean isSpam) {
 		this.isSpam = isSpam;
 	}
 
