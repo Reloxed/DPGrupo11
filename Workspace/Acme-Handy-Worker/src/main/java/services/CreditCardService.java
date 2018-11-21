@@ -24,34 +24,38 @@ public class CreditCardService {
 	@Autowired
 	private CreditCardRepository creditCardRepository;
 	
-	// Supporting Repositories
+	// Supporting Services
+	
+	@Autowired
+	//private SponsorshipService sponsorshipService;
+	
 	
 	// Simple CRUD Methods
 	
 	public CreditCard create() {
-		CreditCard creditCard = new CreditCard();
-		return creditCard;
+		return new CreditCard();
 	}
 	
 	public Collection<CreditCard> findAll(){
-		Collection<CreditCard> collCC = new ArrayList<>(creditCardRepository.getAllCreditCards());
+		Collection<CreditCard> collCC = new ArrayList<>(creditCardRepository.findAll());
 		return collCC;
 	}
 	
 	public CreditCard findOne(int creditCardId){
-		return creditCardRepository.getByCreditCardId(creditCardId);
+		return creditCardRepository.findOne(creditCardId);
 	}
 	
 	public CreditCard save (CreditCard creditCard) throws ParseException{
+		Assert.notNull(creditCard);
 		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
 		Date expiration = formato.parse(monthYear);
 		Assert.isTrue(expiration.after(LocalDate.now().toDate()));
-		return creditCard;
+		return creditCardRepository.save(creditCard);
 	}
 	
 	public void delete(CreditCard creditCard) {
-		
+		//Assert.isTrue(!(Assert.notEmpty(sponsorshipService.find))
 	}
 	
 	
