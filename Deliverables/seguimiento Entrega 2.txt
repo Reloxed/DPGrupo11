@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+-Librerías:Json se puede hacer como el tutorial que pasó lucia o con jackson como los pdfs que pasé yo.
+-Clase Law:no hace falta una clase law, quitarla y poner atributo multiple-> Collection<String> .
+-A)Coger varias entidades relacionadas entre ellas y pasarlas a json manualmente como viene en el tutorial que paso lucia
+-B)Json->Objeto->printearlo:Una vez que tengamos estos tipos json, tenemos que leerlo de alguna forma (creo que en la clase que pase y los apuntes puede venir).
+Al leerse tiene que crearse un objeto con esos valores de los atributos que ha cogido del json y pasarselo a la clase SchemaPrinter e imprimirlo por pantalla.
+-C)Decir la librería usada y cómo lo hemos hecho. 
+
+
+
+
+=======
+-Librerías:Json se puede hacer como el tutorial que pasó lucia o con jackson como los pdfs que pasé yo.
+-Clase Law:no hace falta una clase law, quitarla y poner atributo multiple-> Collection<String> .
+-A)Coger varias entidades relacionadas entre ellas y pasarlas a json manualmente como viene en el tutorial que paso lucia
+-B)Json->Objeto->printearlo:Una vez que tengamos estos tipos json, tenemos que leerlo de alguna forma (creo que en la clase que pase y los apuntes puede venir).
+Al leerse tiene que crearse un objeto con esos valores de los atributos que ha cogido del json y pasarselo a la clase SchemaPrinter e imprimirlo por pantalla.
+-C)Decir la librería usada y cómo lo hemos hecho. 
+
+
+
+
+>>>>>>> 0b88af36e6534fb8efd2bad2664980cba8a8cb1c
