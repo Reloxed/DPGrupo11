@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CreditCardRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.CreditCard;
 
 @Service
@@ -33,6 +36,12 @@ public class CreditCardService {
 	// Simple CRUD Methods
 	
 	public CreditCard create() {
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.equals(userAccount.getAuthorities().contains("SPONSOR")||
+				userAccount.equals(userAccount.getAuthorities().contains("HANDYWORKER"))));
+		
 		return new CreditCard();
 	}
 	
@@ -46,7 +55,14 @@ public class CreditCardService {
 	}
 	
 	public CreditCard save (CreditCard creditCard) throws ParseException{
+		
 		Assert.notNull(creditCard);
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Assert.isTrue(userAccount.equals(userAccount.getAuthorities().contains("SPONSOR")||
+				userAccount.equals(userAccount.getAuthorities().contains("HANDYWORKER"))));		
+
 		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
 		Date expiration = formato.parse(monthYear);
@@ -55,6 +71,12 @@ public class CreditCardService {
 	}
 	
 	public void delete(CreditCard creditCard) {
+		
+		Assert.notNull(creditCard);
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Assert.isTrue(creditCard.))
 		//Assert.isTrue(!(Assert.notEmpty(sponsorshipService.find))
 	}
 	
