@@ -57,12 +57,6 @@ public class SponsorService {
 		return result;
 	}
 	
-	public void delete(Sponsor s){
-		Assert.notNull(s);
-		Assert.notNull(this.sponsorRepository.findOne(s.getId()));
-		this.sponsorRepository.delete(s);
-	}
-	
 	//Other business methods
 	
 	public Sponsor findByCreditCardId(CreditCard creditCard) {

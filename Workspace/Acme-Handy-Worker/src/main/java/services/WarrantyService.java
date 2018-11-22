@@ -17,7 +17,7 @@ public class WarrantyService {
 	//Managed repository
 	
 	@Autowired
-	private WarrantyRepository wr;
+	private WarrantyRepository warrantyRepository;
 	
 	//Supporting services
 	
@@ -30,7 +30,7 @@ public class WarrantyService {
 	public Collection<Warranty> findAll(){
 		Collection<Warranty> warranties;
 		
-		warranties = this.wr.findAll();
+		warranties = this.warrantyRepository.findAll();
 		
 		return warranties;
 	}
@@ -42,7 +42,7 @@ public class WarrantyService {
 	public Warranty findOne(int warrantyId){
 		Warranty result;
 		
-		result = this.wr.findOne(warrantyId);
+		result = this.warrantyRepository.findOne(warrantyId);
 		
 		return result;
 	}
@@ -51,15 +51,15 @@ public class WarrantyService {
 		Assert.notNull(w);
 		
 		Warranty result;
-		result = this.wr.save(w);
+		result = this.warrantyRepository.save(w);
 		
 		return result;
 	}
 	
 	public void delete(Warranty w){
 		Assert.notNull(w);
-		Assert.notNull(this.wr.findOne(w.getId()));
-		this.wr.delete(w);
+		Assert.notNull(this.warrantyRepository.findOne(w.getId()));
+		this.warrantyRepository.delete(w);
 	}
 	
 	//Other business methods

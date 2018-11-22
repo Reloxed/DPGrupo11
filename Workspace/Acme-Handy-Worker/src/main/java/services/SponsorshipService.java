@@ -17,7 +17,7 @@ public class SponsorshipService {
 	//Managed repository
 	
 	@Autowired
-	private SponsorshipRepository sr;
+	private SponsorshipRepository sponsorshipRepository;
 	
 	//Supporting services
 	
@@ -30,7 +30,7 @@ public class SponsorshipService {
 	public Collection<Sponsorship> findAll(){
 		Collection<Sponsorship> sponsorships;
 		
-		sponsorships = this.sr.findAll();
+		sponsorships = this.sponsorshipRepository.findAll();
 		
 		return sponsorships;
 	}
@@ -42,7 +42,7 @@ public class SponsorshipService {
 	public Sponsorship findOne(int sponsorshipId){
 		Sponsorship result;
 		
-		result = this.sr.findOne(sponsorshipId);
+		result = this.sponsorshipRepository.findOne(sponsorshipId);
 		
 		return result;
 	}
@@ -51,15 +51,15 @@ public class SponsorshipService {
 		Assert.notNull(s);
 		
 		Sponsorship result;
-		result = this.sr.save(s);
+		result = this.sponsorshipRepository.save(s);
 		
 		return result;
 	}
 	
 	public void delete(Sponsorship s){
 		Assert.notNull(s);
-		Assert.notNull(this.sr.findOne(s.getId()));
-		this.sr.delete(s);
+		Assert.notNull(this.sponsorshipRepository.findOne(s.getId()));
+		this.sponsorshipRepository.delete(s);
 	}
 
 	//Other business methods
