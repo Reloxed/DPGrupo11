@@ -29,12 +29,6 @@
 		</property>
 		<property name="userAccount" ref="userCustomer1" />
 		<property name="score" value="0" />
-		<property name="endorsements">
-			<list>
-				<ref bean="endorsementCustomer1_1" />
-				<ref bean="endorsementCustomer1_2" />
-			</list>
-		</property>
 		<property name="fixUpTasks">
 			<list>
 				<ref bean="fixUpTask1_1" />
@@ -70,11 +64,6 @@
 		</property>
 		<property name="userAccount" ref="userCustomer2" />
 		<property name="score" value="0" />
-		<property name="endorsements">
-			<list>
-				<ref bean="endorsementHandyWorker1_1" />
-			</list>
-		</property>
 		<property name="fixUpTasks">
 			<list>
 				<ref bean="fixUpTask2_1" />
@@ -188,11 +177,6 @@
 		<property name="userAccount" ref="userHandyWorker1" />
 		<property name="make" value="Handy Worker 1 S.A." />
 		<property name="score" value="0" />
-		<property name="endorsements">
-			<list>
-				<ref bean="endorsementHandyWorker1_1" />
-			</list>
-		</property>
 		<property name="applications">
 			<list>
 				<ref bean="applicationf1_1_1" />
@@ -229,12 +213,6 @@
 		<property name="userAccount" ref="userHandyWorker2" />
 		<property name="make" value="Handy Worker 2 S.A." />
 		<property name="score" value="0" />
-		<property name="endorsements">
-			<list>
-				<ref bean="endorsementCustomer1_1" />
-				<ref bean="endorsementCustomer1_2" />
-			</list>
-		</property>
 		<property name="tutorial">
 			<list>
 				<ref bean="tutorial1" />
@@ -870,23 +848,23 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="MessageInBoxSponsor2" class="domain.Message">
-		<property name="sendMoment" value="12/12/2016 05:32:14"/>
-		<property name="subject" value="prueba"/>
-		<property name="body" value="cuerpo del mensaje de prueba"/>
-		<property name="priority" value="LOW"/>	
-		<property name="tags" value="lel"/>
+		<property name="sendMoment" value="12/12/2016 05:32:14" />
+		<property name="subject" value="prueba" />
+		<property name="body" value="cuerpo del mensaje de prueba" />
+		<property name="priority" value="LOW" />
+		<property name="tags" value="lel" />
 		<property name="sender">
 			<ref bean="administrator2" />
-		</property>	
+		</property>
 		<property name="recipients">
 			<list>
 				<ref bean="sponsor2" />
 			</list>
 		</property>
-		
-	</bean>	
+
+	</bean>
 	<bean id="outBoxSponsor2" class="domain.MessageBox">
 		<property name="name" value="Out box" />
 		<property name="isPredefined" value="true" />
@@ -902,8 +880,8 @@
 			<null />
 		</property>
 	</bean>
-	
-	
+
+
 	<bean id="spamBoxSponsor2" class="domain.MessageBox">
 		<property name="name" value="Spam box" />
 		<property name="isPredefined" value="true" />
@@ -1121,23 +1099,23 @@
 	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="11/11/18 12:26" />
 		<property name="comment" value="This customer is amazingly amazing" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
+		<property name="recipient" ref="customer1" />
+		<property name="sender" ref="handyWorker2" />
 	</bean>
 
 	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
 		<property name="publishedMoment" value="05/11/18 15:56" />
 		<property name="comment" value="This customer is amazingly amazing 2" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
+		<property name="recipient" ref="customer1" />
+		<property name="sender" ref="handyWorker2" />
 	</bean>
 
 	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="07/10/18 20:43" />
 		<property name="comment"
 			value="This handy worker works so well that he can build a house in a minute" />
-		<property name="customer" ref="customer2" />
-		<property name="handyWorker" ref="handyWorker1" />
+		<property name="recipient" ref="handyWorker1" />
+		<property name="sender" ref="customer2" />
 	</bean>
 
 	<!-- SOCIAL PROFILE -->
@@ -1205,7 +1183,7 @@
 		</property>
 		<property name="startMoment" value="15/11/2018 17:30" />
 		<property name="endMoment" value="15/11/2018 18:30" />
-		<property name="applications">	
+		<property name="applications">
 			<list>
 				<ref bean="applicationf1_1_1" />
 				<ref bean="applicationf1_1_2" />
@@ -1293,7 +1271,7 @@
 			<null />
 		</property>
 	</bean>
-	
+
 	<!-- REPAIRS -->
 	<bean id="repairs" class="domain.Category">
 		<property name="spanishName" value="Reparaciones" />
@@ -1302,7 +1280,7 @@
 			<ref bean="CATEGORY" />
 		</property>
 	</bean>
-	
+
 	<!-- HOUSING -->
 	<bean id="housing" class="domain.Category">
 		<property name="spanishName" value="Hogar" />
@@ -1705,6 +1683,7 @@
 		<property name="targetPage" value="http://www.random.es" />
 		<property name="creditCard" ref="creditCard1" />
 		<property name="tutorial" ref="tutorial1" />
+		<property name="sponsor" ref="sponsor1" />
 	</bean>
 
 	<!-- Sponsorship 1 of sponsor 2 -->
@@ -1715,5 +1694,6 @@
 		<property name="targetPage" value="http://www.random.com" />
 		<property name="creditCard" ref="creditCard2" />
 		<property name="tutorial" ref="tutorial2" />
+		<property name="sponsor" ref="sponsor2" />
 	</bean>
 </beans>
