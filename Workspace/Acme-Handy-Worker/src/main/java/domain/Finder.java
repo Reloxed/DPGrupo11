@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -6,14 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -23,16 +21,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
-	private String					keyWord;
-	private Money					priceLow;
-	private Money					priceHigh;
-	private Date					startMoment;
-	private Date					endMoment;
-	private Date					searchMoment;
-	private Category				category;
-	private Warranty				warranty;
-	private Collection<FixUpTask>	fixuptask;
-
+	private String keyWord;
+	private Double priceLow;
+	private Double priceHigh;
+	private Date startMoment;
+	private Date endMoment;
+	private Date searchMoment;
+	private Category category;
+	private Warranty warranty;
+	private Collection<FixUpTask> fixuptask;
 
 	public String getKeyWord() {
 		return this.keyWord;
@@ -42,21 +39,21 @@ public class Finder extends DomainEntity {
 		this.keyWord = keyWord;
 	}
 
-	@AttributeOverride(name = "quantity", column = @Column(name = "priceLow"))
-	public Money getPriceLow() {
+	@Digits(fraction = 2, integer = 10)
+	public Double getPriceLow() {
 		return this.priceLow;
 	}
 
-	public void setPriceLow(final Money priceLow) {
+	public void setPriceLow(final Double priceLow) {
 		this.priceLow = priceLow;
 	}
 
-	@AttributeOverride(name = "quantity", column = @Column(name = "priceHigh"))
-	public Money getPriceHigh() {
+	@Digits(fraction = 2, integer = 10)
+	public Double getPriceHigh() {
 		return this.priceHigh;
 	}
 
-	public void setPriceHigh(final Money priceHigh) {
+	public void setPriceHigh(final Double priceHigh) {
 		this.priceHigh = priceHigh;
 	}
 
