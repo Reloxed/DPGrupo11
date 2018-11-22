@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import domain.CreditCard;
+
 @Service
 @Transactional
 public class UserAccountService {
@@ -23,5 +25,10 @@ public class UserAccountService {
 	
 	
 	// Other business methods
+	
+//	public UserAccount getUserAccountByCreditCard (CreditCard creditCard) {
+//		UserAccount userAccount = new UserAccount(userAccountRepository);
+//	}
+	
 	
 }

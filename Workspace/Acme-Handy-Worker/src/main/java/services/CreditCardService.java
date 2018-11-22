@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CreditCardRepository;
-import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
@@ -30,7 +29,10 @@ public class CreditCardService {
 	// Supporting Services
 	
 	@Autowired
-	//private SponsorshipService sponsorshipService;
+	private CustomerService customerService;
+	
+	@Autowired
+	private SponsorService sponsorService;
 	
 	
 	// Simple CRUD Methods
@@ -40,7 +42,7 @@ public class CreditCardService {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Assert.isTrue(userAccount.equals(userAccount.getAuthorities().contains("SPONSOR")||
-				userAccount.equals(userAccount.getAuthorities().contains("HANDYWORKER"))));
+				userAccount.equals(userAccount.getAuthorities().contains("CUSTOMER"))));
 		
 		return new CreditCard();
 	}
@@ -74,9 +76,9 @@ public class CreditCardService {
 		
 		Assert.notNull(creditCard);
 		
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		Assert.isTrue(creditCard.))
+		Integer userAccountId = LoginService.getPrincipal().getId();
+		Assert.isTrue(userAccountId.equals(this.customerService.findByCreditCardId(creditCard).getUserAccount())
+				||userAccountId.equals(this.sponsorService.findByCreditCardId(creditCard).getUserAccount()));
 		//Assert.isTrue(!(Assert.notEmpty(sponsorshipService.find))
 	}
 	
