@@ -49,28 +49,26 @@ public class ActorService {
 
 	}
 
-	/*
-	 * public Actor findOne(final int actorId) {
-	 * Actor result;
-	 * 
-	 * result = this.actorRepository.findOne(actorId);
-	 * if (result == null) {
-	 * result = this.handyWorkerService.findOne(actorId);
-	 * if (result == null) {
-	 * result = this.customerService.findOne(actorId);
-	 * if (result == null) {
-	 * result = this.administratorService.findOne(actorId);
-	 * if (result == null) {
-	 * result = this.sponsorService.findOne(actorId);
-	 * if (result == null)
-	 * result = this.refereeService.findOne(actorId);
-	 * }
-	 * }
-	 * }
-	 * }
-	 * return result;
-	 * }
-	 */
+	/*public Actor findOne(final int actorId) {
+		Actor result;
+
+		result = this.actorRepository.findOne(actorId);
+		if (result == null) {
+			result = this.handyWorkerService.findOne(actorId);
+			if (result == null) {
+				result = this.customerService.findOne(actorId);
+				if (result == null) {
+					result = this.administratorService.findOne(actorId);
+					if (result == null) {
+						result = this.sponsorService.findOne(actorId);
+						if (result == null)
+							result = this.refereeService.findOne(actorId);
+					}
+				}
+			}
+		}
+		return result;
+	}*/
 
 	public Actor findByPrincipal() {
 		Actor result;
