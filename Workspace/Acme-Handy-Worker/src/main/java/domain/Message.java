@@ -30,7 +30,8 @@ public class Message extends DomainEntity {
 	private Actor sender;
 	private Collection<Actor> recipients;
 	private boolean isSpam;
-
+	private Collection<MessageBox> messageBoxes;
+	
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -108,5 +109,14 @@ public class Message extends DomainEntity {
 	public void setRecipients(Collection<Actor> recipients) {
 		this.recipients = recipients;
 	}
+	@ManyToMany(mappedBy="messages")
+	public Collection<MessageBox> getMessageBoxes() {
+		return messageBoxes;
+	}
+
+	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
+	}
+	
 
 }

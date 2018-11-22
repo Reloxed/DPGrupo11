@@ -12,23 +12,14 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Customer extends Actor {
+public class Customer extends Endorser {
 
 	private double score;
-	private Collection<Endorsement> endorsements;
+	
 	private Collection<FixUpTask> fixUpTasks;
 	private Collection<Complaint> complaints;
-
-	@Valid
-	@OneToMany(mappedBy = "customer")
-	public Collection<Endorsement> getEndorsements() {
-		return endorsements;
-	}
-
-	public void setEndorsements(Collection<Endorsement> endorsements) {
-		this.endorsements = endorsements;
-	}
-
+	
+	
 	@Valid
 	@OneToMany
 	public Collection<FixUpTask> getFixUpTasks() {
