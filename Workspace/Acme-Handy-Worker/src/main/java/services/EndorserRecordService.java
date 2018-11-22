@@ -27,8 +27,10 @@ public class EndorserRecordService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 	
-	//añadir curriculum?
-	
+	//Constructor ----------------------------------------------------
+		public EndorserRecordService() {
+			super();
+		}
 	
 	
 	
@@ -36,7 +38,6 @@ public class EndorserRecordService {
 	public EndorserRecord create(){
 		EndorserRecord result;
 		HandyWorker principal;
-		//mirar si solo puede crearlo o colgarlo un handyworker
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
@@ -56,13 +57,13 @@ public class EndorserRecordService {
 	public EndorserRecord findOne(final int endorserRecordId){
 		EndorserRecord result;
 		result=this.endorserRecordRepository.findOne(endorserRecordId);
-		Assert.isNull(result);//quito el not null por q puede que no haya endorserRecord?
+		//Assert.isNull(result);
 		return result;
 		
 	}
 	
 	public EndorserRecord save(EndorserRecord endorserRecord){
-		//quien puede guardar un record solo handy?
+	
 		Assert.notNull(endorserRecord);
 		EndorserRecord result;
 		HandyWorker principal;
@@ -77,7 +78,18 @@ public class EndorserRecordService {
 		Assert.notNull(result);
 		//tengo que poner una condición con el formato del telefono
 		//email?etc
+		/**if(patron){
+		 * .save
+		 * 		}
+		 * else{excepcion
+		 * }
+		 * 
+		 * */
+		
+		
 		endorsersRecord.add(result);
+		principal.getCurriculum().setEndorserRecords(endorsersRecord);
+		
 		
 		return result;
 		
@@ -86,10 +98,19 @@ public class EndorserRecordService {
 	}
 	
 	public void  delete(EndorserRecord endorserRecord){
-		//quien puede eliminarlo
 		
+		HandyWorker principal;
+		Collection<EndorserRecord> collectionEndorserRecords;
 		
-		return;
+		principal=this.handyWorkerService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		
+		collectionEndorserRecords=principal.getCurriculum().getEndorserRecords();
+		
+		this.endorserRecordRepository.delete(endorserRecord);
+		collectionEndorserRecords.remove(endorserRecord);
+		
 		
 	}
 	

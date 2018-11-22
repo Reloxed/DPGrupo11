@@ -22,6 +22,10 @@ public class HandyWorkerService {
 	//Supporting services ----------
 	
 	
+	//Constructor ----------------------------------------------------
+	public HandyWorkerService() {
+		super();
+	}
 	
 	//Simple CRUD methods-------
 	
