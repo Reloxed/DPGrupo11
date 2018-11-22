@@ -30,6 +30,9 @@ public class ApplicationService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
+	private CustomerService				customerService;
+
+	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
 
@@ -51,13 +54,13 @@ public class ApplicationService {
 	}
 
 	public Application save(final Application a) {
-		final HandyWorker applicant;
-		final Application result;
-		final Date registeredMoment;
-		final FixUpTask fixUpTask;
+		HandyWorker applicant;
+		Application result;
+		Date registeredMoment;
+		FixUpTask fixUpTask;
 		final String messageHandyWorker;
 		final String messageCustomer;
-		final Collection<Application> applications, updated;
+		Collection<Application> applications, updated;
 		final Collection<String> spamWords;
 		final boolean containsSpam;
 
@@ -84,6 +87,12 @@ public class ApplicationService {
 		updated = new ArrayList<Application>(applications);
 		updated.add(result);
 		applicant.setApplications(updated);
+
+		// Add application to collection of applications of fixUpTask
+		applications = fixUpTask.getApplications();
+		updated = new ArrayList<Application>(applications);
+		updated.add(result);
+		fixUpTask.setApplications(updated);
 
 		// Check contain of strings searching spamWords
 		/*
@@ -114,6 +123,25 @@ public class ApplicationService {
 	}
 
 	// Other business methods --------------------------
+
+	/*
+	 * public void accept(final Application a) {
+	 * final Customer customer;
+	 * final String messageHandyWorker;
+	 * final String messageCustomer;
+	 * 
+	 * Assert.notNull(a);
+	 * Assert.isTrue(a.getId() != 0);
+	 * 
+	 * customer = this.customerService.findByPrincipal();
+	 * Assert.notNull(customer);
+	 * 
+	 * Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
+	 * Assert.isTrue(a.getStatus() == "PENDING");
+	 * a.setStatus("ACCEPTED");
+	 * this.applicationRepository.save(a);
+	 * }
+	 */
 
 	public Collection<Application> findAllApplicationsByHandyWorker(final int handyWorkerId) {
 		Collection<Application> result;

@@ -37,12 +37,12 @@ public class CreditCardService {
 	}
 	
 	public Collection<CreditCard> findAll(){
-		Collection<CreditCard> collCC = new ArrayList<>(creditCardRepository.findAll());
+		Collection<CreditCard> collCC = new ArrayList<>(this.creditCardRepository.findAll());
 		return collCC;
 	}
 	
 	public CreditCard findOne(int creditCardId){
-		return creditCardRepository.findOne(creditCardId);
+		return this.creditCardRepository.findOne(creditCardId);
 	}
 	
 	public CreditCard save (CreditCard creditCard) throws ParseException{
@@ -51,7 +51,7 @@ public class CreditCardService {
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
 		Date expiration = formato.parse(monthYear);
 		Assert.isTrue(expiration.after(LocalDate.now().toDate()));
-		return creditCardRepository.save(creditCard);
+		return this.creditCardRepository.save(creditCard);
 	}
 	
 	public void delete(CreditCard creditCard) {
