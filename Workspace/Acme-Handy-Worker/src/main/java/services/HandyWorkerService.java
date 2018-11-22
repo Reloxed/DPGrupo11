@@ -2,6 +2,8 @@
 package services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
@@ -9,6 +11,8 @@ import security.LoginService;
 import security.UserAccount;
 import domain.HandyWorker;
 
+@Service
+@Transactional
 public class HandyWorkerService {
 
 	//Managed repository-----------
@@ -28,7 +32,13 @@ public class HandyWorkerService {
 	}
 	
 	//Simple CRUD methods-------
-	
+	public HandyWorker findOne(int handyWorkerId){
+		HandyWorker result;
+		
+		result = this.handyWorkerRepository.findOne(handyWorkerId);
+		
+		return result;
+	}
 	
 	
 	//Other business methods--------
