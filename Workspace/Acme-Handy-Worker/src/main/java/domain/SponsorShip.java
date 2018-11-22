@@ -3,6 +3,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class Sponsorship extends DomainEntity {
 	private String targetPage;
 	private CreditCard creditCard;
 	private Tutorial tutorial;
+	private Sponsor sponsor;
 
 	// Methods
 
@@ -63,5 +65,17 @@ public class Sponsorship extends DomainEntity {
 	public void setTutorial(final Tutorial tutorial) {
 		this.tutorial = tutorial;
 	}
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Sponsor getSponsor() {
+		return sponsor;
+	}
 
+	public void setSponsor(Sponsor sponsor) {
+		this.sponsor = sponsor;
+	}
+
+	
+	
 }

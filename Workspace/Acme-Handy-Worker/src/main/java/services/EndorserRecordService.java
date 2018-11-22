@@ -40,9 +40,9 @@ public class EndorserRecordService {
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		result= new EndonserRecord();
-		Assert.notNull(result);
-		result.set
+		//result= new EndonserRecord();
+		//Assert.notNull(result);
+		
 		
 		
 		return null;

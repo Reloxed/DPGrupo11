@@ -14,11 +14,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class HandyWorker extends Actor {
+public class HandyWorker extends Endorser {
 
 	private double score;
 	private String make;
-	private Collection<Endorsement> endorsements;
 	private Collection<Tutorial> tutorial;
 	private Collection<Application> applications;
 	private Finder finder;
@@ -31,16 +30,6 @@ public class HandyWorker extends Actor {
 
 	public void setMake(String make) {
 		this.make = make;
-	}
-
-	@Valid
-	@OneToMany(mappedBy = "handyWorker")
-	public Collection<Endorsement> getEndorsements() {
-		return endorsements;
-	}
-
-	public void setEndorsements(Collection<Endorsement> endorsements) {
-		this.endorsements = endorsements;
 	}
 
 	@Valid
