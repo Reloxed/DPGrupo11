@@ -16,7 +16,7 @@ import repositories.EndorserRecordRepository;
 @Transactional
 public class EndorserRecordService {
 
-	
+	 
 	//Managed repository-----------
 	
 	@Autowired
@@ -27,7 +27,7 @@ public class EndorserRecordService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 	
-
+	//añadir curriculum?
 	
 	
 	
@@ -36,34 +36,59 @@ public class EndorserRecordService {
 	public EndorserRecord create(){
 		EndorserRecord result;
 		HandyWorker principal;
-		
+		//mirar si solo puede crearlo o colgarlo un handyworker
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		//result= new EndonserRecord();
-		//Assert.notNull(result);
+		result= new EndorserRecord();
+		Assert.notNull(result);
 		
-		
-		
-		return null;
+		return result;
 		
 	}
 	public Collection<EndorserRecord> findAll(){
-		return null;
+		Collection <EndorserRecord> result;
+		result=this.endorserRecordRepository.findAll();
+		return result;
 		
 	} 
 	
-	public EndorserRecord findOne(int endorserRecordId){
-		return null;
+	public EndorserRecord findOne(final int endorserRecordId){
+		EndorserRecord result;
+		result=this.endorserRecordRepository.findOne(endorserRecordId);
+		Assert.isNull(result);//quito el not null por q puede que no haya endorserRecord?
+		return result;
 		
 	}
 	
 	public EndorserRecord save(EndorserRecord endorserRecord){
-		return null;
+		//quien puede guardar un record solo handy?
+		Assert.notNull(endorserRecord);
+		EndorserRecord result;
+		HandyWorker principal;
+		Collection<EndorserRecord> endorsersRecord;
+		
+		principal=this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(principal.getCurriculum());
+		
+		endorsersRecord=principal.getCurriculum().getEndorserRecords();
+		result=this.endorserRecordRepository.save(endorserRecord);
+		Assert.notNull(result);
+		//tengo que poner una condición con el formato del telefono
+		//email?etc
+		endorsersRecord.add(result);
+		
+		return result;
+		
+		
 		
 	}
 	
 	public void  delete(EndorserRecord endorserRecord){
+		//quien puede eliminarlo
+		
+		
 		return;
 		
 	}
