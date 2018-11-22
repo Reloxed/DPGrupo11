@@ -8,3 +8,7 @@
 - Sponsorship --> CreditCard relación 1..* a 1
 - Money FUERA
 - Minusculas cambiadas todas a mayusculas.
+
+JAVA
+
+- Falta Collection<Phase> workPlan en FixUpTask (modificar el populate, domain)

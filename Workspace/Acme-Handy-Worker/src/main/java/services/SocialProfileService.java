@@ -23,6 +23,7 @@ public class SocialProfileService {
 	
 	//Supporting services
 	
+	@Autowired
 	private ActorService actorService;
 	
 	//Simple CRUD Methods
@@ -35,6 +36,7 @@ public class SocialProfileService {
 		Assert.notNull(principal);
 		
 		result = new SocialProfile();
+		Assert.notNull(result);
 		return result;
 	}
 	
