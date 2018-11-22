@@ -1121,23 +1121,23 @@
 	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="11/11/18 12:26" />
 		<property name="comment" value="This customer is amazingly amazing" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
+		<property name="sender" ref="customer1" />
+		<property name="recipient" ref="handyWorker2" />
 	</bean>
 
 	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
 		<property name="publishedMoment" value="05/11/18 15:56" />
 		<property name="comment" value="This customer is amazingly amazing 2" />
-		<property name="customer" ref="customer1" />
-		<property name="handyWorker" ref="handyWorker2" />
+		<property name="sender" ref="customer1" />
+		<property name="recipient" ref="handyWorker2" />
 	</bean>
 
 	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="07/10/18 20:43" />
 		<property name="comment"
 			value="This handy worker works so well that he can build a house in a minute" />
-		<property name="customer" ref="customer2" />
-		<property name="handyWorker" ref="handyWorker1" />
+		<property name="sender" ref="customer2" />
+		<property name="recipient" ref="handyWorker1" />
 	</bean>
 
 	<!-- SOCIAL PROFILE -->
