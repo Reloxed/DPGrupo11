@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
 import domain.CreditCard;
 import domain.Customer;
 
@@ -27,7 +26,7 @@ public class CustomerService {
 	
 	// Supporting Services
 
-	private AdministratorService administratorService;
+//	private AdministratorService administratorService;
 	
 	// Simple CRUD Methods
 	
@@ -53,13 +52,13 @@ public class CustomerService {
 		return cus;
 	}
 	
-	public void Delete (Customer customer) {
-		Administrator admin;
-
-		admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		customerRepository.delete(customer);
-	}
+//	public void Delete (Customer customer) {
+//		Administrator admin;
+//
+//		admin = this.administratorService.findByPrincipal();
+//		Assert.notNull(admin);
+//		customerRepository.delete(customer);
+//	}
 	
 	// Other business methods
 	
@@ -76,7 +75,7 @@ public class CustomerService {
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		res = this.findCustomerByUserAccount(userAccount.getId());
+		res = this.customerRepository.findCustomerByUserAccount(userAccount.getId());
 		Assert.notNull(res);
 
 		return res;
