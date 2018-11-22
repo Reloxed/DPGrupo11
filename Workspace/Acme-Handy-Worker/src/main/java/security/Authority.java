@@ -42,6 +42,7 @@ public class Authority implements GrantedAuthority {
 	public static final String	REFEREE		= "REFEREE";
 	public static final String	SPONSOR		= "SPONSOR";
 	public static final String	HANDYWORKER		= "HANDYWORKER";
+	public static final String	ENDORSER		= "ENDORSER";
 
 	// Attributes -------------------------------------------------------------
 
@@ -49,7 +50,7 @@ public class Authority implements GrantedAuthority {
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.CUSTOMER + "|" + Authority.REFEREE + "|" + Authority.SPONSOR + "|" + Authority.HANDYWORKER + "$")
+	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.CUSTOMER + "|" + Authority.REFEREE + "|" + Authority.SPONSOR + "|" + Authority.HANDYWORKER + "|" + Authority.ENDORSER + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
