@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,14 +66,20 @@ public class SponsorService {
 	
 	//Other business methods
 	
-	public Sponsor findByCreditCardId(CreditCard creditCard) {
-		Sponsor res;
-		int creditCardId = creditCard.getId();
-		
-		res = this.sponsorRepository.findByCreditCardId(creditCardId);
-		Assert.notNull(res);
-
-		return res;
+//	public Sponsor findByCreditCardId(CreditCard creditCard) {
+//		Sponsor res;
+//		int creditCardId = creditCard.getId();
+//		
+//		res = this.sponsorRepository.findByCreditCardId(creditCardId);
+//		Assert.notNull(res);
+//
+//		return res;
+//	}
+	
+	public Collection<CreditCard> findCreditCardsBySponsorId (int sponsorId){
+		Collection<CreditCard> collCC = new ArrayList<>();
+		collCC = sponsorRepository.findCreditCardsBySponsorId(sponsorId);
+		return collCC;
 	}
 	
 }
