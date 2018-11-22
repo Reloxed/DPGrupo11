@@ -3,4 +3,8 @@
 - {overlapping} a {disjoint} de actor hacia referee, administrator, etc.
 - Quitado childcategories de CATEGORIA
 - Sponsor --> Sponsorship a Sponsor <--> Sponsorship
-- Money se pasa a Entity
+-Atributo recipient en la clase Message.java pasa a ser recipients.
+- Application --> CreditCard relación 1..* a 0..1
+- Sponsorship --> CreditCard relación 1..* a 1
+- Money FUERA
+- Minusculas cambiadas todas a mayusculas.

@@ -1,1 +1,0 @@
--Atributo recipient en la clase Message.java pasa a ser recipients.
