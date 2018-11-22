@@ -30,6 +30,7 @@ public class FixUpTaskService {
 	
 	
 	//Simple CRUD methods-------
+	//teniendo en cuenta las reglas de negocio
 	
 	public FixUpTask create(){
 		return null;
@@ -60,6 +61,7 @@ public class FixUpTaskService {
 	
 	
 	//Other business methods--------
+	//resitricciones de datos y restricciones de acceso
 	
 	
 	
