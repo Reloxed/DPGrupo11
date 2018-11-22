@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.Application;
 import domain.Category;
 import domain.FixUpTask;
-import domain.Money;
 import domain.Warranty;
 
 public class CreateJSON {
@@ -55,16 +54,10 @@ public class CreateJSON {
 		c.setEnglishName("Category");
 		c.setSpanishName("Categoría");
 
-		Money mnfix = new Money();
-		mnfix.setQuantity(200.);
-
-		Money mnhandy = new Money();
-		mnhandy.setQuantity(180.);
-
 		Application ap1 = new Application();
 		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
 		ap1.setStatus("PENDING");
-		ap1.setOfferedPrice(mnhandy);
+		ap1.setOfferedPrice(180.);
 		ap1.setComment("Comment del handy");
 
 		Warranty w = new Warranty();
@@ -82,7 +75,7 @@ public class CreateJSON {
 		f.setPublishedMoment(LocalDate.now().toDate());
 		f.setDescription("Desciption");
 		f.setAddress("ETSII - Sevilla");
-		f.setMaxPrice(mnfix);
+		f.setMaxPrice(200.);
 		f.setStartMoment(LocalDate.parse("2018-10-29").toDate());
 		f.setEndMoment(LocalDate.parse("2018-10-30").toDate());
 		f.setCategory(c);

@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -11,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -22,14 +22,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	private Date				registeredMoment;
-	private String				status;
-	private Money				offeredPrice;
-	private String				comment;
-	private CreditCard			creditCard;
-	private FixUpTask			fixUpTask;
-	private HandyWorker			applicant;
-
+	private Date registeredMoment;
+	private String status;
+	private Double offeredPrice;
+	private String comment;
+	private CreditCard creditCard;
+	private FixUpTask fixUpTask;
+	private HandyWorker applicant;
 
 	@NotBlank
 	@Pattern(regexp = "^PENDING|ACCEPTED|REJECTED$")
@@ -41,13 +40,12 @@ public class Application extends DomainEntity {
 		this.status = status;
 	}
 
-	@NotNull
-	@Valid
-	public Money getOfferedPrice() {
+	@Digits(fraction = 2, integer = 10)
+	public Double getOfferedPrice() {
 		return this.offeredPrice;
 	}
 
-	public void setOfferedPrice(final Money offeredPrice) {
+	public void setOfferedPrice(final Double offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
 
@@ -99,6 +97,7 @@ public class Application extends DomainEntity {
 	public HandyWorker getApplicant() {
 		return this.applicant;
 	}
+
 	public void setApplicant(final HandyWorker applicant) {
 		this.applicant = applicant;
 	}

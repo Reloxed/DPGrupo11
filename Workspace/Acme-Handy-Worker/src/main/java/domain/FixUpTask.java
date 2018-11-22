@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -13,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -25,18 +25,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class FixUpTask extends DomainEntity {
 
-	private String					ticker;
-	private Date					publishedMoment;
-	private String					description;
-	private String					address;
-	private Money					maxPrice;
-	private Date					startMoment;
-	private Date					endMoment;
-	private Collection<Application>	applications;
-	private Category				category;
-	private Warranty				warranty;
-	private Collection<Complaint>	complaints;
-
+	private String ticker;
+	private Date publishedMoment;
+	private String description;
+	private String address;
+	private double maxPrice;
+	private Date startMoment;
+	private Date endMoment;
+	private Collection<Application> applications;
+	private Category category;
+	private Warranty warranty;
+	private Collection<Complaint> complaints;
 
 	@NotBlank
 	@Column(unique = true)
@@ -79,13 +78,12 @@ public class FixUpTask extends DomainEntity {
 		this.address = address;
 	}
 
-	@Valid
-	@NotNull
-	public Money getMaxPrice() {
+	@Digits(fraction = 2, integer = 10)
+	public double getMaxPrice() {
 		return this.maxPrice;
 	}
 
-	public void setMaxPrice(final Money maxPrice) {
+	public void setMaxPrice(final double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 
@@ -107,7 +105,7 @@ public class FixUpTask extends DomainEntity {
 	public Date getEndMoment() {
 		return this.endMoment;
 	}
-	
+
 	public void setEndMoment(final Date endMoment) {
 		this.endMoment = endMoment;
 	}
@@ -143,7 +141,7 @@ public class FixUpTask extends DomainEntity {
 	public void setWarranty(final Warranty warranty) {
 		this.warranty = warranty;
 	}
-	
+
 	@Valid
 	@OneToMany(mappedBy = "fixUpTask")
 	public Collection<Complaint> getComplaints() {

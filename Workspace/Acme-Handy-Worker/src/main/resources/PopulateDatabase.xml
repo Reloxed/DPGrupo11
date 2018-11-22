@@ -81,11 +81,7 @@
 	<bean id="applicationf1_1_1" class="domain.Application">
 		<property name="registeredMoment" value="08/11/2018 17:55" />
 		<property name="status" value="PENDING" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="40" />
-			</bean>
-		</property>
+		<property name="offeredPrice" value="40." />
 		<property name="comment"
 			value="I am experienced in window reparation because..." />
 		<property name="creditCard">
@@ -103,11 +99,7 @@
 	<bean id="applicationf1_1_2" class="domain.Application">
 		<property name="registeredMoment" value="08/11/2018 18:43" />
 		<property name="status" value="PENDING" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="43" />
-			</bean>
-		</property>
+		<property name="offeredPrice" value="43." />
 		<property name="comment"
 			value="I am better than other Handy Workers because..." />
 		<property name="creditCard">
@@ -123,11 +115,7 @@
 	<bean id="applicationf2_1_1" class="domain.Application">
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="PENDING" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="80" />
-			</bean>
-		</property>
+		<property name="offeredPrice" value="80." />
 		<property name="comment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard2" />
@@ -143,11 +131,7 @@
 	<bean id="applicationf1_2_1" class="domain.Application">
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
-		<property name="offeredPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="80" />
-			</bean>
-		</property>
+		<property name="offeredPrice" value="20." />
 		<property name="comment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard2" />
@@ -1182,11 +1166,7 @@
 		<property name="description"
 			value="Replace the window of my house because it broke" />
 		<property name="address" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="50" />
-			</bean>
-		</property>
+		<property name="maxPrice" value="50." />
 		<property name="startMoment" value="15/11/2018 17:30" />
 		<property name="endMoment" value="15/11/2018 18:30" />
 		<property name="applications">
@@ -1216,11 +1196,7 @@
 		<property name="description"
 			value="Repair the toilet because water leaks from the deposit" />
 		<property name="address" value="c/Nostromo, 8, Seville" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="30" />
-			</bean>
-		</property>
+		<property name="maxPrice" value="30." />
 		<property name="startMoment" value="15/11/2018 18:30" />
 		<property name="endMoment" value="15/11/2018 19:00" />
 		<property name="applications">
@@ -1246,11 +1222,7 @@
 		<property name="publishedMoment" value="05/11/2018 13:31" />
 		<property name="description" value="Repair the replicant" />
 		<property name="address" value="c/Tyrellco, 19, Los Ángeles" />
-		<property name="maxPrice">
-			<bean id="maxPrice" class="domain.Money">
-				<property name="quantity" value="4068" />
-			</bean>
-		</property>
+		<property name="maxPrice" value="4068." />
 		<property name="startMoment" value="14/11/2018 20:19" />
 		<property name="endMoment" value="14/11/2018" />
 		<property name="applications">
@@ -1545,24 +1517,9 @@
 
 	<bean id="finderHW1" class="domain.Finder">
 		<property name="keyWord" value="replicant" />
-		<property name="priceLow">
-			<null />
-		</property>
-		<property name="priceHigh">
-			<null />
-		</property>
-		<property name="startMoment">
-			<null />
-		</property>
-		<property name="endMoment">
-			<null />
-		</property>
 		<property name="searchMoment" value="10/11/2018 10:48" />
 		<property name="category">
 			<ref bean="concreteWork" />
-		</property>
-		<property name="warranty">
-			<null />
 		</property>
 		<property name="fixuptask">
 			<list>
@@ -1573,24 +1530,9 @@
 
 	<bean id="finderHW2" class="domain.Finder">
 		<property name="keyWord" value="replicant" />
-		<property name="priceLow">
-			<null />
-		</property>
-		<property name="priceHigh">
-			<null />
-		</property>
-		<property name="startMoment">
-			<null />
-		</property>
-		<property name="endMoment">
-			<null />
-		</property>
 		<property name="searchMoment" value="10/11/2018 10:48" />
 		<property name="category">
 			<ref bean="concreteWork" />
-		</property>
-		<property name="warranty">
-			<null />
 		</property>
 		<property name="fixuptask">
 			<list>
