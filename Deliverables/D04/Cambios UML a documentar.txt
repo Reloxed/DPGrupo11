@@ -3,3 +3,4 @@
 - {overlapping} a {disjoint} de actor hacia referee, administrator, etc.
 - Quitado childcategories de CATEGORIA
 - Sponsor --> Sponsorship a Sponsor <--> Sponsorship
+- Money se pasa a Entity
