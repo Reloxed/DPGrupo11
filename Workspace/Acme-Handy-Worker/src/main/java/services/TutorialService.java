@@ -17,7 +17,7 @@ public class TutorialService {
 	//Managed repository
 	
 	@Autowired
-	private TutorialRepository tr;
+	private TutorialRepository tutorialRepository;
 	
 	//Supporting services
 	
@@ -30,7 +30,7 @@ public class TutorialService {
 	public Collection<Tutorial> findAll(){
 		Collection<Tutorial> tutorials;
 		
-		tutorials = this.tr.findAll();
+		tutorials = this.tutorialRepository.findAll();
 		
 		return tutorials;
 	}
@@ -42,7 +42,7 @@ public class TutorialService {
 	public Tutorial findOne(int tutorialId){
 		Tutorial result;
 		
-		result = this.tr.findOne(tutorialId);
+		result = this.tutorialRepository.findOne(tutorialId);
 		
 		return result;
 	}
@@ -51,15 +51,15 @@ public class TutorialService {
 		Assert.notNull(t);
 		
 		Tutorial result;
-		result = this.tr.save(t);
+		result = this.tutorialRepository.save(t);
 		
 		return result;
 	}
 	
 	public void delete(Tutorial t){
 		Assert.notNull(t);
-		Assert.notNull(this.tr.findOne(t.getId()));
-		this.tr.delete(t);
+		Assert.notNull(this.tutorialRepository.findOne(t.getId()));
+		this.tutorialRepository.delete(t);
 	}
 	
 	//Other business methods
