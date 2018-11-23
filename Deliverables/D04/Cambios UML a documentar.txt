@@ -7,6 +7,7 @@
 - Application --> CreditCard relación 1..* a 0..1
 - Sponsorship --> CreditCard relación 1..* a 1
 - Money FUERA
+- Sponsorship --> Tutorial cambiado a Tutorial --> Sponsorship 1..* 0..*
 
 JAVA
 

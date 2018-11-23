@@ -48,10 +48,6 @@ public class SocialProfileService {
 		return socialProfiles;
 	}
 	
-//	public Collection<SocialProfile> find(){
-//		return null;
-//	}
-	
 	public SocialProfile findOne(int socialProfileId){
 		SocialProfile result;
 		

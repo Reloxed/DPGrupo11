@@ -68,10 +68,6 @@ public class SponsorService {
 		return sponsors;
 	}
 	
-//	public Collection<Sponsor> find(){
-//		
-//	}
-	
 	public Sponsor findOne(int sponsorId){
 		Sponsor result;
 		
