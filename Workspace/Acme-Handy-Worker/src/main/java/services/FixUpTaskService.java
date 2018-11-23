@@ -26,7 +26,10 @@ public class FixUpTaskService {
 	//Supporting services ----------
 	
 	
-	
+	//Constructor ----------------------------------------------------
+	public FixUpTaskService() {
+		super();
+	}
 	
 	
 	//Simple CRUD methods-------
