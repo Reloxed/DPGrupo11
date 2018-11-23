@@ -7,5 +7,7 @@ import domain.Section;
 
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Integer> {
+	
+	
 
 }

@@ -14,54 +14,62 @@ import domain.Tutorial;
 @Transactional
 public class TutorialService {
 
-	//Managed repository
-	
+	// Managed repository
+
 	@Autowired
 	private TutorialRepository tr;
-	
-	//Supporting services
-	
-	//Simple CRUD Methods
-	
-	public Tutorial create(){
+
+	// Supporting services
+
+	// Simple CRUD Methods
+
+	public Tutorial create() {
 		return new Tutorial();
 	}
-	
-	public Collection<Tutorial> findAll(){
+
+	public Collection<Tutorial> findAll() {
 		Collection<Tutorial> tutorials;
-		
+
 		tutorials = this.tr.findAll();
-		
+
 		return tutorials;
 	}
-	
-//	public Collection<Tutorial> find(){
-//		
-//	}
-	
-	public Tutorial findOne(int tutorialId){
+
+	// public Collection<Tutorial> find(){
+	//
+	// }
+
+	public Tutorial findOne(int tutorialId) {
 		Tutorial result;
-		
+
 		result = this.tr.findOne(tutorialId);
-		
+
 		return result;
 	}
-	
-	public Tutorial save(Tutorial t){
+
+	public Tutorial save(Tutorial t) {
 		Assert.notNull(t);
-		
+
 		Tutorial result;
 		result = this.tr.save(t);
-		
+
 		return result;
 	}
-	
-	public void delete(Tutorial t){
+
+	public void delete(Tutorial t) {
 		Assert.notNull(t);
 		Assert.notNull(this.tr.findOne(t.getId()));
 		this.tr.delete(t);
 	}
-	
-	//Other business methods
-	
+
+	// Other business methods
+
+	public Tutorial findTutorialBySectionId(int sectionId) {
+		Tutorial res;
+
+		res = this.tr.findTutorialBySectionId(sectionId);
+		Assert.notNull(res);
+
+		return res;
+	}
 }
