@@ -19,7 +19,6 @@ public class Sponsorship extends DomainEntity {
 	private String banner;
 	private String targetPage;
 	private CreditCard creditCard;
-	private Tutorial tutorial;
 	private Sponsor sponsor;
 
 	// Methods
@@ -55,16 +54,6 @@ public class Sponsorship extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-	@Valid
-	@NotNull
-	@OneToOne(optional=false)
-	public Tutorial getTutorial() {
-		return this.tutorial;
-	}
-
-	public void setTutorial(final Tutorial tutorial) {
-		this.tutorial = tutorial;
-	}
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)

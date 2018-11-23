@@ -547,8 +547,12 @@
 		<property name="sections">
 			<list>
 				<ref bean="section1" />
-
-
+			</list>
+		</property>
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship1_1" />
+				<ref bean="sponsorship2_1" />
 			</list>
 		</property>
 	</bean>
@@ -560,14 +564,15 @@
 		<property name="pictures"
 			value="https://images-na.ssl-images-amazon.com/images/uwepoi7L.jpg" />
 		<property name="sections">
-
-
 			<list>
-
 				<ref bean="section2" />
-
 			</list>
-
+		</property>
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship1_1" />
+				<ref bean="sponsorship2_1" />
+			</list>
 		</property>
 	</bean>
 
@@ -1630,7 +1635,6 @@
 			value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AAAAAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
 		<property name="targetPage" value="http://www.random.es" />
 		<property name="creditCard" ref="creditCard1" />
-		<property name="tutorial" ref="tutorial1" />
 		<property name="sponsor" ref="sponsor1" />
 	</bean>
 
@@ -1641,7 +1645,6 @@
 			value="https://img00.deviantart.net/9480/i/2011/046/4/a/random_banner_by_mobianangel11-d39nc1t.png" />
 		<property name="targetPage" value="http://www.random.com" />
 		<property name="creditCard" ref="creditCard2" />
-		<property name="tutorial" ref="tutorial2" />
 		<property name="sponsor" ref="sponsor2" />
 	</bean>
 </beans>

@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +30,7 @@ public class Tutorial extends DomainEntity {
 	private String				summary;
 	private String				pictures;
 	private Collection<Section>	sections;
-
+	private Collection<Sponsorship> sponsorships;
 
 	@NotBlank
 	public String getTitle() {
@@ -79,6 +80,16 @@ public class Tutorial extends DomainEntity {
 
 	public void setSections(final Collection<Section> sections) {
 		this.sections = sections;
+	}
+	
+	
+	@ManyToMany
+	public Collection<Sponsorship> getSponsorships() {
+		return sponsorships;
+	}
+
+	public void setSponsorships(Collection<Sponsorship> sponsorships) {
+		this.sponsorships = sponsorships;
 	}
 
 }
