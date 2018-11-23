@@ -17,6 +17,7 @@ import domain.CreditCard;
 import domain.MessageBox;
 import domain.SocialProfile;
 import domain.Sponsor;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -52,6 +53,7 @@ public class SponsorService {
 		result.setIsSuspicious(false);
 		result.setMessageBoxes(messageBoxes);
 		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
+		result.setSponsorships(Collections.<Sponsorship> emptyList());
 		
 		return result;
 	}
