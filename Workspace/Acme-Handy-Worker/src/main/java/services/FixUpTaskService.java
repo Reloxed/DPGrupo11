@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 
 import domain.FixUpTask;
@@ -40,12 +41,22 @@ public class FixUpTaskService {
 		
 	}
 	public Collection<FixUpTask> findAll(){
-		return null;
+		Collection<FixUpTask> result;
+
+		result = this.fixUpTaskRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
 		
 	} 
 	
 	public FixUpTask findOne(int fixUpTaskId){
-		return null;
+		FixUpTask result;
+
+		result = this.fixUpTaskRepository.findOne(fixUpTaskId);
+		Assert.notNull(result);
+
+		return result;
 		
 	}
 	

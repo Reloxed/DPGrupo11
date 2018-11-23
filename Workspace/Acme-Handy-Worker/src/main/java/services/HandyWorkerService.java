@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,16 @@ public class HandyWorkerService {
 		result = this.handyWorkerRepository.findOne(handyWorkerId);
 		
 		return result;
+	}
+	public Collection<HandyWorker> findAll(){
+		Collection<HandyWorker> result;
+
+		result = this.handyWorkerRepository.findAll();
+
+		Assert.notNull(result);
+
+		return result;
+		
 	}
 	
 	
