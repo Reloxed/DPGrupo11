@@ -26,7 +26,13 @@ public class FinderService {
 	
 	
 	//Supporting services ----------
+	@Autowired
 	private FixUpTaskService fixUptaskService;
+	
+	//Constructor -----------------------
+		public FinderService() {
+			super();
+		}
 	
 	
 	

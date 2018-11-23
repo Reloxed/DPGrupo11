@@ -16,7 +16,7 @@ import repositories.EndorserRecordRepository;
 @Transactional
 public class EndorserRecordService {
 
-	
+	 
 	//Managed repository-----------
 	
 	@Autowired
@@ -27,8 +27,10 @@ public class EndorserRecordService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 	
-
-	
+	//Constructor ----------------------------------------------------
+		public EndorserRecordService() {
+			super();
+		}
 	
 	
 	
@@ -36,35 +38,79 @@ public class EndorserRecordService {
 	public EndorserRecord create(){
 		EndorserRecord result;
 		HandyWorker principal;
-		
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		//result= new EndonserRecord();
-		//Assert.notNull(result);
+		result= new EndorserRecord();
+		Assert.notNull(result);
 		
-		
-		
-		return null;
+		return result;
 		
 	}
 	public Collection<EndorserRecord> findAll(){
-		return null;
+		Collection <EndorserRecord> result;
+		result=this.endorserRecordRepository.findAll();
+		return result;
 		
 	} 
 	
-	public EndorserRecord findOne(int endorserRecordId){
-		return null;
+	public EndorserRecord findOne(final int endorserRecordId){
+		EndorserRecord result;
+		result=this.endorserRecordRepository.findOne(endorserRecordId);
+		//Assert.isNull(result);
+		return result;
 		
 	}
 	
 	public EndorserRecord save(EndorserRecord endorserRecord){
-		return null;
+	
+		Assert.notNull(endorserRecord);
+		EndorserRecord result;
+		HandyWorker principal;
+		Collection<EndorserRecord> endorsersRecord;
+		
+		principal=this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(principal.getCurriculum());
+		
+		endorsersRecord=principal.getCurriculum().getEndorserRecords();
+		result=this.endorserRecordRepository.save(endorserRecord);
+		Assert.notNull(result);
+		//tengo que poner una condición con el formato del telefono
+		//email?etc
+		/**if(patron){
+		 * .save
+		 * 		}
+		 * else{excepcion
+		 * }
+		 * 
+		 * */
+		
+		
+		endorsersRecord.add(result);
+		principal.getCurriculum().setEndorserRecords(endorsersRecord);
+		
+		
+		return result;
+		
+		
 		
 	}
 	
 	public void  delete(EndorserRecord endorserRecord){
-		return;
+		
+		HandyWorker principal;
+		Collection<EndorserRecord> collectionEndorserRecords;
+		
+		principal=this.handyWorkerService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		
+		collectionEndorserRecords=principal.getCurriculum().getEndorserRecords();
+		
+		this.endorserRecordRepository.delete(endorserRecord);
+		collectionEndorserRecords.remove(endorserRecord);
+		
 		
 	}
 	

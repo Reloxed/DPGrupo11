@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -14,8 +15,8 @@ import domain.Sponsorship;
 @Transactional
 public class SponsorshipService {
 
-	//Managed repository
-	
+	//Managed repository -----------------------------
+
 	@Autowired
 	private SponsorshipRepository sponsorshipRepository;
 	
@@ -26,42 +27,42 @@ public class SponsorshipService {
 	public Sponsorship create(){
 		return new Sponsorship();
 	}
-	
-	public Collection<Sponsorship> findAll(){
+
+	public Collection<Sponsorship> findAll() {
 		Collection<Sponsorship> sponsorships;
-		
+
 		sponsorships = this.sponsorshipRepository.findAll();
-		
+
 		return sponsorships;
 	}
-	
-//	public Collection<Sponsorship> find(){
-//		
-//	}
-	
-	public Sponsorship findOne(int sponsorshipId){
+
+	//	public Collection<Sponsorship> find(){
+	//		
+	//	}
+
+	public Sponsorship findOne(final int sponsorshipId) {
 		Sponsorship result;
 		
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
 		
 		return result;
 	}
-	
-	public Sponsorship save(Sponsorship s){
+
+	public Sponsorship save(final Sponsorship s) {
 		Assert.notNull(s);
-		
 		Sponsorship result;
+
 		result = this.sponsorshipRepository.save(s);
 		
 		return result;
 	}
-	
-	public void delete(Sponsorship s){
+
+	public void delete(final Sponsorship s) {
 		Assert.notNull(s);
 		Assert.notNull(this.sponsorshipRepository.findOne(s.getId()));
 		this.sponsorshipRepository.delete(s);
 	}
 
 	//Other business methods
-	
+
 }

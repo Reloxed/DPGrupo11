@@ -61,8 +61,8 @@ public class ApplicationService {
 		final String messageHandyWorker;
 		final String messageCustomer;
 		Collection<Application> applications, updated;
-		final Collection<String> spamWords;
-		final boolean containsSpam;
+		String[] spamWords, comments;
+		boolean containsSpam;
 
 		Assert.notNull(a);
 		applicant = this.handyWorkerService.findByPrincipal();
@@ -95,17 +95,26 @@ public class ApplicationService {
 		fixUpTask.setApplications(updated);
 
 		// Check contain of strings searching spamWords
-		/*
-		 * containsSpam = false;
-		 * spamWords = this.systemConfigurationService
-		 */
 
-		// TODO: necesito un metodo de systemConfiguration que me devuelva las palabras spam para comprobar que el contenido de los comentarios no tiene spam
+		containsSpam = false;
+		spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		comments = result.getComment().split(",");
+		for (final String word : spamWords) {
 
+			for (final String comment : comments)
+				if (comment.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				applicant.setIsSuspicious(true);
+				break;
+			}
+
+		}
 		// TODO: falta el mensaje de notificacion
 		return result;
 	}
-
 	public Collection<Application> findAll() {
 		Collection<Application> result;
 
