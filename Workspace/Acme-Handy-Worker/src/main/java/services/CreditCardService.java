@@ -34,82 +34,74 @@ public class CreditCardService {
 	@Autowired
 	private SponsorService sponsorService;
 	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+	
 	// Simple CRUD Methods
 	
-//	public CreditCard create() {
-//		
-//		final CreditCard result;
-//		Sponsor ownerSponsor;
-//		Customer ownerCustomer;
-//
-//		ownerSponsor = this.sponsorService.findByPrincipal();
-//		ownerCustomer = this.customerService.findByPrincipal();
-//		if(!(ownerCustomer==null && ownerSponsor!=null||ownerCustomer!=null && ownerSponsor==null)){
-//			
-//			Assert.notNull(ownerSponsor);
-//			Assert.notNull(ownerCustomer);
-//			
-//		} else {
-//			result = new CreditCard();
-//			
-//			result.setHolderName("");
-//			result.setBrandName("");
-//			result.setNumber("");
-//			result.setExpirationMonth(99);
-//			result.setExpirationYear(99);
-//			result.setCVV(999);
-//
-//		}
-//		
-//		return result;
-//	}
-//
-//	public Collection<CreditCard> findAll(){
-//		Collection<CreditCard> collCC = new ArrayList<>();
-//		Sponsor ownerSponsor;
-//		Customer ownerCustomer;
-//
-//		ownerSponsor = this.sponsorService.findByPrincipal();
-//		ownerCustomer = this.customerService.findByPrincipal();
-//		if(!(ownerCustomer==null && ownerSponsor!=null||ownerCustomer!=null && ownerSponsor==null)){		
-//			Assert.notNull(ownerSponsor);
-//			Assert.notNull(ownerCustomer);
-//		}
-//		if(ownerCustomer!=null) {
-//			collCC = this.customerService.findCreditCardsByCustomerId(ownerCustomer.getId());
-//		} else {
-//			collCC = this.sponsorService.findCreditCardsBySponsorId(ownerSponsor.getId());
-//		}
-//
-//		return collCC;
-//	}
-//	
-//	public CreditCard findOne(int creditCardId){
-//		return this.creditCardRepository.findOne(creditCardId);
-//	}
-//
-//	public CreditCard save (CreditCard creditCard) throws ParseException{
-//		Assert.notNull(creditCard);
-//		Assert.isTrue(creditCard.getId() != 0);
-//		
-//		Sponsor ownerSponsor;
-//		Customer ownerCustomer;
-//		
-//		ownerSponsor = this.sponsorService.findByPrincipal();
-//		ownerCustomer = this.customerService.findByPrincipal();
-//		if(!(ownerCustomer==null && ownerSponsor!=null||ownerCustomer!=null && ownerSponsor==null)){
-//			
-//			Assert.notNull(ownerSponsor);
-//			Assert.notNull(ownerCustomer);
-//			
-//		} else {
-//			String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
-//			SimpleDateFormat formato = new SimpleDateFormat("MM YY");
-//			Date expiration = formato.parse(monthYear);
-//			Assert.isTrue(expiration.after(LocalDate.now().toDate()));
-//		}
-//		return this.creditCardRepository.save(creditCard);
-//	}
+	public CreditCard create() {
+		
+		final CreditCard result;
+		Sponsor ownerSponsor;
+		Customer ownerCustomer;
+
+		ownerSponsor = this.sponsorService.findByPrincipal();
+		ownerCustomer = this.customerService.findByPrincipal();
+		if(ownerCustomer==null && ownerSponsor==null){
+			
+			Assert.notNull(ownerSponsor);
+		}
+		
+		return result;
+	}
+
+	public Collection<CreditCard> findAll(){
+		Collection<CreditCard> collCC = new ArrayList<>();
+		Sponsor ownerSponsor;
+		Customer ownerCustomer;
+
+		ownerSponsor = this.sponsorService.findByPrincipal();
+		ownerCustomer = this.customerService.findByPrincipal();
+		if(ownerCustomer==null && ownerSponsor==null){
+	
+		Assert.notNull(ownerSponsor);
+	
+		}
+		if(ownerCustomer!=null) {
+			collCC = this.customerService.findCreditCardsByCustomerId(ownerCustomer.getId());
+		} else {
+			collCC = this.sponsorService.findCreditCardsBySponsorId(ownerSponsor.getId());
+		}
+
+		return collCC;
+	}
+	
+	public CreditCard findOne(int creditCardId){
+		return this.creditCardRepository.findOne(creditCardId);
+	}
+
+	public CreditCard save (CreditCard creditCard) throws ParseException{
+		Assert.notNull(creditCard);
+		Assert.isTrue(creditCard.getId() != 0);
+		
+		Sponsor ownerSponsor;
+		Customer ownerCustomer;
+		
+		ownerSponsor = this.sponsorService.findByPrincipal();
+		ownerCustomer = this.customerService.findByPrincipal();
+		if(ownerCustomer==null && ownerSponsor==null){
+	
+			Assert.notNull(ownerSponsor);
+	
+		}
+		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
+		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
+		Date expiration = formato.parse(monthYear);
+		Assert.isTrue(expiration.after(LocalDate.now().toDate()));
+		
+		Assert.isTrue(systemConfigurationService.findMySystemConfiguration().getListCreditCardMakes().contains(creditCard.getBrandName()));
+		return this.creditCardRepository.save(creditCard);
+	}
 	
 	public void delete(CreditCard creditCard) {
 		
