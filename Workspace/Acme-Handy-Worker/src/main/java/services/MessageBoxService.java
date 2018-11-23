@@ -2,7 +2,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -28,6 +27,105 @@ public class MessageBoxService {
 	private ActorService actorService;
 	
 	//CRUD Methods --------------------------------
+	public MessageBox create(){
+		MessageBox result;
+		Actor principal;
+		Collection<Message> messages;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		messages = new ArrayList<Message>();
+		
+		result = new MessageBox();
+		Assert.notNull(result);
+		
+		result.setMessages(messages);
+		
+		
+		return result;
+	}
+	
+	public MessageBox findOne(final int messageBoxId){
+		MessageBox result;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Assert.isTrue(messageBoxId!=0);
+		
+		result = this.messageBoxRepository.findOne(messageBoxId);
+		Assert.notNull(result);
+		
+		return result;
+		
+	}
+	
+	public Collection<MessageBox> findAll(){
+		Collection<MessageBox>result;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.messageBoxRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public MessageBox save(final MessageBox messageBox){
+		MessageBox result;
+		Actor principal;
+		Collection<Message>messages;
+		
+		Assert.notNull(messageBox);
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		if(messageBox.getIsPredefined()==true){
+			messageBox.setIsPredefined(true);
+			messages = new ArrayList<Message>();
+			messageBox.setMessages(messages);
+			
+		}else{
+			
+			Assert.isTrue(messageBox.getIsPredefined()==false);
+			Assert.isTrue(principal.getMessageBoxes().contains(messageBox));
+			messageBox.setIsPredefined(false);
+			Collection<Message>messagesBox = messageBox.getMessages();
+			messageBox.setMessages(messagesBox);
+			
+		}
+		
+		result = this.messageBoxRepository.save(messageBox);
+		Assert.notNull(result);
+		
+		if(!principal.getMessageBoxes().contains(messageBox)){
+			principal.getMessageBoxes().add(messageBox);
+		}
+		
+		return result;
+		
+	}
+	
+	public void delete(MessageBox messageBox){
+		Actor principal;
+		
+		Assert.isTrue(messageBox.getId()!=0);
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Assert.isTrue(!messageBox.getIsPredefined());
+		Assert.isTrue(principal.getMessageBoxes().contains(messageBox));
+		
+		this.messageBoxRepository.delete(messageBox);
+		principal.getMessageBoxes().remove(messageBox);
+	}
+	
 	
 	public Collection<MessageBox> createSystemMessageBoxes(){
 		Collection<MessageBox> result;
