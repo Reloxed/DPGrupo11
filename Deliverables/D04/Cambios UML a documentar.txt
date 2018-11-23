@@ -7,4 +7,4 @@
 - Application --> CreditCard relación 1..* a 0..1
 - Sponsorship --> CreditCard relación 1..* a 1
 - Money FUERA
-- Minusculas cambiadas todas a mayusculas.
+- Minusculas cambiadas todas a mayusculas en el UML

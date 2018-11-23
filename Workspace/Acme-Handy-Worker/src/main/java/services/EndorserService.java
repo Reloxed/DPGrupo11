@@ -1,19 +1,19 @@
-package security;
+package services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.CreditCard;
+import repositories.EndorserRepository;
 
 @Service
 @Transactional
-public class UserAccountService {
-
+public class EndorserService {
+	
 	// Managed Repository
 	
 	@Autowired
-	private UserAccountRepository userAccountRepository;
+	private EndorserRepository endorserRepository;
 		
 		
 	// Supporting Services
@@ -25,10 +25,5 @@ public class UserAccountService {
 	
 	
 	// Other business methods
-	
-//	public UserAccount getUserAccountByCreditCard (CreditCard creditCard) {
-//		UserAccount userAccount = new UserAccount(userAccountRepository);
-//	}
-	
-	
+
 }

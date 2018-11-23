@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -15,51 +16,56 @@ import domain.SystemConfiguration;
 public class SystemConfigurationService {
 
 	//Managed repository
-	
+
 	@Autowired
-	private SystemConfigurationRepository scr;
-	
+	private SystemConfigurationRepository	systemConfigurationRepository;
+
+
 	//Supporting services
-	
+
 	//Simple CRUD Methods
-	
-	public SystemConfiguration create(){
+
+	public SystemConfiguration create() {
 		return new SystemConfiguration();
 	}
-	
-	public Collection<SystemConfiguration> findAll(){
+
+	public Collection<SystemConfiguration> findAll() {
 		Collection<SystemConfiguration> systemConfigurations;
-		
-		systemConfigurations = this.scr.findAll();
-		
+
+		systemConfigurations = this.systemConfigurationRepository.findAll();
+
 		return systemConfigurations;
 	}
-	
-//	public Collection<SystemConfiguration> find(){
-//		
-//	}
-	
-	public SystemConfiguration findOne(int systemConfigurationId){
-		SystemConfiguration result;
-		
-		result = this.scr.findOne(systemConfigurationId);
-		
+
+	public SystemConfiguration findMySystemConfiguration() {
+		final SystemConfiguration result;
+
+		result = this.systemConfigurationRepository.findAll().get(0);
+
 		return result;
 	}
-	
-	public SystemConfiguration save(SystemConfiguration sc){
-		Assert.notNull(sc);
-		
+
+	public SystemConfiguration findOne(final int systemConfigurationId) {
 		SystemConfiguration result;
-		result = this.scr.save(sc);
-		
+
+		result = this.systemConfigurationRepository.findOne(systemConfigurationId);
+
 		return result;
 	}
-	
-	public void delete(SystemConfiguration sc){
-		Assert.notNull(sc);
-		Assert.notNull(this.scr.findOne(sc.getId()));
-		this.scr.delete(sc);
+
+	public SystemConfiguration save(final SystemConfiguration systemConfiguration) {
+		Assert.notNull(systemConfiguration);
+
+		SystemConfiguration result;
+		result = this.systemConfigurationRepository.save(systemConfiguration);
+
+		return result;
+	}
+
+	public void delete(final SystemConfiguration systemConfiguration) {
+		Assert.notNull(systemConfiguration);
+		Assert.notNull(this.systemConfigurationRepository.findOne(systemConfiguration.getId()));
+		this.systemConfigurationRepository.delete(systemConfiguration);
 	}
 
 	//Other business methods
