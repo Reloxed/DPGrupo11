@@ -85,8 +85,8 @@ public class SectionService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.notNull(section.getTitle());
-		Assert.notNull(section.getText());
+		Assert.isTrue(!section.getTitle().isEmpty());
+		Assert.isTrue(!section.getText().isEmpty());
 
 		tutorial = this.tutorialService
 				.findTutorialBySectionId(section.getId());

@@ -5,8 +5,11 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.RefereeRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Referee;
 
 @Service
@@ -18,7 +21,6 @@ public class RefereeService {
 	@Autowired
 	private RefereeRepository refereeRepository;
 
-	// TODO
 	// Supporting services -----------------------------------
 
 	// Simple CRUD methods -----------------------------------
@@ -46,4 +48,29 @@ public class RefereeService {
 
 	// TODO
 	// Other business methods -------------------------------
+
+	public Referee findByPrincipal() {
+		Referee res;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		res = this.findRefereeByUserAccount(userAccount.getId());
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Referee findRefereeByUserAccount(final int userAccountId) {
+		Assert.isTrue(userAccountId != 0);
+
+		Referee result;
+
+		result = this.refereeRepository.findRefereeByUserAccount(userAccountId);
+
+		Assert.notNull(result);
+
+		return result;
+	}
 }

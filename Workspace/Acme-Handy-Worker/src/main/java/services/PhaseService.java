@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.PhaseRepository;
 import domain.Application;
+import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
@@ -28,6 +29,9 @@ public class PhaseService {
 
 	@Autowired
 	private HandyWorkerService handyWorkerService;
+
+	@Autowired
+	private CustomerService customerService;
 
 	// Simple CRUD methods -----------------------------------
 
@@ -69,8 +73,17 @@ public class PhaseService {
 		return res;
 	}
 
-	// TODO
 	public Phase findOne(int phaseId) {
+		HandyWorker principalHW;
+		Customer principalC;
+		Assert.isTrue(phaseId != 0);
+
+		principalHW = this.handyWorkerService.findByPrincipal();
+
+		if (principalHW == null) {
+			principalC = this.customerService.findByPrincipal();
+			Assert.notNull(principalC);
+		}
 		return this.phaseRepository.findOne(phaseId);
 	}
 
@@ -82,8 +95,8 @@ public class PhaseService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.notNull(phase.getTitle());
-		Assert.notNull(phase.getDescription());
+		Assert.isTrue(!phase.getTitle().isEmpty());
+		Assert.isTrue(!phase.getDescription().isEmpty());
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
 		return this.phaseRepository.save(phase);
