@@ -12,10 +12,8 @@ import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
 import domain.Application;
-import domain.CreditCard;
 import domain.FixUpTask;
 import domain.HandyWorker;
-import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -37,9 +35,6 @@ public class ApplicationService {
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
-
-	// Handy Worker : List, show, create
-	// Customer : List, update
 
 	// Simple CRUD methods ---------------------------
 	public Application create() {
@@ -209,10 +204,10 @@ public class ApplicationService {
 
 		return result;
 	}
-	
-	public Collection<Application> findByCreditCardId(int creditCardId) {
-		Collection <Application> res = new ArrayList<>();
-		
+
+	public Collection<Application> findByCreditCardId(final int creditCardId) {
+		Collection<Application> res = new ArrayList<>();
+
 		res = this.applicationRepository.findByCreditCardId(creditCardId);
 
 		return res;
