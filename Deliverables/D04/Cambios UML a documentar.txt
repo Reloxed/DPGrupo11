@@ -10,8 +10,13 @@
 - Sponsorship --> Tutorial cambiado a Tutorial --> Sponsorship 1..* 0..*
 - Cambiada las relaciones complaint --> report a complaint <-- report && 
 	report --> note a report <-- note
+- Relacion note a report bidireccional--> done
 
 JAVA
 
 - Falta Collection<Phase> workPlan en FixUpTask (modificar el populate, domain)
 - Minusculas cambiadas todas a mayusculas en el UML
+- Añadido collection<Note>notes a la clase report
+
+POPULATE
+-Cambiar domain.report añadiendole un bean de notes. TODO
