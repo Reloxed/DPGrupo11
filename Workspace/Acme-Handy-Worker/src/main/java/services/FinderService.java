@@ -156,7 +156,7 @@ public class FinderService {
 		Collection<FixUpTask> result;
 		HandyWorker principal;
 		Category category;//hay que poder buscar por categoria y garantia hay q hacer query
-		Warranty warranty;
+		Warranty warranty;//tengo que tener los ids de esa categoria y garantia
 		
 		principal=this.handyWorkerService.findByPrincipal();
 		
