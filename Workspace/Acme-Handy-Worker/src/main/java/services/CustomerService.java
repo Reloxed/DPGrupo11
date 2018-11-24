@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -15,6 +16,7 @@ import security.UserAccount;
 import domain.Actor;
 import domain.CreditCard;
 import domain.Customer;
+import domain.MessageBox;
 
 @Service
 @Transactional
@@ -30,16 +32,24 @@ public class CustomerService {
 	@Autowired
 	private ActorService actorService;
 	
+	@Autowired
+	private MessageBoxService messageBoxService;
+	
 	// Simple CRUD Methods
 	
 	public Customer create() {
 		Customer result;
+		Collection<MessageBox> messageBoxes;
 		Actor principal;
 		
 		principal = this.actorService.findByPrincipal();
 		Assert.isNull(principal);
 		
 		result = new Customer();
+		
+		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+		
+		result.setMessageBoxes(messageBoxes);
 		
 		return result;
 	}
@@ -57,7 +67,17 @@ public class CustomerService {
 	}
 	
 	public Customer save(Customer customer) {
+		Assert.notNull(customer);
 		Customer cus;
+		
+		if(customer.getId() == 0){
+			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+			customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
+		} else{
+			Customer principal;
+			principal = this.findByPrincipal();
+			Assert.notNull(principal);
+		}
 		cus = customerRepository.save(customer);
 		return cus;
 	}

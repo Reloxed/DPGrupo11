@@ -22,25 +22,9 @@ public class EndorserService {
 	@Autowired
 	private EndorserRepository endorserRepository;
 		
-		
 	// Supporting Services
-
-	@Autowired
-	private ActorService actorService;
 		
 	// Simple CRUD Methods
-	
-	public Endorser create() {
-		Endorser result;
-		Actor principal;
-		
-		principal = this.actorService.findByPrincipal();
-		Assert.isNull(principal);
-		
-		result = new Customer();
-		
-		return result;
-	}
 	
 	public Collection<Endorser> findAll(){
 		Collection<Endorser> collEnd = new ArrayList<>();
@@ -52,12 +36,6 @@ public class EndorserService {
 		Integer id = endorserId;
 		Endorser endorser = endorserRepository.findOne(id);	
 		return endorser;
-	}
-	
-	public Endorser save(Endorser endorser) {
-		Endorser end;
-		end = endorserRepository.save(endorser);
-		return end;
 	}
 	
 	// Other business methods
