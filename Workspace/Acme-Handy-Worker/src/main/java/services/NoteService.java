@@ -11,16 +11,14 @@ import repositories.NoteRepository;
 @Transactional
 public class NoteService {
 
-	//Managed repository ----------------------------
-	
+	// Managed repository ----------------------------
+
 	@Autowired
 	private NoteRepository noteRepository;
-	
-	//Supporting services -------------------
-	
-	
-	//CRUD Methods --------------------------------
-	
-	
-	//Other business methods -----------------------------
+
+	// Supporting services -------------------
+
+	// CRUD Methods --------------------------------
+
+	// Other business methods -----------------------------
 }

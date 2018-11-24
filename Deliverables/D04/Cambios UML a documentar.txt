@@ -8,6 +8,8 @@
 - Sponsorship --> CreditCard relación 1..* a 1
 - Money FUERA
 - Sponsorship --> Tutorial cambiado a Tutorial --> Sponsorship 1..* 0..*
+- Cambiada las relaciones complaint --> report a complaint <-- report && 
+	report --> note a report <-- note
 
 JAVA
 

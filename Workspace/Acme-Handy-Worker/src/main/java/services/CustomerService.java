@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
+
 import domain.CreditCard;
 import domain.Customer;
 
@@ -19,11 +20,10 @@ import domain.Customer;
 public class CustomerService {
 
 	// Managed Repository
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
+
 	// Supporting Services
 
 //	private AdministratorService administratorService;
@@ -92,5 +92,4 @@ public class CustomerService {
 
 		return result;
 	}
-	
 }

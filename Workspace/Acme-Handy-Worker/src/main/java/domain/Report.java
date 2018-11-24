@@ -1,13 +1,11 @@
-
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,12 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Report extends DomainEntity {
 
-	private Date				publishedMoment;
-	private String				description;
-	private String				attachments;
-	private boolean				isFinal;
-	private Collection<Note>	notes;
-
+	private Date publishedMoment;
+	private String description;
+	private String attachments;
+	private boolean isFinal;
+	private Complaint complaint;
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -67,14 +64,15 @@ public class Report extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	@OneToMany
+	@OneToOne(optional = false)
 	@Valid
-	public Collection<Note> getNotes() {
-		return this.notes;
+	@NotNull
+	public Complaint getComplaint() {
+		return complaint;
 	}
 
-	public void setNotes(final Collection<Note> notes) {
-		this.notes = notes;
+	public void setComplaint(Complaint complaint) {
+		this.complaint = complaint;
 	}
 
 }
