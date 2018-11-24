@@ -280,6 +280,7 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship1_1" />
+				<ref bean="sponsorship1_2" />
 			</list>
 		</property>
 	</bean>
@@ -537,6 +538,16 @@
 		<property name="expirationYear" value="22" />
 		<property name="CVV" value="223" />
 	</bean>
+	
+	<bean id="creditCard3" class="domain.CreditCard">
+		<property name="holderName" value="Esteban Coralino Riesco Motos" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="1234567349234999" />
+		<property name="expirationMonth" value="06" />
+		<property name="expirationYear" value="21" />
+		<property name="CVV" value="861" />
+	</bean>
+	
 	<!-- TUTORIAL -->
 	<bean id="tutorial1" class="domain.Tutorial">
 		<property name="title" value="How to pass DP" />
@@ -552,6 +563,7 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship1_1" />
+				<ref bean="sponsorship1_2" />
 				<ref bean="sponsorship2_1" />
 			</list>
 		</property>
@@ -571,6 +583,7 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship1_1" />
+				<ref bean="sponsorship1_2" />
 				<ref bean="sponsorship2_1" />
 			</list>
 		</property>
@@ -1749,6 +1762,14 @@
 		<property name="creditCard" ref="creditCard1" />
 		<property name="sponsor" ref="sponsor1" />
 	</bean>
+	
+	<bean id="sponsorship1_2" class="domain.Sponsorship">
+		<property name="banner"
+			value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AABBBAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
+		<property name="targetPage" value="http://www.random.com" />
+		<property name="creditCard" ref="creditCard3" />
+		<property name="sponsor" ref="sponsor1" />
+	</bean>
 
 	<!-- Sponsorship 1 of sponsor 2 -->
 
@@ -1759,4 +1780,6 @@
 		<property name="creditCard" ref="creditCard2" />
 		<property name="sponsor" ref="sponsor2" />
 	</bean>
+	
+
 </beans>

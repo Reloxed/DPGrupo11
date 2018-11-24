@@ -12,8 +12,10 @@ import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
 import domain.Application;
+import domain.CreditCard;
 import domain.FixUpTask;
 import domain.HandyWorker;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -206,6 +208,14 @@ public class ApplicationService {
 		result = this.applicationRepository.findDataApplicationsOfferedPrice();
 
 		return result;
+	}
+	
+	public Collection<Application> findByCreditCardId(int creditCardId) {
+		Collection <Application> res = new ArrayList<>();
+		
+		res = this.applicationRepository.findByCreditCardId(creditCardId);
+
+		return res;
 	}
 
 }

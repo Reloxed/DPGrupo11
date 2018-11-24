@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,7 @@ import org.springframework.util.Assert;
 import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
-
-import domain.Customer;
-import domain.HandyWorker;
-import domain.Administrator;
+import domain.Actor;
 import domain.CreditCard;
 import domain.Customer;
 
@@ -29,12 +27,21 @@ public class CustomerService {
 
 	// Supporting Services
 
-	private AdministratorService administratorService;
+	@Autowired
+	private ActorService actorService;
 	
 	// Simple CRUD Methods
 	
 	public Customer create() {
-		return new Customer();
+		Customer result;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.isNull(principal);
+		
+		result = new Customer();
+		
+		return result;
 	}
 	
 	public Collection<Customer> findAll(){
@@ -55,21 +62,8 @@ public class CustomerService {
 		return cus;
 	}
 	
-	public void Delete (Customer customer) {
-		Administrator admin;
-
-		admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		customerRepository.delete(customer);
-	}
-	
 	// Other business methods
-	
-	public Collection<CreditCard> findCreditCardsByCustomerId (int customerId){
-		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = customerRepository.findCreditCardsByCustomerId(customerId);
-		return collCC;
-	}
+
 	
 	public Customer findByPrincipal() {
 		Customer res;
@@ -78,7 +72,7 @@ public class CustomerService {
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		res = this.findCustomerByUserAccount(userAccount.getId());
+		res = this.customerRepository.findCustomerByUserAccount(userAccount.getId());
 		Assert.notNull(res);
 
 		return res;
@@ -94,5 +88,29 @@ public class CustomerService {
 		Assert.notNull(result);
 
 		return result;
+	}
+	
+	public Customer findByCreditCardId(int creditCardId) {
+		Customer res;
+		
+		res = this.customerRepository.findByCreditCardId(creditCardId);
+
+		return res;
+	}
+	
+	public Collection<CreditCard> findCreditCardsByCustomerId (int customerId){
+		Collection<CreditCard> collCC = new ArrayList<>();
+		collCC = customerRepository.findCreditCardsByCustomerId(customerId);
+		return collCC;
+	}
+	
+	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
+		List<Customer> collC = customerTenPercentMoraThanAverage();
+		return collC.subList(0, 3);
+	}
+	
+	public List<Customer> customerTenPercentMoraThanAverage() {
+		List<Customer> collC = customerRepository.customerTenPercentMoraThanAverage();
+		return collC;
 	}
 }

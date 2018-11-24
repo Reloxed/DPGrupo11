@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
+import domain.CreditCard;
 import domain.Sponsor;
 import domain.Sponsorship;
 import domain.Tutorial;
@@ -128,5 +130,13 @@ public class SponsorshipService {
 	}
 
 	//Other business methods
+	
+	public Collection<Sponsorship> findByCreditCardId(int creditCardId) {
+		Collection <Sponsorship> res = new ArrayList<>();
+		
+		res = this.sponsorshipRepository.findByCreditCardId(creditCardId);
+
+		return res;
+	}
 
 }
