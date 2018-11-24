@@ -1,22 +1,23 @@
-- Relaci髇 endorsment --> handyworker,customer se ha cambiado
+- Relaci贸n endorsment --> handyworker,customer se ha cambiado
 - MessageBox --> Message a MessageBox <--> Message
 - {overlapping} a {disjoint} de actor hacia referee, administrator, etc.
 - Quitado childcategories de CATEGORIA
 - Sponsor --> Sponsorship a Sponsor <--> Sponsorship
 -Atributo recipient en la clase Message.java pasa a ser recipients.
-- Application --> CreditCard relaci髇 1..* a 0..1
-- Sponsorship --> CreditCard relaci髇 1..* a 1
+- Application --> CreditCard relaci贸n 1..* a 0..1
+- Sponsorship --> CreditCard relaci贸n 1..* a 1
 - Money FUERA
 - Sponsorship --> Tutorial cambiado a Tutorial --> Sponsorship 1..* 0..*
 - Cambiada las relaciones complaint --> report a complaint <-- report && 
 	report --> note a report <-- note
 - Relacion note a report bidireccional--> done
+- Se ha vuelto a poner bidireccional la relaci贸n Category-Category ya que si, por ejemplo, eliminamos una categor铆a que es padre, debemos actualizar el atributo parentCategory de sus categor铆as hijas.
 
 JAVA
 
 - Falta Collection<Phase> workPlan en FixUpTask (modificar el populate, domain)
 - Minusculas cambiadas todas a mayusculas en el UML
-- A馻dido collection<Note>notes a la clase report
+- A帽adido collection<Note>notes a la clase report
 
 POPULATE
--Cambiar domain.report a馻diendole un bean de notes. TODO
+-Cambiar domain.report a帽adiendole un bean de notes. TODO

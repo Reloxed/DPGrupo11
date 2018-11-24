@@ -42,8 +42,13 @@ public class CategoryService {
 	public Category save(final Category c) {
 		final Administrator admin;
 		Category result;
-		final Category parent, oldParent;
+		final Category parent, root;
 
+		admin = this.administratorService.findByPrincipal();
+		root = this.findRoot();
+
+		Assert.isTrue(c.getId() != root.getId());
+		Assert.notNull(admin);
 		Assert.notNull(c.getEnglishName());
 		Assert.notNull(c.getSpanishName());
 		Assert.notNull(c.getParentCategory());
@@ -52,12 +57,12 @@ public class CategoryService {
 
 		parent = result.getParentCategory();
 		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
-		if (c.getId() != 0)
+		if (c.getId() == 0)
 			this.newChild(parent, result);
-		else {
-
+		else if (!c.getParentCategory().equals(parent)) {
+			this.deleteChild(c.getParentCategory(), c);
+			this.newChild(parent, c);
 		}
-
 		return result;
 	}
 

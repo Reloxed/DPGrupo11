@@ -1,9 +1,11 @@
 
 package services;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -13,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
 import domain.MessageBox;
+import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -32,34 +35,56 @@ public class AdministratorService {
 	public Administrator create() {
 		Administrator principal;
 		Administrator result;
-		final List<MessageBox> messageBoxes;
+		final Collection<MessageBox> messageBoxes;
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
 
 		result = new Administrator();
-		/*
-		 * messageBoxes = this.messageBoxService.createSystemMessageBoxs();
-		 * 
-		 * result.setIsSuspicious(false);
-		 * result.setIsBanned(false);
-		 * result.setMessageBoxes(messageBoxes);
-		 * result.setSentMessages(Collections.<Message> emptyList());
-		 * result.setReceivedMessages(Collections.<Message> emptyList());
-		 * result.setSocialProfiles(Collections.<SocialProfile> emptyList());
-		 */
-		return result;
 
+		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+
+		result.setIsSuspicious(false);
+		result.getUserAccount().setIsBanned(false);
+		result.setMessageBoxes(messageBoxes);
+		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
+
+		return result;
+	}
+
+	public Administrator save(final Administrator admin) {
+		Administrator result, principal;
+		Assert.notNull(admin);
+		Md5PasswordEncoder encoder;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		encoder = new Md5PasswordEncoder();
+
+		if (admin.getId() == 0)
+			admin.getUserAccount().setPassword(encoder.encodePassword(admin.getUserAccount().getPassword(), null));
+
+		result = this.administratorRepository.save(admin);
+
+		return result;
 	}
 
 	public Administrator findOne(final int administratorId) {
-
 		Administrator result;
 
 		result = this.administratorRepository.findOne(administratorId);
 
 		return result;
 
+	}
+
+	public Collection<Administrator> findAll() {
+		Collection<Administrator> result;
+
+		result = this.administratorRepository.findAll();
+
+		return result;
 	}
 
 	public Administrator findByPrincipal() {

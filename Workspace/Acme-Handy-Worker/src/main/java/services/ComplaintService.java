@@ -2,13 +2,16 @@
 package services;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
 import domain.Complaint;
+import domain.Customer;
 
 @Service
 @Transactional
@@ -25,15 +28,20 @@ public class ComplaintService {
 
 	// CRUD methods -----------------------------------------
 
-	/*
-	 * public Complaint create() {
-	 * final Complaint result;
-	 * final Customer customer;
-	 * 
-	 * customer = this.customerService.
-	 * 
-	 * }
-	 */
+	public Complaint create() {
+		Complaint result;
+		Customer customer;
+
+		customer = this.customerService.findByPrincipal();
+		Assert.notNull(customer);
+
+		result = new Complaint();
+
+		result.setTicker(this.generateTicker(result));
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
+
+		return result;
+	}
 
 	// Other business methods --------------------------------
 	public String generateTicker(final Complaint c) {
