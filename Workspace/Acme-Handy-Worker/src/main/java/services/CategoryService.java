@@ -40,7 +40,9 @@ public class CategoryService {
 	}
 
 	public Category save(final Category c) {
-		final Category result;
+		final Administrator admin;
+		Category result;
+		final Category parent, oldParent;
 
 		Assert.notNull(c.getEnglishName());
 		Assert.notNull(c.getSpanishName());
@@ -48,14 +50,41 @@ public class CategoryService {
 
 		result = this.categoryRepository.save(c);
 
+		parent = result.getParentCategory();
+		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
+		if (c.getId() != 0)
+			this.newChild(parent, result);
+		else {
+
+		}
+
 		return result;
 	}
 
 	public void delete(final Category c) {
-		/*
-		 * Si borro una categoría, debo eliminarla de las categorías hijas de su padre y además,
-		 * si es padre, debo borrar sus categorias hijas
-		 */
+		Administrator admin;
+		Category parent, root, aux;
+		Collection<Category> childCategories;
+
+		Assert.notNull(c);
+		Assert.isTrue(c.getId() != 0);
+
+		admin = this.administratorService.findByPrincipal();
+		Assert.notNull(admin);
+		root = this.findRoot();
+		Assert.isTrue(c.getId() != root.getId()); // Comprobamos que no vamos a borrar la categoría raiz
+
+		childCategories = c.getChildCategories();
+		aux = null;
+
+		if (!childCategories.isEmpty())
+			for (final Category cat : childCategories)
+				cat.setParentCategory(aux);
+
+		parent = c.getParentCategory();
+		this.deleteChild(parent, c);
+
+		this.categoryRepository.delete(c);
 	}
 
 	public Collection<Category> findAll() {
@@ -72,5 +101,39 @@ public class CategoryService {
 		result = this.categoryRepository.findOne(categoryId);
 
 		return result;
+	}
+
+	// Other business methods
+
+	public Collection<Category> findChildCategories(final int categoryId) {
+		Collection<Category> result;
+
+		result = this.categoryRepository.findChildCategories(categoryId);
+
+		return result;
+	}
+
+	public Category findRoot() {
+		Category result;
+
+		result = this.categoryRepository.findRoot();
+
+		return result;
+	}
+
+	private void newChild(final Category c, final Category child) {
+		Collection<Category> childCategories;
+
+		childCategories = c.getChildCategories();
+		childCategories.add(child);
+		c.setChildCategories(childCategories);
+	}
+
+	private void deleteChild(final Category c, final Category child) {
+		Collection<Category> childCategories;
+
+		childCategories = c.getChildCategories();
+		childCategories.remove(child);
+		c.setChildCategories(childCategories);
 	}
 }
