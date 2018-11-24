@@ -109,7 +109,15 @@ public class CurriculumService {
 		Assert.notNull(curriculum);
 		Assert.isTrue(curriculum.getId() != 0);
 		
-		return curriculum;
+		HandyWorker author;
+		author = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(author);
+	
+		
+		author.setCurriculum(curriculum);		
+		
+		return this.curriculumRepository.save(curriculum);
+
 	}
 	
 	public void delete (Curriculum curriculum) {

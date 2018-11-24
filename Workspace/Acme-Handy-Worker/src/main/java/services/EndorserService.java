@@ -6,8 +6,10 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.EndorserRepository;
+import domain.Actor;
 import domain.Customer;
 import domain.Endorser;
 
@@ -23,12 +25,21 @@ public class EndorserService {
 		
 	// Supporting Services
 
-	
+	@Autowired
+	private ActorService actorService;
 		
 	// Simple CRUD Methods
 	
 	public Endorser create() {
-		return new Endorser();
+		Endorser result;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.isNull(principal);
+		
+		result = new Customer();
+		
+		return result;
 	}
 	
 	public Collection<Endorser> findAll(){

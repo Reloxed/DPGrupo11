@@ -113,15 +113,13 @@ public class SponsorService {
 	
 	//Other business methods
 	
-//	public Sponsor findByCreditCardId(CreditCard creditCard) {
-//		Sponsor res;
-//		int creditCardId = creditCard.getId();
-//		
-//		res = this.sponsorRepository.findByCreditCardId(creditCardId);
-//		Assert.notNull(res);
-//
-//		return res;
-//	}
+	public Sponsor findByCreditCardId(int creditCardId) {
+		Sponsor res;
+		
+		res = this.sponsorRepository.findByCreditCardId(creditCardId);
+
+		return res;
+	}
 	
 	public Collection<CreditCard> findCreditCardsBySponsorId (int sponsorId){
 		Collection<CreditCard> collCC = new ArrayList<>();
