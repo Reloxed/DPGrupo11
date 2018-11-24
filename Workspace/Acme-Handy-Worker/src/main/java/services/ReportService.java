@@ -42,6 +42,18 @@ public class ReportService {
 		return res;
 	}
 
+	public Collection<Report> findAll() {
+		Referee principal;
+		Collection<Report> res;
+
+		principal = this.refereeService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.reportRepository.findAll();
+
+		return res;
+	}
+
 	public Report findOne(int reportId) {
 		Report res = null;
 		Collection<Report> reports;
@@ -58,7 +70,6 @@ public class ReportService {
 		return res;
 	}
 
-	// TODO
 	public Report save(Report report) {
 		Referee principal;
 		Report res;
@@ -80,7 +91,6 @@ public class ReportService {
 
 	public void delete(Report report) {
 		Referee principal;
-		Collection<Complaint> complaints;
 
 		Assert.notNull(report);
 		Assert.isTrue(report.getId() != 0);
@@ -89,16 +99,7 @@ public class ReportService {
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
-		complaints = principal.getComplaints();
-		Assert.notEmpty(complaints);
-
-		for (Complaint complaint : complaints) {
-			if (complaint.getReport() == report) {
-				complaint.setReport(null);
-				this.reportRepository.delete(report);
-			}
-
-		}
+		this.reportRepository.delete(report.getId());
 
 	}
 
@@ -107,6 +108,7 @@ public class ReportService {
 	public Collection<Report> findByPrincipal() {
 		Referee principal;
 		Collection<Report> res;
+		Collection<Report> allReports;
 		Collection<Complaint> complaints;
 
 		principal = this.refereeService.findByPrincipal();
@@ -115,9 +117,17 @@ public class ReportService {
 		complaints = principal.getComplaints();
 		Assert.notNull(complaints);
 
+		allReports = this.findAll();
+		Assert.notNull(allReports);
+
 		res = new ArrayList<Report>();
 		for (Complaint complaint : complaints) {
-			res.add(complaint.getReport());
+			for (Report report : allReports) {
+				if (complaint.equals(report.getComplaint())) {
+					res.add(report);
+					break;
+				}
+			}
 		}
 
 		return res;

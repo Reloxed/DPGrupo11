@@ -1,8 +1,10 @@
 package services;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -10,7 +12,10 @@ import org.springframework.util.Assert;
 import repositories.RefereeRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Administrator;
+import domain.MessageBox;
 import domain.Referee;
+import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -23,30 +28,75 @@ public class RefereeService {
 
 	// Supporting services -----------------------------------
 
+	@Autowired
+	private AdministratorService administratorService;
+
+	@Autowired
+	private MessageBoxService messageBoxService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Referee create() {
-		return new Referee();
+		Administrator principal;
+		Referee res;
+		Collection<MessageBox> messageBoxes;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = new Referee();
+
+		res.setIsSuspicious(false);
+		res.getUserAccount().setIsBanned(false);
+
+		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+
+		res.setMessageBoxes(messageBoxes);
+		res.setSocialProfiles(Collections.<SocialProfile> emptyList());
+		return res;
 	}
 
 	public Collection<Referee> findAll() {
-		return this.refereeRepository.findAll();
+		Collection<Referee> res;
+		res = this.refereeRepository.findAll();
+		Assert.notNull(res);
+		return res;
 	}
 
 	public Referee findOne(int refereeId) {
-		return this.refereeRepository.findOne(refereeId);
+		Referee res;
+
+		Assert.isTrue(refereeId != 0);
+
+		res = this.refereeRepository.findOne(refereeId);
+
+		return res;
 	}
 
-	public Referee save(Referee r) {
-		return this.refereeRepository.save(r);
+	public Referee save(Referee referee) {
+		Referee res;
+
+		Assert.notNull(referee);
+
+		if (referee.getId() == 0) {
+			Administrator principal;
+			principal = this.administratorService.findByPrincipal();
+			Assert.notNull(principal);
+			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+			referee.getUserAccount().setPassword(
+					passwordEncoder.encodePassword(referee.getUserAccount()
+							.getPassword(), null));
+		} else {
+			Referee principal;
+			principal = this.findByPrincipal();
+			Assert.notNull(principal);
+		}
+
+		res = this.refereeRepository.save(referee);
+
+		return res;
 	}
 
-	// TODO
-	public void delete(Referee r) {
-		this.refereeRepository.delete(r);
-	}
-
-	// TODO
 	// Other business methods -------------------------------
 
 	public Referee findByPrincipal() {
@@ -72,5 +122,18 @@ public class RefereeService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public Collection<Referee> findRefereeBySuspicious() {
+		Collection<Referee> res;
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.refereeRepository.findRefereeBySuspicious();
+		Assert.notNull(res);
+
+		return res;
 	}
 }
