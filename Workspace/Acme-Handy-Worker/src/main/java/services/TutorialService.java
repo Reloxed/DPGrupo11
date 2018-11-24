@@ -32,6 +32,9 @@ public class TutorialService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+	
 	// Simple CRUD Methods
 
 	public Tutorial create() {
@@ -88,6 +91,37 @@ public class TutorialService {
 			t.setSponsorships(sponsorships);
 		} else {
 			Assert.isTrue(principal.getTutorial().contains(t));
+		}
+		
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		String[] title = t.getTitle().split(" ");
+		for(String word: spamWords){
+			for(String titleWord: title){
+				if(titleWord.toLowerCase().contains(word.toLowerCase())){
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam){
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		
+		containsSpam = false;
+		String[] summary = t.getSummary().split(" ");
+		for(String word: spamWords){
+			for(String summaryWord: summary){
+				if(summaryWord.toLowerCase().contains(word.toLowerCase())){
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam){
+				principal.setIsSuspicious(true);
+				break;
+			}
 		}
 
 		result = this.tutorialRepository.save(t);
