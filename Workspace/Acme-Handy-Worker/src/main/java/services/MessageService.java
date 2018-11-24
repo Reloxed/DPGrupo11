@@ -191,6 +191,24 @@ public class MessageService {
 		
 	}
 	
+	public Message findOne(final int messageId){
+		Message result;
+		
+		result = this.messageRepository.findOne(messageId);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Message> findAll(){
+		Collection<Message>result;
+		
+		result = this.messageRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 	//Other business methods -----------------------------
 
 	public void move(final Message message, final MessageBox destination){
@@ -236,14 +254,6 @@ public class MessageService {
 		
 	}
 	
-	public Message findOne(final int messageId){
-		Message result;
-		
-		result = this.messageRepository.findOne(messageId);
-		Assert.notNull(result);
-		
-		return result;
-	}
 	
 	public void broadcast(final Message m){
 		Administrator principal;

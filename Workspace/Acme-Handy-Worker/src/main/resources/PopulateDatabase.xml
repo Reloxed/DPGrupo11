@@ -1253,6 +1253,13 @@
 		<property name="parentCategory">
 			<null />
 		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="repairs"/>
+				<ref bean="housing"/>
+				<ref bean="carpentry"/>
+			</list>
+		</property>
 	</bean>
 
 	<!-- REPAIRS -->
@@ -1261,6 +1268,16 @@
 		<property name="englishName" value="Repairs" />
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
+		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="ceilingRepair"/>
+				<ref bean="fenceFixing"/>
+				<ref bean="lampRepairs"/>
+				<ref bean="plumbingRepairs"/>
+				<ref bean="sprinklerRepair"/>
+				<ref bean="windowRepair"/>
+			</list>
 		</property>
 	</bean>
 
@@ -1271,6 +1288,24 @@
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
 		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="cleaning"/>
+				<ref bean="concreteWork"/>
+				<ref bean="doors"/>
+				<ref bean="electricalWiring"/>
+				<ref bean="fanInstallation"/>
+				<ref bean="homeSecuritySystem"/>
+				<ref bean="insulationInstallation"/>
+				<ref bean="moving"/>
+				<ref bean="painting"/>
+				<ref bean="pestControl"/>
+				<ref bean="plumbingRepairs"/>
+				<ref bean="shelfInstallation"/>
+				<ref bean="solarPanels"/>
+				<ref bean="soundProofing"/>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Carpentry -->
@@ -1279,6 +1314,10 @@
 		<property name="englishName" value="Carpentry" />
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1289,6 +1328,10 @@
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Cleaning -->
@@ -1297,6 +1340,10 @@
 		<property name="englishName" value="Cleaning" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1307,6 +1354,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Doors -->
@@ -1315,6 +1366,10 @@
 		<property name="englishName" value="Doors" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1325,6 +1380,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Fan installation -->
@@ -1333,6 +1392,10 @@
 		<property name="englishName" value="Fan installation" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1343,6 +1406,10 @@
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Home Security Systems -->
@@ -1351,6 +1418,10 @@
 		<property name="englishName" value="Home security systems" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1361,6 +1432,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Lamp Repairs -->
@@ -1369,6 +1444,10 @@
 		<property name="englishName" value="Lamp repairs" />
 		<property name="parentCategory">
 			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1379,6 +1458,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Painting -->
@@ -1387,6 +1470,10 @@
 		<property name="englishName" value="Painting" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1397,6 +1484,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Plumbing Repairs -->
@@ -1405,6 +1496,10 @@
 		<property name="englishName" value="Plumbing repairs" />
 		<property name="parentCategory">
 			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1415,6 +1510,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Shelf Installation -->
@@ -1423,6 +1522,10 @@
 		<property name="englishName" value="Shelf installation" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1433,6 +1536,10 @@
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Soundproofing -->
@@ -1441,6 +1548,10 @@
 		<property name="englishName" value="Soundproofing" />
 		<property name="parentCategory">
 			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 
@@ -1451,6 +1562,10 @@
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Window Repair -->
@@ -1459,6 +1574,10 @@
 		<property name="englishName" value="Window repair" />
 		<property name="parentCategory">
 			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
 		</property>
 	</bean>
 

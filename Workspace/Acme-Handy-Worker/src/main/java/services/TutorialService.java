@@ -21,6 +21,7 @@ public class TutorialService {
 	// Managed repository
 
 	@Autowired
+
 	private TutorialRepository tutorialRepository;
 
 	// Supporting services
@@ -115,5 +116,13 @@ public class TutorialService {
 	}
 
 	// Other business methods
+	
+	public Tutorial findTutorialBySectionId(int sectionId) {
+		Tutorial res;
 
+		res = this.tr.findTutorialBySectionId(sectionId);
+		Assert.notNull(res);
+
+		return res;
+	}
 }

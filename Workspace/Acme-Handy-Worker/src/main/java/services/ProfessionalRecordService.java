@@ -2,11 +2,14 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.ProfessionalRecordRepository;
+import domain.HandyWorker;
 import domain.ProfessionalRecord;
 
 @Service
@@ -26,26 +29,85 @@ public class ProfessionalRecordService {
 	// Simple CRUD methods -----------------------------------
 
 	public ProfessionalRecord create() {
-		return new ProfessionalRecord();
-	}
+		HandyWorker principal;
+		ProfessionalRecord res;
 
-	public Collection<ProfessionalRecord> findAll() {
-		return this.professionalRecordRepository.findAll();
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = new ProfessionalRecord();
+
+		return res;
 	}
 
 	public ProfessionalRecord findOne(int professionalRecordId) {
-		return this.professionalRecordRepository.findOne(professionalRecordId);
+		ProfessionalRecord res;
+		res = this.professionalRecordRepository.findOne(professionalRecordId);
+		return res;
 	}
 
-	public ProfessionalRecord save(ProfessionalRecord p) {
-		return this.professionalRecordRepository.save(p);
+	public ProfessionalRecord save(ProfessionalRecord professionalRecord) {
+		HandyWorker principal;
+		ProfessionalRecord res;
+		Collection<ProfessionalRecord> professionalRecords;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(principal.getCurriculum());
+
+		Assert.notNull(professionalRecord);
+
+		Assert.isTrue(!professionalRecord.getCompanyName().isEmpty());
+		Assert.isTrue(!professionalRecord.getRole().isEmpty());
+		Assert.isTrue(professionalRecord.getStartDate().before(
+				LocalDate.now().toDate()));
+
+		professionalRecords = principal.getCurriculum()
+				.getProfessionalRecords();
+
+		res = this.professionalRecordRepository.save(professionalRecord);
+		Assert.notNull(res);
+		if (professionalRecord.getId() == 0) {
+			professionalRecords.add(res);
+			principal.getCurriculum().setProfessionalRecords(
+					professionalRecords);
+		}
+
+		return res;
 	}
 
-	// TODO
-	public void delete(ProfessionalRecord p) {
-		this.professionalRecordRepository.delete(p);
+	public void delete(ProfessionalRecord professionalRecord) {
+		HandyWorker principal;
+		Collection<ProfessionalRecord> professionalRecords;
+
+		Assert.notNull(professionalRecord);
+		Assert.isTrue(professionalRecord.getId() != 0);
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		professionalRecords = principal.getCurriculum()
+				.getProfessionalRecords();
+
+		this.professionalRecordRepository.delete(professionalRecord);
+
+		professionalRecords.remove(professionalRecord);
+
+		principal.getCurriculum().setProfessionalRecords(professionalRecords);
 	}
 
-	// TODO
 	// Other business methods -------------------------------
+
+	public Collection<ProfessionalRecord> findByPrincipal() {
+		HandyWorker principal;
+		Collection<ProfessionalRecord> res;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = principal.getCurriculum().getProfessionalRecords();
+		Assert.notNull(res);
+
+		return res;
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import domain.CreditCard;
 import domain.Customer;
+import domain.HandyWorker;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
