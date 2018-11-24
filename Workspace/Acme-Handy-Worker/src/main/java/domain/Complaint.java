@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -23,13 +22,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String		ticker;
-	private Date		moment;
-	private String		description;
-	private String		attachements;
-	private FixUpTask	fixUpTask;
-	private Report		report;
-
+	private String ticker;
+	private Date moment;
+	private String description;
+	private String attachements;
+	private FixUpTask fixUpTask;
 
 	@NotBlank
 	@Column(unique = true)
@@ -70,6 +67,7 @@ public class Complaint extends DomainEntity {
 	public void setAttachements(final String attachements) {
 		this.attachements = attachements;
 	}
+
 	@ManyToOne(optional = false)
 	@Valid
 	@NotNull
@@ -79,16 +77,6 @@ public class Complaint extends DomainEntity {
 
 	public void setFixUpTask(final FixUpTask fixUpTask) {
 		this.fixUpTask = fixUpTask;
-	}
-
-	@OneToOne(optional = true)
-	@Valid
-	public Report getReport() {
-		return this.report;
-	}
-
-	public void setReport(final Report report) {
-		this.report = report;
 	}
 
 }

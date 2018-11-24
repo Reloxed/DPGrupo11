@@ -1255,9 +1255,9 @@
 		</property>
 		<property name="childCategories">
 			<list>
-				<ref bean="repairs"/>
-				<ref bean="housing"/>
-				<ref bean="carpentry"/>
+				<ref bean="repairs" />
+				<ref bean="housing" />
+				<ref bean="carpentry" />
 			</list>
 		</property>
 	</bean>
@@ -1271,12 +1271,12 @@
 		</property>
 		<property name="childCategories">
 			<list>
-				<ref bean="ceilingRepair"/>
-				<ref bean="fenceFixing"/>
-				<ref bean="lampRepairs"/>
-				<ref bean="plumbingRepairs"/>
-				<ref bean="sprinklerRepair"/>
-				<ref bean="windowRepair"/>
+				<ref bean="ceilingRepair" />
+				<ref bean="fenceFixing" />
+				<ref bean="lampRepairs" />
+				<ref bean="plumbingRepairs" />
+				<ref bean="sprinklerRepair" />
+				<ref bean="windowRepair" />
 			</list>
 		</property>
 	</bean>
@@ -1290,20 +1290,20 @@
 		</property>
 		<property name="childCategories">
 			<list>
-				<ref bean="cleaning"/>
-				<ref bean="concreteWork"/>
-				<ref bean="doors"/>
-				<ref bean="electricalWiring"/>
-				<ref bean="fanInstallation"/>
-				<ref bean="homeSecuritySystem"/>
-				<ref bean="insulationInstallation"/>
-				<ref bean="moving"/>
-				<ref bean="painting"/>
-				<ref bean="pestControl"/>
-				<ref bean="plumbingRepairs"/>
-				<ref bean="shelfInstallation"/>
-				<ref bean="solarPanels"/>
-				<ref bean="soundProofing"/>
+				<ref bean="cleaning" />
+				<ref bean="concreteWork" />
+				<ref bean="doors" />
+				<ref bean="electricalWiring" />
+				<ref bean="fanInstallation" />
+				<ref bean="homeSecuritySystem" />
+				<ref bean="insulationInstallation" />
+				<ref bean="moving" />
+				<ref bean="painting" />
+				<ref bean="pestControl" />
+				<ref bean="plumbingRepairs" />
+				<ref bean="shelfInstallation" />
+				<ref bean="solarPanels" />
+				<ref bean="soundProofing" />
 			</list>
 		</property>
 	</bean>
@@ -1675,10 +1675,8 @@
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>
-		<property name="report">
-			<ref bean="reportCFT1_2" />
-		</property>
 	</bean>
+
 	<bean id="complaintf1_1" class="domain.Complaint">
 		<property name="ticker" value="346408-ASDFGP" />
 		<property name="moment" value="11/11/2018 17:14" />
@@ -1686,9 +1684,6 @@
 		<property name="attachements" value="http://www.imgur.com/replicant2" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
-		</property>
-		<property name="report">
-			<ref bean="reportCFT1_1" />
 		</property>
 	</bean>
 
@@ -1700,9 +1695,6 @@
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
-		<property name="report">
-			<ref bean="reportCFT2_1" />
-		</property>
 	</bean>
 	<!-- REPORTs -->
 
@@ -1713,25 +1705,25 @@
 			value="Evaluated the funcionality of the replicant, and it worked perfectly with no signs of malfunctioning." />
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
-		<property name="notes">
-			<list>
-				<ref bean="noteRCFT1_2" />
-			</list>
-		</property>
+		<property name="complaint" ref="complaintf1_2" />
 	</bean>
+
 	<bean id="reportCFT1_1" class="domain.Report">
 		<property name="publishedMoment" value="09/11/2018 10:38" />
 		<property name="description"
 			value="Evaluated the funcionality of one replicant, and it worked perfectly with no signs of malfunctioning." />
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
+		<property name="complaint" ref="complaintf1_1" />
 	</bean>
+
 	<bean id="reportCFT2_1" class="domain.Report">
 		<property name="publishedMoment" value="09/11/2018 10:38" />
 		<property name="description"
 			value="Evaluated the funcionality of the replicants, and it worked perfectly with no signs of malfunctioning." />
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
+		<property name="complaint" ref="complaintf2_1" />
 	</bean>
 
 	<!-- NOTEs -->
@@ -1743,6 +1735,7 @@
 		<property name="customerComment"
 			value="I don't agree with you, it acts weird when I am alone with it." />
 		<property name="handyWorkerComment" value="'None yet'" />
+		<property name="report" ref="reportCFT1_2" />
 	</bean>
 
 	<!-- Sponsorships -->
