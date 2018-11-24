@@ -38,6 +38,8 @@ public class ActorService {
 	private RefereeService			refereeService;
 
 
+	// Simple CRUDs methods ------------------------
+
 	public Collection<Actor> findAll() {
 
 		Collection<Actor> result;
@@ -49,7 +51,7 @@ public class ActorService {
 
 	}
 
-	/*public Actor findOne(final int actorId) {
+	public Actor findOne(final int actorId) {
 		Actor result;
 
 		result = this.actorRepository.findOne(actorId);
@@ -68,7 +70,9 @@ public class ActorService {
 			}
 		}
 		return result;
-	}*/
+	}
+
+	// Other business methods ---------------------------
 
 	public Actor findByPrincipal() {
 		Actor result;
