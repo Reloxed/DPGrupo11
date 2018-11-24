@@ -18,97 +18,102 @@ import domain.Tutorial;
 @Transactional
 public class TutorialService {
 
-	//Managed repository
-	
+	// Managed repository
+
 	@Autowired
 	private TutorialRepository tutorialRepository;
-	
-	//Supporting services
-	
+
+	// Supporting services
+
 	@Autowired
 	private SponsorshipService sponsorshipService;
-	
+
 	@Autowired
 	private HandyWorkerService handyWorkerService;
-	
-	//Simple CRUD Methods
-	
-	public Tutorial create(){
+
+	// Simple CRUD Methods
+
+	public Tutorial create() {
 		Tutorial result;
-		
+		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
 		result = new Tutorial();
-		
+
 		Section s = new Section();
 		Collection<Section> sections = Collections.<Section> emptyList();
 		sections.add(s);
 		result.setSections(sections);
-		
+
 		return result;
 	}
-	
-	public Collection<Tutorial> findAll(){
+
+	public Collection<Tutorial> findAll() {
 		Collection<Tutorial> tutorials;
-		
+
 		tutorials = this.tutorialRepository.findAll();
-		
+
 		return tutorials;
 	}
-	
-//	public Collection<Tutorial> find(){
-//		
-//	}
-	
-	public Tutorial findOne(int tutorialId){
+
+	public Tutorial findOne(int tutorialId) {
 		Tutorial result;
-		
+
 		result = this.tutorialRepository.findOne(tutorialId);
-		
+
 		return result;
 	}
-	
-	public Tutorial save(Tutorial t){
+
+	public Tutorial save(Tutorial t) {
 		Assert.notNull(t);
 		Tutorial result;
 		HandyWorker principal;
 		Collection<Tutorial> tutorials;
 		Collection<Sponsorship> sponsorships;
-		
+
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		tutorials = Collections.<Tutorial> emptyList();
-		tutorials.addAll(principal.getTutorial());
-		tutorials.add(t);
-		principal.setTutorial(tutorials);
-		
-		sponsorships = Collections.<Sponsorship> emptyList();
-		sponsorships.addAll(this.sponsorshipService.findAll());
-		t.setSponsorships(sponsorships);
-		
+
+		if (t.getId() == 0) {
+			tutorials = Collections.<Tutorial> emptyList();
+			tutorials.addAll(principal.getTutorial());
+			tutorials.add(t);
+			principal.setTutorial(tutorials);
+
+			sponsorships = Collections.<Sponsorship> emptyList();
+			sponsorships.addAll(this.sponsorshipService.findAll());
+			t.setSponsorships(sponsorships);
+		} else {
+			Assert.isTrue(principal.getTutorial().contains(t));
+		}
+
 		result = this.tutorialRepository.save(t);
-		
+
 		return result;
 	}
-	
-	public void delete(Tutorial t){
+
+	public void delete(Tutorial t) {
 		Assert.notNull(t);
 		Assert.isTrue(t.getId() != 0);
-		
+
 		HandyWorker principal;
 		Collection<Tutorial> tutorials;
-		Collection<Sponsorship> sponsorships;
-		
+
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		tutorials = Collections.<Tutorial> emptyList();
-		tutorials.addAll(principal.getTutorial());
-		tutorials.remove(t);
-		principal.setTutorial(tutorials);
-		
-		this.tutorialRepository.delete(t);
+
+		if (principal.getTutorial().contains(t)) {
+			tutorials = Collections.<Tutorial> emptyList();
+			tutorials.addAll(principal.getTutorial());
+			tutorials.remove(t);
+			principal.setTutorial(tutorials);
+			this.tutorialRepository.delete(t);
+		}
+
 	}
-	
-	//Other business methods
-	
+
+	// Other business methods
+
 }
