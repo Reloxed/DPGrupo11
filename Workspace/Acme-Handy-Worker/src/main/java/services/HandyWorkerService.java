@@ -37,7 +37,7 @@ public class HandyWorkerService {
 	@Autowired
 	private ApplicationService applicationService;
 	@Autowired
-	private MessageBox messageBox;
+	private MessageBoxService messageBox;
 	
 	//Constructor ----------------------------------------------------
 	public HandyWorkerService() {
@@ -92,9 +92,9 @@ public class HandyWorkerService {
 		UserAccount userAccount;
 		
 		result=new HandyWorker();
-		
+		 
 		result.setIsSuspicious(false);
-		result.setMessageBoxes(this.messageBox.createSystemMessageBoxes());
+		result.setMessageBoxes(this.MessageBoxService.createSystemMessageBoxes());
 		result.setApplications(new HashSet<Application>());
 		result.setCurriculum(new Curriculum());
 		result.setFinder(new Finder());
@@ -109,8 +109,8 @@ public class HandyWorkerService {
 	}
 	
 	//Other business methods--------
-
-
+	//handyworker can write a tutorial,a note,may endorse,
+	//search in a finder ,can register a cv,apply for a fixuptask
 	public HandyWorker findByPrincipal() {
 		HandyWorker res;
 		UserAccount userAccount;
@@ -135,4 +135,5 @@ public class HandyWorkerService {
 
 		return result;
 	}
+	
 }
