@@ -12,6 +12,7 @@ import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Administrator;
 
 @Service
 @Transactional
@@ -93,5 +94,30 @@ public class ActorService {
 		Actor result;
 		result = this.actorRepository.findByUserAccountId(userAccount.getId());
 		return result;
+	}
+
+	public void ban(Actor a) {
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(a);
+		Assert.isTrue(a.getIsSuspicious());
+		Assert.isTrue(!a.getUserAccount().getIsBanned());
+
+		a.getUserAccount().setIsBanned(true);
+		a = this.actorRepository.save(a);
+	}
+
+	public void unban(Actor a) {
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(a);
+		Assert.isTrue(a.getUserAccount().getIsBanned());
+
+		a.getUserAccount().setIsBanned(false);
+		a = this.actorRepository.save(a);
 	}
 }
