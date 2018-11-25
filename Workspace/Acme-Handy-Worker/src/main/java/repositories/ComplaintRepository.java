@@ -9,6 +9,6 @@ import domain.Complaint;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
-	@Query("select c from Complaint c where c.report.id = ?1")
-	public Complaint findByReportId(int reportId);
+//	@Query("select c from Complaint c where c.report.id = ?1")
+//	public Complaint findByReportId(int reportId);
 }

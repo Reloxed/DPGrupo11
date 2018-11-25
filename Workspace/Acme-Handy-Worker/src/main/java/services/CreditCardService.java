@@ -120,7 +120,7 @@ public class CreditCardService {
 			if (creditCard.getId()==0) {
 				for(FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks()) {
 					for(Application application : fixUpTasks.getApplications()) {
-						if(application.getCreditCard()==null) {
+						if(application.getCreditCard()==null && application.getStatus().equals("ACCEPTED")) {
 							application.setCreditCard(creditCard);
 							this.applicationService.save(application);
 						}

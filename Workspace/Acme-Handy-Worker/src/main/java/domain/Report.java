@@ -1,10 +1,12 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +27,7 @@ public class Report extends DomainEntity {
 	private String attachments;
 	private boolean isFinal;
 	private Complaint complaint;
+	private Collection<Note>notes;
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -74,5 +77,16 @@ public class Report extends DomainEntity {
 	public void setComplaint(Complaint complaint) {
 		this.complaint = complaint;
 	}
+	
+	@NotNull
+	@OneToMany
+	public Collection<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Collection<Note> notes) {
+		this.notes = notes;
+	}
+	
 
 }

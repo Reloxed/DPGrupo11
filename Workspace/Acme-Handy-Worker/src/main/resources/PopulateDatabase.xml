@@ -1719,6 +1719,11 @@
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
 		<property name="complaint" ref="complaintf1_2" />
+		<property name="notes">
+			<list>
+				<ref bean="noteRCFT1_2" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="reportCFT1_1" class="domain.Report">
@@ -1728,6 +1733,10 @@
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
 		<property name="complaint" ref="complaintf1_1" />
+		<property name="notes">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="reportCFT2_1" class="domain.Report">
@@ -1737,6 +1746,10 @@
 		<property name="attachments" value="http://www.reports.es/replicant" />
 		<property name="isFinal" value="true" />
 		<property name="complaint" ref="complaintf2_1" />
+		<property name="notes">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<!-- NOTEs -->
