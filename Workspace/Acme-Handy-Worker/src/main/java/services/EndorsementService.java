@@ -63,7 +63,7 @@ public class EndorsementService {
 		
 	} 
 	
-	public Endorsement findOne(int endorsementId){
+	public Endorsement findOne( final int endorsementId){
 		Endorsement result;
 		
 		result=this.endorsementRepository.findOne(endorsementId);
@@ -73,22 +73,20 @@ public class EndorsementService {
 
 	}
 	
-	public Endorsement save(Endorsement endorsement){
+	public Endorsement save(final Endorsement endorsement){
 		Endorsement result;
-		Endorser principal;
-		UserAccount user;
+		Endorser endorser;
+		
 		Assert.isTrue(endorsement.getSender()!=null);
-		//hacer
-		
-		this.handyWorkerService.findByPrincipal();
-		
-		
+		endorser=this.endorserService.findByPrincipal();
+		Assert.notNull(endorser);
 		result=this.endorsementRepository.save(endorsement);
-		return null;
+		
+		return result;
 		
 	}
 	
-	public void  delete(Endorsement endorsement){
+	public void  delete(final Endorsement endorsement){
 		Assert.notNull(endorsement);
 		Assert.isTrue(endorsement.getId()!=0);
 
