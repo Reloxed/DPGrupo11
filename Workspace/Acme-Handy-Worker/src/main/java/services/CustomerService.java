@@ -98,7 +98,7 @@ public class CustomerService {
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		res = this.customerRepository.findCustomerByUserAccount(userAccount.getId());
+		res = this.findCustomerByUserAccount(userAccount.getId());
 		Assert.notNull(res);
 
 		return res;
