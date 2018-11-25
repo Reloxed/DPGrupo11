@@ -58,7 +58,7 @@ public class FixUpTaskService {
 		result.setCategory(category);
 		result.setTicker(this.curriculumService.generateTicker());
 		result.setWarranty(warranty);
-		//falta quien la crea,
+		//falta quien la crea?
 
 		
 		

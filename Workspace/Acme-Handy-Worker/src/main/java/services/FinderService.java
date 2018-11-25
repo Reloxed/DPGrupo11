@@ -7,6 +7,7 @@ import java.util.Date;
 
 
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
@@ -67,7 +68,6 @@ public class FinderService {
 		
 	}
 	public Collection<Finder> findAll(){
-		//tiene sentido si un handyworker puede tener una collecion de busquedas
 		Collection<Finder> result;
 		result=this.finderRepository.findAll();
 		
@@ -92,23 +92,23 @@ public class FinderService {
 		
 	}
 	
-	public Finder save(Finder finderId){
+	public Finder save(Finder finderId,final int maxResults){
 		Finder result;
 		HandyWorker principal;
-		Collection<Finder> finders;//poner @OneToMany un handyworker puede tener una collecion de finders
-		//Date currentMoment;
+		Date currentMoment;
 		
 		
 		Assert.notNull(finderId);
-		Assert.isTrue(finderId.getId()==0);//compruebo que todavia no se ha guardado en la DB
+		Assert.isTrue(finderId.getId()!=0);
 		
 		principal=this.handyWorkerService.findByPrincipal();
 		
 		Assert.notNull(principal);
+		Assert.isTrue(finderId.getId()==principal.getFinder().getId());
 		
-		//currentMoment=new Date(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-		//guarda el momento de la busqueda en segundos 
-		//finderId.setSearchMoment(currentMoment);
+		currentMoment=new Date(System.currentTimeMillis() - 1);
+		
+		finderId.setSearchMoment(currentMoment);
 		
 		if(finderId.getStartMoment()!=null && finderId.getEndMoment()!=null ){
 			Assert.isTrue(finderId.getStartMoment().before(finderId.getEndMoment()));
@@ -116,29 +116,52 @@ public class FinderService {
 		}else if(finderId.getPriceHigh()!= null && finderId.getPriceLow()!= null){
 			Assert.isTrue(finderId.getPriceHigh()>=finderId.getPriceLow());
 		}
-		//comrobar mas atributos?
 		
-		//no tengo que saber exacatmente quien es el HandyWorker no?
+		
+	
 		
 		result=this.finderRepository.save(finderId);
 		Assert.notNull(result);
-		//añadir busqueda a la collecion de busquedas
-		/*finders=new ArrayList<Finder>(principal.getFinder());
-		finders.add(result);
-		principal.setFinder(finders);
-		*/
+
 		Assert.isTrue(finderId.getId()!=0);
 		
 		return result;
 		
 	}
 	//expiración de la busqueda cuanto termina tiempo caché
-	public void  delete(final Finder finderId){
-		Assert.notNull(finderId);
-		Assert.isTrue(finderId.getId()!= 0);
-		Assert.isTrue(this.finderRepository.exists(finderId.getId()));
+	public void  deleteExpireFinders(final int resultsInCache){
+		Finder finder;
+		Collection<Finder> finders;
+		Collection<Finder> findersDelete;
+		Collection<Finder> currentFinders;
 		
-		this.finderRepository.delete(finderId);
+		HandyWorker principal;
+		Date currentMoment;
+		Date expireCache;
+		
+		principal=this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		currentMoment=new Date();
+		expireCache=DateUtils.addHours(currentMoment, resultsInCache);
+		
+		finders=new ArrayList<Finder>();
+		finder=principal.getFinder();
+		finders.add(finder);
+		
+		findersDelete=new ArrayList<Finder>();
+		currentFinders=new ArrayList<Finder>(finders);
+		
+		for (Finder f : finders)
+			if (f.getSearchMoment().before(expireCache)) {
+				findersDelete.add(f);
+				this.finderRepository.delete(f);
+			}
+
+		currentFinders.removeAll(findersDelete);
+		
+		
+		
 		
 	}
 	
@@ -147,7 +170,7 @@ public class FinderService {
 	
 	//Other business methods--------
 	
-	public Collection<FixUpTask> search(final Finder finderId,final int paginas ){
+	public Collection<FixUpTask> search(final Finder finderId,final int nResults ){
 		String keyWord;
 		Double priceLow;
 		Double priceHigh;
@@ -161,6 +184,10 @@ public class FinderService {
 		principal=this.handyWorkerService.findByPrincipal();
 		
 		Assert.notNull(principal);
+		
+		if(nResults>100){
+			throw new IllegalArgumentException();
+		}
 		
 		startMoment=finderId.getStartMoment();
 		endMoment=finderId.getEndMoment();
@@ -186,8 +213,9 @@ public class FinderService {
 			
 			keyWord="";
 		}
-		
-		result=this.finderRepository.searchFixUpTasks(startMoment, endMoment,  priceLow,  priceHigh,  keyWord,new PageRequest(0, paginas));
+		category=finderId.getCategory();
+		warranty=finderId.getWarranty();
+		result=this.finderRepository.searchFixUpTasks(startMoment, endMoment,  priceLow,  priceHigh,  keyWord,new PageRequest(0, nResults),category,warranty);
 		Assert.notNull(result);
 		
 		finderId.setFixuptask(new ArrayList<FixUpTask>(result));
