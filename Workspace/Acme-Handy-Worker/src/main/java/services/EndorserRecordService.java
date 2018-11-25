@@ -119,18 +119,7 @@ public class EndorserRecordService {
 	
 	//Other business methods--------
 	
-	public Collection<EndorserRecord> findByPrincipal() {
-		HandyWorker principal;
-		Collection<EndorserRecord> res;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = principal.getCurriculum().getEndorserRecords();
-		Assert.notNull(res);
-
-		return res;
-	}
+	
 	
 	
 }
