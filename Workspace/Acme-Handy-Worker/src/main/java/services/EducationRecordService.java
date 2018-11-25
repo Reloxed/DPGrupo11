@@ -12,6 +12,7 @@ import repositories.EducationRecordRepository;
 import domain.Curriculum;
 import domain.EducationRecord;
 import domain.HandyWorker;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -49,6 +50,14 @@ public class EducationRecordService {
 		EducationRecord res;
 		res = this.educationRecordRepository.findOne(educationRecordId);
 		return res;
+	}
+	
+	public Collection<EducationRecord> findAll() {
+		Collection<EducationRecord> educationRecords;
+
+		educationRecords = this.educationRecordRepository.findAll();
+
+		return educationRecords;
 	}
 
 	public EducationRecord save(EducationRecord educationRecord) {
