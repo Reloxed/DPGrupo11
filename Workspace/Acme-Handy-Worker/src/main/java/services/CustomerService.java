@@ -2,8 +2,10 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -11,28 +13,51 @@ import org.springframework.util.Assert;
 import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
+import domain.Actor;
+import domain.Complaint;
 import domain.CreditCard;
 import domain.Customer;
+import domain.FixUpTask;
+import domain.MessageBox;
+import domain.SocialProfile;
 
 @Service
 @Transactional
 public class CustomerService {
 
 	// Managed Repository
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
+
 	// Supporting Services
 
-	private AdministratorService administratorService;
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private MessageBoxService messageBoxService;
 	
 	// Simple CRUD Methods
 	
 	public Customer create() {
-		return new Customer();
+		Customer result;
+		Collection<MessageBox> messageBoxes;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.isNull(principal);
+		
+		result = new Customer();
+		
+		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+		
+		result.setMessageBoxes(messageBoxes);
+		result.setComplaints(new ArrayList<Complaint>());
+		result.setFixUpTasks(new ArrayList<FixUpTask>());
+		result.setSocialProfiles(new ArrayList<SocialProfile>());
+		
+		return result;
 	}
 	
 	public Collection<Customer> findAll(){
@@ -48,26 +73,23 @@ public class CustomerService {
 	}
 	
 	public Customer save(Customer customer) {
+		Assert.notNull(customer);
 		Customer cus;
+		
+		if(customer.getId() == 0){
+			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+			customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
+		} else{
+			Customer principal;
+			principal = this.findByPrincipal();
+			Assert.notNull(principal);
+		}
 		cus = customerRepository.save(customer);
 		return cus;
 	}
 	
-	public void Delete (Customer customer) {
-		Administrator admin;
-
-		admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		customerRepository.delete(customer);
-	}
-	
 	// Other business methods
-	
-	public Collection<CreditCard> findCreditCardsByCustomerId (int customerId){
-		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = customerRepository.findCreditCardsByCustomerId(customerId);
-		return collCC;
-	}
+
 	
 	public Customer findByPrincipal() {
 		Customer res;
@@ -76,7 +98,7 @@ public class CustomerService {
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		res = this.findCustomerByUserAccount(userAccount.getId());
+		res = this.customerRepository.findCustomerByUserAccount(userAccount.getId());
 		Assert.notNull(res);
 
 		return res;
@@ -94,4 +116,27 @@ public class CustomerService {
 		return result;
 	}
 	
+	public Customer findByCreditCardId(int creditCardId) {
+		Customer res;
+		
+		res = this.customerRepository.findByCreditCardId(creditCardId);
+
+		return res;
+	}
+	
+	public Collection<CreditCard> findCreditCardsByCustomerId (int customerId){
+		Collection<CreditCard> collCC = new ArrayList<>();
+		collCC = customerRepository.findCreditCardsByCustomerId(customerId);
+		return collCC;
+	}
+	
+	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
+		List<Customer> collC = customerTenPercentMoraThanAverage();
+		return collC.subList(0, 3);
+	}
+	
+	public List<Customer> customerTenPercentMoraThanAverage() {
+		List<Customer> collC = customerRepository.customerTenPercentMoraThanAverage();
+		return collC;
+	}
 }

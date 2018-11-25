@@ -36,9 +36,6 @@ public class ApplicationService {
 	private SystemConfigurationService	systemConfigurationService;
 
 
-	// Handy Worker : List, show, create
-	// Customer : List, update
-
 	// Simple CRUD methods ---------------------------
 	public Application create() {
 		final Application result;
@@ -206,6 +203,14 @@ public class ApplicationService {
 		result = this.applicationRepository.findDataApplicationsOfferedPrice();
 
 		return result;
+	}
+
+	public Collection<Application> findByCreditCardId(final int creditCardId) {
+		Collection<Application> res = new ArrayList<>();
+
+		res = this.applicationRepository.findByCreditCardId(creditCardId);
+
+		return res;
 	}
 
 }

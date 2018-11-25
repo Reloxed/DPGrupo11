@@ -1,11 +1,15 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -13,9 +17,10 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Category extends DomainEntity {
 
-	private String		spanishName;
-	private String		englishName;
-	private Category	parentCategory;
+	private String					spanishName;
+	private String					englishName;
+	private Category				parentCategory;
+	private Collection<Category>	childCategories;
 
 
 	@NotBlank
@@ -44,6 +49,16 @@ public class Category extends DomainEntity {
 
 	public void setParentCategory(final Category parentCategory) {
 		this.parentCategory = parentCategory;
+	}
+
+	@NotNull
+	@OneToMany(mappedBy = "parentCategory")
+	public Collection<Category> getChildCategories() {
+		return this.childCategories;
+	}
+
+	public void setChildCategories(final Collection<Category> childCategories) {
+		this.childCategories = childCategories;
 	}
 
 	@Override
