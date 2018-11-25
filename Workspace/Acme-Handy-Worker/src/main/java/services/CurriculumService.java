@@ -59,10 +59,6 @@ public class CurriculumService {
 		Assert.notNull(author);
 		
 		PersonalRecord personalRecord = new PersonalRecord();
-		EducationRecord educationRecord = new EducationRecord();
-		ProfessionalRecord professionalRecord = new ProfessionalRecord();
-		EndorserRecord endorserRecord = new EndorserRecord();
-		MiscellaneousRecord miscellaneousRecord = new MiscellaneousRecord();
 		
 		Collection<EducationRecord> collER = new ArrayList<>();
 		Collection<ProfessionalRecord> collProR = new ArrayList<>();
@@ -70,11 +66,6 @@ public class CurriculumService {
 		Collection<MiscellaneousRecord> collMR = new ArrayList<>();
 		String ticker = this.generateTicker();
 		
-		collER.add(educationRecord);
-		collProR.add(professionalRecord);
-		collEndR.add(endorserRecord);
-		collMR.add(miscellaneousRecord);
-
 		result = new Curriculum();
 		result.setTicker(ticker);
 		result.setEducationRecords(collER);
@@ -94,14 +85,6 @@ public class CurriculumService {
 		return curriculums;
 	}
 
-	public Curriculum findMySystemConfiguration() {
-		final Curriculum result;
-
-		result = this.curriculumRepository.findAll().get(0);
-
-		return result;
-	}
-
 	public Curriculum findOne(final int curriculumId) {
 		Curriculum result;
 
@@ -112,13 +95,14 @@ public class CurriculumService {
 	
 	public Curriculum save (Curriculum curriculum){
 		Assert.notNull(curriculum);
-		Assert.isTrue(curriculum.getId() != 0);
 		
 		HandyWorker author;
 		author = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(author);
-		
-		Assert.isTrue(curriculum.getTicker().equals(author.getCurriculum().getTicker()));
+		if (curriculum.getId() != 0){
+			Assert.isTrue(curriculum.getTicker().equals(author.getCurriculum().getTicker()));
+		}
+		Assert.notNull(curriculum.getPersonalRecord());
 		
 		return this.curriculumRepository.save(curriculum);
 

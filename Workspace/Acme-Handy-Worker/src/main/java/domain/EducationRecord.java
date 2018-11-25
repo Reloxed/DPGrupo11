@@ -48,7 +48,6 @@ public class EducationRecord extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getEndDate() {

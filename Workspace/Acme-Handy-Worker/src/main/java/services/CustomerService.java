@@ -14,9 +14,12 @@ import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Complaint;
 import domain.CreditCard;
 import domain.Customer;
+import domain.FixUpTask;
 import domain.MessageBox;
+import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -50,6 +53,9 @@ public class CustomerService {
 		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 		
 		result.setMessageBoxes(messageBoxes);
+		result.setComplaints(new ArrayList<Complaint>());
+		result.setFixUpTasks(new ArrayList<FixUpTask>());
+		result.setSocialProfiles(new ArrayList<SocialProfile>());
 		
 		return result;
 	}

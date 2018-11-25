@@ -103,6 +103,10 @@ public class CreditCardService {
 			Assert.notNull(ownerSponsor);
 		}
 		
+		Assert.notNull(creditCard.getHolderName());
+		Assert.notNull(creditCard.getBrandName());
+		Assert.notNull(creditCard.getNumber());
+		
 		// Comprobacion de fecha
 		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
@@ -141,7 +145,6 @@ public class CreditCardService {
 	}
 	
 	public void delete(CreditCard creditCard) {
-		
 		Assert.notNull(creditCard);
 		Assert.isTrue(creditCard.getId() != 0);
 		
