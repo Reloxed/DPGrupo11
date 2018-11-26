@@ -30,18 +30,20 @@ public class EducationRecordServiceTest extends AbstractTest{
 	public void testSaveEducationRecords() {
 		EducationRecord educationRecord, saved;
 		Collection<EducationRecord> educationRecords;
+		Calendar startDate;
 		String username = "handyWorker1";
 		super.authenticate(username);
 		
 		educationRecord = educationRecordService.create();
 		educationRecord.setDiplomaTitle("Grado en Ingeniería Informática - Ingeniería del Software");
-		Calendar startDate = null;
+		startDate = Calendar.getInstance();
 		startDate.set(2015, 8, 22);
 		educationRecord.setStartDate(startDate.getTime());
 		educationRecord.setInstitutionName("Universidad de Sevilla");
 		saved = educationRecordService.save(educationRecord);
 		educationRecords = educationRecordService.findAll();
 		Assert.isTrue(educationRecords.contains(saved));
+		
 		
 		super.unauthenticate();		
 	}

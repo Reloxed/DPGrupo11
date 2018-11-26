@@ -31,7 +31,7 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindAll1() {
-		super.authenticate("administrator1");
+		super.authenticate("admin1");
 		Collection<Category> categories = null;
 
 		categories = this.categoryService.findAll();
