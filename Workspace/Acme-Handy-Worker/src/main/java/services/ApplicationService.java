@@ -14,6 +14,7 @@ import repositories.ApplicationRepository;
 import domain.Application;
 import domain.FixUpTask;
 import domain.HandyWorker;
+import domain.Message;
 
 @Service
 @Transactional
@@ -55,8 +56,7 @@ public class ApplicationService {
 		Application result;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
-		final String messageHandyWorker;
-		final String messageCustomer;
+		final Message messageHandyWorker, messageCustomer;
 		Collection<Application> applications, updated;
 		String[] spamWords, comments;
 		boolean containsSpam;
