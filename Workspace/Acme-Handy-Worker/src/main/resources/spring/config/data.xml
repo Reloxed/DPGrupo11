@@ -46,7 +46,7 @@
 		<prop key="hibernate.format_sql">true</prop>
 		<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
 		<prop key="hibernate.ejb.entitymanager_factory_name">entity-manager</prop>
-		<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.DefaultNamingStrategy</prop>
+		<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>-->
 	</util:properties>
 
 </beans>
