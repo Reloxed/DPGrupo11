@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,15 @@ public class EducationRecordService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
+		Assert.notNull(educationRecord.getDiplomaTitle());
+		Assert.notNull(educationRecord.getStartDate());
+		Assert.notNull(educationRecord.getInstitutionName());
+		if (educationRecord.getEndDate()!=null){
+			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
+		} else {
+			Assert.isTrue(educationRecord.getStartDate().before(LocalDate.now().toDate()));
+		}
+		
 		res = this.educationRecordRepository.save(educationRecord);
 
 		educationRecords = principal.getCurriculum().getEducationRecords();
@@ -89,10 +99,10 @@ public class EducationRecordService {
 
 		this.educationRecordRepository.delete(educationRecord);
 
-		educationRecords.remove(educationRecord);
-
-		principal.getCurriculum().setEducationRecords(educationRecords);
-		
+//		educationRecords.remove(educationRecord);
+//
+//		principal.getCurriculum().setEducationRecords(educationRecords);
+//		
 //		this.handyWorkerService.save(principal);
 	}
 	
