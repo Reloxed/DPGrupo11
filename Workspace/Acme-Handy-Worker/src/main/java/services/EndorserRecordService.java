@@ -63,7 +63,7 @@ public class EndorserRecordService {
 	}
 	
 	public EndorserRecord save(EndorserRecord endorserRecord){
-	
+	 
 		Assert.notNull(endorserRecord);
 		EndorserRecord result;
 		HandyWorker principal;
@@ -73,6 +73,10 @@ public class EndorserRecordService {
 		Assert.notNull(principal);
 		Assert.notNull(principal.getCurriculum());
 		
+		Assert.notNull(endorserRecord.getFullName());
+		Assert.notNull(endorserRecord.getEmail());
+		Assert.notNull(endorserRecord.getLinkedinLink());
+		Assert.notNull(endorserRecord.getPhoneNumber());
 		endorsersRecord=principal.getCurriculum().getEndorserRecords();
 		result=this.endorserRecordRepository.save(endorserRecord);
 		Assert.notNull(result);
@@ -81,10 +85,7 @@ public class EndorserRecordService {
 		endorsersRecord.add(result);
 		principal.getCurriculum().setEndorserRecords(endorsersRecord);
 		
-		
 		return result;
-		
-		
 		
 	}
 	
