@@ -40,22 +40,28 @@ public class EndorserService {
 	
 	// Other business methods
 
-	
 	public Endorser findByPrincipal() {
 		Endorser res;
 		UserAccount userAccount;
- 		userAccount = LoginService.getPrincipal();
+
+		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
- 		res = this.findEndorserByUserAccount(userAccount.getId());
+
+		res = this.findEndorserByUserAccount(userAccount.getId());
 		Assert.notNull(res);
- 		return res;
+
+		return res;
 	}
-	
+
 	public Endorser findEndorserByUserAccount(final int userAccountId) {
 		Assert.isTrue(userAccountId != 0);
- 		Endorser result;
- 		result = this.endorserRepository.findEndorserByUserAccount(userAccountId);
- 		Assert.notNull(result);
- 		return result;
+
+		Endorser result;
+
+		result = this.endorserRepository.findEndorserByUserAccount(userAccountId);
+
+		Assert.notNull(result);
+
+		return result;
 	}
 }

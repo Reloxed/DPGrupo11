@@ -34,34 +34,18 @@ public class EndorsementService {
 		
 	} 
 	
-
-	public Endorsement findOne( final int endorsementId){
-		Endorsement result;
-		
-		result=this.endorsementRepository.findOne(endorsementId);
-		Assert.notNull(result);
+	public Endorsement findOne(int endorsementId){
+		return null;
 		
 	}
 	
-	public Endorsement save(final Endorsement endorsement){
-		Endorsement result;
-		Endorser endorser;
-		
-		Assert.isTrue(endorsement.getSender()!=null);
-		endorser=this.endorserService.findByPrincipal();
-		Assert.notNull(endorser);
-		result=this.endorsementRepository.save(endorsement);
-		
-		return result;
+	public Endorsement save(Endorsement endorsement){
+		return null;
 		
 	}
 	
-	public void  delete(final Endorsement endorsement){
-		Assert.notNull(endorsement);
-		Assert.isTrue(endorsement.getId()!=0);
-
-		
-		this.endorsementRepository.delete(endorsement);
+	public void  delete(Endorsement endorsement){
+		return;
 		
 	}
 	

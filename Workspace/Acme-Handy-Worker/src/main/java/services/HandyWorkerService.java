@@ -24,11 +24,7 @@ public class HandyWorkerService {
 	
 	
 	//Supporting services ----------
-
-	@Autowired
-	private ApplicationService applicationService;
-	@Autowired
-	private MessageBoxService messageBoxService;
+	
 	
 	//Constructor ----------------------------------------------------
 	public HandyWorkerService() {
@@ -44,26 +40,6 @@ public class HandyWorkerService {
 		return result;
 	}
 	
-	public HandyWorker create( ){
-		HandyWorker result;
-		
-		
-		result=new HandyWorker();
-		 
-		result.setIsSuspicious(false);
-		result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
-		result.setApplications(new HashSet<Application>());
-		result.setCurriculum(new Curriculum());
-		result.setFinder(new Finder());
-		result.setSocialProfiles(new HashSet<SocialProfile>());
-		result.setTutorial(new HashSet<Tutorial>() );
-		
-		
-		
-		return result;
-		
-		
-	}
 	
 	//Other business methods--------
 
