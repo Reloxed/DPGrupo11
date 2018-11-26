@@ -33,7 +33,7 @@ public class FixUpTaskService {
 	
 	//Supporting services ----------
 	@Autowired 
-	private CurriculumService curriculumService;
+	private UtilityService utilityService;
 	
 	@Autowired
 	private CustomerService customerService;
@@ -55,7 +55,7 @@ public class FixUpTaskService {
 		result=new FixUpTask();
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setApplications(new HashSet<Application>());
-		result.setTicker(this.curriculumService.generateTicker());
+		result.setTicker(this.utilityService.generateTicker());
 		
 		//falta quien la crea?
 
