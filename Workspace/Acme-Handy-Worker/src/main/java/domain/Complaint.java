@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -7,7 +8,6 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,11 +22,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String ticker;
-	private Date moment;
-	private String description;
-	private String attachements;
-	private FixUpTask fixUpTask;
+	private String		ticker;
+	private Date		moment;
+	private String		description;
+	private String		attachements;
+	private FixUpTask	fixUpTask;
+
 
 	@NotBlank
 	@Column(unique = true)

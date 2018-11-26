@@ -39,8 +39,8 @@ public class Authority implements GrantedAuthority {
 
 	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
 	public static final String	CUSTOMER		= "CUSTOMER";
-	public static final String	REFEREE		= "REFEREE";
-	public static final String	SPONSOR		= "SPONSOR";
+	public static final String	REFEREE			= "REFEREE";
+	public static final String	SPONSOR			= "SPONSOR";
 	public static final String	HANDYWORKER		= "HANDYWORKER";
 	public static final String	ENDORSER		= "ENDORSER";
 
@@ -72,6 +72,22 @@ public class Authority implements GrantedAuthority {
 
 		authority = new Authority();
 		authority.setAuthority(Authority.CUSTOMER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.REFEREE);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.SPONSOR);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.HANDYWORKER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.ENDORSER);
 		result.add(authority);
 
 		return result;

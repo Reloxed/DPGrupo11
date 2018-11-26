@@ -1,6 +1,7 @@
 
 package services;
 
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,12 +44,25 @@ public class ComplaintService {
 		return result;
 	}
 
+	public Complaint save(final Complaint c) {
+		Complaint result;
+		Customer customer;
+
+		customer = this.customerService.findByPrincipal();
+		Assert.notNull(customer);
+		Assert.notNull(c.getFixUpTask());
+		Assert.notNull(c.getDescription());
+
+		result = this.complaintRepository.save(c);
+
+		return result;
+	}
+
 	// Other business methods --------------------------------
 	public String generateTicker(final Complaint c) {
 		final String result;
 		Calendar date;
-		String year;
-		final String month, day;
+		String year, month, day, alphaNum;
 
 		date = Calendar.getInstance();
 		date.setTime(c.getMoment());
@@ -57,9 +71,23 @@ public class ComplaintService {
 		month = String.valueOf(date.get(Calendar.MONTH));
 		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
 
-		//TODO: faltan los caracteres alphanumericos aleatorios
-		result = null;
+		alphaNum = this.randomString();
+		result = year + month + day + "-" + alphaNum;
 
 		return result;
+	}
+
+	public String randomString() {
+
+		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		final SecureRandom rnd = new SecureRandom();
+		final int length = 6;
+
+		final StringBuilder stringBuilder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++)
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars.length())));
+		return stringBuilder.toString();
+
 	}
 }
