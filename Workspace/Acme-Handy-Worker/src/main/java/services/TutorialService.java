@@ -151,12 +151,12 @@ public class TutorialService {
 
 	// Other business methods
 	
-	public Tutorial findTutorialBySectionId(int sectionId) {
+/*	public Tutorial findTutorialBySectionId(int sectionId) {
 		Tutorial res;
 
 		res = this.tutorialRepository.findTutorialBySectionId(sectionId);
 		Assert.notNull(res);
 
 		return res;
-	}
+	}*/
 }
