@@ -44,14 +44,22 @@ public class FixUpTaskService {
 	
 	public FixUpTask create(){
 		FixUpTask result;
+		Customer principal;
 		
+		principal=this.customerService.findByPrincipal();
+		Assert.notNull(principal);
 		
 		result=new FixUpTask();
-		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		result.setApplications(new HashSet<Application>());
 		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("");
+		result.setAddress("");
+		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
+		result.setEndMoment(new Date(1425942200000L));
+		result.setApplications(new HashSet<Application>());
 		
-		//falta quien la crea?
+		
+		
 
 		return result;
 
@@ -116,5 +124,27 @@ public class FixUpTaskService {
 
 	// Other business methods--------
 	// resitricciones de datos y restricciones de acceso
-
+	
+	public Double[] findApplicationsNumberOperations(){
+		Double [] res=this.fixUpTaskRepository.findApplicationsNumberOperations();
+		return res;
+	}
+	public Double[] findMaxPricesNumberOperations(){
+		Double[]res=this.fixUpTaskRepository.findMaxPricesNumberOperations();
+		return res;
+		
+	}
+	public Double[] findComplaintsNumberOperations(){
+		
+		Double [] res= this.fixUpTaskRepository.findComplaintsNumberOperations();
+		return res;
+		
+	}
+	public Double ratioFixUpTaskWithComplaints(){
+		
+		Double res= this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
+		return res;
+		
+	}
+	
 }
