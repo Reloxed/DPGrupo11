@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -12,6 +11,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,12 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Phase extends DomainEntity {
 
-	private String		title;
-	private String		description;
-	private Date		startMoment;
-	private Date		endMoment;
-	private FixUpTask	fixUpTask;
-
+	private String title;
+	private String description;
+	private Date startMoment;
+	private Date endMoment;
+	private FixUpTask fixUpTask;
 
 	@NotBlank
 	public String getTitle() {

@@ -27,6 +27,9 @@ public class SectionService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
+	@Autowired
+	private TutorialService tutorialService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Section create() {
@@ -81,6 +84,7 @@ public class SectionService {
 	public void delete(Section section) {
 		HandyWorker principal;
 		Collection<Section> sections;
+		Tutorial tutorial;
 
 		Assert.notNull(section);
 		Assert.isTrue(section.getId() != 0);
@@ -88,10 +92,19 @@ public class SectionService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		sections = this.findSectionsByPrincipal();
+		tutorial = this.tutorialService
+				.findTutorialBySectionId(section.getId());
+		Assert.notNull(tutorial);
+		Assert.isTrue(tutorial.getSections().contains(section));
+
+		sections = tutorial.getSections();
 		Assert.isTrue(sections.contains(section));
 
+		sections.remove(section);
+
 		this.sectionRepository.delete(section);
+
+		tutorial.setSections(sections);
 	}
 
 	// Other business methods ---------------------------------

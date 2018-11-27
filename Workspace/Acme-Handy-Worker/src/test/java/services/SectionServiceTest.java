@@ -16,6 +16,7 @@ import utilities.AbstractTest;
 import domain.Customer;
 import domain.HandyWorker;
 import domain.Section;
+import domain.Tutorial;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -33,6 +34,9 @@ public class SectionServiceTest extends AbstractTest {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private TutorialService tutorialService;
 
 	// Tests ------------------------------------------------------------------
 
@@ -132,14 +136,22 @@ public class SectionServiceTest extends AbstractTest {
 	public void testDelete() {
 		Section toDelete = new Section();
 		Collection<Section> sections;
+		Tutorial tutorial;
 
 		super.authenticate("handyWorker2");
 
 		sections = this.sectionService.findSectionsByPrincipal();
-		Assert.notNull(sections);
+		Assert.notEmpty(sections);
 
 		toDelete = sections.iterator().next();
+		tutorial = this.tutorialService.findTutorialBySectionId(toDelete
+				.getId());
+
 		this.sectionService.delete(toDelete);
+
+		sections = tutorial.getSections();
+
+		Assert.isTrue(sections.size() == 0);
 
 		super.unauthenticate();
 	}
