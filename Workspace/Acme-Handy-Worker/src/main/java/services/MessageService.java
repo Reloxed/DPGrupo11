@@ -353,7 +353,7 @@ public class MessageService {
 		Collection<Actor>recipients;
 		Collection<MessageBox>boxes;
 		MessageBox outBox;
-		
+		MessageBox inBox;
 		recipients = new ArrayList<Actor>();
 		boxes = new ArrayList<MessageBox>();
 		
@@ -364,7 +364,9 @@ public class MessageService {
 		result.setSendMoment(moment);
 		result.setIsSpam(false);
 		outBox = this.messageBoxService.findOutBoxActor(actor);
+		inBox = this.messageBoxService.findInBoxActor(actor);
 		boxes.add(outBox);
+		boxes.add(inBox);
 		result.setMessageBoxes(boxes);
 		result.setBody(body);
 		result.setSubject("Status updated");
