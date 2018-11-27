@@ -51,8 +51,8 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.authenticate("handyWorker1");
 
 		Application a;
-		final Application saved;
-		final Collection<Application> applications;
+		Application saved;
+		Collection<Application> applications;
 
 		a = this.applicationService.create();
 		a.setFixUpTask(this.fixUpTaskService.findOne(2429));
@@ -70,6 +70,18 @@ public class ApplicationServiceTest extends AbstractTest {
 
 		applications = this.applicationService.findAll();
 		Assert.isTrue(applications.size() == 4);
+
+		super.unauthenticate();
+	}
+
+	public void testAccept() {
+		super.authenticate("customer1");
+		Application a;
+
+		a = this.applicationService.create();
+		this.applicationService.save(a);
+		this.applicationService.accept(a);
+		Assert.isTrue(a.getStatus() == "ACCEPTED");
 
 		super.unauthenticate();
 	}
