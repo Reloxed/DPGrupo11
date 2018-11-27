@@ -46,6 +46,9 @@ public class CurriculumService {
 
 	@Autowired
 	private MiscellaneousRecordService	miscellaneousRecordService;
+	
+	@Autowired
+	private UtilityService	utilityRecordService;
 
 
 	// Simple CRUD Methods
@@ -63,7 +66,7 @@ public class CurriculumService {
 		final Collection<ProfessionalRecord> collProR = new ArrayList<>();
 		final Collection<EndorserRecord> collEndR = new ArrayList<>();
 		final Collection<MiscellaneousRecord> collMR = new ArrayList<>();
-		final String ticker = this.generateTicker();
+		final String ticker = this.utilityRecordService.generateTicker();
 
 		result = new Curriculum();
 		result.setTicker(ticker);
@@ -93,6 +96,7 @@ public class CurriculumService {
 	}
 
 	public Curriculum save(final Curriculum curriculum) {
+		Curriculum result;
 		Assert.notNull(curriculum);
 
 		HandyWorker author;
@@ -101,8 +105,9 @@ public class CurriculumService {
 		if (curriculum.getId() != 0)
 			Assert.isTrue(curriculum.getTicker().equals(author.getCurriculum().getTicker()));
 		Assert.notNull(curriculum.getPersonalRecord());
-
-		return this.curriculumRepository.save(curriculum);
+		result = this.curriculumRepository.save(curriculum);
+		this.curriculumRepository.flush();
+		return result;
 
 	}
 
