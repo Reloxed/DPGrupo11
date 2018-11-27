@@ -42,6 +42,19 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void createTestValid() {
+		Category category;
+
+		category = this.categoryService.create();
+
+		Assert.notNull(category);
+		Assert.isNull(category.getSpanishName());
+		Assert.isNull(category.getEnglishName());
+		Assert.isNull(category.getParentCategory());
+		Assert.notNull(category.getChildCategories());
+
+	}
+	@Test
 	public void testSave() {
 
 	}

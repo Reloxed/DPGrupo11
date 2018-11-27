@@ -348,4 +348,32 @@ public class MessageService {
 		this.messageRepository.save(outBoxMessage);
 	}
 	
+	public Message createAndSaveStatus(final Actor actor, final String body,final Date moment){
+		Message result;
+		Collection<Actor>recipients;
+		Collection<MessageBox>boxes;
+		MessageBox outBox;
+		MessageBox inBox;
+		recipients = new ArrayList<Actor>();
+		boxes = new ArrayList<MessageBox>();
+		
+		result = new Message();
+		result.setSender(actor);
+		recipients.add(actor);
+		result.setRecipients(recipients);
+		result.setSendMoment(moment);
+		result.setIsSpam(false);
+		outBox = this.messageBoxService.findOutBoxActor(actor);
+		inBox = this.messageBoxService.findInBoxActor(actor);
+		boxes.add(outBox);
+		boxes.add(inBox);
+		result.setMessageBoxes(boxes);
+		result.setBody(body);
+		result.setSubject("Status updated");
+		
+		this.messageRepository.save(result);
+		
+		return result;
+	}
+	
 }

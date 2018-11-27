@@ -32,8 +32,10 @@ public class HandyWorkerService {
 	//Supporting services ----------
 	@Autowired
 	private ApplicationService		applicationService;
+
 	@Autowired
 	private MessageBoxService		messageBoxService;
+
 
 
 	//Constructor ----------------------------------------------------
@@ -86,8 +88,6 @@ public class HandyWorkerService {
 
 	public HandyWorker create() {
 		HandyWorker result;
-		final UserAccount userAccount;
-
 		result = new HandyWorker();
 
 		result.setIsSuspicious(false);
@@ -96,8 +96,7 @@ public class HandyWorkerService {
 		result.setCurriculum(new Curriculum());
 		result.setFinder(new Finder());
 		result.setSocialProfiles(new HashSet<SocialProfile>());
-		result.setTutorial(new HashSet<Tutorial>());
-		result.setUserAccount(userAccount);
+		result.setTutorial(new HashSet<Tutorial>() );
 
 		return result;
 
