@@ -37,16 +37,6 @@ public class SponsorServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	// Crear un objeto siendo un actor logueado (SE PODRA CREAR O NO?)
-	@Test
-	public void testCreate2() {
-		Sponsor res;
-		super.authenticate("handyWorker1");
-		res = this.sponsorService.create();
-		Assert.notNull(res);
-		super.unauthenticate();
-	}
-
 	@Test
 	public void testFindAll() {
 		Collection<Sponsor> res;
@@ -70,15 +60,72 @@ public class SponsorServiceTest extends AbstractTest {
 		res = this.sponsorService.findOne(233);
 		Assert.notNull(res);
 	}
+
+	// FindByPrincipal con un actor incorrecto
+	@Test(expected = IllegalArgumentException.class)
+	public void testFindByPrincipal1() {
+		Sponsor res;
+		super.authenticate("handyWorker1");
+		res = this.sponsorService.findByPrincipal();
+		Assert.notNull(res);
+		System.out.println(res);
+		super.unauthenticate();
+	}
+
+	// FindByPrincipal con un sponsor
+	@Test
+	public void testFindByPrincipal2() {
+		Sponsor res;
+		super.authenticate("sponsor1");
+		res = this.sponsorService.findByPrincipal();
+		Assert.notNull(res);
+		super.unauthenticate();
+	}
+
+	// Save correcto
+	@Test
+	public void testSave1() {
+		Sponsor res;
+		Sponsor s = this.sponsorService.create();
+		s.setName("Walabonso");
+		s.setSurname("Nieto-Perez Gordo");
+		s.setEmail("wakawaka@us.es");
+		s.getUserAccount().setUsername("WNPGG");
+		s.getUserAccount().setPassword("123456abc");
+		res = this.sponsorService.save(s);
+		Assert.notNull(res);
+	}
+
+	// Save actualizando
+	@Test
+	public void testSave2() {
+		Sponsor res;
+		super.authenticate("sponsor1");
+		Sponsor s = this.sponsorService.findOne(2312);
+		s.setName("Walabonso");
+		s.setSurname("Nieto-Perez Gordo");
+		s.setEmail("wakawaka@us.es");
+		s.getUserAccount().setUsername("WNPGG");
+		s.getUserAccount().setPassword("123456abc");
+		res = this.sponsorService.save(s);
+		Assert.notNull(res);
+		super.unauthenticate();
+	}
 	
-	// FindByPrincipal
-		@Test
-		public void testFindByPrincipal() {
+	// Save actualizando un sponsor que no le corresponde al usuario logueado
+		@Test(expected = IllegalArgumentException.class)
+		public void testSave3() {
 			Sponsor res;
-			super.authenticate("handyWorker1");
-			res = this.sponsorService.findByPrincipal();
+			super.authenticate("sponsor2");
+			Sponsor s = this.sponsorService.findOne(2312);
+			s.setName("Walabonso");
+			s.setSurname("Nieto-Perez Gordo");
+			s.setEmail("wakawaka@us.es");
+			s.getUserAccount().setUsername("WNPGG");
+			s.getUserAccount().setPassword("123456abc");
+			res = this.sponsorService.save(s);
 			Assert.notNull(res);
-			System.out.println(res);
+			super.unauthenticate();
 		}
 
 }
