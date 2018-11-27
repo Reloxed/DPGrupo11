@@ -1,8 +1,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +46,12 @@ public class ProfessionalRecordService {
 		return res;
 	}
 
+	public Collection<ProfessionalRecord> findAll() {
+		Collection<ProfessionalRecord> res;
+		res = this.professionalRecordRepository.findAll();
+		return res;
+	}
+
 	public ProfessionalRecord save(ProfessionalRecord professionalRecord) {
 		HandyWorker principal;
 		ProfessionalRecord res;
@@ -57,10 +63,15 @@ public class ProfessionalRecordService {
 
 		Assert.notNull(professionalRecord);
 
-		Assert.isTrue(!professionalRecord.getCompanyName().isEmpty());
-		Assert.isTrue(!professionalRecord.getRole().isEmpty());
-		Assert.isTrue(professionalRecord.getStartDate().before(
-				LocalDate.now().toDate()));
+		Assert.notNull(professionalRecord.getCompanyName());
+		Assert.notNull(professionalRecord.getRole());
+		if (professionalRecord.getEndDate() != null) {
+			Assert.isTrue(professionalRecord.getStartDate().before(
+					professionalRecord.getEndDate()));
+		} else {
+			Assert.isTrue(professionalRecord.getStartDate().before(
+					new Date(System.currentTimeMillis())));
+		}
 
 		professionalRecords = principal.getCurriculum()
 				.getProfessionalRecords();
@@ -89,25 +100,13 @@ public class ProfessionalRecordService {
 		professionalRecords = principal.getCurriculum()
 				.getProfessionalRecords();
 
-		this.professionalRecordRepository.delete(professionalRecord);
-
 		professionalRecords.remove(professionalRecord);
+
+		this.professionalRecordRepository.delete(professionalRecord);
 
 		principal.getCurriculum().setProfessionalRecords(professionalRecords);
 	}
 
 	// Other business methods -------------------------------
 
-	public Collection<ProfessionalRecord> findByPrincipal() {
-		HandyWorker principal;
-		Collection<ProfessionalRecord> res;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = principal.getCurriculum().getProfessionalRecords();
-		Assert.notNull(res);
-
-		return res;
-	}
 }
