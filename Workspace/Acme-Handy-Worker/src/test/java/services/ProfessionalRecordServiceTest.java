@@ -32,10 +32,10 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	@Test
 	public void testFindByPrincipal() {
 		Collection<ProfessionalRecord> res;
-		super.authenticate("handyWorker1");
+		super.authenticate("handyWorker2");
 		res = this.professionalRecordService.findByPrincipal();
 		Assert.notNull(res);
-		//Assert.isTrue(res.size() == 1);
+		Assert.isTrue(res.size() == 2);
 		super.unauthenticate();
 	}
 }
