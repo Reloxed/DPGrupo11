@@ -87,6 +87,9 @@ public class CustomerService {
 			Assert.notNull(principal);
 		}
 		cus = this.customerRepository.save(customer);
+
+		this.customerRepository.flush();
+
 		return cus;
 	}
 

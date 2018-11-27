@@ -86,7 +86,7 @@ public class ApplicationService {
 
 		a.setApplicant(applicant);
 
-		result = this.applicationRepository.save(a);
+		result = this.applicationRepository.saveAndFlush(a);
 		Assert.notNull(a);
 
 		// Add application to collection of applications of handyWorker

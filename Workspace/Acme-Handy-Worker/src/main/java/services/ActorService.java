@@ -76,17 +76,12 @@ public class ActorService {
 	// Other business methods ---------------------------
 
 	public Actor findByPrincipal() {
-
 		Actor result;
-
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-
 		Assert.notNull(userAccount);
-
 		result = this.findByUserAccount(userAccount);
-
 		Assert.notNull(result);
 
 		return result;
@@ -94,9 +89,7 @@ public class ActorService {
 	}
 
 	public Actor findByUserAccount(final UserAccount userAccount) {
-
 		Assert.notNull(userAccount);
-
 		Actor result;
 
 		result = this.actorRepository.findByUserAccountId(userAccount.getId());
