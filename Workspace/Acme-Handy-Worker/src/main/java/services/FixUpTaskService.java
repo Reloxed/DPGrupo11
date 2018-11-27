@@ -1,7 +1,7 @@
 package services;
 
 import java.util.Collection;
-import java.util.Collections;
+
 import java.util.Date;
 import java.util.HashSet;
 
@@ -12,10 +12,10 @@ import org.springframework.util.Assert;
 
 
 import domain.Application;
-import domain.Category;
+
 import domain.Customer;
 import domain.FixUpTask;
-import domain.Warranty;
+
 
 import repositories.FixUpTaskRepository;
 
@@ -33,10 +33,10 @@ public class FixUpTaskService {
 	
 	//Supporting services ----------
 	@Autowired 
-	private CurriculumService curriculumService;
+	private UtilityService utilityService;
 	
 	@Autowired
-	private CustomerService cusotmerService;
+	private CustomerService customerService;
 	
 	
 	//Constructor ----------------------------------------------------
@@ -48,16 +48,15 @@ public class FixUpTaskService {
 	//Simple CRUD methods-------
 	
 	
-	public FixUpTask create(final Category category,final Warranty warranty){
+	public FixUpTask create(){
 		FixUpTask result;
-		Date currentMoment;
+		
 		
 		result=new FixUpTask();
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setApplications(new HashSet<Application>());
-		result.setCategory(category);
-		result.setTicker(this.curriculumService.generateTicker());
-		result.setWarranty(warranty);
+		result.setTicker(this.utilityService.generateTicker());
+		
 		//falta quien la crea?
 
 		
@@ -94,7 +93,7 @@ public class FixUpTaskService {
 		Assert.isTrue(fixUpTask.getId()!=0);
 		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
 		
-		principal=this.cusotmerService.findByPrincipal();
+		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 		
 		
@@ -111,7 +110,7 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getId()!=0);
 		
-		principal=this.cusotmerService.findByPrincipal();
+		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 		
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());//no se puede eliminar una chapuza si tiene solicitudes
