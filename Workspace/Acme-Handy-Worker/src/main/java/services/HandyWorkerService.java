@@ -17,7 +17,6 @@ import domain.Application;
 import domain.Curriculum;
 import domain.Finder;
 import domain.HandyWorker;
-import domain.MessageBox;
 import domain.SocialProfile;
 import domain.Tutorial;
 
@@ -26,35 +25,33 @@ import domain.Tutorial;
 public class HandyWorkerService {
 
 	//Managed repository-----------
-	
-	
+
 	@Autowired
 	private HandyWorkerRepository	handyWorkerRepository;
-	
-	
-	
+
 	//Supporting services ----------
 	@Autowired
-	private ApplicationService applicationService;
+	private ApplicationService		applicationService;
 	@Autowired
-	private MessageBoxService messageBox;
-	
+	private MessageBoxService		messageBoxService;
+
+
 	//Constructor ----------------------------------------------------
 	public HandyWorkerService() {
 		super();
 	}
-	
+
 	//Simple CRUD methods-------
-	public HandyWorker findOne(int handyWorkerId){
+	public HandyWorker findOne(final int handyWorkerId) {
 		HandyWorker result;
-		
-		Assert.isTrue(handyWorkerId!=0);
-		
+
+		Assert.isTrue(handyWorkerId != 0);
+
 		result = this.handyWorkerRepository.findOne(handyWorkerId);
-		
+
 		return result;
 	}
-	public Collection<HandyWorker> findAll(){
+	public Collection<HandyWorker> findAll() {
 		Collection<HandyWorker> result;
 
 		result = this.handyWorkerRepository.findAll();
@@ -62,52 +59,50 @@ public class HandyWorkerService {
 		Assert.notNull(result);
 
 		return result;
-		
+
 	}
-	public void delete(final HandyWorker handyWorker){
-		
+	public void delete(final HandyWorker handyWorker) {
+
 		this.handyWorkerRepository.delete(handyWorker);
-		
+
 	}
-	
-	public HandyWorker save(HandyWorker handyWorker){
+
+	public HandyWorker save(final HandyWorker handyWorker) {
 		HandyWorker result;
 		Assert.notNull(handyWorker);
-		
-		if(handyWorker.getId()==0){
-			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+
+		if (handyWorker.getId() == 0) {
+			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 			handyWorker.getUserAccount().setPassword(passwordEncoder.encodePassword(handyWorker.getUserAccount().getPassword(), null));
-		}else{
-			result=this.findByPrincipal();
+		} else {
+			result = this.findByPrincipal();
 			Assert.notNull(result);
 		}
-		result=this.handyWorkerRepository.save(handyWorker);
-		
+		result = this.handyWorkerRepository.save(handyWorker);
+
 		return result;
-		
+
 	}
-	
-	public HandyWorker create( ){
+
+	public HandyWorker create() {
 		HandyWorker result;
-		UserAccount userAccount;
-		
-		result=new HandyWorker();
-		 
+		final UserAccount userAccount;
+
+		result = new HandyWorker();
+
 		result.setIsSuspicious(false);
-		result.setMessageBoxes(this.MessageBoxService.createSystemMessageBoxes());
+		result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 		result.setApplications(new HashSet<Application>());
 		result.setCurriculum(new Curriculum());
 		result.setFinder(new Finder());
 		result.setSocialProfiles(new HashSet<SocialProfile>());
-		result.setTutorial(new HashSet<Tutorial>() );
+		result.setTutorial(new HashSet<Tutorial>());
 		result.setUserAccount(userAccount);
-		
-		
+
 		return result;
-		
-		
+
 	}
-	
+
 	//Other business methods--------
 	//handyworker can write a tutorial,a note,may endorse,
 	//search in a finder ,can register a cv,apply for a fixuptask
@@ -135,5 +130,5 @@ public class HandyWorkerService {
 
 		return result;
 	}
-	
+
 }
