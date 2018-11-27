@@ -32,15 +32,12 @@ public class HandyWorkerService {
 	//Supporting services ----------
 	@Autowired
 	private ApplicationService		applicationService;
+
 	@Autowired
-<<<<<<< HEAD
-	private MessageBoxService messageBoxService;
-	
-=======
 	private MessageBoxService		messageBoxService;
 
 
->>>>>>> e8794ab98aadd0ec1fd5b30d31f8544f59fa83b4
+
 	//Constructor ----------------------------------------------------
 	public HandyWorkerService() {
 		super();
@@ -91,33 +88,16 @@ public class HandyWorkerService {
 
 	public HandyWorker create() {
 		HandyWorker result;
-<<<<<<< HEAD
-		
-		
-		result=new HandyWorker();
-		 
-=======
-		final UserAccount userAccount;
-
 		result = new HandyWorker();
 
->>>>>>> e8794ab98aadd0ec1fd5b30d31f8544f59fa83b4
 		result.setIsSuspicious(false);
 		result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 		result.setApplications(new HashSet<Application>());
 		result.setCurriculum(new Curriculum());
 		result.setFinder(new Finder());
 		result.setSocialProfiles(new HashSet<SocialProfile>());
-<<<<<<< HEAD
 		result.setTutorial(new HashSet<Tutorial>() );
-		
-		
-		
-=======
-		result.setTutorial(new HashSet<Tutorial>());
-		result.setUserAccount(userAccount);
 
->>>>>>> e8794ab98aadd0ec1fd5b30d31f8544f59fa83b4
 		return result;
 
 	}
