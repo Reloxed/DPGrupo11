@@ -81,8 +81,8 @@ public class ActorService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
+
 		result = this.findByUserAccount(userAccount);
-		Assert.notNull(result);
 
 		return result;
 
