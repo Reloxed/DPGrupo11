@@ -11,12 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
-import domain.Actor;
 import domain.Application;
+import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
-import domain.Message;
-import domain.MessageBox;
 
 @Service
 @Transactional
@@ -37,9 +35,6 @@ public class ApplicationService {
 
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
-
-	@Autowired
-	private MessageBoxService			messageBoxService;
 
 	@Autowired
 	private MessageService				messageService;
@@ -64,12 +59,10 @@ public class ApplicationService {
 		Application result;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
-		final Message messageNotification;
 		Collection<Application> applications, updated;
 		String[] spamWords, comments;
+		final String bodyHandyWorker, bodyCustomer;
 		boolean containsSpam;
-		final Collection<Actor> recipients;
-		Collection<MessageBox> messageBoxes;
 
 		Assert.notNull(a);
 		applicant = this.handyWorkerService.findByPrincipal();
@@ -120,25 +113,10 @@ public class ApplicationService {
 
 		}
 
-		recipients = new ArrayList<Actor>();
-		recipients.add(applicant);
-		recipients.add(this.customerService.findCustomerByApplicationId(result.getId()));
-
-		messageBoxes = new ArrayList<MessageBox>();
-		messageBoxes.add(this.messageBoxService.findInBoxActor(applicant));
-		messageBoxes.add(this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(result.getId())));
-
-		messageNotification = new Message();
-		messageNotification.setSender(applicant);
-		messageNotification.setRecipients(recipients);
-		messageNotification.setPriority("NORMAL");
-		messageNotification.setSendMoment(new Date(System.currentTimeMillis() - 1));
-		messageNotification.setIsSpam(false);
-		messageNotification.setMessageBoxes(messageBoxes);
-		messageNotification.setBody("The status of application of fix up task with description: " + fixUpTask.getDescription());
-		messageNotification.setSubject("New status update");
-
-		this.messageService.save(messageNotification);
+		bodyCustomer = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		bodyHandyWorker = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		this.messageService.createAndSaveStatus(applicant, bodyCustomer, result.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyHandyWorker, result.getRegisteredMoment());
 
 		return result;
 	}
@@ -160,24 +138,47 @@ public class ApplicationService {
 
 	// Other business methods --------------------------
 
-	/*
-	 * public void accept(final Application a) {
-	 * final Customer customer;
-	 * final String messageNotification;
-	 * final String messageCustomer;
-	 * 
-	 * Assert.notNull(a);
-	 * Assert.isTrue(a.getId() != 0);
-	 * 
-	 * customer = this.customerService.findByPrincipal();
-	 * Assert.notNull(customer);
-	 * 
-	 * Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
-	 * Assert.isTrue(a.getStatus() == "PENDING");
-	 * a.setStatus("ACCEPTED");
-	 * this.applicationRepository.save(a);
-	 * }
-	 */
+	public void accept(final Application a) {
+		final Customer customer;
+		final String bodyCustomer, bodyHandyWorker;
+
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+
+		customer = this.customerService.findByPrincipal();
+		Assert.notNull(customer);
+
+		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
+		Assert.isTrue(a.getStatus() == "PENDING");
+		a.setStatus("ACCEPTED");
+		this.applicationRepository.saveAndFlush(a);
+
+		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
+	}
+
+	public void reject(final Application a) {
+		final Customer customer;
+		final String bodyCustomer, bodyHandyWorker;
+
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+
+		customer = this.customerService.findByPrincipal();
+		Assert.notNull(customer);
+
+		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
+		Assert.isTrue(a.getStatus() == "PENDING");
+		a.setStatus("REJECTED");
+		this.applicationRepository.saveAndFlush(a);
+
+		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
+	}
 
 	public Collection<Application> findAllApplicationsByHandyWorker(final int handyWorkerId) {
 		Collection<Application> result;
