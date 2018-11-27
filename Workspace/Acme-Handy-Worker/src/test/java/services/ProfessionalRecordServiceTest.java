@@ -52,8 +52,8 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	public void testCreateAndSave0() {
 		ProfessionalRecord res;
 		ProfessionalRecord saved;
-
 		HandyWorker principal;
+
 		super.authenticate("handyWorker2");
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
@@ -95,27 +95,27 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	}
 
 	// Wrong startDate
-	// @Test
-	// public void testCreateAndSave2() {
-	// ProfessionalRecord res;
-	// ProfessionalRecord saved;
-	//
-	// HandyWorker principal;
-	// super.authenticate("handyWorker2");
-	// principal = this.handyWorkerService.findByPrincipal();
-	// Assert.notNull(principal);
-	//
-	// res = this.professionalRecordService.create();
-	// res.setCompanyName("Company");
-	// res.setStartDate(new Date(System.currentTimeMillis() + 116551651000L));
-	// res.setRole("Role");
-	//
-	// saved = this.professionalRecordService.save(res);
-	//
-	// Assert.notNull(saved);
-	// Assert.isTrue(principal.getCurriculum().getProfessionalRecords()
-	// .contains(saved));
-	// }
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateAndSave2() {
+		ProfessionalRecord res;
+		ProfessionalRecord saved;
+
+		HandyWorker principal;
+		super.authenticate("handyWorker2");
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.professionalRecordService.create();
+		res.setCompanyName("Company");
+		res.setStartDate(new Date(System.currentTimeMillis() + 116551651000L));
+		res.setRole("Role");
+
+		saved = this.professionalRecordService.save(res);
+
+		Assert.notNull(saved);
+		Assert.isTrue(principal.getCurriculum().getProfessionalRecords()
+				.contains(saved));
+	}
 
 	@Test
 	public void testDelete() {
@@ -136,6 +136,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		professionalRecords = principal.getCurriculum()
 				.getProfessionalRecords();
 		Assert.isTrue(professionalRecords.size() == 1);
+
 		super.unauthenticate();
 	}
 }

@@ -27,9 +27,6 @@ public class SectionService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
-	@Autowired
-	private TutorialService tutorialService;
-
 	// Simple CRUD methods -----------------------------------
 
 	public Section create() {
@@ -47,6 +44,61 @@ public class SectionService {
 	public Collection<Section> findAll() {
 		Collection<Section> res;
 		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.sectionRepository.findAll();
+		return res;
+	}
+
+	public Section findOne(int sectionId) {
+		Section res;
+		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.sectionRepository.findOne(sectionId);
+		return res;
+
+	}
+
+	public Section save(Section section) {
+		Section res;
+		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		Assert.notNull(section);
+
+		res = this.sectionRepository.saveAndFlush(section);
+
+		return res;
+	}
+
+	public void delete(Section section) {
+		HandyWorker principal;
+		Collection<Section> sections;
+
+		Assert.notNull(section);
+		Assert.isTrue(section.getId() != 0);
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		sections = this.findSectionsByPrincipal();
+		Assert.isTrue(sections.contains(section));
+
+		this.sectionRepository.delete(section);
+	}
+
+	// Other business methods ---------------------------------
+
+	public Collection<Section> findSectionsByPrincipal() {
+		Collection<Section> res;
+		HandyWorker principal;
 		Collection<Tutorial> tutorials;
 
 		principal = this.handyWorkerService.findByPrincipal();
@@ -60,55 +112,5 @@ public class SectionService {
 		}
 
 		return res;
-	}
-
-	public Section findOne(int sectionId) {
-		Section res;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = this.sectionRepository.findOne(sectionId);
-
-		return res;
-
-	}
-
-	public Section save(Section section) {
-		HandyWorker principal;
-		Tutorial tutorial;
-		Section[] tutorialSections;
-
-		Assert.notNull(section);
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		Assert.isTrue(!section.getTitle().isEmpty());
-		Assert.isTrue(!section.getText().isEmpty());
-
-		tutorial = this.tutorialService
-				.findTutorialBySectionId(section.getId());
-		tutorialSections = (Section[]) tutorial.getSections().toArray();
-		int size = tutorialSections.length;
-
-		Assert.isTrue(section.getNumber() == tutorialSections[size - 1]
-				.getNumber() + 1);
-
-		return this.sectionRepository.save(section);
-	}
-
-	public void delete(Section section) {
-		HandyWorker principal;
-
-		Assert.notNull(section);
-		Assert.isTrue(section.getId() != 0);
-
-		principal = this.handyWorkerService.findByPrincipal();
-
-		Assert.notNull(principal);
-
-		this.sectionRepository.delete(section);
 	}
 }

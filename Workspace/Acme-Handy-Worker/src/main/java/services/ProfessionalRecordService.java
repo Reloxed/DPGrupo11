@@ -63,8 +63,6 @@ public class ProfessionalRecordService {
 
 		Assert.notNull(professionalRecord);
 
-		Assert.notNull(professionalRecord.getCompanyName());
-		Assert.notNull(professionalRecord.getRole());
 		if (professionalRecord.getEndDate() != null) {
 			Assert.isTrue(professionalRecord.getStartDate().before(
 					professionalRecord.getEndDate()));
@@ -76,7 +74,8 @@ public class ProfessionalRecordService {
 		professionalRecords = principal.getCurriculum()
 				.getProfessionalRecords();
 
-		res = this.professionalRecordRepository.save(professionalRecord);
+		res = this.professionalRecordRepository
+				.saveAndFlush(professionalRecord);
 		Assert.notNull(res);
 		if (professionalRecord.getId() == 0) {
 			professionalRecords.add(res);

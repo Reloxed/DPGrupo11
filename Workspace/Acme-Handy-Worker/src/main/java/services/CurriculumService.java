@@ -46,6 +46,9 @@ public class CurriculumService {
 	@Autowired
 	private MiscellaneousRecordService miscellaneousRecordService;
 
+	@Autowired
+	private UtilityService utilityService;
+
 	// Simple CRUD Methods
 
 	public Curriculum create() {
@@ -61,7 +64,7 @@ public class CurriculumService {
 		final Collection<ProfessionalRecord> collProR = new ArrayList<>();
 		final Collection<EndorserRecord> collEndR = new ArrayList<>();
 		final Collection<MiscellaneousRecord> collMR = new ArrayList<>();
-		final String ticker = this.generateTicker();
+		final String ticker = this.utilityService.generateTicker();
 
 		result = new Curriculum();
 		result.setTicker(ticker);
