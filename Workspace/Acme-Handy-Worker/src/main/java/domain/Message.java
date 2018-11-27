@@ -109,6 +109,7 @@ public class Message extends DomainEntity {
 	public void setRecipients(Collection<Actor> recipients) {
 		this.recipients = recipients;
 	}
+	@NotNull
 	@ManyToMany(mappedBy="messages")
 	public Collection<MessageBox> getMessageBoxes() {
 		return messageBoxes;

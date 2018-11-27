@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -15,103 +16,102 @@ import domain.SocialProfile;
 @Service
 @Transactional
 public class SocialProfileService {
-	
-	//Managed repository
-	
+
+	// Managed repository
+
 	@Autowired
 	private SocialProfileRepository socialProfileRepository;
-	
-	//Supporting services
-	
+
+	// Supporting services
+
 	@Autowired
 	private ActorService actorService;
-	
-	//Simple CRUD Methods
-	
-	public SocialProfile create(){
+
+	// Simple CRUD Methods
+
+	public SocialProfile create() {
 		SocialProfile result;
 		Actor principal;
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		result = new SocialProfile();
 		Assert.notNull(result);
 		return result;
 	}
-	
-	public Collection<SocialProfile> findAll(){
+
+	public Collection<SocialProfile> findAll() {
 		Collection<SocialProfile> socialProfiles;
-		
+
 		socialProfiles = this.socialProfileRepository.findAll();
-		
+
 		return socialProfiles;
 	}
-	
-	public SocialProfile findOne(int socialProfileId){
+
+	public SocialProfile findOne(int socialProfileId) {
 		SocialProfile result;
-		
+
 		result = this.socialProfileRepository.findOne(socialProfileId);
 		Assert.notNull(result);
 		return result;
 	}
-	
-	public Collection<SocialProfile> findByPrincipal(){
+
+	public Collection<SocialProfile> findByPrincipal() {
 		Collection<SocialProfile> result;
 		Actor principal;
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		result = principal.getSocialProfiles();
 		return result;
 	}
-	
-	public SocialProfile save(SocialProfile socialProfile){
+
+	public SocialProfile save(SocialProfile socialProfile) {
 		Actor principal;
 		SocialProfile result;
 		Collection<SocialProfile> socialProfilesUpdated;
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.notNull(socialProfile);
-		
-		if(socialProfile.getId() != 0){
+
+		if (socialProfile.getId() != 0) {
 			Assert.isTrue(principal.getSocialProfiles().contains(socialProfile));
 		} else {
-			socialProfilesUpdated = Collections.<SocialProfile> emptyList();
+			socialProfilesUpdated = new ArrayList<SocialProfile>();
 			socialProfilesUpdated.addAll(principal.getSocialProfiles());
 			socialProfilesUpdated.add(socialProfile);
 			principal.setSocialProfiles(socialProfilesUpdated);
 		}
-		
-		result = this.socialProfileRepository.save(socialProfile);
+
+		result = this.socialProfileRepository.saveAndFlush(socialProfile);
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public void delete(SocialProfile socialProfile){
+
+	public void delete(SocialProfile socialProfile) {
 		Actor principal;
 		Collection<SocialProfile> socialProfilesUpdated;
-		
+
 		Assert.notNull(socialProfile);
 		Assert.isTrue(socialProfile.getId() != 0);
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		socialProfilesUpdated = Collections.<SocialProfile> emptyList();
+
+		socialProfilesUpdated = new ArrayList<SocialProfile>();
 		socialProfilesUpdated.addAll(principal.getSocialProfiles());
+		Assert.isTrue(socialProfilesUpdated.contains(socialProfile));
 		socialProfilesUpdated.remove(socialProfile);
 		principal.setSocialProfiles(socialProfilesUpdated);
-		
+
 		this.socialProfileRepository.delete(socialProfile);
-		
+
 	}
-	
-	//Other business methods
-	
-	
-	
+
+	// Other business methods
+
 }

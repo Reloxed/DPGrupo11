@@ -42,19 +42,19 @@ public class SponsorService {
 	public Sponsor create(){
 		Sponsor result;
 		Collection<MessageBox> messageBoxes;
-		Actor principal;
 		
-		principal = this.actorService.findByPrincipal();
-		Assert.isNull(principal);
-		
-		result = new Sponsor();
-		
-		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-		
-		result.setIsSuspicious(false);
-		result.setMessageBoxes(messageBoxes);
-		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
-		result.setSponsorships(Collections.<Sponsorship> emptyList());
+		if(LoginService.getPrincipal() == null){
+			result = new Sponsor();
+			
+			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+			
+			result.setIsSuspicious(false);
+			result.setMessageBoxes(messageBoxes);
+			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
+			result.setSponsorships(Collections.<Sponsorship> emptyList());
+		} else {
+			result = null;
+		}
 		
 		return result;
 	}
