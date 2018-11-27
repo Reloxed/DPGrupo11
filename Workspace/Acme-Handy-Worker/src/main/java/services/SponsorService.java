@@ -24,107 +24,113 @@ import domain.Sponsorship;
 @Transactional
 public class SponsorService {
 
-	//Managed repository
-	
+	// Managed repository
+
 	@Autowired
 	private SponsorRepository sponsorRepository;
-	
-	//Supporting services
-	
+
+	// Supporting services
+
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private MessageBoxService messageBoxService;
-	
-	//Simple CRUD Methods
-	
-	public Sponsor create(){
+
+	// Simple CRUD Methods
+
+	public Sponsor create() {
 		Sponsor result;
 		Collection<MessageBox> messageBoxes;
 		Actor principal;
-		
-		principal = this.actorService.findByPrincipal();
-		Assert.isNull(principal);
-		
-		result = new Sponsor();
-		
-		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-		
-		result.setIsSuspicious(false);
-		result.setMessageBoxes(messageBoxes);
-		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
-		result.setSponsorships(Collections.<Sponsorship> emptyList());
-		
-		return result;
+
+		principal = this.findByPrincipal();
+		if (principal == null) {
+
+			result = new Sponsor();
+
+			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
+
+			result.setIsSuspicious(false);
+			result.setMessageBoxes(messageBoxes);
+			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
+			result.setSponsorships(Collections.<Sponsorship> emptyList());
+
+			return result;
+		} else{
+			return null;
+		}
 	}
-	
-	public Collection<Sponsor> findAll(){
+
+	public Collection<Sponsor> findAll() {
 		Collection<Sponsor> sponsors;
-		
+
 		sponsors = this.sponsorRepository.findAll();
 		Assert.notNull(sponsors);
-		
+
 		return sponsors;
 	}
-	
-	public Sponsor findOne(int sponsorId){
+
+	public Sponsor findOne(int sponsorId) {
 		Sponsor result;
-		
+
 		result = this.sponsorRepository.findOne(sponsorId);
-		
+
 		return result;
 	}
-	
-	public Sponsor findByPrincipal(){
+
+	public Sponsor findByPrincipal() {
 		Sponsor result;
 		UserAccount userAccount;
-		
+
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 		result = this.findByUserAccount(userAccount);
 		Assert.notNull(result);
 		return result;
 	}
-	
+
 	public Sponsor findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Sponsor result;
-		result = this.sponsorRepository.findByUserAccountId(userAccount.getId());
+		result = this.sponsorRepository
+				.findByUserAccountId(userAccount.getId());
 		return result;
 	}
-	
-	public Sponsor save(Sponsor s){
+
+	public Sponsor save(Sponsor s) {
 		Sponsor saved;
 		Assert.notNull(s);
-		
-		if(s.getId() == 0){
+
+		if (s.getId() == 0) {
 			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-			s.getUserAccount().setPassword(passwordEncoder.encodePassword(s.getUserAccount().getPassword(), null));
-		} else{
+			s.getUserAccount().setPassword(
+					passwordEncoder.encodePassword(s.getUserAccount()
+							.getPassword(), null));
+		} else {
 			Sponsor principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
 		}
-		
+
 		saved = this.sponsorRepository.save(s);
 		return saved;
 	}
-	
-	//Other business methods
-	
+
+	// Other business methods
+
 	public Sponsor findByCreditCardId(int creditCardId) {
 		Sponsor res;
-		
+
 		res = this.sponsorRepository.findByCreditCardId(creditCardId);
 
 		return res;
 	}
-	
-	public Collection<CreditCard> findCreditCardsBySponsorId (int sponsorId){
+
+	public Collection<CreditCard> findCreditCardsBySponsorId(int sponsorId) {
 		Collection<CreditCard> collCC = new ArrayList<>();
 		collCC = sponsorRepository.findCreditCardsBySponsorId(sponsorId);
 		return collCC;
 	}
-	
+
 }

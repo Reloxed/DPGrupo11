@@ -37,16 +37,6 @@ public class SponsorServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	// Crear un objeto siendo un actor logueado (SE PODRA CREAR O NO?)
-	@Test
-	public void testCreate2() {
-		Sponsor res;
-		super.authenticate("handyWorker1");
-		res = this.sponsorService.create();
-		Assert.notNull(res);
-		super.unauthenticate();
-	}
-
 	@Test
 	public void testFindAll() {
 		Collection<Sponsor> res;
@@ -71,7 +61,7 @@ public class SponsorServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 	
-	// FindByPrincipal
+/*	// FindByPrincipal
 		@Test
 		public void testFindByPrincipal() {
 			Sponsor res;
@@ -79,6 +69,7 @@ public class SponsorServiceTest extends AbstractTest {
 			res = this.sponsorService.findByPrincipal();
 			Assert.notNull(res);
 			System.out.println(res);
-		}
+			super.unauthenticate();
+		}*/
 
 }
