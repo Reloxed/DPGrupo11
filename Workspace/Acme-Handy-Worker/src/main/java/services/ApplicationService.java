@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
+import domain.Actor;
 import domain.Application;
 import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Message;
+import domain.MessageBox;
 
 @Service
 @Transactional
@@ -36,6 +38,12 @@ public class ApplicationService {
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
+	@Autowired
+	private MessageBoxService			messageBoxService;
+
+	@Autowired
+	private MessageService				messageService;
+
 
 	// Simple CRUD methods ---------------------------
 	public Application create() {
@@ -56,10 +64,12 @@ public class ApplicationService {
 		Application result;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
-		final Message messageHandyWorker, messageCustomer;
+		final Message messageNotification;
 		Collection<Application> applications, updated;
 		String[] spamWords, comments;
 		boolean containsSpam;
+		final Collection<Actor> recipients;
+		Collection<MessageBox> messageBoxes;
 
 		Assert.notNull(a);
 		applicant = this.handyWorkerService.findByPrincipal();
@@ -94,7 +104,7 @@ public class ApplicationService {
 		// Check contain of strings searching spamWords
 
 		containsSpam = false;
-		spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		spamWords = this.systemConfigurationService.findSpamWords().split(",");
 		comments = result.getComment().split(",");
 		for (final String word : spamWords) {
 
@@ -109,7 +119,27 @@ public class ApplicationService {
 			}
 
 		}
-		// TODO: falta el mensaje de notificacion
+
+		recipients = new ArrayList<Actor>();
+		recipients.add(applicant);
+		recipients.add(this.customerService.findCustomerByApplicationId(result.getId()));
+
+		messageBoxes = new ArrayList<MessageBox>();
+		messageBoxes.add(this.messageBoxService.findInBoxActor(applicant));
+		messageBoxes.add(this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(result.getId())));
+
+		messageNotification = new Message();
+		messageNotification.setSender(applicant);
+		messageNotification.setRecipients(recipients);
+		messageNotification.setPriority("NORMAL");
+		messageNotification.setSendMoment(new Date(System.currentTimeMillis() - 1));
+		messageNotification.setIsSpam(false);
+		messageNotification.setMessageBoxes(messageBoxes);
+		messageNotification.setBody("The status of application of fix up task with description: " + fixUpTask.getDescription());
+		messageNotification.setSubject("New status update");
+
+		this.messageService.save(messageNotification);
+
 		return result;
 	}
 	public Collection<Application> findAll() {
@@ -133,7 +163,7 @@ public class ApplicationService {
 	/*
 	 * public void accept(final Application a) {
 	 * final Customer customer;
-	 * final String messageHandyWorker;
+	 * final String messageNotification;
 	 * final String messageCustomer;
 	 * 
 	 * Assert.notNull(a);
