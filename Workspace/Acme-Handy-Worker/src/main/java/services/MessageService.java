@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.HandyWorkerRepository;
 import repositories.MessageRepository;
 import domain.Actor;
 import domain.Administrator;
@@ -39,27 +40,28 @@ public class MessageService {
 	
 	@Autowired
 	private AdministratorService administratorService;
+	
+	
 	//CRUD Methods --------------------------------
 	
-	//When an actor sends a message it is saved to the out box
+	
 	public Message create(){
 		Message result;
 		Actor principal;
 		Collection<MessageBox> messageBoxes;
-		MessageBox outBox;
-
+		Collection<Actor> recipients;
+		
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
 		messageBoxes = new ArrayList<MessageBox>();	
-		outBox = this.messageBoxService.findOutBoxActor(principal);	
-		Assert.notNull(outBox);
-		messageBoxes.add(outBox);
-
+		recipients = new ArrayList<Actor>();
+		
 		result = new Message();
 		result.setSender(principal);
 		result.setMessageBoxes(messageBoxes);
 		result.setSendMoment(new Date(System.currentTimeMillis()-1));
+		result.setRecipients(recipients);
 
 
 		return result;
@@ -84,16 +86,18 @@ public class MessageService {
 		sendMoment = new Date(System.currentTimeMillis()-1);
 		isSpam = false;
 		
-		SystemConfiguration sc = (SystemConfiguration) this.systemConfiguratoinService.findAll().toArray()[0];
-		spamWords = sc.getSpamWords();
+		SystemConfiguration sc = this.systemConfiguratoinService.findMySystemConfiguration();
+		spamWords = sc.getSpamWords().trim();
 		String[]splitSpamWords = spamWords.split(",");
 		
 		for(final String spam: splitSpamWords){
 			if(message.getSubject().toLowerCase().contains(spam.toLowerCase())){
 				isSpam = true;
+				principal.setIsSuspicious(true);
 				break;
 			}else if(message.getBody().toLowerCase().contains(spam.toLowerCase())){
 				isSpam = true;
+				principal.setIsSuspicious(true);
 				break;
 			}
 		}
@@ -213,7 +217,7 @@ public class MessageService {
 
 	public void move(final Message message, final MessageBox destination){
 		Actor principal;
-		MessageBox origin = null;
+		Collection<MessageBox> origin;
 		Collection<Message> allMessages;
 		Collection<MessageBox> messageBoxesMessage;
 		Collection<Message> updatedOriginMessageBox;
@@ -228,13 +232,14 @@ public class MessageService {
 		
 		messageBoxesMessage = message.getMessageBoxes();
 		allMessages = new ArrayList<Message>();
-		//origin = (MessageBox) messageBoxesMessage.toArray()[0];
+		origin = new ArrayList<MessageBox>();
+		
 		for(final MessageBox mb : messageBoxesMessage){
 			
 			allMessages.addAll(mb.getMessages());
 			
 			if(mb.getMessages().contains(message)){
-				origin = mb;
+				origin.add(mb);
 				
 			}
 			
@@ -245,6 +250,14 @@ public class MessageService {
 		Assert.isTrue(allMessages.contains(message));
 		Assert.isTrue(principal.getMessageBoxes().contains(origin));
 		Assert.isTrue(principal.getMessageBoxes().contains(destination));
+		
+		updatedOriginMessageBox = new ArrayList<Message>();
+		updatedDestinationFolder = new ArrayList<Message>();
+		
+		for(final MessageBox box : origin){
+			updatedOriginMessageBox.addAll(box.getMessages());
+			
+		}
 		
 		
 		

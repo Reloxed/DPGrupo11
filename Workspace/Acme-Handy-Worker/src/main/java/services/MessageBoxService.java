@@ -134,10 +134,10 @@ public class MessageBoxService {
 		MessageBox saved;
 		
 		names = new ArrayList<String>();
-		names.add("in box");
-		names.add("out box");
-		names.add("spam box");
-		names.add("trash box");
+		names.add("In box");
+		names.add("Out box");
+		names.add("Spam box");
+		names.add("Trash box");
 		
 		result = new ArrayList<MessageBox>();
 		for(final String name : names){
