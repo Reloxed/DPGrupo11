@@ -81,27 +81,36 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		result=this.endorserRecordService.create();
 		result.setFullName("Jesus");
 		result.setEmail("jesus9619@gmail.com");
-		
+		result.setLinkedinLink("https://pepe.com");
+		result.setPhoneNumber("955686532");
 		saved=this.endorserRecordService.save(result);
 		Assert.notNull(saved);
 		Assert.isTrue(principal.getCurriculum().getEndorserRecords().contains(saved));
 		super.unauthenticate();
 		
 	}
+	/*
 	@Test
 	public void testDelete(){
-		EndorserRecord toDelete;
-		Collection<EndorserRecord> collectionEndorserRecords;
-		super.authenticate("handyWorker1");
-		collectionEndorserRecords=this.endorserRecordService.findByPrincipal();
-		Assert.notNull(collectionEndorserRecords);
-		toDelete=collectionEndorserRecords.iterator().next();
-		this.endorserRecordService.delete(toDelete);
 		
+			EndorserRecord toDelete;
+		    Collection<EndorserRecord> listEndorserRecord;
+		    HandyWorker principal;
+		    
+		    principal = this.handyWorkerService.findByPrincipal();
+		    Assert.notNull(principal);
+		    
+		    super.authenticate("handyWorker1");
+		    
+		    toDelete = this.endorserRecordService.findOne(2325);
+		    listEndorserRecord = principal.getCurriculum().getEndorserRecords();
+		    Assert.isTrue(!listEndorserRecord.contains(toDelete));
+		    
+		    super.unauthenticate();
 		
-		super.unauthenticate();
+
 		
 	}
-	
+	*/
 
 }

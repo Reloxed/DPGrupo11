@@ -1,4 +1,4 @@
-/*package services;
+package services;
 
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class FinderService {
 	@Autowired
 	private FinderRepository finderRepository;
 	
+	//Un usuario no autenticado pueda hacer busquedas como contemplo eso?
 	
 	//Supporting services ----------
 	//@Autowired
@@ -79,12 +80,12 @@ public class FinderService {
 	
 	public Finder findOne(final int finderId){
 		Finder result;
-		HandyWorker principal;
+		/*HandyWorker principal;
 		
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		
+		*/
 		result=this.finderRepository.findOne(finderId);
 		Assert.notNull(result);
 		
@@ -169,7 +170,7 @@ public class FinderService {
 	
 	
 	//Other business methods--------
-	
+/*	
 	public Collection<FixUpTask> search(final Finder finderId,final int nResults ){
 		String keyWord;
 		Double priceLow;
@@ -226,9 +227,8 @@ public class FinderService {
 		
 		
 	}
-	
+	*/
 	
 	
 	
 }
-*/
