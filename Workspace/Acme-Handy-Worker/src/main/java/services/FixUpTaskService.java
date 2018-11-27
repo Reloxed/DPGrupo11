@@ -11,10 +11,10 @@ import org.springframework.util.Assert;
 
 import repositories.FixUpTaskRepository;
 import domain.Application;
-import domain.Category;
+
 import domain.Customer;
 import domain.FixUpTask;
-import domain.Warranty;
+
 
 @Service
 @Transactional
@@ -24,32 +24,34 @@ public class FixUpTaskService {
 
 	@Autowired
 	private FixUpTaskRepository fixUpTaskRepository;
-
-	// Supporting services ----------
+	
+	//Supporting services ----------
+	@Autowired 
+	private UtilityService utilityService;
+	
 	@Autowired
-	private CurriculumService curriculumService;
-
-	@Autowired
-	private CustomerService cusotmerService;
-
-	// Constructor ----------------------------------------------------
+	private CustomerService customerService;
+	
+	
+	//Constructor ----------------------------------------------------
 	public FixUpTaskService() {
 		super();
 	}
-
-	// Simple CRUD methods-------
-
-	public FixUpTask create(final Category category, final Warranty warranty) {
+	
+	
+	//Simple CRUD methods-------
+	
+	
+	public FixUpTask create(){
 		FixUpTask result;
-		Date currentMoment;
-
-		result = new FixUpTask();
+		
+		
+		result=new FixUpTask();
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setApplications(new HashSet<Application>());
-		result.setCategory(category);
-		result.setTicker(this.curriculumService.generateTicker());
-		result.setWarranty(warranty);
-		// falta quien la crea?
+		result.setTicker(this.utilityService.generateTicker());
+		
+		//falta quien la crea?
 
 		return result;
 
@@ -81,11 +83,10 @@ public class FixUpTaskService {
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());
 		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
-		Assert.isTrue(fixUpTask.getId() != 0);
-		Assert.isTrue(fixUpTask.getStartMoment().before(
-				fixUpTask.getEndMoment()));
-
-		principal = this.cusotmerService.findByPrincipal();
+		Assert.isTrue(fixUpTask.getId()!=0);
+		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		
+		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		result = this.fixUpTaskRepository.save(fixUpTask);
@@ -98,9 +99,9 @@ public class FixUpTaskService {
 		Customer principal;
 
 		Assert.notNull(fixUpTask);
-		Assert.notNull(fixUpTask.getId() != 0);
-
-		principal = this.cusotmerService.findByPrincipal();
+		Assert.notNull(fixUpTask.getId()!=0);
+		
+		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());// no se puede

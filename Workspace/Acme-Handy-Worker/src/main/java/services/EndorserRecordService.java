@@ -76,17 +76,8 @@ public class EndorserRecordService {
 		endorsersRecord=principal.getCurriculum().getEndorserRecords();
 		result=this.endorserRecordRepository.save(endorserRecord);
 		Assert.notNull(result);
-		//tengo que poner una condición con el formato del telefono
-		//email?etc
-		/**if(patron){
-		 * .save
-		 * 		}
-		 * else{excepcion
-		 * }
-		 * 
-		 * */
-		
-		
+	
+		 
 		endorsersRecord.add(result);
 		principal.getCurriculum().setEndorserRecords(endorsersRecord);
 		
