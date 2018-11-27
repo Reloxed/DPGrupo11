@@ -145,7 +145,7 @@ public class CustomerService {
 	public Customer findCustomerByApplicationId(final int applicationId) {
 		Customer result;
 
-		result = this.findCustomerByApplicationId(applicationId);
+		result = this.customerRepository.findCustomerByApplicationId(applicationId);
 
 		return result;
 	}
