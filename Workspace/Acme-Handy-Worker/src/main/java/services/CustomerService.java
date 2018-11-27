@@ -43,21 +43,22 @@ public class CustomerService {
 	// Simple CRUD Methods
 
 	public Customer create() {
-		Customer result;
+		Customer result = null;
 		Collection<MessageBox> messageBoxes;
 		Actor principal;
 
 		principal = this.actorService.findByPrincipal();
-		Assert.isNull(principal);
 
-		result = new Customer();
+		if(principal == null){
+			result = new Customer();
+			
+			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 
-		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-
-		result.setMessageBoxes(messageBoxes);
-		result.setComplaints(new ArrayList<Complaint>());
-		result.setFixUpTasks(new ArrayList<FixUpTask>());
-		result.setSocialProfiles(new ArrayList<SocialProfile>());
+			result.setMessageBoxes(messageBoxes);
+			result.setComplaints(new ArrayList<Complaint>());
+			result.setFixUpTasks(new ArrayList<FixUpTask>());
+			result.setSocialProfiles(new ArrayList<SocialProfile>());
+		}
 
 		return result;
 	}
@@ -85,6 +86,10 @@ public class CustomerService {
 			Customer principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
+			Assert.isTrue(principal.getUserAccount().equals(customer.getUserAccount()));
+//			System.out.println(customer.getIsSuspicious()+"Hi");
+//			System.out.println(principal.getIsSuspicious()+"Damn");
+//			Assert.isTrue(customer.getIsSuspicious() == principal.getIsSuspicious());
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();
