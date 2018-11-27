@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,23 @@ public class ComplaintService {
 		Assert.notNull(c.getFixUpTask());
 		Assert.notNull(c.getDescription());
 
-		result = this.complaintRepository.save(c);
+		result = this.complaintRepository.saveAndFlush(c);
+
+		return result;
+	}
+
+	public Collection<Complaint> findAll() {
+		Collection<Complaint> result;
+
+		result = this.complaintRepository.findAll();
+
+		return result;
+	}
+
+	public Complaint findOne(final int complaintId) {
+		Complaint result;
+
+		result = this.complaintRepository.findOne(complaintId);
 
 		return result;
 	}
