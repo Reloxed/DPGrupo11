@@ -97,8 +97,8 @@ public class SocialProfileServiceTest extends AbstractTest{
 	public void testSave1(){
 		SocialProfile res;
 		Actor principal;
-		SocialProfile s = new SocialProfile();
 		super.authenticate("handyWorker1");
+		SocialProfile s = this.socialProfileService.create();
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 		s.setNick("WalabonsoNPG");
@@ -114,8 +114,8 @@ public class SocialProfileServiceTest extends AbstractTest{
 	@Test(expected = ConstraintViolationException.class)
 	public void testSave2(){
 		SocialProfile res;
-		SocialProfile s = new SocialProfile();
 		super.authenticate("handyWorker1");
+		SocialProfile s = this.socialProfileService.create();
 		s.setNick("WalabonsoNPG");
 		s.setLink("http://www.snapchat.com/");
 		res = this.socialProfileService.save(s);
@@ -127,8 +127,8 @@ public class SocialProfileServiceTest extends AbstractTest{
 	@Test(expected = ConstraintViolationException.class)
 	public void testSave3(){
 		SocialProfile res;
-		SocialProfile s = new SocialProfile();
 		super.authenticate("handyWorker1");
+		SocialProfile s = this.socialProfileService.create();
 		s.setNick("WalabonsoNPG");
 		s.setSocialNetwork("Snapchat");
 		s.setLink("Hola");
