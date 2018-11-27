@@ -1,0 +1,2 @@
+-un HandyWorker puede hacer varias busquedas no solo una como está puesto.
+-bidireccional handyworker finder

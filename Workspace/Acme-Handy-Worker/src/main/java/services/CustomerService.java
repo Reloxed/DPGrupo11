@@ -84,7 +84,8 @@ public class CustomerService {
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
 		}
-		cus = customerRepository.save(customer);
+		cus = this.customerRepository.save(customer);
+		this.customerRepository.flush();
 		return cus;
 	}
 	
@@ -98,7 +99,7 @@ public class CustomerService {
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		res = this.customerRepository.findCustomerByUserAccount(userAccount.getId());
+		res = this.findCustomerByUserAccount(userAccount.getId());
 		Assert.notNull(res);
 
 		return res;

@@ -64,6 +64,7 @@ public class CurriculumService {
 		final Collection<ProfessionalRecord> collProR = new ArrayList<>();
 		final Collection<EndorserRecord> collEndR = new ArrayList<>();
 		final Collection<MiscellaneousRecord> collMR = new ArrayList<>();
+
 		final String ticker = this.utilityService.generateTicker();
 
 		result = new Curriculum();
@@ -94,6 +95,7 @@ public class CurriculumService {
 	}
 
 	public Curriculum save(final Curriculum curriculum) {
+		Curriculum result;
 		Assert.notNull(curriculum);
 
 		HandyWorker author;
@@ -103,8 +105,9 @@ public class CurriculumService {
 			Assert.isTrue(curriculum.getTicker().equals(
 					author.getCurriculum().getTicker()));
 		Assert.notNull(curriculum.getPersonalRecord());
-
-		return this.curriculumRepository.save(curriculum);
+		result = this.curriculumRepository.save(curriculum);
+		this.curriculumRepository.flush();
+		return result;
 
 	}
 

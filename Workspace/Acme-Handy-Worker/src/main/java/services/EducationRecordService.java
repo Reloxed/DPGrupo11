@@ -1,9 +1,13 @@
 package services;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.hibernate.validator.internal.constraintvalidators.URLValidator;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -50,6 +54,14 @@ public class EducationRecordService {
 		res = this.educationRecordRepository.findOne(educationRecordId);
 		return res;
 	}
+	
+	public Collection<EducationRecord> findAll() {
+		Collection<EducationRecord> educationRecords;
+
+		educationRecords = this.educationRecordRepository.findAll();
+
+		return educationRecords;
+	}
 
 	public EducationRecord save(EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
@@ -57,20 +69,18 @@ public class EducationRecordService {
 		HandyWorker principal;
 		EducationRecord res;
 		Collection<EducationRecord> educationRecords;
-
+		
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		Assert.notNull(educationRecord.getDiplomaTitle());
-		Assert.notNull(educationRecord.getStartDate());
-		Assert.notNull(educationRecord.getInstitutionName());
-		if (educationRecord.getEndDate()!=null){
-			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
-		} else {
+	
+		if (educationRecord.getEndDate()==null){
 			Assert.isTrue(educationRecord.getStartDate().before(LocalDate.now().toDate()));
+		} else {
+			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
 		}
 		
 		res = this.educationRecordRepository.save(educationRecord);
+		this.educationRecordRepository.flush();
 
 		educationRecords = principal.getCurriculum().getEducationRecords();
 
@@ -99,13 +109,22 @@ public class EducationRecordService {
 
 		this.educationRecordRepository.delete(educationRecord);
 
-//		educationRecords.remove(educationRecord);
-//
-//		principal.getCurriculum().setEducationRecords(educationRecords);
-//		
-//		this.handyWorkerService.save(principal);
 	}
-	
 	// Other business methods
 
+//	public boolean isValidEmail(String email) {
+//		boolean seraEmail = false;
+//		Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+//		Matcher matcher = pattern.matcher(email);
+//		if(matcher.matches()){
+//			seraEmail = true;
+//		}
+//		return seraEmail;
+//	}
+//	
+//	public boolean isValidURL(String url) {
+//	boolean seraURL = false;
+//	seraURL = UrlUtils.isAbsoluteUrl(url);
+//	return seraURL;
+//	}
 }

@@ -102,11 +102,7 @@ public class CreditCardService {
 		if(ownerCustomer==null && ownerSponsor==null){
 			Assert.notNull(ownerSponsor);
 		}
-		
-		Assert.notNull(creditCard.getHolderName());
-		Assert.notNull(creditCard.getBrandName());
-		Assert.notNull(creditCard.getNumber());
-		
+
 		// Comprobacion de fecha
 		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
 		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
@@ -118,6 +114,7 @@ public class CreditCardService {
 		Assert.isTrue(systemConfigurationService.findMySystemConfiguration().getListCreditCardMakes().contains(creditCard.getBrandName()));
 		
 		res = this.creditCardRepository.save(creditCard);
+		this.creditCardRepository.flush();
 		
 		//Metemos la creditCard en la application o sponsorship correspondiente
 		if(ownerCustomer != null){
