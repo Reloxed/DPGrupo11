@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -11,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
 import domain.CreditCard;
 import domain.MessageBox;
 import domain.SocialProfile;
@@ -42,12 +43,17 @@ public class SponsorService {
 	public Sponsor create(){
 		Sponsor result;
 		Collection<MessageBox> messageBoxes;
-		Actor principal;
 		
-		principal = this.actorService.findByPrincipal();
-		Assert.isNull(principal);
+		Authority authority = new Authority();
+		authority.setAuthority(Authority.SPONSOR);
+		List<Authority> authorities = new ArrayList<Authority>();
+		authorities.add(authority);
+		UserAccount ua = new UserAccount();
+		ua.setAuthorities(authorities);
 		
 		result = new Sponsor();
+		
+		result.setUserAccount(ua);
 		
 		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 		
@@ -105,9 +111,10 @@ public class SponsorService {
 			Sponsor principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
+			Assert.isTrue(principal.getUserAccount().getId() == s.getUserAccount().getId());
 		}
 		
-		saved = this.sponsorRepository.save(s);
+		saved = this.sponsorRepository.saveAndFlush(s);
 		return saved;
 	}
 	

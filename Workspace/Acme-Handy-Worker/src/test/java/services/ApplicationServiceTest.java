@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,25 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.authenticate("handyWorker1");
 
 		Application a;
+		final Application saved;
+		final Collection<Application> applications;
 
 		a = this.applicationService.create();
 		a.setFixUpTask(this.fixUpTaskService.findOne(2429));
-		this.applicationService.save(a);
+		saved = this.applicationService.save(a);
+		applications = this.applicationService.findAll();
+		Assert.isTrue(applications.contains(saved));
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindAll() {
+		super.authenticate("handyWorker1");
+		Collection<Application> applications;
+
+		applications = this.applicationService.findAll();
+		Assert.isTrue(applications.size() == 4);
 
 		super.unauthenticate();
 	}
