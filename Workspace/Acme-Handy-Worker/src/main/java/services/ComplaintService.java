@@ -1,8 +1,6 @@
 
 package services;
 
-import java.security.SecureRandom;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,9 @@ public class ComplaintService {
 	@Autowired
 	private CustomerService		customerService;
 
+	@Autowired
+	private UtilityService		utilityService;
+
 
 	// CRUD methods -----------------------------------------
 
@@ -38,7 +39,7 @@ public class ComplaintService {
 
 		result = new Complaint();
 
-		result.setTicker(this.generateTicker(result));
+		result.setTicker(this.utilityService.generateTicker());
 		result.setMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
@@ -59,35 +60,4 @@ public class ComplaintService {
 	}
 
 	// Other business methods --------------------------------
-	public String generateTicker(final Complaint c) {
-		final String result;
-		Calendar date;
-		String year, month, day, alphaNum;
-
-		date = Calendar.getInstance();
-		date.setTime(c.getMoment());
-		year = String.valueOf(date.get(Calendar.YEAR));
-		year = year.substring(year.length() - 2, year.length());
-		month = String.valueOf(date.get(Calendar.MONTH));
-		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
-
-		alphaNum = this.randomString();
-		result = year + month + day + "-" + alphaNum;
-
-		return result;
-	}
-
-	public String randomString() {
-
-		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		final SecureRandom rnd = new SecureRandom();
-		final int length = 6;
-
-		final StringBuilder stringBuilder = new StringBuilder(length);
-
-		for (int i = 0; i < length; i++)
-			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars.length())));
-		return stringBuilder.toString();
-
-	}
 }
