@@ -30,7 +30,7 @@ public class CategoryServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
-	public void testFindAll1() {
+	public void testFindAll() {
 		super.authenticate("admin1");
 		Collection<Category> categories = null;
 
@@ -42,7 +42,8 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void createTestValid() {
+	public void testCreate() {
+		super.authenticate("admin1");
 		Category category;
 
 		category = this.categoryService.create();
@@ -53,9 +54,54 @@ public class CategoryServiceTest extends AbstractTest {
 		Assert.isNull(category.getParentCategory());
 		Assert.notNull(category.getChildCategories());
 
+		super.unauthenticate();
 	}
+
 	@Test
 	public void testSave() {
+		super.authenticate("admin1");
+		Category category, saved;
+		Collection<Category> categories, categoriesUpdated;
 
+		categories = this.categoryService.findAll();
+		category = this.categoryService.create();
+		category.setSpanishName("hola");
+		category.setEnglishName("hello");
+		category.setParentCategory(this.categoryService.findRoot());
+		Assert.isTrue(!categories.contains(category));
+
+		saved = this.categoryService.save(category);
+		categoriesUpdated = this.categoryService.findAll();
+		Assert.isTrue(categoriesUpdated.contains(saved));
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testUpdateExistingCategory() {
+		super.authenticate("admin1");
+		Category category, saved;
+		Collection<Category> categories;
+
+		categories = this.categoryService.findAll();
+		category = this.categoryService.findOne(2391);
+		Assert.isTrue(category.getSpanishName().equals("Reparaciones"));
+		category.setSpanishName("Nuevo nombre");
+		saved = this.categoryService.save(category);
+		Assert.isTrue(categories.contains(saved));
+		Assert.isTrue(category.getSpanishName().equals("Nuevo nombre"));
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testRemoveCategory() {
+		super.authenticate("admin1");
+		Category category;
+
+		category = this.categoryService.findOne(2392);
+		Assert.isTrue(this.categoryService.findAll().contains(category));
+		this.categoryService.delete(category);
+		Assert.isTrue(!this.categoryService.findAll().contains(category));
 	}
 }

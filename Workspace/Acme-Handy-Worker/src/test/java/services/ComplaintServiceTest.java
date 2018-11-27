@@ -61,4 +61,13 @@ public class ComplaintServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
+
+	@Test
+	public void testFindAll() {
+		super.authenticate(null);
+
+		Assert.notNull(this.complaintService.findAll());
+
+		super.unauthenticate();
+	}
 }

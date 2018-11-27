@@ -23,8 +23,17 @@ public class ActorServiceTest extends AbstractTest {
 
 
 	@Test
-	public void testFindByPrincipal() {
+	public void testFindByPrincipalHW() {
 		super.authenticate("handyWorker1");
+
+		Assert.notNull(this.actorService.findByPrincipal());
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindByPrincipalCustomer() {
+		super.authenticate("customer1");
 
 		Assert.notNull(this.actorService.findByPrincipal());
 

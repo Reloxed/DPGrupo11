@@ -37,9 +37,9 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 	@Test
 	public void testFindOne(){
 		MiscellaneousRecord result;
-		result = this.miscellaneousRecordService.findOne(2327);
+		result = this.miscellaneousRecordService.findOne(2364);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId()==2327);
+		Assert.isTrue(result.getId()==2364);
 		
 	}
 	@Test
@@ -50,18 +50,15 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 		Assert.isTrue(result.size()==2);
 	}
 	@Test
-	public void testCreateAndSave(){
+	public void testCreate(){
 		MiscellaneousRecord result;
 		MiscellaneousRecord saved;
 		HandyWorker principal;
-		super.authenticate("handyworker1");
+		super.authenticate("handyWorker2");
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		result = this.miscellaneousRecordService.create();
-		result.setTitle("Sample");
-		saved = this.miscellaneousRecordService.save(result);
-		Assert.notNull(saved);
-		Assert.isTrue(principal.getCurriculum().getMiscellaneousRecords().contains(saved));
+		
 		super.unauthenticate();
 	}
 	
@@ -72,10 +69,11 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 		HandyWorker principal;
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		super.authenticate("handyworker2");
-		toDelete = this.miscellaneousRecordService.findOne(2328);
+		super.authenticate("handyWorker2");
+		toDelete = this.miscellaneousRecordService.findOne(2364);
+		this.miscellaneousRecordService.delete(toDelete);
 		listMiscellaneousRecord = principal.getCurriculum().getMiscellaneousRecords();
-		Assert.isTrue(!listMiscellaneousRecord.contains(toDelete));
+		Assert.isTrue(listMiscellaneousRecord.size()==1);
 		super.unauthenticate();
 		
 	}

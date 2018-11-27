@@ -4,10 +4,11 @@ package services;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
@@ -36,7 +37,6 @@ public class AdministratorService {
 		Administrator principal;
 		Administrator result;
 		final Collection<MessageBox> messageBoxes;
-
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
 

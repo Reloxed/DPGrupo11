@@ -865,6 +865,11 @@
 				<ref bean="sponsor2" />
 			</list>
 		</property>
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxSponsor2" />
+			</list>
+		</property>
 
 	</bean>
 	<bean id="outBoxSponsor2" class="domain.MessageBox">
