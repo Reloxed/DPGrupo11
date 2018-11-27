@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Application;
-import domain.Customer;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
@@ -33,7 +32,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select avg(a.offeredPrice), max(a.offeredPrice), min(a.offeredPrice), sqrt(sum(a.offeredPrice*a.offeredPrice)/count(a.offeredPrice)-(avg(a.offeredPrice)*avg(a.offeredPrice))) from Application a group by 'a'")
 	Double[] findDataApplicationsOfferedPrice();
-	
+
 	@Query("select app from Application app join app.creditCard cc where cc.id = ?1")
 	Collection<Application> findByCreditCardId(int creditCardId);
 }

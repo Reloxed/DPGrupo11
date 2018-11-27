@@ -89,11 +89,13 @@ public class ActorService {
 	}
 
 	public Actor findByUserAccount(final UserAccount userAccount) {
-
 		Assert.notNull(userAccount);
 		Actor result;
+
 		result = this.actorRepository.findByUserAccountId(userAccount.getId());
+
 		return result;
+
 	}
 
 	public void ban(Actor a) {
