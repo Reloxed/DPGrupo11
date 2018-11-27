@@ -26,6 +26,13 @@ public class MiscellaneousRecordService {
 
 	private HandyWorkerService handyWorkerService;
 
+	//Constructor
+	
+	public MiscellaneousRecordService(){
+		super();
+	}
+	
+	
 	//CRUD Methods --------------------------------
 	public MiscellaneousRecord create(){
 		MiscellaneousRecord result;
@@ -59,10 +66,11 @@ public class MiscellaneousRecordService {
 
 		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
 		Assert.notNull(result);
-
+		
+		miscellaneousRecords.add(miscellaneousRecord);
 		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
-
-
+		
+		
 		return result;
 
 	}

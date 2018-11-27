@@ -1,4 +1,4 @@
-- Relación endorsment --> handyworker,customer se ha cambiado
+﻿- Relación endorsment --> handyworker,customer se ha cambiado
 - MessageBox --> Message a MessageBox <--> Message
 - {overlapping} a {disjoint} de actor hacia referee, administrator, etc.
 - Quitado childcategories de CATEGORIA
@@ -18,6 +18,7 @@ JAVA
 - Falta Collection<Phase> workPlan en FixUpTask (modificar el populate, domain)
 - Minusculas cambiadas todas a mayusculas en el UML
 - Añadido collection<Note>notes a la clase report
+- Añadido @NotNull al atributo messageBoxes de la clase Message
 
 POPULATE
 -Cambiar domain.report añadiendole un bean de notes. TODO

@@ -1,7 +1,6 @@
 package services;
 
 import java.util.Collection;
-
 import java.util.Date;
 import java.util.HashSet;
 
@@ -10,26 +9,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-
+import repositories.FixUpTaskRepository;
 import domain.Application;
 
 import domain.Customer;
 import domain.FixUpTask;
 
 
-import repositories.FixUpTaskRepository;
-
-
-
 @Service
 @Transactional
 public class FixUpTaskService {
 
-	//Managed repository-----------
-	
+	// Managed repository-----------
+
 	@Autowired
 	private FixUpTaskRepository fixUpTaskRepository;
-	
 	
 	//Supporting services ----------
 	@Autowired 
@@ -59,35 +53,34 @@ public class FixUpTaskService {
 		
 		//falta quien la crea?
 
-		
-		
 		return result;
-		
+
 	}
-	public Collection<FixUpTask> findAll(){
+
+	public Collection<FixUpTask> findAll() {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
 		Assert.notNull(result);
-		
+
 		return result;
-		
-	} 
-	
-	public FixUpTask findOne(int fixUpTaskId){
+
+	}
+
+	public FixUpTask findOne(int fixUpTaskId) {
 		FixUpTask result;
 
 		result = this.fixUpTaskRepository.findOne(fixUpTaskId);
 		Assert.notNull(result);
 
 		return result;
-		
+
 	}
-	
-	public FixUpTask save(FixUpTask fixUpTask){
+
+	public FixUpTask save(FixUpTask fixUpTask) {
 		FixUpTask result;
 		Customer principal;
-		
+
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());
 		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
 		Assert.isTrue(fixUpTask.getId()!=0);
@@ -95,38 +88,33 @@ public class FixUpTaskService {
 		
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		
-		result=this.fixUpTaskRepository.save(fixUpTask);
-		
+
+		result = this.fixUpTaskRepository.save(fixUpTask);
+
 		return result;
-		
-		
+
 	}
-	
-	public void  delete(FixUpTask fixUpTask){
+
+	public void delete(FixUpTask fixUpTask) {
 		Customer principal;
-		
+
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getId()!=0);
 		
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		Assert.isTrue(fixUpTask.getApplications().isEmpty());//no se puede eliminar una chapuza si tiene solicitudes
-		
-		this.fixUpTaskRepository.delete(fixUpTask);		
-		
-		
+
+		Assert.isTrue(fixUpTask.getApplications().isEmpty());// no se puede
+																// eliminar una
+																// chapuza si
+																// tiene
+																// solicitudes
+
+		this.fixUpTaskRepository.delete(fixUpTask);
+
 	}
-	
-	
-	
-	
-	
-	//Other business methods--------
-	//resitricciones de datos y restricciones de acceso
-	
-	
-	
+
+	// Other business methods--------
+	// resitricciones de datos y restricciones de acceso
+
 }
