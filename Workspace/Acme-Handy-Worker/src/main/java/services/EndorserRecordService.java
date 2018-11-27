@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 
+import domain.Curriculum;
 import domain.EndorserRecord;
 import domain.HandyWorker;
 import repositories.EndorserRecordRepository;
@@ -89,20 +90,25 @@ public class EndorserRecordService {
 		
 	}
 	
-	public void  delete(EndorserRecord endorserRecord){
+	public void  delete(final EndorserRecord endorserRecord){
 		
 		HandyWorker principal;
 		Collection<EndorserRecord> collectionEndorserRecords;
+		Curriculum curriculumHW;
 		
+		Assert.notNull(endorserRecord);
 		principal=this.handyWorkerService.findByPrincipal();
-		
 		Assert.notNull(principal);
 		
-		collectionEndorserRecords=principal.getCurriculum().getEndorserRecords();
+		curriculumHW=principal.getCurriculum();
+		Assert.notNull(curriculumHW);
+		
+		collectionEndorserRecords=curriculumHW.getEndorserRecords();
 		
 		this.endorserRecordRepository.delete(endorserRecord);
 		collectionEndorserRecords.remove(endorserRecord);
 		
+		curriculumHW.setEndorserRecords(collectionEndorserRecords);
 		
 	}
 	

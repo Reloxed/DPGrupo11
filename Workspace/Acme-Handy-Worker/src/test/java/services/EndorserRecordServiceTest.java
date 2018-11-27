@@ -89,20 +89,28 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 		
 	}
-/*	@Test
+	/*
+	@Test
 	public void testDelete(){
-		EndorserRecord toDelete;
-		Collection<EndorserRecord> collectionEndorserRecords;
-		super.authenticate("handyWorker1");
-		collectionEndorserRecords=this.endorserRecordService.findByPrincipal();
-		Assert.notNull(collectionEndorserRecords);
-		toDelete=collectionEndorserRecords.iterator().next();
-		this.endorserRecordService.delete(toDelete);
 		
+			EndorserRecord toDelete;
+		    Collection<EndorserRecord> listEndorserRecord;
+		    HandyWorker principal;
+		    
+		    principal = this.handyWorkerService.findByPrincipal();
+		    Assert.notNull(principal);
+		    
+		    super.authenticate("handyWorker1");
+		    
+		    toDelete = this.endorserRecordService.findOne(2325);
+		    listEndorserRecord = principal.getCurriculum().getEndorserRecords();
+		    Assert.isTrue(!listEndorserRecord.contains(toDelete));
+		    
+		    super.unauthenticate();
 		
-		super.unauthenticate();
+
 		
-	}*/
-	
+	}
+	*/
 
 }
