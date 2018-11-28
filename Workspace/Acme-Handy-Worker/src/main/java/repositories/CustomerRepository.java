@@ -24,7 +24,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	Customer findByCreditCardId(int creditCardId);
 
 	@Query("select c from Customer c join c.fixUpTasks f where c.fixUpTasks.size" + ">(select avg(c.fixUpTasks.size)*1.1 from Customer c) order by count(f.applications.size) desc")
-	List<Customer> customerTenPercentMoraThanAverage();
+	List<Customer> customerTenPercentMoreFixUpTasksThanAverage();
 
 	@Query("select c from Customer c join c.fixUpTasks f join f.applications a where a.id=?1")
 	Customer findCustomerByApplicationId(int applicationId);

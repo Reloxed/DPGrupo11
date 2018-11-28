@@ -11,13 +11,7 @@ import org.springframework.util.Assert;
 import repositories.EndorserRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
-import domain.Complaint;
-import domain.Customer;
 import domain.Endorser;
-import domain.FixUpTask;
-import domain.MessageBox;
-import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -31,18 +25,6 @@ public class EndorserService {
 	// Supporting Services
 		
 	// Simple CRUD Methods
-	
-	public Endorser create() {
-		Endorser result;
-		Actor principal;
-
-//		principal = this.actorService.findByPrincipal();
-//		Assert.isNull(principal);
-
-		result = new Endorser();
-
-		return result;
-	}
 	
 	public Collection<Endorser> findAll(){
 		Collection<Endorser> collEnd = new ArrayList<>();

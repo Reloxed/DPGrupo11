@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CreditCardRepository;
@@ -86,10 +87,33 @@ public class CreditCardService {
 	}
 	
 	public CreditCard findOne(int creditCardId){
-		return this.creditCardRepository.findOne(creditCardId);
+		Sponsor ownerSponsor;
+		Customer ownerCustomer;
+		CreditCard creditCard;
+
+		ownerSponsor = this.sponsorService.findByPrincipal();
+		ownerCustomer = this.customerService.findByPrincipal();
+		if(ownerCustomer==null && ownerSponsor==null){
+			Assert.notNull(ownerSponsor);
+		}
+		
+		// Según sea un customer o un sponsor, vemos si la credit card que pide es suya 
+		if(ownerCustomer!=null) {
+			Customer customer;
+			customer = this.customerService.findByCreditCardId(creditCardId);
+			Assert.isTrue(customer.equals(ownerCustomer));
+			creditCard = this.findOne(creditCardId);
+		} else {
+			Sponsor sponsor;
+			sponsor = this.sponsorService.findByCreditCardId(creditCardId);
+			Assert.isTrue(sponsor.equals(ownerCustomer));
+			creditCard = this.findOne(creditCardId);
+		}
+
+		return creditCard;
 	}
 
-	public CreditCard save (CreditCard creditCard) throws ParseException {
+	public CreditCard save (CreditCard creditCard){
 		Assert.notNull(creditCard);
 		
 		CreditCard res;
