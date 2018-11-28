@@ -56,14 +56,13 @@ public class FixUpTaskService {
 		result=new FixUpTask();
 		result.setTicker(this.utilityService.generateTicker());
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		result.setDescription("");
-		result.setAddress("");
-		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		result.setEndMoment(new Date(1425942200000L));
+		
+	
+		
 		result.setApplications(new HashSet<Application>());
 		result.setComplaints(new HashSet<Complaint> ());
-		result.setCategory(new Category());
-		result.setWarranty(new Warranty());
+		
+
 
 		return result;
 
@@ -95,14 +94,20 @@ public class FixUpTaskService {
 
 
 		Assert.isTrue(fixUpTask.getId()==0);
-		Assert.isTrue(fixUpTask.getStartMoment().after(fixUpTask.getEndMoment()));
+		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		Assert.notNull(fixUpTask.getEndMoment());
+		Assert.notNull(fixUpTask.getStartMoment());
+		Assert.notNull(fixUpTask.getTicker());
+		Assert.notNull(fixUpTask.getPublishedMoment());
+		Assert.notNull(fixUpTask.getDescription());
+		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.notNull(fixUpTask.getWarranty());
-		Assert.notNull(fixUpTask.getApplications());
+		
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.fixUpTaskRepository.save(fixUpTask);
+		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
 		return result;
 
@@ -136,6 +141,7 @@ public class FixUpTaskService {
 	//deberian de ir en el servico del admin 
 	public Double[] findApplicationsNumberOperations(){
 		Double [] res=this.fixUpTaskRepository.findApplicationsNumberOperations();
+		System.out.println(res);
 		return res;
 	}
 	public Double[] findMaxPricesNumberOperations(){
