@@ -64,6 +64,7 @@ public class FinderService {
 		result=new Finder();
 		//tengo que saber que handyWorker va a realizar la busqueda exactamente para algo?
 		result.setFixuptask(new ArrayList<FixUpTask>());
+		result.setSearchMoment(new Date(System.currentTimeMillis()-1));
 		
 		return result;
 		
@@ -71,6 +72,7 @@ public class FinderService {
 	public Collection<Finder> findAll(){
 		Collection<Finder> result;
 		result=this.finderRepository.findAll();
+		Assert.notNull(result);
 		
 		return result;
 		
@@ -80,12 +82,12 @@ public class FinderService {
 	
 	public Finder findOne(final int finderId){
 		Finder result;
-		/*HandyWorker principal;
+		HandyWorker principal;
 		
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		*/
+		
 		result=this.finderRepository.findOne(finderId);
 		Assert.notNull(result);
 		
@@ -93,14 +95,14 @@ public class FinderService {
 		
 	}
 	
-	public Finder save(Finder finderId,final int maxResults){
+	public Finder save(Finder finderId){
 		Finder result;
 		HandyWorker principal;
 		Date currentMoment;
 		
 		
 		Assert.notNull(finderId);
-		Assert.isTrue(finderId.getId()!=0);
+		Assert.isTrue(finderId.getId()==0);
 		
 		principal=this.handyWorkerService.findByPrincipal();
 		
@@ -117,9 +119,6 @@ public class FinderService {
 		}else if(finderId.getPriceHigh()!= null && finderId.getPriceLow()!= null){
 			Assert.isTrue(finderId.getPriceHigh()>=finderId.getPriceLow());
 		}
-		
-		
-	
 		
 		result=this.finderRepository.save(finderId);
 		Assert.notNull(result);
@@ -149,7 +148,7 @@ public class FinderService {
 		finders=new ArrayList<Finder>();
 		finder=principal.getFinder();
 		finders.add(finder);
-		
+		//solo tenemos uno en caché,OJO
 		findersDelete=new ArrayList<Finder>();
 		currentFinders=new ArrayList<Finder>(finders);
 		
@@ -170,6 +169,19 @@ public class FinderService {
 	
 	
 	//Other business methods--------
+	
+	public Finder findByPrincipal() {
+		Finder finder;
+		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		finder = principal.getFinder();
+
+		return finder;
+	}
+	
 /*	
 	public Collection<FixUpTask> search(final Finder finderId,final int nResults ){
 		String keyWord;

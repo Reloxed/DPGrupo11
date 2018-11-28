@@ -52,6 +52,22 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		
 	}
 	
+	@Test
+	public void testCreateAndSave(){
+	
+		
+		
+	}
+	
+	
+	@Test
+	public void testDelete(){
+		
+		
+		
+		
+	}
+	
 	
 	
 	
