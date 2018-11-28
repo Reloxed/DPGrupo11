@@ -28,31 +28,31 @@ public class FixUpTaskService {
 
 	@Autowired
 	private FixUpTaskRepository fixUpTaskRepository;
-	
+
 	//Supporting services ----------
 	@Autowired 
 	private UtilityService utilityService;
-	
+
 	@Autowired
 	private CustomerService customerService;
-	
-	
+
+
 	//Constructor ----------------------------------------------------
 	public FixUpTaskService() {
 		super();
 	}
-	
-	
+
+
 	//Simple CRUD methods-------
-	
-	
+
+
 	public FixUpTask create(){
 		FixUpTask result;
 		Customer principal;
-		
+
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		result=new FixUpTask();
 		result.setTicker(this.utilityService.generateTicker());
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
@@ -73,7 +73,7 @@ public class FixUpTaskService {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
-		Assert.notNull(result);
+		//Assert.notNull(result);
 
 		return result;
 
@@ -93,13 +93,12 @@ public class FixUpTaskService {
 		FixUpTask result;
 		Customer principal;
 
-		Assert.isTrue(fixUpTask.getApplications().isEmpty());
-		//Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
+
 		Assert.isTrue(fixUpTask.getId()==0);
-		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		Assert.isTrue(fixUpTask.getStartMoment().after(fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.notNull(fixUpTask.getWarranty());
-		
+		Assert.notNull(fixUpTask.getApplications());
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
@@ -114,15 +113,15 @@ public class FixUpTaskService {
 
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getId()!=0);
-		
+
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());// no se puede
-																// eliminar una
-																// chapuza si
-																// tiene
-																// solicitudes
+		// eliminar una
+		// chapuza si
+		// tiene
+		// solicitudes
 
 		this.fixUpTaskRepository.delete(fixUpTask);
 
@@ -130,10 +129,10 @@ public class FixUpTaskService {
 
 	// Other business methods--------
 	// resitricciones de datos y restricciones de acceso
-	
-	
-	
-	
+
+
+
+
 	//deberian de ir en el servico del admin 
 	public Double[] findApplicationsNumberOperations(){
 		Double [] res=this.fixUpTaskRepository.findApplicationsNumberOperations();
@@ -142,19 +141,19 @@ public class FixUpTaskService {
 	public Double[] findMaxPricesNumberOperations(){
 		Double[]res=this.fixUpTaskRepository.findMaxPricesNumberOperations();
 		return res;
-		
+
 	}
 	public Double[] findComplaintsNumberOperations(){
-		
+
 		Double [] res= this.fixUpTaskRepository.findComplaintsNumberOperations();
 		return res;
-		
+
 	}
 	public Double ratioFixUpTaskWithComplaints(){
-		
+
 		Double res= this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
 		return res;
-		
+
 	}
-	
+
 }

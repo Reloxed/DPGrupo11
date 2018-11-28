@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,11 +13,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import domain.Category;
+import domain.Application;
+
 import domain.Customer;
-import domain.EndorserRecord;
+
 import domain.FixUpTask;
-import domain.Warranty;
+
 
 import utilities.AbstractTest;
 
@@ -46,6 +48,9 @@ public class FixUpTaskServiceTest extends AbstractTest{
 	@Autowired
 	private WarrantyService warrantyService;
 	
+	@Autowired
+	private ApplicationService applicationService;
+	
 	//Tests ---------------------------------------
 	
 	
@@ -74,13 +79,12 @@ public class FixUpTaskServiceTest extends AbstractTest{
 		FixUpTask result;
 		Customer principal;
 		FixUpTask saved;
-		System.out.println("a");
+		
 		super.authenticate("customer2");
 		
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		System.out.println();
+	
 		
 		result=this.fixUpTaskService.create();
 		result.setTicker(this.utilityService.generateTicker());
@@ -91,12 +95,11 @@ public class FixUpTaskServiceTest extends AbstractTest{
 		result.setEndMoment(new Date(203984203402L));
 		result.setCategory(this.categoryService.findOne(2391));
 		result.setWarranty(this.warrantyService.findOne(2415));
+		result.setApplications(this.applicationService.findAll());
 		
 		saved=this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
 		
-		Collection<FixUpTask> tasks=this.fixUpTaskService.findAll();
-		Assert.isTrue(tasks.contains(saved));
 		
 		super.unauthenticate();
 	
@@ -106,12 +109,48 @@ public class FixUpTaskServiceTest extends AbstractTest{
 	
 	
 	@Test
-	public void testDelete(){
+	public void Delete1(){
+		Customer principal;
+		FixUpTask result;
 		
+		super.authenticate("customer2");
+		principal=this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result=this.fixUpTaskService.findOne(2428);
+		result.setApplications(new ArrayList<Application>());
+		if(result.getApplications().isEmpty()){
+			this.fixUpTaskService.delete(result);
+		}
+		
+		
+		super.unauthenticate();
+		
+	}
+	
+	
+	@Test
+	public void testDelete2(){
+		FixUpTask result;
+		Customer principal;
+		Collection <FixUpTask> fixs;
 		
 		super.authenticate("customer2");
 		
+		principal=this.customerService.findByPrincipal();
+		Assert.notNull(principal);
 		
+		result=this.fixUpTaskService.findOne(2428);
+		
+		try{
+			this.fixUpTaskService.delete(result);
+		}catch(final RuntimeException e){	
+		}
+		
+		fixs=this.fixUpTaskService.findAll();
+		
+		Assert.isTrue(fixs.contains(result));
+
 		
 		super.unauthenticate();
 		
