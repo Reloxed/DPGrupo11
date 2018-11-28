@@ -92,7 +92,7 @@ public class NoteServiceTest extends AbstractTest{
 	
 	@Test
 	public void tetsDelete(){
-		super.authenticate("handyWorker2");
+		super.authenticate("Customer1");
 		Actor principal;
 		Note toDelete,note;
 		Report report;
@@ -122,6 +122,8 @@ public class NoteServiceTest extends AbstractTest{
 		Assert.notNull(removed);
 		Assert.isTrue(notes.contains(toDelete));
 		Assert.isTrue(!removed.contains(toDelete));
+		Assert.isTrue(removed.size()==1);
+		Assert.isTrue(notes.size()==2);
 	}
 	
 	@Test
