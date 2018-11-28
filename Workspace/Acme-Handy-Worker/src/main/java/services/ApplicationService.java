@@ -46,6 +46,7 @@ public class ApplicationService {
 
 
 	// Simple CRUD methods ---------------------------
+
 	public Application create() {
 		final Application result;
 		HandyWorker applicant;
