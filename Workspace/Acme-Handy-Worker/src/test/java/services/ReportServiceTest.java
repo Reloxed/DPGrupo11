@@ -82,6 +82,6 @@ public class ReportServiceTest extends AbstractTest {
 		this.reportService.delete(toDelete);
 
 		reports = this.reportService.findReportByPrincipal();
-		Assert.isTrue(reports.size() == 0);
+		Assert.isTrue(reports.size() == 2);
 	}
 }

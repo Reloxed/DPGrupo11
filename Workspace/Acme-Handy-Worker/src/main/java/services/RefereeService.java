@@ -65,11 +65,9 @@ public class RefereeService {
 
 	public Referee findOne(int refereeId) {
 		Referee res;
-
 		Assert.isTrue(refereeId != 0);
-
 		res = this.refereeRepository.findOne(refereeId);
-
+		Assert.notNull(res);
 		return res;
 	}
 

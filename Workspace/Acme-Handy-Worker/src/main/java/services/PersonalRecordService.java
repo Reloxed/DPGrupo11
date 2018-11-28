@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,18 @@ public class PersonalRecordService {
 
 	// Simple CRUD methods -----------------------------------
 
+	public PersonalRecord findOne(int personalRecordId) {
+		PersonalRecord res;
+		res = this.personalRecordRepository.findOne(personalRecordId);
+		return res;
+	}
+
+	public Collection<PersonalRecord> findAll() {
+		Collection<PersonalRecord> res;
+		res = this.personalRecordRepository.findAll();
+		return res;
+	}
+
 	public PersonalRecord create() {
 		HandyWorker principal;
 		PersonalRecord res;
@@ -47,14 +61,9 @@ public class PersonalRecordService {
 
 		Assert.notNull(personalRecord);
 
-		Assert.isTrue(!personalRecord.getFullName().isEmpty());
-		Assert.isTrue(!personalRecord.getEmail().isEmpty());
-		Assert.isTrue(!personalRecord.getPhoneNumber().isEmpty());
-		Assert.isTrue(!personalRecord.getLinkedinLink().isEmpty());
-
 		res = personalRecord;
 
-		return this.personalRecordRepository.save(res);
+		return this.personalRecordRepository.saveAndFlush(res);
 	}
 
 	public void delete(PersonalRecord personalRecord) {
@@ -66,20 +75,14 @@ public class PersonalRecordService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
+		Assert.isTrue(principal.getCurriculum().getPersonalRecord()
+				.equals(personalRecord));
+
 		this.personalRecordRepository.delete(personalRecord);
+
+		principal.getCurriculum().setPersonalRecord(null);
 	}
 
 	// Other business methods -------------------------------
 
-	public PersonalRecord findByPrincipal() {
-		HandyWorker principal;
-		PersonalRecord res;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = principal.getCurriculum().getPersonalRecord();
-
-		return res;
-	}
 }
