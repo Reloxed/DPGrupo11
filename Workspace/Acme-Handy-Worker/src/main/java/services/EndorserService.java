@@ -12,12 +12,7 @@ import repositories.EndorserRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
-import domain.Complaint;
-import domain.Customer;
 import domain.Endorser;
-import domain.FixUpTask;
-import domain.MessageBox;
-import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -36,7 +31,7 @@ public class EndorserService {
 		Endorser result;
 		Actor principal;
 
-//		principal = this.actorService.findByPrincipal();
+		//		principal = this.actorService.findByPrincipal();
 //		Assert.isNull(principal);
 
 		result = new Endorser();
