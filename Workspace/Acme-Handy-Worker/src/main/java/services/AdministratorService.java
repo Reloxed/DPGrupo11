@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
@@ -40,12 +43,19 @@ public class AdministratorService {
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
 
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMINISTRATOR);
+		final List<Authority> authorities = new ArrayList<Authority>();
+		authorities.add(authority);
+		final UserAccount ua = new UserAccount();
+		ua.setAuthorities(authorities);
+
 		result = new Administrator();
 
 		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 
 		result.setIsSuspicious(false);
-		result.getUserAccount().setIsBanned(false);
+		ua.setIsBanned(false);
 		result.setMessageBoxes(messageBoxes);
 		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 
