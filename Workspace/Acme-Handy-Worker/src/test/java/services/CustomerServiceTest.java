@@ -23,10 +23,7 @@ public class CustomerServiceTest extends AbstractTest{
 	// System under test ------------------------------------------------------
 
 		@Autowired
-		private CustomerService customerService;
-		
-		@Autowired
-		private CreditCardService creditCardService;	
+		private CustomerService customerService;	
 		
 		@Autowired
 		private ApplicationService applicationService;	

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RefereeRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
@@ -47,12 +48,18 @@ public class RefereeService {
 		res = new Referee();
 
 		res.setIsSuspicious(false);
-		res.getUserAccount().setIsBanned(false);
 
 		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 
 		res.setMessageBoxes(messageBoxes);
 		res.setSocialProfiles(Collections.<SocialProfile> emptyList());
+
+		Authority authority = new Authority();
+		authority.setAuthority(Authority.REFEREE);
+		UserAccount userAccount = new UserAccount();
+		userAccount.addAuthority(authority);
+
+		res.setUserAccount(userAccount);
 		return res;
 	}
 
@@ -65,11 +72,9 @@ public class RefereeService {
 
 	public Referee findOne(int refereeId) {
 		Referee res;
-
 		Assert.isTrue(refereeId != 0);
-
 		res = this.refereeRepository.findOne(refereeId);
-
+		Assert.notNull(res);
 		return res;
 	}
 
@@ -92,7 +97,7 @@ public class RefereeService {
 			Assert.notNull(principal);
 		}
 
-		res = this.refereeRepository.save(referee);
+		res = this.refereeRepository.saveAndFlush(referee);
 
 		return res;
 	}

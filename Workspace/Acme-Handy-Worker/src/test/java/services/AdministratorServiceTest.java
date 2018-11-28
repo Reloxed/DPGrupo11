@@ -80,23 +80,4 @@ public class AdministratorServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	//@Test(expected = IllegalArgumentException.class)
-	/*
-	 * public void testSave2() throws CloneNotSupportedException {
-	 * Administrator res;
-	 * super.authenticate("administrator1");
-	 * Administrator res = this.administratorService.findOne(2312);
-	 * final Administrator clone = res.clone();
-	 * clone.setName("Walabonso");
-	 * clone.setSurname("Nieto-Perez Gordo");
-	 * clone.setEmail("wakawaka@us.es");
-	 * clone.getUserAccount().setUsername("WNPGG");
-	 * clone.getUserAccount().setPassword("123456abc");
-	 * clone.setIsSuspicious(true);
-	 * res = clone;
-	 * res = this.administratorService.save(s);
-	 * Assert.notNull(res);
-	 * super.unauthenticate();
-	 * }
-	 */
 }

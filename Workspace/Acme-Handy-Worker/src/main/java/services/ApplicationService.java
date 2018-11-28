@@ -56,6 +56,7 @@ public class ApplicationService {
 
 		result = new Application();
 		result.setRegisteredMoment(new Date(System.currentTimeMillis() - 1));
+		result.setApplicant(applicant);
 		Assert.notNull(result);
 
 		return result;

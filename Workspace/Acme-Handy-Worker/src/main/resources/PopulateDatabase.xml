@@ -231,6 +231,8 @@
 		<property name="complaints">
 			<list>
 				<ref bean="complaintf1_2" />
+				<ref bean="complaintf2_1" />
+				<ref bean="complaintf1_1" />
 			</list>
 		</property>
 	</bean>
@@ -538,7 +540,7 @@
 		<property name="expirationYear" value="22" />
 		<property name="CVV" value="223" />
 	</bean>
-	
+
 	<bean id="creditCard3" class="domain.CreditCard">
 		<property name="holderName" value="Esteban Coralino Riesco Motos" />
 		<property name="brandName" value="VISA" />
@@ -547,7 +549,7 @@
 		<property name="expirationYear" value="21" />
 		<property name="CVV" value="861" />
 	</bean>
-	
+
 	<!-- TUTORIAL -->
 	<bean id="tutorial1" class="domain.Tutorial">
 		<property name="title" value="How to pass DP" />
@@ -1727,6 +1729,7 @@
 		<property name="notes">
 			<list>
 				<ref bean="noteRCFT1_2" />
+				<ref bean="noteRCFT2_2" />
 			</list>
 		</property>
 	</bean>
@@ -1769,6 +1772,15 @@
 		<property name="report" ref="reportCFT1_2" />
 	</bean>
 
+	<bean id="noteRCFT2_2" class="domain.Note">
+		<property name="publishedMoment" value="10/11/2018 12:03" />
+		<property name="refereeComment" value="'None yet'" />
+		<property name="customerComment"
+			value="I don't agree with you, it acts weird when I am alone with it." />
+		<property name="handyWorkerComment" value="'None yet'" />
+		<property name="report" ref="reportCFT1_2" />
+	</bean>
+
 	<!-- Sponsorships -->
 
 	<!-- Sponsorship 1 of sponsor 1 -->
@@ -1780,7 +1792,7 @@
 		<property name="creditCard" ref="creditCard1" />
 		<property name="sponsor" ref="sponsor1" />
 	</bean>
-	
+
 	<bean id="sponsorship1_2" class="domain.Sponsorship">
 		<property name="banner"
 			value="http://2.bp.blogspot.com/-8TFZxUDrFCg/UEx8iJXnZPI/AABBBAAAAARw/RgR7KVxC42g/s1600/Absolutely-Random-banner.jpg" />
@@ -1798,6 +1810,6 @@
 		<property name="creditCard" ref="creditCard2" />
 		<property name="sponsor" ref="sponsor2" />
 	</bean>
-	
+
 
 </beans>

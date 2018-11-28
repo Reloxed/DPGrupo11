@@ -45,8 +45,9 @@ public class NoteService {
 
 	// CRUD Methods --------------------------------
 
-	//check in referee that the report is saves in final mode to create the note.
-	public Note create(){
+	// check in referee that the report is saves in final mode to create the
+	// note.
+	public Note create() {
 		Actor principal;
 		Note result;
 
@@ -55,23 +56,24 @@ public class NoteService {
 
 		result = new Note();
 
-		if(principal instanceof Customer){
+		if (principal instanceof Customer) {
+
 			Assert.isTrue(principal instanceof Customer);
 
 			result.setCustomerComment(" ");
 
-
-		}else if(principal instanceof Referee){
+		} else if (principal instanceof Referee) {
 			Assert.isTrue(principal instanceof Referee);
 
 			result.setRefereeComment(" ");
 
-		}else{
+		} else {
 			Assert.isTrue(principal instanceof HandyWorker);
 
 			result.setHandyWorkerComment(" ");
 
 		}
+
 
 		result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
 		return result;
@@ -94,20 +96,21 @@ public class NoteService {
 		report = note.getReport();
 		Assert.notNull(report);
 
-		if(principal instanceof Referee){
+		if (principal instanceof Referee) {
+
 			Assert.isTrue(principal instanceof Referee);
 			note.setRefereeComment(note.getRefereeComment());
 
-		}else if(principal instanceof Customer){
+		} else if (principal instanceof Customer) {
 			Assert.isTrue(principal instanceof Customer);
 			note.setCustomerComment(note.getCustomerComment());
 
-		}else{
+		} else {
 			Assert.isTrue(principal instanceof HandyWorker);
 			note.setHandyWorkerComment(note.getHandyWorkerComment());
 
 		}
-		note.setPublishedMoment(new Date(System.currentTimeMillis()-1));
+		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		note.setReport(report);
 		Assert.isTrue(report.getIsFinal());
 		result = this.noteRepository.save(note);
@@ -124,10 +127,11 @@ public class NoteService {
 	}
 
 
+
 	public void delete(Note note){
 		Actor principal;
 		Report report;
-		Collection<Note>notes,updated;
+		Collection<Note> notes, updated;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
@@ -139,18 +143,19 @@ public class NoteService {
 		notes = this.noteRepository.findAll();
 		Assert.notNull(notes);
 
-		Assert.isTrue(principal instanceof Customer||
-				principal instanceof Referee||
-				principal instanceof HandyWorker);
 
-		Assert.isTrue(report.getIsFinal());
+		Assert.isTrue(principal instanceof Customer
+				|| principal instanceof Referee
+				|| principal instanceof HandyWorker);
 
+		Assert.isTrue(!report.getIsFinal());
 		this.noteRepository.delete(note);
 		updated = new ArrayList<Note>(notes);
 		updated.remove(note);
 		Assert.isTrue(!updated.contains(note));
 		report.setNotes(updated);
 	}
+
 
 	public Note findOne(final int id){
 		Note result;
@@ -162,14 +167,13 @@ public class NoteService {
 
 	}
 
-	public Collection<Note> findAll(){
-		Collection<Note>result;
+	public Collection<Note> findAll() {
+		Collection<Note> result;
 
 		result = this.noteRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
-
 
 	}
 	// Other business methods -----------------------------
