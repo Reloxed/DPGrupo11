@@ -109,7 +109,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 	
-	// Save correcto TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+	// Save correcto
 	@Test
 	public void testSave1(){
 		Sponsorship res;
@@ -124,8 +124,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 		cc.setExpirationMonth(1);
 		cc.setExpirationYear(24);
 		cc.setCVV(100);
-		CreditCard forId = this.creditCardService.save(cc);
-		s.setCreditCard(this.creditCardService.findOne(forId.getId()));
+		cc = this.creditCardService.save(cc);
+		s.setCreditCard(cc);
 		res = this.sponsorshipService.save(s);
 		Assert.notNull(res);
 		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));

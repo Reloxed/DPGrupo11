@@ -35,7 +35,6 @@ public class SponsorServiceTest extends AbstractTest {
 	public void testCreate1() {
 		Sponsor res;
 		res = this.sponsorService.create();
-		System.out.println(res);
 		Assert.notNull(res);
 	}
 
@@ -183,7 +182,7 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test
 	public void testFindByCreditCardId1() {
 		Sponsor res;
-		res = this.sponsorService.findByCreditCardId(2370);
+		res = this.sponsorService.findByCreditCardId(2487);
 		Assert.notNull(res);
 	}
 
@@ -200,7 +199,7 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test
 	public void testFindCreditCardsBySponsorId1() {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(2346));
+		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(2463));
 		Assert.notEmpty(collCC);
 	}
 

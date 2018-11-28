@@ -89,14 +89,14 @@ public class SponsorshipService {
 		result = this.sponsorshipRepository.saveAndFlush(s);
 		Assert.notNull(result);
 		
-		sponsorships = Collections.<Sponsorship> emptyList();
+		sponsorships = new ArrayList<>();
 		sponsorships.addAll(principal.getSponsorships());
 		sponsorships.add(s);
 		principal.setSponsorships(sponsorships);
 		
 		for(Tutorial t: this.tutorialService.findAll() ){
 			Collection<Sponsorship> aux;
-			aux = Collections.<Sponsorship> emptyList();
+			aux = new ArrayList<>();
 			aux.addAll(t.getSponsorships());
 			aux.add(s);
 			t.setSponsorships(aux);
