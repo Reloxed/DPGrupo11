@@ -62,12 +62,22 @@ public class EducationRecordServiceTest extends AbstractTest{
 	
 	@Test
 	public void testFindOneEducationRecord() {
-		EducationRecord educationRecord;
+		EducationRecord educationRecord, saved;
+		Calendar startDate;
 		String username = "handyWorker1";
 		super.authenticate(username);
-		educationRecord = educationRecordService.findOne(2323);
+		
+		educationRecord = educationRecordService.create();
+		educationRecord.setDiplomaTitle("Grado en Ingeniería Informática - Ingeniería del Software");
+		startDate = Calendar.getInstance();
+		startDate.set(2015, 8, 22);
+		educationRecord.setStartDate(startDate.getTime());
+		educationRecord.setInstitutionName("Universidad de Sevilla");
+		saved = educationRecordService.save(educationRecord);
+		educationRecord = educationRecordService.findOne(saved.getId());
 		Assert.notNull(educationRecord);
-		super.unauthenticate();	
+		
+		super.unauthenticate();		
 	}
 	
 	@Test(expected=IllegalArgumentException.class) 
@@ -77,7 +87,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 		super.authenticate(username);
 		
 		// Wrong educationRecord.id
-		educationRecord = educationRecordService.findOne(323);
+		educationRecord = educationRecordService.findOne(32);
 		Assert.notNull(educationRecord);
 		super.unauthenticate();	
 	}

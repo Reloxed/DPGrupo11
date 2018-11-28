@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Sponsor extends Actor {
+public class Sponsor extends Actor implements Cloneable {
 
 	// Attributes
 
@@ -25,6 +25,18 @@ public class Sponsor extends Actor {
 
 	public void setSponsorships(final Collection<Sponsorship> sponsorships) {
 		this.sponsorships = sponsorships;
+	}
+	
+	@Override
+	public Sponsor clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return (Sponsor) super.clone();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
 	}
 
 }

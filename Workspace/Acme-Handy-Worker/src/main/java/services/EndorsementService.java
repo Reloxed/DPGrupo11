@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,6 @@ public class EndorsementService {
 	
 	@Autowired
 	private EndorserService endorserService;
-	@Autowired
-	private HandyWorkerService handyWorkerService;
-	@Autowired
-	private CustomerService customerService;
-	
 	
 	// Constructors ------------------------------------
 	public EndorsementService() {
@@ -44,13 +40,19 @@ public class EndorsementService {
 	
 	//Simple CRUD methods-------
 	public Endorsement create(){
+		//comprobar autoridades endorser es un handyworker o un customer?
+		//comprobarlo
 		Endorsement result;
 		Endorser endorser;
 		
 		endorser=this.endorserService.findByPrincipal();
+		Assert.notNull(endorser);
 		
 		result=new Endorsement();
 		result.setSender(endorser);
+		result.setRecipient(endorser);
+		result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
+		result.setComment("");
 		
 		return result;
 		
@@ -76,22 +78,31 @@ public class EndorsementService {
 	public Endorsement save(Endorsement endorsement){
 		Endorsement result;
 		Endorser principal;
-		UserAccount user;
+		
 		Assert.isTrue(endorsement.getSender()!=null);
-		//hacer
+		Assert.isTrue(endorsement.getRecipient()!=null);
+		Assert.notNull(endorsement.getPublishedMoment());
+		Assert.notNull(endorsement.getComment());
 		
-		this.handyWorkerService.findByPrincipal();
 		
-		
+		principal=this.endorserService.findByPrincipal();
+		Assert.notNull(principal);
+		Assert.notNull(endorsement.getId()==0);
 		result=this.endorsementRepository.save(endorsement);
-		return null;
+		
+		return result;
 		
 	}
 	
 	public void  delete(Endorsement endorsement){
+		Endorser principal;
+		
+		
 		Assert.notNull(endorsement);
 		Assert.isTrue(endorsement.getId()!=0);
-
+		principal=this.endorserService.findByPrincipal();
+		Assert.notNull(principal);
+		
 		
 		this.endorsementRepository.delete(endorsement);
 		

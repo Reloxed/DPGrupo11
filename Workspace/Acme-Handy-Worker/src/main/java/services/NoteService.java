@@ -57,6 +57,7 @@ public class NoteService {
 		result = new Note();
 
 		if (principal instanceof Customer) {
+
 			Assert.isTrue(principal instanceof Customer);
 
 			result.setCustomerComment(" ");
@@ -73,74 +74,21 @@ public class NoteService {
 
 		}
 
-		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+
+		result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
 		return result;
-	}
+	}		
 
-	/*
-	 * customer = this.customerService.findByPrincipal();
-	 * 
-	 * referee = this.refereeService.findByPrincipal();
-	 * 
-	 * handyWorker = this.handyWorkerService.findByPrincipal();
-	 * 
-	 * result = new Note();
-	 * 
-	 * if(principal.equals(customer) || principal.equals(referee) ||
-	 * principal.equals(handyWorker)){
-	 * 
-	 * Assert.isTrue(principal.equals(customer) || principal.equals(referee) ||
-	 * principal.equals(handyWorker));
-	 * 
-	 * 
-	 * report = result.getReport();
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
-	 * 
-	 * 
-	 * } return result; } /*if(principal.equals(customer)){
-	 * Assert.notNull(customer); Assert.isTrue(principal.equals(customer));
-	 * 
-	 * result = new Note(); report = result.getReport();
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
-	 * result.setCustomerComment(" "); }else if(principal.equals(referee)){
-	 * Assert.notNull(referee); Assert.isTrue(principal.equals(referee));
-	 * 
-	 * result = new Note(); report = result.getReport();
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
-	 * result.setRefereeComment(" ");
-	 * 
-	 * }else{ Assert.notNull(handyWorker);
-	 * Assert.isTrue(principal.equals(handyWorker));
-	 * 
-	 * result = new Note(); report = result.getReport();
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
-	 * result.setHandyWorkerComment(" "); }
-	 * 
-	 * Assert.notNull(result); return result;
-	 */
 
-	public Note save(Note note) {
-		Note result, saved;
+
+	public Note save(Note note){
+		Note result;
 		Report report;
 		Actor principal;
-		Collection<Note> notes, updated;
+		Collection<Note>notes,updated;
 
 		Assert.notNull(note);
-		Assert.isTrue(note.getId() == 0);// notes cannot be updated or deleted
-											// once they are saved to the
-											// database
+		Assert.isTrue(note.getId()==0);//notes cannot be updated or deleted once they are saved to the database
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
@@ -149,6 +97,7 @@ public class NoteService {
 		Assert.notNull(report);
 
 		if (principal instanceof Referee) {
+
 			Assert.isTrue(principal instanceof Referee);
 			note.setRefereeComment(note.getRefereeComment());
 
@@ -173,102 +122,13 @@ public class NoteService {
 		updated.add(result);
 		report.setNotes(updated);
 
-		// result.setReport(report);
-
 		return result;
 
 	}
 
-	/*
-	 * customer = this.customerService.findByPrincipal();
-	 * 
-	 * referee = this.refereeService.findByPrincipal();
-	 * 
-	 * handyWorker = this.handyWorkerService.findByPrincipal();
-	 * 
-	 * report = note.getReport(); Assert.notNull(report);
-	 * 
-	 * if(principal.equals(customer) || principal.equals(referee)||
-	 * principal.equals(handyWorker)){
-	 * 
-	 * publishedMoment= new Date(System.currentTimeMillis()-1);
-	 * Assert.isTrue(publishedMoment.after(report.getPublishedMoment()));
-	 * 
-	 * customerComment = note.getCustomerComment(); refereeComment =
-	 * note.getRefereeComment(); handyWorkerComment =
-	 * note.getHandyWorkerComment();
-	 * 
-	 * note.setPublishedMoment(publishedMoment);
-	 * note.setCustomerComment(customerComment);
-	 * note.setRefereeComment(refereeComment);
-	 * note.setHandyWorkerComment(handyWorkerComment);
-	 * 
-	 * 
-	 * 
-	 * }
-	 * 
-	 * result = this.noteRepository.save(note); Assert.notNull(result);
-	 * 
-	 * notes = new ArrayList<Note>(); notes = report.getNotes();
-	 * if(!notes.contains(result)){ notes.add(result); report.setNotes(notes); }
-	 * 
-	 * 
-	 * return result; }
-	 * 
-	 * /*if(principal.equals(customer)){ Assert.notNull(customer);
-	 * 
-	 * customerComment = note.getCustomerComment();
-	 * Assert.notNull(customerComment);
-	 * 
-	 * publishedMoment = new Date(System.currentTimeMillis()-1);
-	 * Assert.isTrue(publishedMoment.after(report.getPublishedMoment()));
-	 * note.setPublishedMoment(publishedMoment);
-	 * note.setCustomerComment(customerComment);
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result = this.noteRepository.save(note); Assert.notNull(result);
-	 * 
-	 * }else if(principal.equals(referee)){ Assert.notNull(referee);
-	 * 
-	 * refereeComment = note.getRefereeComment();
-	 * Assert.notNull(refereeComment);
-	 * 
-	 * publishedMoment = new Date(System.currentTimeMillis()-1);
-	 * Assert.isTrue(publishedMoment.after(report.getPublishedMoment()));
-	 * note.setPublishedMoment(publishedMoment);
-	 * note.setRefereeComment(refereeComment);
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result = this.noteRepository.save(note); Assert.notNull(result);
-	 * 
-	 * }else{
-	 * 
-	 * Assert.notNull(handyWorker);
-	 * 
-	 * handyWorkerComment = note.getHandyWorkerComment();
-	 * Assert.notNull(handyWorkerComment);
-	 * 
-	 * publishedMoment = new Date(System.currentTimeMillis()-1);
-	 * Assert.isTrue(publishedMoment.after(report.getPublishedMoment()));
-	 * note.setPublishedMoment(publishedMoment);
-	 * note.setHandyWorkerComment(handyWorkerComment);
-	 * 
-	 * Assert.isTrue(!report.getIsFinal());
-	 * 
-	 * result = this.noteRepository.save(note); Assert.notNull(result);
-	 * 
-	 * }
-	 * 
-	 * notes =
-	 * 
-	 * 
-	 * 
-	 * return result;
-	 */
 
-	public void delete(Note note) {
+
+	public void delete(Note note){
 		Actor principal;
 		Report report;
 		Collection<Note> notes, updated;
@@ -283,12 +143,12 @@ public class NoteService {
 		notes = this.noteRepository.findAll();
 		Assert.notNull(notes);
 
+
 		Assert.isTrue(principal instanceof Customer
 				|| principal instanceof Referee
 				|| principal instanceof HandyWorker);
 
 		Assert.isTrue(!report.getIsFinal());
-
 		this.noteRepository.delete(note);
 		updated = new ArrayList<Note>(notes);
 		updated.remove(note);
@@ -296,26 +156,8 @@ public class NoteService {
 		report.setNotes(updated);
 	}
 
-	/*
-	 * customer = this.customerService.findByPrincipal();
-	 * 
-	 * referee = this.refereeService.findByPrincipal();
-	 * 
-	 * handyWorker = this.handyWorkerService.findByPrincipal();
-	 * 
-	 * Assert.notNull(note); Assert.isTrue(note.getId() == 0);
-	 * 
-	 * report = note.getReport(); if(principal.equals(customer)||
-	 * principal.equals(referee)|| principal.equals(handyWorker)){
-	 * 
-	 * notes = report.getNotes();
-	 * 
-	 * if(notes.contains(note)){ notes.remove(note); report.setNotes(notes); }
-	 * 
-	 * }
-	 */
 
-	public Note findOne(final int id) {
+	public Note findOne(final int id){
 		Note result;
 
 		result = this.noteRepository.findOne(id);

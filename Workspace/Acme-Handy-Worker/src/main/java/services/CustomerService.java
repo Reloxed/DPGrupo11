@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CustomerRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
@@ -34,9 +36,6 @@ public class CustomerService {
 	// Supporting Services
 
 	@Autowired
-	private ActorService		actorService;
-
-	@Autowired
 	private MessageBoxService	messageBoxService;
 
 
@@ -46,10 +45,17 @@ public class CustomerService {
 		Customer result = null;
 		Collection<MessageBox> messageBoxes;
 		Actor principal;
+		Authority authority = new Authority();
+		UserAccount userAccount = new UserAccount();
 
-		principal = this.actorService.findByPrincipal();
-
-		if(principal == null){
+		
+		
+		try {
+			principal = this.findByPrincipal();
+			Assert.isNull(principal);
+			
+		} catch (IllegalArgumentException e){
+			
 			result = new Customer();
 			
 			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
@@ -58,6 +64,9 @@ public class CustomerService {
 			result.setComplaints(new ArrayList<Complaint>());
 			result.setFixUpTasks(new ArrayList<FixUpTask>());
 			result.setSocialProfiles(new ArrayList<SocialProfile>());
+			authority.setAuthority(Authority.CUSTOMER);
+			userAccount.addAuthority(authority);
+			result.setUserAccount(userAccount);
 		}
 
 		return result;
@@ -80,16 +89,23 @@ public class CustomerService {
 		Customer cus;
 
 		if (customer.getId() == 0) {
-			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-			customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
+			try {
+				Actor principal;
+				principal = this.findByPrincipal();
+				Assert.isNull(principal);
+				
+			} catch (IllegalArgumentException e){
+				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+				customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
+			}
 		} else {
-			Customer principal;
-			principal = this.findByPrincipal();
-			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().equals(customer.getUserAccount()));
-//			System.out.println(customer.getIsSuspicious()+"Hi");
-//			System.out.println(principal.getIsSuspicious()+"Damn");
-//			Assert.isTrue(customer.getIsSuspicious() == principal.getIsSuspicious());
+			Customer principalC;
+			principalC = this.findByPrincipal();
+			Assert.notNull(principalC);
+			Assert.isTrue(principalC.getUserAccount().equals(customer.getUserAccount()));
+			System.out.println(customer.getIsSuspicious()+"Hi");
+			System.out.println(principalC.getIsSuspicious()+"Damn");
+			Assert.isTrue(customer.getIsSuspicious() == principalC.getIsSuspicious());
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();
@@ -138,12 +154,16 @@ public class CustomerService {
 	}
 
 	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
-		final List<Customer> collC = this.customerTenPercentMoraThanAverage();
-		return collC.subList(0, 3);
+		List<Customer> collC = this.customerTenPercentMoraThanAverage();
+		if(collC.size()<3) {
+			return collC;
+		} else {
+			return collC.subList(0, 3);
+		}
 	}
 
 	public List<Customer> customerTenPercentMoraThanAverage() {
-		final List<Customer> collC = this.customerRepository.customerTenPercentMoraThanAverage();
+		final List<Customer> collC = this.customerRepository.customerTenPercentMoreFixUpTasksThanAverage();
 		return collC;
 	}
 

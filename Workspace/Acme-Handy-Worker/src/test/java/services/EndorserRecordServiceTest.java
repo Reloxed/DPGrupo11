@@ -89,20 +89,23 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 		
 	}
-	/*
+	
 	@Test
 	public void testDelete(){
 		
 			EndorserRecord toDelete;
 		    Collection<EndorserRecord> listEndorserRecord;
 		    HandyWorker principal;
-		    
-		    principal = this.handyWorkerService.findByPrincipal();
-		    Assert.notNull(principal);
+		   
+
 		    
 		    super.authenticate("handyWorker1");
+		    principal = this.handyWorkerService.findByPrincipal();
+		    System.out.println(principal);
+		    Assert.notNull(principal);
 		    
 		    toDelete = this.endorserRecordService.findOne(2325);
+		    this.endorserRecordService.delete(toDelete);
 		    listEndorserRecord = principal.getCurriculum().getEndorserRecords();
 		    Assert.isTrue(!listEndorserRecord.contains(toDelete));
 		    
@@ -111,6 +114,6 @@ public class EndorserRecordServiceTest extends AbstractTest {
 
 		
 	}
-	*/
+	
 
 }
