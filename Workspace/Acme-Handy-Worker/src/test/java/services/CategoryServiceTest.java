@@ -81,15 +81,18 @@ public class CategoryServiceTest extends AbstractTest {
 	public void testUpdateExistingCategory() {
 		super.authenticate("admin1");
 		Category category, saved;
-		Collection<Category> categories;
+		Collection<Category> categories, categoriesUpdated;
 
 		categories = this.categoryService.findAll();
-		category = this.categoryService.findOne(2391);
-		Assert.isTrue(category.getSpanishName().equals("Reparaciones"));
-		category.setSpanishName("Nuevo nombre");
+		category = this.categoryService.create();
+		category.setSpanishName("hola");
+		category.setEnglishName("hello");
+		category.setParentCategory(this.categoryService.findRoot());
+		Assert.isTrue(!categories.contains(category));
 		saved = this.categoryService.save(category);
-		Assert.isTrue(categories.contains(saved));
-		Assert.isTrue(category.getSpanishName().equals("Nuevo nombre"));
+		categoriesUpdated = this.categoryService.findAll();
+		Assert.isTrue(categoriesUpdated.contains(saved));
+		Assert.isTrue(saved.getId() != 0);
 
 		super.unauthenticate();
 	}
@@ -99,7 +102,7 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin1");
 		Category category;
 
-		category = this.categoryService.findOne(2392);
+		category = this.categoryService.findOne(2422);
 		Assert.isTrue(this.categoryService.findAll().contains(category));
 		Assert.isTrue(this.categoryService.findAll().size() == 24);
 		this.categoryService.delete(category);
@@ -110,12 +113,25 @@ public class CategoryServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 		super.authenticate("admin1");
-		Category c;
 
-		c = this.categoryService.findOne(2391);
+		Category category, saved, found;
+		Collection<Category> categories, categoriesUpdated;
 
-		Assert.notNull(c);
-		Assert.isTrue(c.getEnglishName().equals("Repairs"));
+		categories = this.categoryService.findAll();
+		category = this.categoryService.create();
+		category.setSpanishName("hola");
+		category.setEnglishName("hello");
+		category.setParentCategory(this.categoryService.findRoot());
+		Assert.isTrue(!categories.contains(category));
+
+		saved = this.categoryService.save(category);
+		categoriesUpdated = this.categoryService.findAll();
+		Assert.isTrue(categoriesUpdated.contains(saved));
+		found = this.categoryService.findOne(saved.getId());
+
+		Assert.notNull(found);
+		Assert.isTrue(found.getEnglishName().equals("hello"));
+
 		super.unauthenticate();
 	}
 }

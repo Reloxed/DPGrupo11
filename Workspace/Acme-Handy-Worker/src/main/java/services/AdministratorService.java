@@ -58,6 +58,7 @@ public class AdministratorService {
 
 		result.setIsSuspicious(false);
 		ua.setIsBanned(false);
+		result.setUserAccount(ua);
 		result.setMessageBoxes(messageBoxes);
 		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 
@@ -77,7 +78,7 @@ public class AdministratorService {
 		if (admin.getId() == 0)
 			admin.getUserAccount().setPassword(encoder.encodePassword(admin.getUserAccount().getPassword(), null));
 
-		result = this.administratorRepository.save(admin);
+		result = this.administratorRepository.saveAndFlush(admin);
 
 		return result;
 	}

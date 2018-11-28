@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -11,14 +12,11 @@ import org.springframework.util.Assert;
 
 import repositories.FixUpTaskRepository;
 import domain.Application;
-
 import domain.Category;
 import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
 import domain.Warranty;
-
-
 
 @Service
 @Transactional
@@ -27,14 +25,14 @@ public class FixUpTaskService {
 	// Managed repository-----------
 
 	@Autowired
-	private FixUpTaskRepository fixUpTaskRepository;
+	private FixUpTaskRepository	fixUpTaskRepository;
 
 	//Supporting services ----------
-	@Autowired 
-	private UtilityService utilityService;
+	@Autowired
+	private UtilityService		utilityService;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService		customerService;
 
 
 	//Constructor ----------------------------------------------------
@@ -42,18 +40,16 @@ public class FixUpTaskService {
 		super();
 	}
 
-
 	//Simple CRUD methods-------
 
-
-	public FixUpTask create(){
+	public FixUpTask create() {
 		FixUpTask result;
 		Customer principal;
 
-		principal=this.customerService.findByPrincipal();
+		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result=new FixUpTask();
+		result = new FixUpTask();
 		result.setTicker(this.utilityService.generateTicker());
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setDescription("");
@@ -61,7 +57,7 @@ public class FixUpTaskService {
 		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
 		result.setEndMoment(new Date(1425942200000L));
 		result.setApplications(new HashSet<Application>());
-		result.setComplaints(new HashSet<Complaint> ());
+		result.setComplaints(new HashSet<Complaint>());
 		result.setCategory(new Category());
 		result.setWarranty(new Warranty());
 
@@ -79,7 +75,7 @@ public class FixUpTaskService {
 
 	}
 
-	public FixUpTask findOne(int fixUpTaskId) {
+	public FixUpTask findOne(final int fixUpTaskId) {
 		FixUpTask result;
 
 		result = this.fixUpTaskRepository.findOne(fixUpTaskId);
@@ -89,32 +85,31 @@ public class FixUpTaskService {
 
 	}
 
-	public FixUpTask save(FixUpTask fixUpTask) {
+	public FixUpTask save(final FixUpTask fixUpTask) {
 		FixUpTask result;
 		Customer principal;
 
-
-		Assert.isTrue(fixUpTask.getId()==0);
+		Assert.isTrue(fixUpTask.getId() == 0);
 		Assert.isTrue(fixUpTask.getStartMoment().after(fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.notNull(fixUpTask.getWarranty());
 		Assert.notNull(fixUpTask.getApplications());
-		principal=this.customerService.findByPrincipal();
+		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.fixUpTaskRepository.save(fixUpTask);
+		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
 		return result;
 
 	}
 
-	public void delete(FixUpTask fixUpTask) {
+	public void delete(final FixUpTask fixUpTask) {
 		Customer principal;
 
 		Assert.notNull(fixUpTask);
-		Assert.notNull(fixUpTask.getId()!=0);
+		Assert.notNull(fixUpTask.getId() != 0);
 
-		principal=this.customerService.findByPrincipal();
+		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());// no se puede
@@ -130,28 +125,25 @@ public class FixUpTaskService {
 	// Other business methods--------
 	// resitricciones de datos y restricciones de acceso
 
-
-
-
 	//deberian de ir en el servico del admin 
-	public Double[] findApplicationsNumberOperations(){
-		Double [] res=this.fixUpTaskRepository.findApplicationsNumberOperations();
+	public Double[] findApplicationsNumberOperations() {
+		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;
 	}
-	public Double[] findMaxPricesNumberOperations(){
-		Double[]res=this.fixUpTaskRepository.findMaxPricesNumberOperations();
-		return res;
-
-	}
-	public Double[] findComplaintsNumberOperations(){
-
-		Double [] res= this.fixUpTaskRepository.findComplaintsNumberOperations();
+	public Double[] findMaxPricesNumberOperations() {
+		final Double[] res = this.fixUpTaskRepository.findMaxPricesNumberOperations();
 		return res;
 
 	}
-	public Double ratioFixUpTaskWithComplaints(){
+	public Double[] findComplaintsNumberOperations() {
 
-		Double res= this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
+		final Double[] res = this.fixUpTaskRepository.findComplaintsNumberOperations();
+		return res;
+
+	}
+	public Double ratioFixUpTaskWithComplaints() {
+
+		final Double res = this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
 		return res;
 
 	}

@@ -56,7 +56,7 @@ public class CategoryService {
 		Assert.notNull(c.getSpanishName());
 		Assert.notNull(c.getParentCategory());
 
-		result = this.categoryRepository.save(c);
+		result = this.categoryRepository.saveAndFlush(c);
 
 		parent = result.getParentCategory();
 		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
