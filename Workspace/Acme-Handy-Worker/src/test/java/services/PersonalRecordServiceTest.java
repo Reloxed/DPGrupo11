@@ -1,7 +1,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,76 +12,69 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.HandyWorker;
-import domain.Phase;
+import domain.PersonalRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
 		"classpath:spring/config/packages.xml" })
 @Transactional
-public class PhaseServiceTest extends AbstractTest {
+public class PersonalRecordServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
 	@Autowired
-	private PhaseService phaseService;
+	private PersonalRecordService personalRecordService;
 
 	@Autowired
 	private HandyWorkerService handyWorkerService;
-
-	@Autowired
-	private FixUpTaskService fixUpTaskService;
 
 	// Tests ------------------------------------------------------------------
 
 	@Test
 	public void testFindAll() {
-		Collection<Phase> res;
-		res = this.phaseService.findAll();
-		Assert.notNull(res);
-		Assert.isTrue(res.size() == 3);
+		Collection<PersonalRecord> res;
+		res = this.personalRecordService.findAll();
+		Assert.notEmpty(res);
+		Assert.isTrue(res.size() == 2);
 	}
 
 	@Test
 	public void testCreateAndSave() {
-		Phase res;
-		Phase saved;
+		PersonalRecord res;
+		PersonalRecord saved;
 		HandyWorker principal;
 
 		super.authenticate("handyWorker2");
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		res = this.phaseService.create();
-		res.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		res.setEndMoment(new Date(1564865498468L));
-		res.setTitle("Title");
-		res.setDescription("Description");
-		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
+		res = this.personalRecordService.create();
+		res.setFullName("fullName");
+		res.setEmail("example@example.com");
+		res.setPhoneNumber("+034695784231");
+		res.setLinkedinLink("https://linkedin.com/78sdio87");
 
-		saved = this.phaseService.save(res);
+		saved = this.personalRecordService.save(res);
 		Assert.notNull(saved);
 
-		res = this.phaseService.findOne(saved.getId());
+		res = this.personalRecordService.findOne(saved.getId());
 		Assert.notNull(res);
 	}
 
 	@Test
 	public void testDelete() {
-		Phase toDelete;
-		Phase aux;
-		Collection<Phase> phases;
+		PersonalRecord toDelete = new PersonalRecord();
 
-		aux = this.phaseService.findAll().iterator().next();
+		HandyWorker principal;
 		super.authenticate("handyWorker2");
+		principal = this.handyWorkerService.findByPrincipal();
 
-		phases = this.phaseService.findPhasesFixUpTask(aux);
-		Assert.notEmpty(phases);
+		toDelete = principal.getCurriculum().getPersonalRecord();
+		Assert.notNull(toDelete);
 
-		toDelete = phases.iterator().next();
+		this.personalRecordService.delete(toDelete);
 
-		this.phaseService.delete(toDelete);
-
-		phases = this.phaseService.findPhasesFixUpTask(aux);
-		Assert.isTrue(phases.size() == 2);
+		Assert.isNull(principal.getCurriculum().getPersonalRecord());
+		super.unauthenticate();
 	}
 }

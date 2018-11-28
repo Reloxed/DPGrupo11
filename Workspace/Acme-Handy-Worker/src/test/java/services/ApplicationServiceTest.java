@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,9 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Application;
+import domain.Customer;
 import domain.FixUpTask;
+import domain.MessageBox;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -38,6 +41,15 @@ public class ApplicationServiceTest extends AbstractTest {
 	@Autowired
 	private MessageBoxService	messageBoxService;
 
+	@Autowired
+	private CategoryService		categoryService;
+
+	@Autowired
+	private UtilityService		utilityService;
+
+	@Autowired
+	private WarrantyService		warrantyService;
+
 
 	// Tests ------------------------------------------------------------------
 
@@ -56,18 +68,45 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
+		// Creating fixUpTask 
+		FixUpTask result;
+		Customer principal;
+		FixUpTask fixUpTaskSaved;
+
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
+		result.setEndMoment(new Date(203984203402L));
+		result.setCategory(this.categoryService.findOne(2391));
+		result.setWarranty(this.warrantyService.findOne(2415));
+		result.setApplications(this.applicationService.findAll());
+
+		fixUpTaskSaved = this.fixUpTaskService.save(result);
+		Assert.notNull(fixUpTaskSaved);
+
+		super.unauthenticate();
+
 		super.authenticate("handyWorker1");
 
 		Application a;
 		Application saved;
 		Collection<Application> applications;
-		//final MessageBox inBoxCustomer, inBoxHW, outBoxCustomer, outBoxHW;
+		final MessageBox inBoxCustomer, inBoxHW, outBoxCustomer, outBoxHW;
 		a = this.applicationService.create();
-		/*
-		 * inBoxCustomer = this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(a.getId()));
-		 * System.out.println("Tamaño inBoxCustomer = " + inBoxCustomer.getMessages().size());
-		 * a.setFixUpTask(this.fixUpTaskService.findOne(2429));
-		 */
+
+		inBoxCustomer = this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(a.getId()));
+		inBoxHW = this.messageBoxService.findInBoxActor(a.getApplicant());
+
+		a.setFixUpTask(fixUpTaskSaved);
+
 		saved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
 		Assert.isTrue(applications.contains(saved));

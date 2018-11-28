@@ -42,6 +42,8 @@ public class ReportServiceTest extends AbstractTest {
 
 		res = this.reportService.findReportByPrincipal();
 		Assert.notEmpty(res);
+
+		System.out.println(res);
 	}
 
 	@Test
@@ -62,6 +64,9 @@ public class ReportServiceTest extends AbstractTest {
 
 		saved = this.reportService.save(res);
 		Assert.notNull(saved);
+
+		res = this.reportService.findOne(saved.getId());
+		Assert.notNull(res);
 	}
 
 	@Test
@@ -74,12 +79,11 @@ public class ReportServiceTest extends AbstractTest {
 		reports = this.reportService.findReportByPrincipal();
 		Assert.notEmpty(reports);
 
-		// toDelete = reports.iterator().next();
-		toDelete = this.reportService.findOne(2438);
+		toDelete = reports.iterator().next();
 		toDelete.setIsFinal(false);
 		this.reportService.delete(toDelete);
 
 		reports = this.reportService.findReportByPrincipal();
-		Assert.isTrue(reports.size() == 0);
+		Assert.isTrue(reports.size() == 2);
 	}
 }

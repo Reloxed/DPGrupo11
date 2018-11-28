@@ -64,7 +64,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.notNull(c);
 
 		c.setDescription("Description");
-		c.setFixUpTask(this.fixUpTaskService.findOne(2429));
+		c.setFixUpTask(this.fixUpTaskService.findOne(2458));
 		saved = this.complaintService.save(c);
 
 		Assert.isTrue(this.complaintService.findAll().contains(saved));
@@ -85,7 +85,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.notNull(c);
 
 		c.setDescription("Description");
-		c.setFixUpTask(this.fixUpTaskService.findOne(2429));
+		c.setFixUpTask(this.fixUpTaskService.findOne(2458));
 		saved = this.complaintService.save(c);
 
 		Assert.isTrue(this.complaintService.findAll().contains(saved));
@@ -108,7 +108,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.authenticate(null);
 		Complaint c;
 
-		c = this.complaintService.findOne(2433);
+		c = this.complaintService.findOne(2464);
 		Assert.notNull(c);
 		Assert.isTrue(c.getTicker().equals("345678-ASDFGH"));
 
