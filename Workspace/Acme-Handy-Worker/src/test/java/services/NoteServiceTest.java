@@ -56,8 +56,8 @@ public class NoteServiceTest extends AbstractTest{
 		super.unauthenticate();
 
 	}
-
 	
+	@Test
 	public void testSave(){
 		super.authenticate("HandyWorker1");
 		Actor principal;
@@ -69,37 +69,61 @@ public class NoteServiceTest extends AbstractTest{
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-
-		
-		notes = this.noteService.findAll();
-		Assert.notNull(notes);
 		
 		result = this.noteService.create();
 		Assert.notNull(result);
 		
+		report = this.reportService.findOne(2467);
+		Assert.notNull(report);
+		
+		notes = report.getNotes();
+		Assert.notNull(notes);
+		
+		result.setHandyWorkerComment("Hola");
+		result.setReport(report);
 		saved = this.noteService.save(result);
 		Assert.notNull(saved);
 		
-		Assert.isTrue(notes.contains(saved));
+		Assert.isTrue(saved.getReport().getNotes().contains(saved));
 		
 
 		super.unauthenticate();
 	}
 	
-	
+	@Test
 	public void tetsDelete(){
-		super.authenticate("handyWorker2");
+		super.authenticate("Customer1");
 		Actor principal;
-		Note toDelete;
+		Note toDelete,note;
+		Report report;
+		Collection<Note>notes,removed;
 		
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		toDelete = this.noteService.create();
+		note = this.noteService.create();
+		Assert.notNull(note);
+		
+		report = this.reportService.findOne(2467);
+		Assert.notNull(report);
+		
+		note.setReport(report);
+		
+		toDelete = this.noteService.save(note);
 		Assert.notNull(toDelete);
+		
+		notes = new ArrayList<Note>();
+		notes = report.getNotes();
+		Assert.notNull(notes);
 		
 		this.noteService.delete(toDelete);
 		
+		removed = report.getNotes();
+		Assert.notNull(removed);
+		Assert.isTrue(notes.contains(toDelete));
+		Assert.isTrue(!removed.contains(toDelete));
+		Assert.isTrue(removed.size()==1);
+		Assert.isTrue(notes.size()==2);
 	}
 	
 	@Test

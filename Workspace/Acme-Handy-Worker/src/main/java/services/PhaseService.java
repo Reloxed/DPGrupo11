@@ -2,17 +2,14 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.PhaseRepository;
-import domain.Application;
-import domain.Customer;
-import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -30,9 +27,6 @@ public class PhaseService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
-	@Autowired
-	private CustomerService customerService;
-
 	// Simple CRUD methods -----------------------------------
 
 	public Phase create() {
@@ -47,44 +41,16 @@ public class PhaseService {
 		return res;
 	}
 
-	public Collection<Phase> findAll() {
-		Collection<Phase> res;
-		HandyWorker principal;
-		Collection<Application> applications;
-		Collection<FixUpTask> fixUpTasks;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		applications = principal.getApplications();
-		Assert.notNull(applications);
-
-		fixUpTasks = new HashSet<FixUpTask>();
-		for (Application application : applications) {
-			if (application.getStatus() == "ACCEPTED") {
-				fixUpTasks.add(application.getFixUpTask());
-			}
-		}
-
-		res = new ArrayList<Phase>();
-		for (FixUpTask fixUpTask : fixUpTasks) {
-			res.addAll(this.phaseRepository.findAllPhases(fixUpTask.getId()));
-		}
+	public Phase findOne(int phaseId) {
+		Phase res;
+		res = this.phaseRepository.findOne(phaseId);
 		return res;
 	}
 
-	public Phase findOne(int phaseId) {
-		HandyWorker principalHW;
-		Customer principalC;
-		Assert.isTrue(phaseId != 0);
-
-		principalHW = this.handyWorkerService.findByPrincipal();
-
-		if (principalHW == null) {
-			principalC = this.customerService.findByPrincipal();
-			Assert.notNull(principalC);
-		}
-		return this.phaseRepository.findOne(phaseId);
+	public Collection<Phase> findAll() {
+		Collection<Phase> res;
+		res = this.phaseRepository.findAll();
+		return res;
 	}
 
 	public Phase save(Phase phase) {
@@ -95,11 +61,9 @@ public class PhaseService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(!phase.getTitle().isEmpty());
-		Assert.isTrue(!phase.getDescription().isEmpty());
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
-		return this.phaseRepository.save(phase);
+		return this.phaseRepository.saveAndFlush(phase);
 	}
 
 	public void delete(Phase phase) {
@@ -113,5 +77,27 @@ public class PhaseService {
 		Assert.notNull(principal);
 
 		this.phaseRepository.delete(phase);
+	}
+
+	// Other business methods -----------------------------------
+
+	public Collection<Phase> findPhasesFixUpTask(Phase phase) {
+		Collection<Phase> res;
+		Collection<Phase> phases;
+		HandyWorker principal;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		phases = this.findAll();
+		Assert.notEmpty(phases);
+
+		res = new ArrayList<Phase>();
+		for (Phase phaseFor : phases) {
+			if (phaseFor.getFixUpTask() == phase.getFixUpTask()) {
+				res.add(phaseFor);
+			}
+		}
+		return res;
 	}
 }

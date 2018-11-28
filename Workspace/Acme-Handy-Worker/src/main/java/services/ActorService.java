@@ -20,10 +20,12 @@ import domain.Administrator;
 public class ActorService {
 
 	// Managed repository -----------------
+
 	@Autowired
 	private ActorRepository			actorRepository;
 
 	// Supporting services ----------------
+
 	@Autowired
 	private HandyWorkerService		handyWorkerService;
 

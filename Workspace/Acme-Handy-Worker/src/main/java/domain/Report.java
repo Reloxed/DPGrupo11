@@ -27,7 +27,7 @@ public class Report extends DomainEntity {
 	private String attachments;
 	private boolean isFinal;
 	private Complaint complaint;
-	private Collection<Note>notes;
+	private Collection<Note> notes;
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -77,7 +77,7 @@ public class Report extends DomainEntity {
 	public void setComplaint(Complaint complaint) {
 		this.complaint = complaint;
 	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<Note> getNotes() {
@@ -87,6 +87,5 @@ public class Report extends DomainEntity {
 	public void setNotes(Collection<Note> notes) {
 		this.notes = notes;
 	}
-	
 
 }

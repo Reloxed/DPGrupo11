@@ -3,9 +3,10 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SectionRepository;
@@ -26,6 +27,9 @@ public class SectionService {
 
 	@Autowired
 	private HandyWorkerService handyWorkerService;
+
+	@Autowired
+	private TutorialService tutorialService;
 
 	// Simple CRUD methods -----------------------------------
 
@@ -81,6 +85,7 @@ public class SectionService {
 	public void delete(Section section) {
 		HandyWorker principal;
 		Collection<Section> sections;
+		Tutorial tutorial;
 
 		Assert.notNull(section);
 		Assert.isTrue(section.getId() != 0);
@@ -88,10 +93,19 @@ public class SectionService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		sections = this.findSectionsByPrincipal();
+		tutorial = this.tutorialService
+				.findTutorialBySectionId(section.getId());
+		Assert.notNull(tutorial);
+		Assert.isTrue(tutorial.getSections().contains(section));
+
+		sections = tutorial.getSections();
 		Assert.isTrue(sections.contains(section));
 
+		sections.remove(section);
+
 		this.sectionRepository.delete(section);
+
+		tutorial.setSections(sections);
 	}
 
 	// Other business methods ---------------------------------

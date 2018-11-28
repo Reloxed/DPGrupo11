@@ -23,7 +23,7 @@ public class MessageBoxService {
 	private MessageBoxRepository messageBoxRepository;
 	
 	//Supporting services -------------------
-	
+	@Autowired
 	private ActorService actorService;
 	
 	//CRUD Methods --------------------------------

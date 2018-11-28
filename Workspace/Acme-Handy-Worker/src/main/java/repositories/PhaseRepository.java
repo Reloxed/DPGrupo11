@@ -12,6 +12,6 @@ import domain.Phase;
 public interface PhaseRepository extends JpaRepository<Phase, Integer> {
 
 	@Query("select p from Phase p where p.fixUpTask.id = ?1")
-	Collection<Phase> findAllPhases(int fixUpTaskId);
+	Collection<Phase> findAllPhasesByFixUpTaskId(int fixUpTaskId);
 
 }

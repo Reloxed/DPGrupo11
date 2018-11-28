@@ -23,7 +23,7 @@ public class MiscellaneousRecordService {
 	private MiscellaneousRecordRepository miscellaneousRecordRepository;
 
 	//Supporting services -------------------
-
+	@Autowired
 	private HandyWorkerService handyWorkerService;
 
 	//Constructor
@@ -46,7 +46,8 @@ public class MiscellaneousRecordService {
 
 		return result;
 	}
-
+	
+	
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord){
 
 		MiscellaneousRecord result;
@@ -67,7 +68,7 @@ public class MiscellaneousRecordService {
 		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
 		Assert.notNull(result);
 		
-		miscellaneousRecords.add(miscellaneousRecord);
+		miscellaneousRecords.add(result);
 		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
 		
 		

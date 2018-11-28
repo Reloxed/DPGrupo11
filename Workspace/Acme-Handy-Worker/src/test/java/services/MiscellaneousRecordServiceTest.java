@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
-
 import utilities.AbstractTest;
-
 import domain.HandyWorker;
 import domain.MiscellaneousRecord;
 
@@ -50,30 +49,38 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 		Assert.isTrue(result.size()==2);
 	}
 	@Test
-	public void testCreate(){
+	public void testCreateAndSave(){
+		super.authenticate("handyWorker2");
 		MiscellaneousRecord result;
 		MiscellaneousRecord saved;
 		HandyWorker principal;
-		super.authenticate("handyWorker2");
+		Collection<MiscellaneousRecord>miscellaneousRecords;
+		miscellaneousRecords = new ArrayList<MiscellaneousRecord>();
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		result = this.miscellaneousRecordService.create();
+		Assert.notNull(result);
+		miscellaneousRecords = principal.getCurriculum().getMiscellaneousRecords();
+		result.setTitle("test");
+		saved = this.miscellaneousRecordService.save(result);
+		Assert.notNull(saved);
+		Assert.isTrue(miscellaneousRecords.contains(saved));
 		
 		super.unauthenticate();
 	}
 	
 	@Test
 	public void testDelete(){
+		super.authenticate("handyWorker2");
 		MiscellaneousRecord toDelete;
 		Collection<MiscellaneousRecord> listMiscellaneousRecord;
 		HandyWorker principal;
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		super.authenticate("handyWorker2");
 		toDelete = this.miscellaneousRecordService.findOne(2364);
 		this.miscellaneousRecordService.delete(toDelete);
 		listMiscellaneousRecord = principal.getCurriculum().getMiscellaneousRecords();
-		Assert.isTrue(listMiscellaneousRecord.size()==1);
+		Assert.isTrue(!listMiscellaneousRecord.contains(toDelete));
 		super.unauthenticate();
 		
 	}

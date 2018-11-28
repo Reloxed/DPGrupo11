@@ -19,10 +19,12 @@ import domain.Customer;
 public class ComplaintService {
 
 	// Managed repository ------------------------------------
+
 	@Autowired
 	private ComplaintRepository	complaintRepository;
 
 	// Supporting services -----------------------------------
+
 	@Autowired
 	private CustomerService		customerService;
 

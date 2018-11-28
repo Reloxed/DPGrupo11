@@ -1,16 +1,18 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 
-import org.joda.time.LocalDate;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
 import domain.Complaint;
+import domain.Note;
 import domain.Referee;
 import domain.Report;
 
@@ -28,6 +30,9 @@ public class ReportService {
 	@Autowired
 	private RefereeService refereeService;
 
+	@Autowired
+	private NoteService noteService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Report create() {
@@ -43,45 +48,26 @@ public class ReportService {
 	}
 
 	public Collection<Report> findAll() {
-		Referee principal;
 		Collection<Report> res;
-
-		principal = this.refereeService.findByPrincipal();
-		Assert.notNull(principal);
-
 		res = this.reportRepository.findAll();
-
 		return res;
 	}
 
 	public Report findOne(int reportId) {
-		Report res = null;
-		Collection<Report> reports;
-
-		reports = this.findByPrincipal();
-		Assert.notEmpty(reports);
-
-		for (Report report : reports) {
-			if (report.getId() == reportId) {
-				res = this.reportRepository.findOne(reportId);
-			}
-		}
-
+		Report res;
+		res = this.reportRepository.findOne(reportId);
 		return res;
 	}
 
 	public Report save(Report report) {
 		Referee principal;
 		Report res;
-		Collection<Report> reports;
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(report.getPublishedMoment().before(
-				LocalDate.now().toDate()));
-		reports = this.findByPrincipal();
-		Assert.notNull(reports);
+				new Date(System.currentTimeMillis())));
 
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
@@ -91,6 +77,7 @@ public class ReportService {
 
 	public void delete(Report report) {
 		Referee principal;
+		Collection<Report> reports;
 
 		Assert.notNull(report);
 		Assert.isTrue(report.getId() != 0);
@@ -99,13 +86,23 @@ public class ReportService {
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
+		reports = this.findReportByPrincipal();
+		Assert.notEmpty(reports);
+		Assert.isTrue(reports.contains(report));
+
+		if (report.getNotes().size() != 0) {
+			for (Note note : report.getNotes()) {
+				this.noteService.delete(note);
+			}
+		}
+
 		this.reportRepository.delete(report.getId());
 
 	}
 
 	// Other business methods -------------------------------
 
-	public Collection<Report> findByPrincipal() {
+	public Collection<Report> findReportByPrincipal() {
 		Referee principal;
 		Collection<Report> res;
 		Collection<Report> allReports;
@@ -120,12 +117,11 @@ public class ReportService {
 		allReports = this.findAll();
 		Assert.notNull(allReports);
 
-		res = new ArrayList<Report>();
+		res = new HashSet<Report>();
 		for (Complaint complaint : complaints) {
 			for (Report report : allReports) {
 				if (complaint.equals(report.getComplaint())) {
 					res.add(report);
-					break;
 				}
 			}
 		}

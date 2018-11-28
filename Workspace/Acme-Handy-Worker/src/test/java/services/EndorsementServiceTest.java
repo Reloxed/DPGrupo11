@@ -52,5 +52,21 @@ public class EndorsementServiceTest extends AbstractTest {
 		Assert.isTrue(result.size()==3);
 	}
 	
+	@Test
+	public void testCreateAndSave(){
+	
+		
+		
+	}
+	
+	
+	@Test
+	public void testDelete(){
+		
+		
+		
+		
+	}
+	
 
 }
