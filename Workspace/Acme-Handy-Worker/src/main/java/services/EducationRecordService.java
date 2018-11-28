@@ -73,9 +73,7 @@ public class EducationRecordService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 	
-		if (educationRecord.getEndDate()==null){
-			Assert.isTrue(educationRecord.getStartDate().before(LocalDate.now().toDate()));
-		} else {
+		if (educationRecord.getEndDate()!=null){
 			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
 		}
 		

@@ -1,10 +1,9 @@
 package services;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,12 +89,13 @@ public class CreditCardService {
 		return this.creditCardRepository.findOne(creditCardId);
 	}
 
-	public CreditCard save (CreditCard creditCard) throws ParseException{
+	public CreditCard save (CreditCard creditCard) throws ParseException {
 		Assert.notNull(creditCard);
 		
 		CreditCard res;
 		Sponsor ownerSponsor;
 		Customer ownerCustomer;
+		Calendar expiration;
 		
 		ownerSponsor = this.sponsorService.findByPrincipal();
 		ownerCustomer = this.customerService.findByPrincipal();
@@ -104,9 +104,8 @@ public class CreditCardService {
 		}
 
 		// Comprobacion de fecha
-		String monthYear = creditCard.getExpirationMonth() + " " + creditCard.getExpirationYear();
-		SimpleDateFormat formato = new SimpleDateFormat("MM YY");
-		Date expiration = formato.parse(monthYear);
+		expiration = Calendar.getInstance();
+		expiration.set(creditCard.getExpirationYear(), creditCard.getExpirationMonth(), 0);
 		Assert.isTrue(expiration.after(LocalDate.now().toDate()));
 		
 		

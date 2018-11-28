@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -38,6 +40,9 @@ public class ApplicationService {
 
 	@Autowired
 	private MessageService				messageService;
+
+	@Autowired
+	private CreditCardService			creditCardService;
 
 
 	// Simple CRUD methods ---------------------------
@@ -141,6 +146,8 @@ public class ApplicationService {
 	public void accept(final Application a) {
 		final Customer customer;
 		final String bodyCustomer, bodyHandyWorker;
+		final CreditCard creditCard;
+		final CreditCard saved;
 
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() != 0);
@@ -157,6 +164,14 @@ public class ApplicationService {
 		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
+
+		/*
+		 * if (a.getStatus() == "ACCEPTED") {
+		 * creditCard = this.creditCardService.create();
+		 * saved = this.creditCardService.save(creditCard);
+		 * Assert.isTrue(this.creditCardService.findAll().contains(saved));
+		 * }
+		 */
 	}
 
 	public void reject(final Application a) {

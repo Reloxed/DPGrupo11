@@ -29,7 +29,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	// Tests ------------------------------------------------------------------
 	
 	@Test
-	public void testCreateEducationRecords() {
+	public void testCreateEducationRecord() {
 		EducationRecord educationRecord;
 		String username = "handyWorker1";
 		super.authenticate(username);
@@ -39,7 +39,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test(expected=IllegalArgumentException.class) 
-	public void testNotCreateEducationRecords() {
+	public void testNotCreateEducationRecord() {
 		EducationRecord educationRecord;
 		// Wrong actor
 		String username = "sponsor1";
@@ -61,7 +61,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test
-	public void testFindOneEducationRecords() {
+	public void testFindOneEducationRecord() {
 		EducationRecord educationRecord;
 		String username = "handyWorker1";
 		super.authenticate(username);
@@ -83,7 +83,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test
-	public void testSaveEducationRecords_1() {
+	public void testSaveEducationRecord_1() {
 		EducationRecord educationRecord, saved;
 		Collection<EducationRecord> educationRecords;
 		Calendar startDate;
@@ -104,7 +104,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test
-	public void testSaveEducationRecords_2() {
+	public void testSaveEducationRecord_2() {
 		EducationRecord educationRecord, saved;
 		Collection<EducationRecord> educationRecords;
 		Calendar startDate;
@@ -126,8 +126,8 @@ public class EducationRecordServiceTest extends AbstractTest{
 		super.unauthenticate();		
 	}
 	
-	@Test(expected=IllegalArgumentException.class) 
-	public void testNotSaveEducationRecords_1() {
+	@Test(expected=ConstraintViolationException.class) 
+	public void testNotSaveEducationRecord_1() {
 		EducationRecord educationRecord, saved;
 		Calendar startDate;
 		String username = "handyWorker1";
@@ -148,7 +148,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test(expected=IllegalArgumentException.class) 
-	public void testNotSaveEducationRecords_2() {
+	public void testNotSaveEducationRecord_2() {
 		EducationRecord educationRecord, saved;
 		Calendar startDate;
 		Calendar endDate;
@@ -173,7 +173,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 	}
 	
 	@Test(expected=ConstraintViolationException.class) 
-	public void testNotSaveEducationRecords_3() {
+	public void testNotSaveEducationRecord_3() {
 		EducationRecord educationRecord, saved;
 		Calendar startDate;
 		String username = "handyWorker1";
