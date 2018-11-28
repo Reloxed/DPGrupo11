@@ -32,14 +32,6 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
-	public void testFindOne() {
-		ProfessionalRecord res;
-		res = this.professionalRecordService.findOne(2329);
-		Assert.notNull(res);
-		Assert.isTrue(res.getId() == 2329);
-	}
-
-	@Test
 	public void testFindAll() {
 		Collection<ProfessionalRecord> res;
 		res = this.professionalRecordService.findAll();
@@ -68,6 +60,9 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		Assert.notNull(saved);
 		Assert.isTrue(principal.getCurriculum().getProfessionalRecords()
 				.contains(saved));
+
+		res = this.professionalRecordService.findOne(saved.getId());
+		Assert.notNull(res);
 	}
 
 	// With endDate

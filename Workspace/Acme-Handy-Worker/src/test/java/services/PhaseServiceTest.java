@@ -35,14 +35,6 @@ public class PhaseServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
-	public void testFindOne() {
-		Phase res;
-		res = this.phaseService.findOne(2430);
-		Assert.notNull(res);
-		Assert.isTrue(res.getId() == 2430);
-	}
-
-	@Test
 	public void testFindAll() {
 		Collection<Phase> res;
 		res = this.phaseService.findAll();
@@ -65,10 +57,13 @@ public class PhaseServiceTest extends AbstractTest {
 		res.setEndMoment(new Date(1564865498468L));
 		res.setTitle("Title");
 		res.setDescription("Description");
-		res.setFixUpTask(this.fixUpTaskService.findOne(2429));
+		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
 
 		saved = this.phaseService.save(res);
 		Assert.notNull(saved);
+
+		res = this.phaseService.findOne(saved.getId());
+		Assert.notNull(res);
 	}
 
 	@Test
@@ -77,7 +72,7 @@ public class PhaseServiceTest extends AbstractTest {
 		Phase aux;
 		Collection<Phase> phases;
 
-		aux = this.phaseService.findOne(2432);
+		aux = this.phaseService.findAll().iterator().next();
 		super.authenticate("handyWorker2");
 
 		phases = this.phaseService.findPhasesFixUpTask(aux);
@@ -90,5 +85,4 @@ public class PhaseServiceTest extends AbstractTest {
 		phases = this.phaseService.findPhasesFixUpTask(aux);
 		Assert.isTrue(phases.size() == 2);
 	}
-
 }

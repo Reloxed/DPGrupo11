@@ -31,14 +31,6 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
-	public void testFindOne() {
-		PersonalRecord res;
-		res = this.personalRecordService.findOne(2476);
-		Assert.notNull(res);
-		Assert.isTrue(res.getId() == 2476);
-	}
-
-	@Test
 	public void testFindAll() {
 		Collection<PersonalRecord> res;
 		res = this.personalRecordService.findAll();
@@ -64,6 +56,9 @@ public class PersonalRecordServiceTest extends AbstractTest {
 
 		saved = this.personalRecordService.save(res);
 		Assert.notNull(saved);
+
+		res = this.personalRecordService.findOne(saved.getId());
+		Assert.notNull(res);
 	}
 
 	@Test
