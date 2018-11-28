@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -54,7 +55,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		FixUpTask result;
 		result = this.fixUpTaskService.findOne(2427);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId() == 2427);
+		Assert.isTrue(result.getId()==2427);
 
 	}
 
@@ -72,7 +73,8 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		FixUpTask result;
 		Customer principal;
 		FixUpTask saved;
-
+		Calendar startMoment;
+		Calendar endMoment;
 		super.authenticate("customer2");
 
 		principal = this.customerService.findByPrincipal();
@@ -83,8 +85,14 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setDescription("descripcion");
 		result.setAddress("Mairena");
-		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		result.setEndMoment(new Date(203984203402L));
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findOne(2391));
 		result.setWarranty(this.warrantyService.findOne(2415));
 		result.setApplications(this.applicationService.findAll());
@@ -136,6 +144,31 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Assert.isTrue(fixs.contains(result));
 
 		super.unauthenticate();
+
+	}
+	@Test
+	public void TestFindApplicationsNumberOperations(){
+		Double[] res;
+
+		res=this.fixUpTaskService.findApplicationsNumberOperations();
+		Assert.notNull(res);
+
+	}
+
+	@Test
+	public void TestFindComplaintsNumberOperations(){
+		Double[] res;
+
+		res=this.fixUpTaskService.findComplaintsNumberOperations();
+		Assert.notNull(res);
+
+	}
+	@Test
+	public void TestFindMaxPricesNumberOperations(){
+		Double[] res;
+
+		res=this.fixUpTaskService.findMaxPricesNumberOperations();
+		Assert.notNull(res);
 
 	}
 

@@ -52,14 +52,13 @@ public class FixUpTaskService {
 		result = new FixUpTask();
 		result.setTicker(this.utilityService.generateTicker());
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		result.setDescription("");
-		result.setAddress("");
-		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		result.setEndMoment(new Date(1425942200000L));
+
+
+
 		result.setApplications(new HashSet<Application>());
-		result.setComplaints(new HashSet<Complaint>());
-		result.setCategory(new Category());
-		result.setWarranty(new Warranty());
+		result.setComplaints(new HashSet<Complaint> ());
+
+
 
 		return result;
 
@@ -89,12 +88,19 @@ public class FixUpTaskService {
 		FixUpTask result;
 		Customer principal;
 
-		Assert.isTrue(fixUpTask.getId() == 0);
-		Assert.isTrue(fixUpTask.getStartMoment().after(fixUpTask.getEndMoment()));
+
+		Assert.isTrue(fixUpTask.getId()==0);
+		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		Assert.notNull(fixUpTask.getEndMoment());
+		Assert.notNull(fixUpTask.getStartMoment());
+		Assert.notNull(fixUpTask.getTicker());
+		Assert.notNull(fixUpTask.getPublishedMoment());
+		Assert.notNull(fixUpTask.getDescription());
+		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.notNull(fixUpTask.getWarranty());
-		Assert.notNull(fixUpTask.getApplications());
-		principal = this.customerService.findByPrincipal();
+
+		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
@@ -125,7 +131,7 @@ public class FixUpTaskService {
 	// Other business methods--------
 	// resitricciones de datos y restricciones de acceso
 
-	//deberian de ir en el servico del admin 
+	//deberian de ir en el servico del admin
 	public Double[] findApplicationsNumberOperations() {
 		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;
