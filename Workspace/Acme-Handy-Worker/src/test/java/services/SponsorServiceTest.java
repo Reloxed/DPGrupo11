@@ -13,7 +13,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.CreditCard;
-import domain.SocialProfile;
 import domain.Sponsor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
