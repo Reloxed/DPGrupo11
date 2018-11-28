@@ -26,10 +26,12 @@ import domain.SocialProfile;
 public class AdministratorService {
 
 	// Managed repository -------------------------
+
 	@Autowired
 	private AdministratorRepository	administratorRepository;
 
 	// Supporting services -------------------------
+
 	@Autowired
 	private MessageBoxService		messageBoxService;
 

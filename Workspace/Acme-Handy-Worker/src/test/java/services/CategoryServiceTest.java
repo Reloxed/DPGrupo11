@@ -37,7 +37,7 @@ public class CategoryServiceTest extends AbstractTest {
 		categories = this.categoryService.findAll();
 
 		Assert.notNull(categories);
-
+		Assert.isTrue(categories.size() == 24);
 		super.unauthenticate();
 	}
 
@@ -101,7 +101,21 @@ public class CategoryServiceTest extends AbstractTest {
 
 		category = this.categoryService.findOne(2392);
 		Assert.isTrue(this.categoryService.findAll().contains(category));
+		Assert.isTrue(this.categoryService.findAll().size() == 24);
 		this.categoryService.delete(category);
 		Assert.isTrue(!this.categoryService.findAll().contains(category));
+		Assert.isTrue(this.categoryService.findAll().size() == 23);
+	}
+
+	@Test
+	public void testFindOne() {
+		super.authenticate("admin1");
+		Category c;
+
+		c = this.categoryService.findOne(2391);
+
+		Assert.notNull(c);
+		Assert.isTrue(c.getEnglishName().equals("Repairs"));
+		super.unauthenticate();
 	}
 }
