@@ -63,7 +63,8 @@ public class SponsorshipService {
 		Collection<Sponsorship> sponsorships;
 
 		sponsorships = this.sponsorshipRepository.findAll();
-
+		Assert.notNull(sponsorships);
+		
 		return sponsorships;
 	}
 
@@ -85,7 +86,7 @@ public class SponsorshipService {
 		principal = this.sponsorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.sponsorshipRepository.save(s);
+		result = this.sponsorshipRepository.saveAndFlush(s);
 		Assert.notNull(result);
 		
 		sponsorships = Collections.<Sponsorship> emptyList();
