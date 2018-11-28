@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.CreditCard;
 import domain.Sponsorship;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -100,14 +101,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	// FindOne correcto
-	@Test
-	public void testFindOne1() {
-		Sponsorship res;
-		res = this.sponsorshipService.findOne(2419);
-		Assert.notNull(res);
-	}
-
 	// FindOne con id incorrecta
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOne2() {
@@ -116,7 +109,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 	
-	// Save correcto
+	// Save correcto TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
 	@Test
 	public void testSave1(){
 		Sponsorship res;
@@ -124,10 +117,18 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Sponsorship s = this.sponsorshipService.create();
 		s.setBanner("http://www.url.com");
 		s.setTargetPage("http://www.targetpage.com");
-		s.setCreditCard(this.creditCardService.findOne(2335));
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		CreditCard forId = this.creditCardService.save(cc);
+		s.setCreditCard(this.creditCardService.findOne(forId.getId()));
 		res = this.sponsorshipService.save(s);
 		Assert.notNull(res);
-		Assert.isTrue(this.sponsorService.findOne(2314).getSponsorships().contains(s));
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
 		super.unauthenticate();
 	}
 }

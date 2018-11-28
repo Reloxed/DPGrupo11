@@ -54,14 +54,6 @@ public class SocialProfileServiceTest extends AbstractTest{
 		Assert.notEmpty(res);
 	}
 	
-	//FindOne Correcto
-	@Test
-	public void testFindOne1(){
-		SocialProfile res;
-		res = this.socialProfileService.findOne(2383);
-		Assert.notNull(res);
-	}
-	
 	//FindOne con ID inexistente
 	@Test(expected=IllegalArgumentException.class)
 	public void testFindOne2(){
@@ -92,9 +84,9 @@ public class SocialProfileServiceTest extends AbstractTest{
 		super.unauthenticate();
 	}
 	
-	//Save correcto
+	//Save correcto con el FindOne
 	@Test
-	public void testSave1(){
+	public void testSaveAndFindOne1(){
 		SocialProfile res;
 		Actor principal;
 		super.authenticate("handyWorker1");
@@ -107,6 +99,7 @@ public class SocialProfileServiceTest extends AbstractTest{
 		res = this.socialProfileService.save(s);
 		Assert.notNull(res);
 		Assert.isTrue(principal.getSocialProfiles().contains(s));
+		Assert.notNull(this.socialProfileService.findOne(res.getId()));
 		super.unauthenticate();
 	}
 
@@ -142,8 +135,16 @@ public class SocialProfileServiceTest extends AbstractTest{
 	public void testSave4(){
 		SocialProfile res;
 		SocialProfile s;
+		SocialProfile forId;
+		super.authenticate("sponsor2");
+		forId = this.socialProfileService.create();
+		forId.setNick("Holaquetal");
+		forId.setLink("http://www.holaktal.com");
+		forId.setSocialNetwork("Tuentixd");
+		forId = this.socialProfileService.save(forId);
+		super.unauthenticate();
 		super.authenticate("handyWorker1");
-		s = this.socialProfileService.findOne(2388);
+		s = this.socialProfileService.findOne(forId.getId());
 		res = this.socialProfileService.save(s);
 		Assert.notNull(res);
 		super.unauthenticate();

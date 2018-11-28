@@ -35,6 +35,7 @@ public class SponsorServiceTest extends AbstractTest {
 	public void testCreate1() {
 		Sponsor res;
 		res = this.sponsorService.create();
+		System.out.println(res);
 		Assert.notNull(res);
 	}
 
@@ -44,14 +45,6 @@ public class SponsorServiceTest extends AbstractTest {
 		res = this.sponsorService.findAll();
 		Assert.notNull(res);
 		Assert.notEmpty(res);
-	}
-
-	// FindOne Correcto
-	@Test
-	public void testFindOne1() {
-		Sponsor res;
-		res = this.sponsorService.findOne(2312);
-		Assert.notNull(res);
 	}
 
 	// FindOne con ID inexistente
@@ -95,14 +88,22 @@ public class SponsorServiceTest extends AbstractTest {
 		s.getUserAccount().setPassword("123456abc");
 		res = this.sponsorService.save(s);
 		Assert.notNull(res);
+		Assert.notNull(this.sponsorService.findOne(res.getId()));
 	}
 
 	// Save actualizando
 	@Test
-	public void testSave2() throws CloneNotSupportedException {
+	public void testSave2(){
 		Sponsor res;
-		super.authenticate("sponsor1");
-		Sponsor s = this.sponsorService.findOne(2312);
+		Sponsor forId = this.sponsorService.create();
+		forId.setName("A editar");
+		forId.setSurname("Editado editado");
+		forId.setEmail("editar@us.es");
+		forId.getUserAccount().setUsername("editanding");
+		forId.getUserAccount().setPassword("123456ab");
+		Sponsor theId = this.sponsorService.save(forId);
+		super.authenticate(theId.getUserAccount().getUsername());
+		Sponsor s = this.sponsorService.findOne(theId.getId());
 		s.setName("Walabonso");
 		s.setSurname("Nieto-Perez Gordo");
 		s.setEmail("wakawaka@us.es");
@@ -117,8 +118,15 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSave3() {
 		Sponsor res;
-		super.authenticate("sponsor2");
-		Sponsor s = this.sponsorService.findOne(2312);
+		Sponsor forId = this.sponsorService.create();
+		forId.setName("A editar");
+		forId.setSurname("Editado editado");
+		forId.setEmail("editar@us.es");
+		forId.getUserAccount().setUsername("editanding");
+		forId.getUserAccount().setPassword("123456ab");
+		Sponsor theId = this.sponsorService.save(forId);
+		super.authenticate("handyWorker1");
+		Sponsor s = this.sponsorService.findOne(theId.getId());
 		s.setName("Walabonso");
 		s.setSurname("Nieto-Perez Gordo");
 		s.setEmail("wakawaka@us.es");
@@ -148,8 +156,15 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSave5() throws CloneNotSupportedException {
 		Sponsor res;
-		super.authenticate("sponsor1");
-		Sponsor s = this.sponsorService.findOne(2312);
+		Sponsor forId = this.sponsorService.create();
+		forId.setName("A editar");
+		forId.setSurname("Editado editado");
+		forId.setEmail("editar@us.es");
+		forId.getUserAccount().setUsername("editanding");
+		forId.getUserAccount().setPassword("123456ab");
+		Sponsor theId = this.sponsorService.save(forId);
+		super.authenticate(theId.getUserAccount().getUsername());
+		Sponsor s = this.sponsorService.findOne(theId.getId());
 		Sponsor clone = s.clone();
 		clone.setName("Walabonso");
 		clone.setSurname("Nieto-Perez Gordo");
@@ -164,10 +179,11 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	// FindByCreditCardId correcto
+	// IMPORTANTE: SI SE HACE UN POPULATE, PUEDE DAR ERROR PORQUE LA ID SE HA ACTUALIZADO, ESTE TEST DEBE FUNCIONAR CON UNA ID DE UNA CREDITCARD VALIDA.
 	@Test
 	public void testFindByCreditCardId1() {
 		Sponsor res;
-		res = this.sponsorService.findByCreditCardId(2333);
+		res = this.sponsorService.findByCreditCardId(2370);
 		Assert.notNull(res);
 	}
 
@@ -180,12 +196,12 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	// FindCreditCardsBySponsorId correcto
+	// IMPORTANTE: SI SE HACE UN POPULATE, PUEDE DAR ERROR PORQUE LA ID SE HA ACTUALIZADO, ESTE TEST DEBE FUNCIONAR CON UNA ID DE UN SPONSOR QUE TENGA SPONSORSHIPS CON CREDITCARDS
 	@Test
 	public void testFindCreditCardsBySponsorId1() {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(2312));
+		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(2346));
 		Assert.notEmpty(collCC);
-		Assert.isTrue(collCC.size() == 2);
 	}
 
 	// FindCreditCardsBySponsorId incorrecto
