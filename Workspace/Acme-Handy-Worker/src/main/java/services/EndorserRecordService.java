@@ -39,11 +39,18 @@ public class EndorserRecordService {
 	public EndorserRecord create(){
 		EndorserRecord result;
 		HandyWorker principal;
+		
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
 		result= new EndorserRecord();
 		Assert.notNull(result);
+		
+		result.setFullName("FullName");
+		result.setEmail("Email@.com");
+		result.setPhoneNumber("PhoneNumber");
+		result.setLinkedinLink("linkedinlink.com");
+		
 		
 		return result;
 		

@@ -67,19 +67,20 @@ public class HandyWorkerService {
 	}
 
 	public HandyWorker save(final HandyWorker handyWorker) {
-		HandyWorker result;
+		HandyWorker saved;
 		Assert.notNull(handyWorker);
 
 		if (handyWorker.getId() == 0) {
 			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 			handyWorker.getUserAccount().setPassword(passwordEncoder.encodePassword(handyWorker.getUserAccount().getPassword(), null));
 		} else {
-			result = this.findByPrincipal();
-			Assert.notNull(result);
+			HandyWorker principal;
+			principal = this.findByPrincipal();
+			Assert.notNull(principal);
 		}
-		result = this.handyWorkerRepository.save(handyWorker);
-		this.handyWorkerRepository.flush();
-		return result;
+		saved = this.handyWorkerRepository.save(handyWorker);
+		
+		return saved;
 
 	}
 

@@ -60,4 +60,20 @@ public class FinderServiceTest extends AbstractTest {
 		Assert.isTrue(result.size()==2);
 		
 	}
+	
+	@Test
+	public void testCreateAndSave(){
+	
+		
+		
+	}
+	
+	
+	@Test
+	public void testDelete(){
+		
+		
+		
+		
+	}
 }

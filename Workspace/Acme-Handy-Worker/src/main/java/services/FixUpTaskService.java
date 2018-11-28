@@ -12,8 +12,12 @@ import org.springframework.util.Assert;
 import repositories.FixUpTaskRepository;
 import domain.Application;
 
+import domain.Category;
+import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Warranty;
+
 
 
 @Service
@@ -57,9 +61,9 @@ public class FixUpTaskService {
 		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
 		result.setEndMoment(new Date(1425942200000L));
 		result.setApplications(new HashSet<Application>());
-		
-		
-		
+		result.setComplaints(new HashSet<Complaint> ());
+		result.setCategory(new Category());
+		result.setWarranty(new Warranty());
 
 		return result;
 
@@ -90,9 +94,11 @@ public class FixUpTaskService {
 		Customer principal;
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());
-		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
-		Assert.isTrue(fixUpTask.getId()!=0);
+		//Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
+		Assert.isTrue(fixUpTask.getId()==0);
 		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		Assert.notNull(fixUpTask.getCategory());
+		Assert.notNull(fixUpTask.getWarranty());
 		
 		principal=this.customerService.findByPrincipal();
 		Assert.notNull(principal);
@@ -125,6 +131,10 @@ public class FixUpTaskService {
 	// Other business methods--------
 	// resitricciones de datos y restricciones de acceso
 	
+	
+	
+	
+	//deberian de ir en el servico del admin 
 	public Double[] findApplicationsNumberOperations(){
 		Double [] res=this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;
