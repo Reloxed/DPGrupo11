@@ -131,19 +131,19 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	// TODO Comprobar contraseña
-	// //Contraseña incorrecta
-	// @Test
-	// public void testSave4() {
-	// Sponsor res;
-	// Sponsor s = this.sponsorService.create();
-	// s.setName("Walabonso");
-	// s.setSurname("Nieto-Perez Gordo");
-	// s.setEmail("wakawaka@us.es");
-	// s.getUserAccount().setUsername("WNPGG");
-	// s.getUserAccount().setPassword("1");
-	// res = this.sponsorService.save(s);
-	// Assert.notNull(res);
-	// }
+	 //Contraseña incorrecta
+//	 @Test
+//	 public void testSave4() {
+//	 Sponsor res;
+//	 Sponsor s = this.sponsorService.create();
+//	 s.setName("Walabonso");
+//	 s.setSurname("Nieto-Perez Gordo");
+//	 s.setEmail("wakawaka@us.es");
+//	 s.getUserAccount().setUsername("WNPGG");
+//	 s.getUserAccount().setPassword("1");
+//	 res = this.sponsorService.save(s);
+//	 Assert.notNull(res);
+//	 }
 
 	// Intentamos modificar el isSuspicious
 	@Test(expected = IllegalArgumentException.class)
