@@ -54,6 +54,7 @@ public class ApplicationService {
 		Assert.notNull(applicant);
 
 		result = new Application();
+		result.setRegisteredMoment(new Date(System.currentTimeMillis() - 1));
 		Assert.notNull(result);
 
 		return result;
@@ -72,8 +73,8 @@ public class ApplicationService {
 		Assert.notNull(a);
 		applicant = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(applicant);
-
 		fixUpTask = a.getFixUpTask();
+
 		if (a.getId() == 0) { // Not saved in database yet
 			a.setStatus("PENDING");
 			registeredMoment = new Date(System.currentTimeMillis() - 1);
@@ -165,13 +166,11 @@ public class ApplicationService {
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 
-		/*
-		 * if (a.getStatus() == "ACCEPTED") {
-		 * creditCard = this.creditCardService.create();
-		 * saved = this.creditCardService.save(creditCard);
-		 * Assert.isTrue(this.creditCardService.findAll().contains(saved));
-		 * }
-		 */
+		if (a.getStatus() == "ACCEPTED") {
+			creditCard = this.creditCardService.create();
+			saved = this.creditCardService.save(creditCard);
+			Assert.isTrue(this.creditCardService.findAll().contains(saved));
+		}
 	}
 
 	public void reject(final Application a) {
@@ -180,6 +179,7 @@ public class ApplicationService {
 
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() != 0);
+		System.out.println("Id de la application: " + a.getId());
 
 		customer = this.customerService.findByPrincipal();
 		Assert.notNull(customer);

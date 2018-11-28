@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Application;
+import domain.FixUpTask;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -29,6 +30,12 @@ public class ApplicationServiceTest extends AbstractTest {
 	// Supported services ---------------------------------------------
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	// Tests ------------------------------------------------------------------
@@ -53,16 +60,19 @@ public class ApplicationServiceTest extends AbstractTest {
 		Application a;
 		Application saved;
 		Collection<Application> applications;
-
+		//final MessageBox inBoxCustomer, inBoxHW, outBoxCustomer, outBoxHW;
 		a = this.applicationService.create();
-		a.setFixUpTask(this.fixUpTaskService.findOne(2429));
+		/*
+		 * inBoxCustomer = this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(a.getId()));
+		 * System.out.println("Tamaño inBoxCustomer = " + inBoxCustomer.getMessages().size());
+		 * a.setFixUpTask(this.fixUpTaskService.findOne(2429));
+		 */
 		saved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
 		Assert.isTrue(applications.contains(saved));
 
 		super.unauthenticate();
 	}
-
 	@Test
 	public void testFindAll() {
 		super.authenticate("handyWorker1");
@@ -74,14 +84,40 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
+	@Test
 	public void testAccept() {
+		super.authenticate("handyWorker1");
+		Application a, saved;
+		final FixUpTask fixUpTask;
+
+		a = this.applicationService.create();
+		a.setFixUpTask(this.fixUpTaskService.create());
+		saved = this.applicationService.save(a);
+		Assert.isTrue(saved.getStatus() == "PENDING");
+
+		super.unauthenticate();
+
 		super.authenticate("customer1");
+		this.applicationService.accept(saved);
+		Assert.isTrue(saved.getStatus() == "ACCEPTED");
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testReject() {
+		super.authenticate("handyWorker1");
 		Application a;
 
 		a = this.applicationService.create();
+		a.setFixUpTask(this.fixUpTaskService.findOne(2427));
 		this.applicationService.save(a);
-		this.applicationService.accept(a);
-		Assert.isTrue(a.getStatus() == "ACCEPTED");
+		Assert.isTrue(a.getStatus() == "PENDING");
+		super.unauthenticate();
+
+		super.authenticate("customer1");
+		this.applicationService.reject(a);
+		Assert.isTrue(a.getStatus() == "REJECTED");
 
 		super.unauthenticate();
 	}
