@@ -82,7 +82,6 @@ public class CreditCardServiceTest extends AbstractTest{
 		
 		String username = "customer1";		
 		CreditCard saved;
-		Collection<CreditCard> collCC;
 		super.authenticate(username);
 		CreditCard creditcard = this.creditCardService.create(); 		
 		
