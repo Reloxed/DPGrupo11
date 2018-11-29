@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,8 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Complaint;
+import domain.Customer;
+import domain.FixUpTask;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -28,6 +32,21 @@ public class ComplaintServiceTest extends AbstractTest {
 
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private UtilityService		utilityService;
+
+	@Autowired
+	private CategoryService		categoryService;
+
+	@Autowired
+	private WarrantyService		warrantyService;
+
+	@Autowired
+	private ApplicationService	applicationService;
 
 
 	@Test
@@ -54,8 +73,44 @@ public class ComplaintServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
+
+		// Creating fix up task
+
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.setApplications(this.applicationService.findAll());
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+
+		super.unauthenticate();
+
+		// Creating complaint 
+
 		super.authenticate("customer1");
-		Complaint c, saved;
+		Complaint c, savedComplaint;
 		Collection<Complaint> complaints;
 
 		complaints = this.complaintService.findAll();
@@ -64,10 +119,10 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.notNull(c);
 
 		c.setDescription("Description");
-		c.setFixUpTask(this.fixUpTaskService.findOne(2458));
-		saved = this.complaintService.save(c);
+		c.setFixUpTask(this.fixUpTaskService.findOne(saved.getId()));
+		savedComplaint = this.complaintService.save(c);
 
-		Assert.isTrue(this.complaintService.findAll().contains(saved));
+		Assert.isTrue(this.complaintService.findAll().contains(savedComplaint));
 		Assert.isTrue(this.complaintService.findAll().size() == 4);
 
 		super.unauthenticate();
@@ -75,8 +130,44 @@ public class ComplaintServiceTest extends AbstractTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSaveFail() {
+
+		// Creating fix up task
+
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.setApplications(this.applicationService.findAll());
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+
+		super.unauthenticate();
+
+		// Creating complaint
+
 		super.authenticate("handyWorker1");
-		Complaint c, saved;
+		Complaint c, savedComplaint;
 		Collection<Complaint> complaints;
 
 		complaints = this.complaintService.findAll();
@@ -85,10 +176,10 @@ public class ComplaintServiceTest extends AbstractTest {
 		Assert.notNull(c);
 
 		c.setDescription("Description");
-		c.setFixUpTask(this.fixUpTaskService.findOne(2458));
-		saved = this.complaintService.save(c);
+		c.setFixUpTask(this.fixUpTaskService.findOne(saved.getId()));
+		savedComplaint = this.complaintService.save(c);
 
-		Assert.isTrue(this.complaintService.findAll().contains(saved));
+		Assert.isTrue(this.complaintService.findAll().contains(savedComplaint));
 		Assert.isTrue(this.complaintService.findAll().size() == 4);
 
 		super.unauthenticate();

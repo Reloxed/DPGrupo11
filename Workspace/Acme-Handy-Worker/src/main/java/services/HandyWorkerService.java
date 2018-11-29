@@ -1,13 +1,14 @@
-
 package services;
 
 import java.util.Collection;
 import java.util.HashSet;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
@@ -26,25 +27,28 @@ import domain.Tutorial;
 @Transactional
 public class HandyWorkerService {
 
-	//Managed repository-----------
+	// Managed repository-----------
 
 	@Autowired
-	private HandyWorkerRepository	handyWorkerRepository;
+	private HandyWorkerRepository handyWorkerRepository;
 
-	//Supporting services ----------
-
-	@Autowired
-	private MessageBoxService		messageBoxService;
+	// Supporting services ----------
 
 	@Autowired
-	private ActorService		actorService;
+	private MessageBoxService messageBoxService;
 
-	//Constructor ----------------------------------------------------
+	@Autowired
+	private ActorService actorService;
+
+	@Autowired
+	private FinderService finderService;
+
+	// Constructor ----------------------------------------------------
 	public HandyWorkerService() {
 		super();
 	}
 
-	//Simple CRUD methods-------
+	// Simple CRUD methods-------
 	public HandyWorker findOne(final int handyWorkerId) {
 		HandyWorker result;
 
@@ -54,6 +58,7 @@ public class HandyWorkerService {
 
 		return result;
 	}
+
 	public Collection<HandyWorker> findAll() {
 		Collection<HandyWorker> result;
 
@@ -64,86 +69,80 @@ public class HandyWorkerService {
 		return result;
 
 	}
-	
+
 	public HandyWorker create() {
 		HandyWorker result;
 		Actor principal;
-		
+
 		Authority authority = new Authority();
 		UserAccount ua = new UserAccount();
-		
-		authority.setAuthority(Authority.HANDYWORKER);
-		ua.addAuthority(authority);
-	
-		
-		try{
-			principal=this.actorService.findByPrincipal();
+
+		try {
+			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
-			
+
 			return null;
-			
-		}catch(IllegalArgumentException e){
-			
+
+		} catch (IllegalArgumentException e) {
+
 			result = new HandyWorker();
-			
+
+			authority.setAuthority(Authority.HANDYWORKER);
+			ua.addAuthority(authority);
+
 			result.setUserAccount(ua);
-			
+
 			result.setIsSuspicious(false);
-			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			result.setMessageBoxes(this.messageBoxService
+					.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
 			result.setTutorial(new HashSet<Tutorial>());
-			
 			return result;
 		}
-		
-		
-
-	
-		
-
 	}
 
 	public HandyWorker save(final HandyWorker handyWorker) {
 		HandyWorker saved;
 		Assert.notNull(handyWorker);
-		
+
 		if (handyWorker.getId() == 0) {
-			try{
+			try {
 				Actor principal;
-				principal =this.actorService.findByPrincipal();
+				principal = this.actorService.findByPrincipal();
 				Assert.isNull(principal);
-			} catch(IllegalArgumentException e){
+			} catch (IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				
-				handyWorker.getUserAccount()
-				    .setPassword(passwordEncoder.encodePassword
-						(handyWorker.getUserAccount().getPassword(),null));
+
+				handyWorker.getUserAccount().setPassword(
+						passwordEncoder.encodePassword(handyWorker
+								.getUserAccount().getPassword(), null));
 			}
-			
+
 		} else {
-			
+
 			HandyWorker principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
+			Assert.isTrue(principal.getUserAccount().getId() == handyWorker
+					.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == handyWorker
+					.getIsSuspicious());
 			handyWorker.setMake(principal.getName());
-			handyWorker.setFinder(new Finder());
 			handyWorker.setCurriculum(new Curriculum());
-			handyWorker.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
-			
+			handyWorker.setMessageBoxes(this.messageBoxService
+					.createSystemMessageBoxes());
+
 		}
-		saved = this.handyWorkerRepository.saveAndFlush(handyWorker);
-		
+		saved = this.handyWorkerRepository.save(handyWorker);
+		Assert.notNull(saved);
+		this.handyWorkerRepository.flush();
+
 		return saved;
 
 	}
 
-	
+	// Other business methods--------
 
-	//Other business methods--------
-	//handyworker can write a tutorial,a note,may endorse,
-	//search in a finder ,can register a cv,apply for a fixuptask
 	public HandyWorker findByPrincipal() {
 		HandyWorker res;
 		UserAccount userAccount;
@@ -157,29 +156,30 @@ public class HandyWorkerService {
 		return res;
 	}
 
-
 	public HandyWorker findHandyWorkerByUserAccount(final int userAccountId) {
 		Assert.isTrue(userAccountId != 0);
 
 		HandyWorker result;
 
-		result = this.handyWorkerRepository.findHandyWorkerByUserAccount(userAccountId);
+		result = this.handyWorkerRepository
+				.findHandyWorkerByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
 		return result;
 	}
-	public Collection<HandyWorker> findMoreApplicationsThanAvg(){
-		Collection<HandyWorker> colHandys=this.handyWorkerRepository.findMoreApplicationsThanAvg();
+
+	public Collection<HandyWorker> findMoreApplicationsThanAvg() {
+		Collection<HandyWorker> colHandys = this.handyWorkerRepository
+				.findMoreApplicationsThanAvg();
 		return colHandys;
-		
-	}
-	
-	public Collection<HandyWorker> findTopComplaintsHandyWorkers(){
-		Collection <HandyWorker> colHandys=this.handyWorkerRepository.findTopComplaintsHandyWorkers();
-		return colHandys;
+
 	}
 
-	
+	public Collection<HandyWorker> findTopComplaintsHandyWorkers() {
+		Collection<HandyWorker> colHandys = this.handyWorkerRepository
+				.findTopComplaintsHandyWorkers();
+		return colHandys;
+	}
 
 }

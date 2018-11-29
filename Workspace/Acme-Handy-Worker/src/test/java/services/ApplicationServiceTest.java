@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -14,9 +16,9 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.MessageBox;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -39,9 +41,6 @@ public class ApplicationServiceTest extends AbstractTest {
 	private CustomerService		customerService;
 
 	@Autowired
-	private MessageBoxService	messageBoxService;
-
-	@Autowired
 	private CategoryService		categoryService;
 
 	@Autowired
@@ -49,6 +48,9 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	@Autowired
 	private WarrantyService		warrantyService;
+
+	@Autowired
+	private CreditCardService	creditCardService;
 
 
 	// Tests ------------------------------------------------------------------
@@ -71,8 +73,9 @@ public class ApplicationServiceTest extends AbstractTest {
 		// Creating fixUpTask 
 		FixUpTask result;
 		Customer principal;
-		FixUpTask fixUpTaskSaved;
-
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
 		super.authenticate("customer2");
 
 		principal = this.customerService.findByPrincipal();
@@ -83,33 +86,34 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setDescription("descripcion");
 		result.setAddress("Mairena");
-		result.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		result.setEndMoment(new Date(203984203402L));
-		result.setCategory(this.categoryService.findOne(2391));
-		result.setWarranty(this.warrantyService.findOne(2415));
-		result.setApplications(this.applicationService.findAll());
 
-		fixUpTaskSaved = this.fixUpTaskService.save(result);
-		Assert.notNull(fixUpTaskSaved);
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.setApplications(new ArrayList<Application>());
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
 
 		super.unauthenticate();
 
 		super.authenticate("handyWorker1");
 
 		Application a;
-		Application saved;
+		Application apSaved;
 		Collection<Application> applications;
-		final MessageBox inBoxCustomer, inBoxHW, outBoxCustomer, outBoxHW;
 		a = this.applicationService.create();
 
-		inBoxCustomer = this.messageBoxService.findInBoxActor(this.customerService.findCustomerByApplicationId(a.getId()));
-		inBoxHW = this.messageBoxService.findInBoxActor(a.getApplicant());
+		a.setFixUpTask(saved);
 
-		a.setFixUpTask(fixUpTaskSaved);
-
-		saved = this.applicationService.save(a);
+		apSaved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
-		Assert.isTrue(applications.contains(saved));
+		Assert.isTrue(applications.contains(apSaved));
 
 		super.unauthenticate();
 	}
@@ -126,38 +130,119 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	@Test
 	public void testAccept() {
-		super.authenticate("handyWorker1");
-		Application a, saved;
-		final FixUpTask fixUpTask;
 
-		a = this.applicationService.create();
-		a.setFixUpTask(this.fixUpTaskService.create());
-		saved = this.applicationService.save(a);
-		Assert.isTrue(saved.getStatus() == "PENDING");
+		// Creating fixUpTask 
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.setApplications(new ArrayList<Application>());
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
 
 		super.unauthenticate();
 
 		super.authenticate("customer1");
-		this.applicationService.accept(saved);
-		Assert.isTrue(saved.getStatus() == "ACCEPTED");
+		CreditCard savedCC;
+		final CreditCard creditcard = this.creditCardService.create();
+
+		creditcard.setHolderName("Pedro Picapiedra");
+		creditcard.setBrandName("VISA");
+		creditcard.setNumber("8731648964261256");
+		creditcard.setExpirationMonth(12);
+		creditcard.setExpirationYear(21);
+		creditcard.setCVV(187);
+		System.out.println(creditcard);
+		savedCC = this.creditCardService.save(creditcard);
+		System.out.println(savedCC);
+		Assert.notNull(savedCC);
+
+		super.authenticate("handyWorker1");
+
+		Application a, apSaved;
+
+		a = this.applicationService.create();
+		a.setFixUpTask(saved);
+		apSaved = this.applicationService.save(a);
+		Assert.isTrue(apSaved.getStatus() == "PENDING");
+
+		super.unauthenticate();
+
+		super.authenticate("customer1");
+		this.applicationService.accept(apSaved, savedCC);
+		Assert.isTrue(apSaved.getStatus() == "ACCEPTED");
 
 		super.unauthenticate();
 	}
 
 	@Test
 	public void testReject() {
-		super.authenticate("handyWorker1");
-		Application a;
+		// Creating fixUpTask 
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
 
-		a = this.applicationService.create();
-		a.setFixUpTask(this.fixUpTaskService.findOne(2427));
-		this.applicationService.save(a);
-		Assert.isTrue(a.getStatus() == "PENDING");
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.setApplications(new ArrayList<Application>());
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+
 		super.unauthenticate();
 
-		super.authenticate("customer1");
-		this.applicationService.reject(a);
-		Assert.isTrue(a.getStatus() == "REJECTED");
+		super.authenticate("handyWorker1");
+		Application a, apSaved;
+
+		a = this.applicationService.create();
+		a.setFixUpTask(saved);
+		apSaved = this.applicationService.save(a);
+		Assert.isTrue(apSaved.getStatus() == "PENDING");
+
+		super.unauthenticate();
+
+		super.authenticate("customer2");
+		this.applicationService.reject(apSaved);
+		Assert.isTrue(apSaved.getStatus() == "REJECTED");
 
 		super.unauthenticate();
 	}

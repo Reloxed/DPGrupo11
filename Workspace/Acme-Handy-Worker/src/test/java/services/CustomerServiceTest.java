@@ -41,22 +41,16 @@ public class CustomerServiceTest extends AbstractTest{
 		@Test
 		public void testFindAllCustomers() {
 			Collection<Customer> customers;
-			String username = "customer1";
-			super.authenticate(username);
 			customers = this.customerService.findAll();
 			Assert.notNull(customers);
 			Assert.notEmpty(customers);
-			super.unauthenticate();	
 		}
 		
 		@Test(expected=IllegalArgumentException.class)
 		public void testNotFindOneCustomer() {
 			Customer customer;
-			String username = "customer1";
-			super.authenticate(username);
-			customer = this.customerService.findOne(11811824);
-			Assert.notNull(customer);
-			super.unauthenticate();	
+			customer = this.customerService.findOne(2);
+			Assert.notNull(customer);	
 		}
 		
 		@Test
@@ -75,9 +69,9 @@ public class CustomerServiceTest extends AbstractTest{
 			customer.getUserAccount().setUsername("Pedro28");
 			customer.getUserAccount().setPassword("adsadd252f");
 			saved = this.customerService.save(customer);
+			super.unauthenticate();	
 			customer = this.customerService.findOne(saved.getId());
 			Assert.notNull(customer);
-			super.unauthenticate();	
 		}
 		
 		

@@ -84,9 +84,6 @@
 		<property name="offeredPrice" value="40." />
 		<property name="comment"
 			value="I am experienced in window reparation because..." />
-		<property name="creditCard">
-			<null></null>
-		</property>
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>
@@ -98,7 +95,7 @@
 	<!-- Application 2 for the FUP1 of the customer 1 -->
 	<bean id="applicationf1_1_2" class="domain.Application">
 		<property name="registeredMoment" value="08/11/2018 18:43" />
-		<property name="status" value="PENDING" />
+		<property name="status" value="ACCEPTED" />
 		<property name="offeredPrice" value="43." />
 		<property name="comment"
 			value="I am better than other Handy Workers because..." />
@@ -117,9 +114,6 @@
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="80." />
 		<property name="comment" value="I can fix it" />
-		<property name="creditCard">
-			<ref bean="creditCard2" />
-		</property>
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
@@ -133,9 +127,6 @@
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
 		<property name="comment" value="I can fix it" />
-		<property name="creditCard">
-			<ref bean="creditCard2" />
-		</property>
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
@@ -375,7 +366,7 @@
 		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+034" />
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 		<property name="spamWords"
@@ -1635,7 +1626,7 @@
 			value="Full examination of the repplicant to determine how bad the damage is" />
 		<property name="startMoment" value="10/11/2018 08:00" />
 		<property name="endMoment" value="10/11/2018 11:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2" />
+		<property name="fixUpTask" ref="fixUpTask1_1" />
 	</bean>
 
 	<!-- Phase 2 of the application 1 of the FUP 1 of the customer 2 -->
@@ -1645,7 +1636,7 @@
 			value="Once found all the imperfections, I will proceed to..." />
 		<property name="startMoment" value="10/11/2018 11:00" />
 		<property name="endMoment" value="10/11/2018 18:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2" />
+		<property name="fixUpTask" ref="fixUpTask1_1" />
 	</bean>
 
 	<!-- Phase 3 of the application 1 of the FUP 1 of the customer 2 -->
@@ -1654,7 +1645,7 @@
 		<property name="description" value="Test the changes applied to the replicant" />
 		<property name="startMoment" value="10/11/2018 18:00" />
 		<property name="endMoment" value="10/11/2018 20:00" />
-		<property name="fixUpTask" ref="fixUpTask1_2" />
+		<property name="fixUpTask" ref="fixUpTask1_1" />
 	</bean>
 
 	<!-- FINDER -->

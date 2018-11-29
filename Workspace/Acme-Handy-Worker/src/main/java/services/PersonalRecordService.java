@@ -60,6 +60,8 @@ public class PersonalRecordService {
 		Assert.notNull(principal);
 
 		Assert.notNull(personalRecord);
+		Assert.isTrue(personalRecord.getLinkedinLink().startsWith(
+				"https://www.linkedin.com/"));
 
 		res = personalRecord;
 

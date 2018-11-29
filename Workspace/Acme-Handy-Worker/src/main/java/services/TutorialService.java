@@ -1,11 +1,13 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.TutorialRepository;
@@ -45,10 +47,11 @@ public class TutorialService {
 
 		result = new Tutorial();
 
-		Section s = new Section();
-		Collection<Section> sections = Collections.<Section> emptyList();
-		sections.add(s);
+		Collection<Section> sections = new ArrayList<Section>();
 		result.setSections(sections);
+		
+		Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
+		result.setSponsorships(sponsorships);
 
 		return result;
 	}
@@ -80,12 +83,12 @@ public class TutorialService {
 		Assert.notNull(principal);
 
 		if (t.getId() == 0) {
-			tutorials = Collections.<Tutorial> emptyList();
+			tutorials = new ArrayList<>();
 			tutorials.addAll(principal.getTutorial());
 			tutorials.add(t);
 			principal.setTutorial(tutorials);
 
-			sponsorships = Collections.<Sponsorship> emptyList();
+			sponsorships = new ArrayList<>();
 			sponsorships.addAll(this.sponsorshipService.findAll());
 			t.setSponsorships(sponsorships);
 		} else {
@@ -93,8 +96,8 @@ public class TutorialService {
 		}
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] spamWords = this.systemConfigurationService.findSpamWords()
+				.split(",");
 		String[] title = t.getTitle().split(" ");
 		for (String word : spamWords) {
 			for (String titleWord : title) {
@@ -108,24 +111,27 @@ public class TutorialService {
 				break;
 			}
 		}
-
-		containsSpam = false;
-		String[] summary = t.getSummary().split(" ");
-		for (String word : spamWords) {
-			for (String summaryWord : summary) {
-				if (summaryWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
+		if (principal.getIsSuspicious() == false) {
+			containsSpam = false;
+			String[] summary = t.getSummary().split(" ");
+			for (String word : spamWords) {
+				for (String summaryWord : summary) {
+					if (summaryWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
 					break;
 				}
 			}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
 		}
-
 		result = this.tutorialRepository.save(t);
-
+		Assert.notNull(result);
+		System.out.println(result.getVersion());
+//		this.tutorialRepository.flush();
+//		principal = this.handyWorkerService.save(principal);
 		return result;
 	}
 
@@ -140,7 +146,7 @@ public class TutorialService {
 		Assert.notNull(principal);
 
 		if (principal.getTutorial().contains(t)) {
-			tutorials = Collections.<Tutorial> emptyList();
+			tutorials = new ArrayList<>();
 			tutorials.addAll(principal.getTutorial());
 			tutorials.remove(t);
 			principal.setTutorial(tutorials);

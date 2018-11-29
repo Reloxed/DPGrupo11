@@ -52,12 +52,9 @@ public class EducationRecordServiceTest extends AbstractTest{
 	@Test
 	public void testFindAllEducationRecords() {
 		Collection<EducationRecord> educationRecords;
-		String username = "handyWorker1";
-		super.authenticate(username);
 		educationRecords = educationRecordService.findAll();
 		Assert.notNull(educationRecords);
 		Assert.notEmpty(educationRecords);
-		super.unauthenticate();	
 	}
 	
 	@Test
@@ -74,22 +71,21 @@ public class EducationRecordServiceTest extends AbstractTest{
 		educationRecord.setStartDate(startDate.getTime());
 		educationRecord.setInstitutionName("Universidad de Sevilla");
 		saved = educationRecordService.save(educationRecord);
+		
+		super.unauthenticate();	
+		
 		educationRecord = educationRecordService.findOne(saved.getId());
 		Assert.notNull(educationRecord);
 		
-		super.unauthenticate();		
 	}
 	
 	@Test(expected=IllegalArgumentException.class) 
 	public void testNotFindOneEducationRecords() {
 		EducationRecord educationRecord;
-		String username = "handyWorker1";
-		super.authenticate(username);
 		
 		// Wrong educationRecord.id
 		educationRecord = educationRecordService.findOne(32);
 		Assert.notNull(educationRecord);
-		super.unauthenticate();	
 	}
 	
 	@Test
@@ -107,10 +103,11 @@ public class EducationRecordServiceTest extends AbstractTest{
 		educationRecord.setStartDate(startDate.getTime());
 		educationRecord.setInstitutionName("Universidad de Sevilla");
 		saved = educationRecordService.save(educationRecord);
+		super.unauthenticate();	
+		
 		educationRecords = educationRecordService.findAll();
 		Assert.isTrue(educationRecords.contains(saved));
-		
-		super.unauthenticate();		
+			
 	}
 	
 	@Test

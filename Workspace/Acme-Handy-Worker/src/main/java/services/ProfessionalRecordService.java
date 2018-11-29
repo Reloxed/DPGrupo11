@@ -27,6 +27,9 @@ public class ProfessionalRecordService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public ProfessionalRecord create() {
@@ -66,6 +69,66 @@ public class ProfessionalRecordService {
 
 		Assert.notNull(professionalRecord);
 
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		if (professionalRecord.getComments() != null) {
+			String[] comments = professionalRecord.getComments().split(
+					"(¿¡,.-_/!?) ");
+			for (String word : spamWords) {
+				for (String titleWord : comments) {
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+			if (!containsSpam) {
+				if (professionalRecord.getRole() != null) {
+					String[] role = professionalRecord.getRole().split(
+							"(¿¡,.-_/!?) ");
+					for (String word : spamWords) {
+						for (String titleWord : role) {
+							if (titleWord.toLowerCase().contains(
+									word.toLowerCase())) {
+								containsSpam = true;
+								break;
+							}
+						}
+						if (containsSpam) {
+							principal.setIsSuspicious(true);
+							break;
+						}
+					}
+				}
+				if (!containsSpam) {
+					if (professionalRecord.getCompanyName() != null) {
+						String[] companyName = professionalRecord.getRole()
+								.split("(¿¡,.-_/!?) ");
+						for (String word : spamWords) {
+							for (String titleWord : companyName) {
+								if (titleWord.toLowerCase().contains(
+										word.toLowerCase())) {
+									containsSpam = true;
+									break;
+								}
+							}
+							if (containsSpam) {
+								principal.setIsSuspicious(true);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		System.out.println("¿Contiene spam?" + containsSpam);
+
 		if (professionalRecord.getEndDate() != null) {
 			Assert.isTrue(professionalRecord.getStartDate().before(
 					professionalRecord.getEndDate()));
@@ -80,6 +143,7 @@ public class ProfessionalRecordService {
 		res = this.professionalRecordRepository
 				.saveAndFlush(professionalRecord);
 		Assert.notNull(res);
+
 		if (professionalRecord.getId() == 0) {
 			professionalRecords.add(res);
 			principal.getCurriculum().setProfessionalRecords(
