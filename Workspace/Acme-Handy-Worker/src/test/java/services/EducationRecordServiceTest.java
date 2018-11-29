@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.EducationRecord;
+import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"})
@@ -25,6 +26,11 @@ public class EducationRecordServiceTest extends AbstractTest{
 
 	@Autowired
 	private EducationRecordService educationRecordService;	
+	
+	// Supporting Services ----------------------------------------------------
+	
+	@Autowired
+	private HandyWorkerService handyWorkerService;
 	
 	// Tests ------------------------------------------------------------------
 	
@@ -84,7 +90,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 		EducationRecord educationRecord;
 		
 		// Wrong educationRecord.id
-		educationRecord = educationRecordService.findOne(32);
+		educationRecord = educationRecordService.findOne(-2);
 		Assert.notNull(educationRecord);
 	}
 	
@@ -201,6 +207,27 @@ public class EducationRecordServiceTest extends AbstractTest{
 		super.unauthenticate();		
 	}
 
+	@Test
+	public void testDeleteEducationRecord() {
+		HandyWorker user;
+		Collection<EducationRecord> educationRecords;
+		EducationRecord educationRecord, deletedER;
+		String username = "handyWorker2";
+		super.authenticate(username);
+		
+		user = this.handyWorkerService.findByPrincipal();
+		educationRecords = user.getCurriculum().getEducationRecords();
+		Assert.notEmpty(educationRecords);
+		educationRecord = educationRecords.iterator().next();
+		
+		this.educationRecordService.delete(educationRecord);
+		
+		deletedER = this.educationRecordService.findOne(educationRecord.getId());
+		Assert.isNull(deletedER);
+
+		super.unauthenticate();
+	}
+	
 
 }
 

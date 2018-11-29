@@ -28,6 +28,10 @@ public class EducationRecordService {
 	
 	@Autowired
 	private CurriculumService curriculumService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+	
 		
 	// Simple CRUD Methods
 	
@@ -72,11 +76,64 @@ public class EducationRecordService {
 			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
 		}
 		
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] diplomaTitle = educationRecord.getDiplomaTitle().split(
+				"(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : diplomaTitle) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			String[] institutionName = educationRecord.getInstitutionName().split("(¿¡,.-_/!?) ");
+			for (String word : spamWords) {
+				for (String titleWord : institutionName) {
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+			if(educationRecord.getComments()!=null){
+				if (!containsSpam) {
+					String[] comments = educationRecord.getComments().split(
+							"(¿¡,.-_/!?) ");
+					for (String word : spamWords) {
+						for (String titleWord : comments) {
+							if (titleWord.toLowerCase()
+									.contains(word.toLowerCase())) {
+								containsSpam = true;
+								break;
+							}
+						}
+						if (containsSpam) {
+							principal.setIsSuspicious(true);
+							break;
+						}
+					}
+				}
+			}
+		}
+			
 		res = this.educationRecordRepository.save(educationRecord);
 		this.educationRecordRepository.flush();
+		
 
 		educationRecords = principal.getCurriculum().getEducationRecords();
-
+		
 		if (educationRecord.getId() == 0) {
 			educationRecords.add(res);
 			Curriculum curriculum;
