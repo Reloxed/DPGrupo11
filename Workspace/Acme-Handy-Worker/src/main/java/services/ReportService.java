@@ -33,6 +33,9 @@ public class ReportService {
 	@Autowired
 	private NoteService noteService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Report create() {
@@ -68,6 +71,23 @@ public class ReportService {
 
 		Assert.isTrue(report.getPublishedMoment().before(
 				new Date(System.currentTimeMillis())));
+
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] comments = report.getDescription().split("(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : comments) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
 
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
