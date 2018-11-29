@@ -25,6 +25,8 @@ public class CurriculumServiceTest extends AbstractTest{
 	@Autowired
 	private CurriculumService curriculumService;	
 	
+	// Supporting Services ----------------------------------------------------
+	
 	@Autowired
 	private PersonalRecordService personalRecordService;	
 	
@@ -58,7 +60,9 @@ public class CurriculumServiceTest extends AbstractTest{
 	@Test
 	public void testFindOneCurriculum() {
 		Curriculum curriculum;
-		curriculum = this.curriculumService.findOne(2475);
+		Collection<Curriculum> collC;
+		collC = this.curriculumService.findAll();
+		curriculum = this.curriculumService.findOne(collC.iterator().next().getId());
 		Assert.notNull(curriculum);
 		
 	}
@@ -66,7 +70,7 @@ public class CurriculumServiceTest extends AbstractTest{
 	@Test(expected=IllegalArgumentException.class)
 	public void testNotFindOneCurriculum() {
 		Curriculum curriculum;
-		curriculum = this.curriculumService.findOne(2);
+		curriculum = this.curriculumService.findOne(-2);
 		Assert.notNull(curriculum);
 	}
 	

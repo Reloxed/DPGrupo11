@@ -51,7 +51,7 @@ public class CustomerServiceTest extends AbstractTest{
 	@Test(expected=IllegalArgumentException.class)
 	public void testNotFindOneCustomer() {
 		Customer customer;
-		customer = this.customerService.findOne(2);
+		customer = this.customerService.findOne(-2);
 		Assert.notNull(customer);	
 	}
 	
@@ -150,6 +150,7 @@ public class CustomerServiceTest extends AbstractTest{
 	@Test
 	public void testFindersById() {
 		Customer customer, customerByCC, customerByApp;
+		Collection<Customer> collC;
 		Collection<CreditCard> collCC;
 		Collection<Application> collApp;
 		CreditCard creditCard;
@@ -159,7 +160,9 @@ public class CustomerServiceTest extends AbstractTest{
 		super.authenticate(username);
 		
 		// Testing findCreditCardsByCustomerId and findByCreditCardId
-		customer = this.customerService.findOne(2335);
+		
+		collC = this.customerService.findAll();
+		customer = this.customerService.findOne(collC.iterator().next().getId());
 		Assert.notNull(customer);
 		collCC = this.customerService.findCreditCardsByCustomerId(customer.getId());
 		Assert.notEmpty(collCC);

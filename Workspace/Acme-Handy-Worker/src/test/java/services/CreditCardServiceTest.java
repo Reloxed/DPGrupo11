@@ -93,9 +93,7 @@ public class CreditCardServiceTest extends AbstractTest{
 		creditcard.setExpirationMonth(12);
 		creditcard.setExpirationYear(21);
 		creditcard.setCVV(187);
-		System.out.println(creditcard);
 		saved = this.creditCardService.save(creditcard);
-		System.out.println(saved);
 		Assert.notNull(saved);
 		
 		super.unauthenticate();	
@@ -105,10 +103,12 @@ public class CreditCardServiceTest extends AbstractTest{
 	public void testFindOneCreditCard() {
 		String username = "customer1";		
 		CreditCard creditCard;
+		Collection<CreditCard> collCC;
 		
 		super.authenticate(username);
 		
-		creditCard = this.creditCardService.findOne(2488);
+		collCC = this.creditCardService.findAll();
+		creditCard = this.creditCardService.findOne(collCC.iterator().next().getId());
 		Assert.notNull(creditCard);
 		
 		super.unauthenticate();	

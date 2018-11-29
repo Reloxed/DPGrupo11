@@ -90,7 +90,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 		EducationRecord educationRecord;
 		
 		// Wrong educationRecord.id
-		educationRecord = educationRecordService.findOne(32);
+		educationRecord = educationRecordService.findOne(-2);
 		Assert.notNull(educationRecord);
 	}
 	
