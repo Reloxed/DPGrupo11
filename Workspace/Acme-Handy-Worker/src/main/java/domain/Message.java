@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import aj.org.objectweb.asm.Type;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -110,7 +113,7 @@ public class Message extends DomainEntity {
 		this.recipients = recipients;
 	}
 	@NotNull
-	@ManyToMany(mappedBy="messages")
+	@ManyToMany(mappedBy="messages" , cascade={CascadeType.ALL})
 	public Collection<MessageBox> getMessageBoxes() {
 		return messageBoxes;
 	}

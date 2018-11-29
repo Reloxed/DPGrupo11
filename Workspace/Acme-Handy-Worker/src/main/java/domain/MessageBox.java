@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
@@ -35,7 +36,7 @@ public class MessageBox extends DomainEntity {
 		this.isPredefined = isPredefined;
 	}
 
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.ALL})
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}

@@ -222,4 +222,16 @@ public class MessageBoxService {
 		
 		return result;
 	}
+	
+	public Collection<MessageBox> findAllByPrincipal(){
+		Collection<MessageBox>result;
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.messageBoxRepository.findAllByPrincipal(principal.getId());
+		Assert.notNull(result);
+		return result;
+	}
 }
