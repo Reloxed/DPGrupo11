@@ -52,7 +52,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		res.setFullName("fullName");
 		res.setEmail("example@example.com");
 		res.setPhoneNumber("+034695784231");
-		res.setLinkedinLink("https://linkedin.com/78sdio87");
+		res.setLinkedinLink("https://www.linkedin.com/78sdio87");
 
 		saved = this.personalRecordService.save(res);
 		Assert.notNull(saved);
