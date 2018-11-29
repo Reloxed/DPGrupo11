@@ -84,8 +84,7 @@ public class CreditCardServiceTest extends AbstractTest{
 		CreditCard saved;
 		Collection<CreditCard> collCC;
 		super.authenticate(username);
-		CreditCard creditcard = this.creditCardService.create(); 
-		
+		CreditCard creditcard = this.creditCardService.create(); 		
 		
 		creditcard.setHolderName("Pedro Picapiedra");
 		creditcard.setBrandName("VISA");
@@ -97,12 +96,24 @@ public class CreditCardServiceTest extends AbstractTest{
 		saved = this.creditCardService.save(creditcard);
 		System.out.println(saved);
 		Assert.notNull(saved);
-		collCC = creditCardService.findAll();
-		System.out.println(collCC);
-		Assert.isTrue(collCC.contains(saved));
-		creditcard = this.creditCardService.findOne(saved.getId());
-		Assert.notNull(creditcard);
-		super.unauthenticate();	
+	}
+	
+	@Test
+	public void testFindOneCreditCard() {
+		String username = "customer1";		
+		CreditCard creditCard;
+		super.authenticate(username);
+		creditCard = this.creditCardService.findOne(2488);
+		Assert.notNull(creditCard);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotFindOneCreditCard() {
+		String username = "customer1";		
+		CreditCard creditCard;
+		super.authenticate(username);
+		creditCard = this.creditCardService.findOne(8);
+		Assert.notNull(creditCard);
 	}
 
 }

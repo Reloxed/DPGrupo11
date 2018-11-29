@@ -114,13 +114,16 @@ public class CreditCardService {
 		if (ownerCustomer != null) {
 			Customer customer;
 			customer = this.customerService.findByCreditCardId(creditCardId);
+			Assert.notNull(customer);
 			Assert.isTrue(customer.equals(ownerCustomer));
-			creditCard = this.findOne(creditCardId);
+			creditCard = this.creditCardRepository.findOne(creditCardId);
 		} else {
 			Sponsor sponsor;
 			sponsor = this.sponsorService.findByCreditCardId(creditCardId);
-			Assert.isTrue(sponsor.equals(ownerCustomer));
-			creditCard = this.findOne(creditCardId);
+			Assert.notNull(ownerSponsor);
+			Assert.notNull(sponsor);
+			Assert.isTrue(sponsor.equals(ownerSponsor));
+			creditCard = this.creditCardRepository.findOne(creditCardId);
 		}
 
 		return creditCard;
@@ -156,22 +159,22 @@ public class CreditCardService {
 		Assert.notNull(res);
 		this.creditCardRepository.flush();
 
-		//Metemos la creditCard en la application o sponsorship correspondiente
-		if (ownerCustomer != null) {
-			if (creditCard.getId() == 0)
-				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
-					for (final Application application : fixUpTasks.getApplications())
-						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
-							application.setCreditCard(creditCard);
-							this.applicationService.save(application);
-						}
-		} else if (ownerSponsor != null)
-			if (creditCard.getId() == 0)
-				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
-					if (sponsorship.getCreditCard() == null) {
-						sponsorship.setCreditCard(creditCard);
-						this.sponsorshipService.save(sponsorship);
-					}
+//		//Metemos la creditCard en la application o sponsorship correspondiente
+//		if (ownerCustomer != null) {
+//			if (creditCard.getId() == 0)
+//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
+//					for (final Application application : fixUpTasks.getApplications())
+//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
+//							application.setCreditCard(creditCard);
+//							this.applicationService.save(application);
+//						}
+//		} else if (ownerSponsor != null)
+//			if (creditCard.getId() == 0)
+//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
+//					if (sponsorship.getCreditCard() == null) {
+//						sponsorship.setCreditCard(creditCard);
+//						this.sponsorshipService.save(sponsorship);
+//					}
 		return res;
 	}
 
