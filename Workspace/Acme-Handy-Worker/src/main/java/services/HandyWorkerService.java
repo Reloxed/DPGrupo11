@@ -19,7 +19,7 @@ import domain.Application;
 import domain.Curriculum;
 import domain.Finder;
 import domain.HandyWorker;
-import domain.SocialProfile;
+
 import domain.Tutorial;
 
 @Service

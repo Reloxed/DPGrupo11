@@ -3,7 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
+
 
 import javax.transaction.Transactional;
 
@@ -15,10 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import domain.Application;
-import domain.Curriculum;
-import domain.Finder;
+
 import domain.HandyWorker;
 import domain.MessageBox;
+
 import domain.Tutorial;
 
 import utilities.AbstractTest;
@@ -48,14 +48,30 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	
 	//Tests ---------------------------------------
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void TestFindOne(){
 		HandyWorker result;
-		result=this.handyWorkerService.findOne(2423);
+		result=this.handyWorkerService.findOne(323);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId()==2423);
 		
 		
+		
+	}
+	
+	// objeto sin loguear
+	@Test
+	public void testCreate() {
+		HandyWorker res;
+		res = this.handyWorkerService.create();
+		Assert.notNull(res);
+	}
+	
+	// id incorrecta
+	@Test(expected = IllegalArgumentException.class)
+	public void testFindOne() {
+		HandyWorker res;
+		res = this.handyWorkerService.findOne(23);
+		Assert.notNull(res);
 	}
 	
 	@Test
@@ -106,20 +122,22 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		
 		
 		Collection <MessageBox> mensajes=new ArrayList<MessageBox>();
-		mensajes.add(this.messageBoxService.findOne(2377));
+		mensajes.add(this.messageBoxService.findAll().iterator().next());
 		result.setMessageBoxes(mensajes);
 		result.setApplications(new HashSet<Application>());
 		result.setTutorial(new HashSet<Tutorial>());
 		
 		result.setMake("pepito");
-		result.setFinder(this.finderService.findOne(2417));
-		result.setCurriculum(this.curriculumService.findOne(2331));
+		result.setFinder(this.finderService.findAll().iterator().next());
+		result.setCurriculum(this.curriculumService.findAll().iterator().next());
 		
 		
 		saved=this.handyWorkerService.save(result);
 		Assert.notNull(saved);
 		super.unauthenticate();
 	}
+	
+	
 	
 	
 

@@ -88,41 +88,37 @@ public class FinderServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete(){
-		Finder result;
 		Finder toDelete;
 		HandyWorker principal;
+		int TimeInCache=3600;
 		 
 		super.authenticate("handyWorker2");
 
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		result=this.finderService.findOne(2418);
-		Assert.notNull(result);
+		toDelete=this.finderService.findAll().iterator().next();
+		Assert.notNull(toDelete);
 		
-		toDelete=this.finderService.deleteExpireFinders(5);
+		this.finderService.deleteExpireFinders(TimeInCache);
 		
-
-
-
-
-
 
 		super.unauthenticate();
 
 
 	}
 
-	@Test
+
+	@Test(expected = IllegalArgumentException.class)
 	public void TestFindOne(){
 		Finder result;
 
 		super.authenticate("handyWorker2");
 
 
-		result=this.finderService.findOne(2418);
+		result=this.finderService.findOne(218);
+		Assert.notNull(result);
 
-		Assert.isTrue(result.getId()==2418);
 		super.unauthenticate();
 
 

@@ -39,12 +39,13 @@ public class EndorsementServiceTest extends AbstractTest {
 	
 	//Tests ---------------------------------------
 	
-	@Test
+	//id incorrecta
+	@Test(expected = IllegalArgumentException.class)
 	public void TestFindOne(){
 		Endorsement result;
-		result=this.endorsementService.findOne(2425);
+		result=this.endorsementService.findOne(272);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId()==2425);
+		
 		
 	}
 	
@@ -69,8 +70,8 @@ public class EndorsementServiceTest extends AbstractTest {
 		Assert.notNull(principal);
 		
 		result=this.endorsementService.create();
-		result.setSender(this.endorsementService.findOne(2425).getSender());
-		result.setRecipient(this.endorsementService.findOne(2425).getRecipient());
+		result.setSender(this.endorsementService.findAll().iterator().next().getSender());
+		result.setRecipient(this.endorsementService.findAll().iterator().next().getRecipient());
 		result.setComment("saludos");
 		saved=this.endorsementService.save(result);
 		Assert.notNull(saved);
@@ -89,7 +90,7 @@ public class EndorsementServiceTest extends AbstractTest {
 		principal=this.endorserService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		toDelete=this.endorsementService.findOne(2425);
+		toDelete=this.endorsementService.findAll().iterator().next();
 		Assert.notNull(toDelete);
 		this.endorsementService.delete(toDelete);
 		

@@ -11,11 +11,9 @@ import org.springframework.util.Assert;
 import domain.Endorsement;
 import domain.Endorser;
 
-import repositories.CustomerRepository;
+
 import repositories.EndorsementRepository;
-import repositories.EndorserRepository;
-import repositories.HandyWorkerRepository;
-import security.UserAccount;
+
 
 @Service
 @Transactional
@@ -110,19 +108,6 @@ public class EndorsementService {
 	
 	//Other business methods--------
 	
-	
-	//checkear que el actor que envía elimina o hace cualquien accion es el sender
-	
-	/*public void isSender(){
-		
-	}*/
-	
-	
-	public Double  computeScore(Endorser actor){
-		
-		return null;
-	
-	}
 	
 	
 }
