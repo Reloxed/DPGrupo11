@@ -38,8 +38,7 @@ public class NoteService {
 
 	// CRUD Methods --------------------------------
 
-	// check in referee that the report is saves in final mode to create the
-	// note.
+	
 	public Note create() {
 		Actor principal;
 		Note result;
@@ -81,7 +80,7 @@ public class NoteService {
 		Collection<Note>notes,updated;
 
 		Assert.notNull(note);
-		Assert.isTrue(note.getId()==0);//notes cannot be updated or deleted once they are saved to the database
+		Assert.isTrue(note.getId()==0);
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);

@@ -79,25 +79,20 @@ public class MessageServiceTest extends AbstractTest {
 		Actor principal;
 		Actor recipient1;
 		Actor recipient2;
-		Collection<Message> messagesInBox;
-		
-		MessageBox inboxes;
-		//Collection<Message> messagesOutBox;
 		Collection<Message> messages;
 		Collection<Actor> recipients;
 		MessageBox outBoxPrincipal;
 		Collection<MessageBox> inBoxRecipients;
-		//Collection<MessageBox>boxes;
+		
 		MessageBox inBoxRecipient1;
 		MessageBox inBoxRecipient2;
-		MessageBox trashBoxRecipient1;
+		
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		//boxes = new ArrayList<MessageBox>();
+	
 		recipients = new ArrayList<Actor>();
-		messagesInBox = new ArrayList<Message>();
 		inBoxRecipients = new ArrayList<MessageBox>();
 		messages = new ArrayList<Message>();
 
@@ -134,9 +129,7 @@ public class MessageServiceTest extends AbstractTest {
 		Assert.isTrue(messages.contains(saved));
 		Assert.isTrue(principal.getIsSuspicious()==false);
 		Assert.isTrue(saved.getIsSpam()==false);
-		trashBoxRecipient1 = this.messageBoxService.findTrashBoxActor(recipient1);
-		//Assert.isTrue(trashBoxRecipient1.getMessages().contains(saved));
-
+	
 		Assert.isTrue(inBoxRecipient1.getMessages().size()==1 && inBoxRecipient1.getMessages().contains(saved));
 		Assert.isTrue(inBoxRecipient2.getMessages().size()==1 && inBoxRecipient2.getMessages().contains(saved));
 		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
@@ -207,34 +200,13 @@ public class MessageServiceTest extends AbstractTest {
 		Assert.isTrue(trashRecipient1.getMessages().size()==1);
 	}
 
-	/*
-	 * outBoxPrincipal = this.messageBoxService.findInBoxActor(principal);
-	 * Assert.notNull(outBoxPrincipal);
-	 * 
-	 * for(Actor a: recipients){ MessageBox inBox =
-	 * this.messageBoxService.findInBoxActor(a); inBoxRecipients.add(inBox);
-	 * 
-	 * } for(MessageBox mb : inBoxRecipients){
-	 * messagesInBox.addAll(mb.getMessages()); } messagesOutBox =
-	 * outBoxPrincipal.getMessages();
-	 * 
-	 * Assert.notNull(messagesOutBox); Assert.notNull(inBoxRecipients);
-	 * 
-	 * Assert.isTrue(principal.getMessageBoxes().contains(outBoxPrincipal));
-	 * Assert
-	 * .isTrue(recipient1.getMessageBoxes().contains(inBoxRecipients));
-	 * Assert
-	 * .isTrue(recipient2.getMessageBoxes().contains(inBoxRecipients));
-	 * Assert.isTrue(messagesInBox.contains(message));
-	 */
+	
 	@Test
 	public void move(){
 		super.authenticate("Sponsor2");
-		Message toMove,saved;
-		Actor recipient,principal;
+		Message toMove;
+		Actor principal;
 		MessageBox destination;
-		Collection<Message>allMessages;
-		Collection<Actor>recipients;
 		Collection<MessageBox>boxes;
 		Collection<MessageBox>boxesAftterMove;
 		
@@ -269,39 +241,7 @@ public class MessageServiceTest extends AbstractTest {
 		
 		
 	}
-		/*recipients = new ArrayList<Actor>();
-		boxesPrincipal = new ArrayList<MessageBox>();
-		origin = new ArrayList<MessageBox>();
 		
-		recipient = this.actorService.findOne(2335);
-		Assert.notNull(recipient);
-		recipients.add(recipient);
-		System.out.println("Message's recipients: \n"+recipients);
-		
-		result = this.messageService.create();
-		result.setSubject("Move");
-		result.setBody("Move");
-		result.setPriority("LOW");
-		result.setRecipients(recipients);
-		result.setTags("lel");
-		result.setIsSpam(false);
-		boxesPrincipal = this.messageBoxService.findAllByPrincipal();
-		result.setMessageBoxes(boxesPrincipal);
-		saved = this.messageService.save(result);
-		Assert.notNull(saved);
-		
-		destination = this.messageBoxService.findTrashBoxActor(recipient);
-		Assert.notNull(destination);
-		
-		this.messageService.move(saved, destination);
-		
-		allMessages = this.messageService.findAll();
-		
-		Assert.isTrue(allMessages.contains(saved));
-		
-		Assert.isTrue(destination.getMessages().contains(saved));
-		
-	*/
 
 	@Test
 	public void testDelete(){
@@ -336,7 +276,6 @@ public class MessageServiceTest extends AbstractTest {
 		super.authenticate("admin2");
 		Message result;
 		MessageBox inBox1;
-		MessageBox inBox2;
 		MessageBox outBoxAdmin;
 		Administrator principal;
 		
