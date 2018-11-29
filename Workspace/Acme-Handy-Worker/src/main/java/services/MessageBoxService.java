@@ -93,18 +93,19 @@ public class MessageBoxService {
 		}else{
 			
 			Assert.isTrue(messageBox.getIsPredefined()==false);
-			Assert.isTrue(principal.getMessageBoxes().contains(messageBox));
+			Assert.isTrue(!principal.getMessageBoxes().contains(messageBox));
 			messageBox.setIsPredefined(false);
 			Collection<Message>messagesBox = messageBox.getMessages();
 			messageBox.setMessages(messagesBox);
 			
 		}
 		
-		result = this.messageBoxRepository.save(messageBox);
+		result = this.messageBoxRepository.saveAndFlush(messageBox);
+		result.setName(messageBox.getName());
 		Assert.notNull(result);
 		
-		if(!principal.getMessageBoxes().contains(messageBox)){
-			principal.getMessageBoxes().add(messageBox);
+		if(!principal.getMessageBoxes().contains(result)){
+			principal.getMessageBoxes().add(result);
 		}
 		
 		return result;

@@ -63,6 +63,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 		miscellaneousRecords = principal.getCurriculum().getMiscellaneousRecords();
 		result.setTitle("test");
 		saved = this.miscellaneousRecordService.save(result);
+		this.miscellaneousRecordService.findOne(saved.getId());
 		Assert.notNull(saved);
 		Assert.isTrue(miscellaneousRecords.contains(saved));
 		

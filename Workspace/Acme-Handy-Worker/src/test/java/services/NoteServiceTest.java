@@ -28,11 +28,7 @@ public class NoteServiceTest extends AbstractTest{
 	@Autowired
 	private NoteService noteService;
 
-	@Autowired
-	private CustomerService customerService;
-
-	@Autowired
-	private RefereeService refereeService;
+	
 
 	@Autowired
 	private ActorService actorService;
@@ -82,6 +78,7 @@ public class NoteServiceTest extends AbstractTest{
 		result.setHandyWorkerComment("Hola");
 		result.setReport(report);
 		saved = this.noteService.save(result);
+		this.noteService.findOne(saved.getId());
 		Assert.notNull(saved);
 		
 		Assert.isTrue(saved.getReport().getNotes().contains(saved));
@@ -110,6 +107,7 @@ public class NoteServiceTest extends AbstractTest{
 		note.setReport(report);
 		
 		toDelete = this.noteService.save(note);
+		this.noteService.findOne(toDelete.getId());
 		Assert.notNull(toDelete);
 		
 		notes = new ArrayList<Note>();
