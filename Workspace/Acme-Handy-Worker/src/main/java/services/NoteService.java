@@ -28,9 +28,12 @@ public class NoteService {
 	private NoteRepository noteRepository;
 
 	// Supporting services -------------------
-	
+
 	@Autowired
 	private ActorService actorService;
+
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 
 	// CRUD Methods --------------------------------
@@ -86,6 +89,7 @@ public class NoteService {
 		report = note.getReport();
 		Assert.notNull(report);
 
+
 		if (principal instanceof Referee) {
 
 			Assert.isTrue(principal instanceof Referee);
@@ -100,6 +104,37 @@ public class NoteService {
 			note.setHandyWorkerComment(note.getHandyWorkerComment());
 
 		}
+
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] customerComments = note.getCustomerComment().split(
+				"(¿¡,.-_/!?) ");
+		String[] refereeComments = note.getRefereeComment().split(
+				"(¿¡,.-_/!?) ");
+		String[] handyComments = note.getHandyWorkerComment().split(
+				"(¿¡,.-_/!?) ");
+		for(String word: spamWords){
+			for(String customerWord : customerComments){
+				if(customerWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+
+				}
+			}
+			for(String refereeWord : refereeComments){
+				if(refereeWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+				}
+			}
+			for(String handyWord : handyComments){
+				if(handyWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+				}
+			}
+		}
+
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		note.setReport(report);
 		Assert.isTrue(report.getIsFinal());

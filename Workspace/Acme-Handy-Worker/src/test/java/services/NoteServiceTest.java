@@ -55,7 +55,7 @@ public class NoteServiceTest extends AbstractTest{
 	
 	@Test
 	public void testSave(){
-		super.authenticate("HandyWorker1");
+		super.authenticate("handyWorker1");
 		Actor principal;
 		Note result,saved;
 		Collection<Note>notes;
@@ -75,14 +75,18 @@ public class NoteServiceTest extends AbstractTest{
 		notes = report.getNotes();
 		Assert.notNull(notes);
 		
-		result.setHandyWorkerComment("Hola");
+		result.setHandyWorkerComment("sex");
+		result.setCustomerComment(" ");
+		result.setRefereeComment(" ");
 		result.setReport(report);
+		System.out.println(result.getReport().getNotes());
 		saved = this.noteService.save(result);
+		
 		this.noteService.findOne(saved.getId());
 		Assert.notNull(saved);
-		
+		Assert.isTrue(principal.getIsSuspicious());
 		Assert.isTrue(saved.getReport().getNotes().contains(saved));
-		
+		System.out.println(saved.getReport().getNotes());
 
 		super.unauthenticate();
 	}
@@ -101,6 +105,9 @@ public class NoteServiceTest extends AbstractTest{
 		note = this.noteService.create();
 		Assert.notNull(note);
 		
+		note.setCustomerComment(" ");
+		note.setHandyWorkerComment(" ");
+		note.setRefereeComment(" ");
 		report = this.reportService.findOne(2467);
 		Assert.notNull(report);
 		
