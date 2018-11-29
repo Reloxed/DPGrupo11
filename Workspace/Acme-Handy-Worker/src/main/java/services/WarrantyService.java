@@ -17,134 +17,133 @@ import domain.Warranty;
 @Transactional
 public class WarrantyService {
 
-	//Managed repository
-	
+	// Managed repository
+
 	@Autowired
 	private WarrantyRepository warrantyRepository;
-	
-	//Supporting services
-	
+
+	// Supporting services
+
 	@Autowired
 	private AdministratorService administratorService;
-	
+
 	@Autowired
 	private SystemConfigurationService systemConfigurationService;
-	
-	//Simple CRUD Methods
-	
-	public Warranty create(){
+
+	// Simple CRUD Methods
+
+	public Warranty create() {
 		Administrator principal;
-		
+
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 		return new Warranty();
 	}
-	
-	public Collection<Warranty> findAll(){
+
+	public Collection<Warranty> findAll() {
 		Collection<Warranty> warranties;
-		
+
 		warranties = this.warrantyRepository.findAll();
-		
+
 		return warranties;
 	}
-	
-	public Warranty findOne(int warrantyId){
+
+	public Warranty findOne(int warrantyId) {
 		Warranty result;
-		
+
 		result = this.warrantyRepository.findOne(warrantyId);
-		
+
 		return result;
 	}
-	
-	public Collection<Warranty> findFinalWarranties(){
+
+	public Collection<Warranty> findFinalWarranties() {
 		Collection<Warranty> result = Collections.<Warranty> emptyList();
-		
-		for(Warranty w: this.warrantyRepository.findAll()){
-			if(w.getIsFinal() == true){
+
+		for (Warranty w : this.warrantyRepository.findAll()) {
+			if (w.getIsFinal() == true) {
 				result.add(w);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	public Warranty save(Warranty w){
+
+	public Warranty save(Warranty w) {
 		Administrator principal;
 		Warranty result;
 		Assert.notNull(w);
-		
+
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.isTrue(w.getIsFinal() == false);
-		
+
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		String[] title = w.getTitle().split(" ");
-		for(String word: spamWords){
-			for(String titleWord: title){
-				if(titleWord.toLowerCase().contains(word.toLowerCase())){
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] title = w.getTitle().split("(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : title) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
 			}
-			if (containsSpam){
+			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
-		
+
 		containsSpam = false;
 		String[] terms = w.getTerms().split(" ");
-		for(String word: spamWords){
-			for(String termsWord: terms){
-				if(termsWord.toLowerCase().contains(word.toLowerCase())){
+		for (String word : spamWords) {
+			for (String termsWord : terms) {
+				if (termsWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
 			}
-			if (containsSpam){
+			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
-		
+
 		containsSpam = false;
 		String[] laws = w.getLaws().split(",");
-		for(String word: spamWords){
-			for(String lawsWord: laws){
-				if(lawsWord.toLowerCase().contains(word.toLowerCase())){
+		for (String word : spamWords) {
+			for (String lawsWord : laws) {
+				if (lawsWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
 			}
-			if (containsSpam){
+			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
-		
+
 		Assert.isTrue(principal.getIsSuspicious() == false);
 		result = this.warrantyRepository.save(w);
-		
+
 		return result;
 	}
-	
-	public void delete(Warranty w){
+
+	public void delete(Warranty w) {
 		Administrator principal;
 		Assert.notNull(w);
-		
+
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.isTrue(w.getId() != 0);
 		Assert.isTrue(w.getIsFinal() == false);
-		
+
 		this.warrantyRepository.delete(w);
 	}
-	
-	//Other business methods
-	
-	
-	
+
+	// Other business methods
+
 }
