@@ -74,7 +74,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		result=this.endorserRecordService.create();
 		result.setFullName("Jesus");
 		result.setEmail("jesus9619@gmail.com");
-		result.setLinkedinLink("https://pepe.com");
+		result.setLinkedinLink("https://www.linkedin.com/aids");
 		result.setPhoneNumber("955686532");
 		saved=this.endorserRecordService.save(result);
 		Assert.notNull(saved);
