@@ -103,8 +103,6 @@ public class CustomerService {
 			principalC = this.findByPrincipal();
 			Assert.notNull(principalC);
 			Assert.isTrue(principalC.getUserAccount().equals(customer.getUserAccount()));
-			System.out.println(customer.getIsSuspicious()+"Hi");
-			System.out.println(principalC.getIsSuspicious()+"Damn");
 			Assert.isTrue(customer.getIsSuspicious() == principalC.getIsSuspicious());
 		}
 		cus = this.customerRepository.save(customer);

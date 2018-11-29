@@ -1,8 +1,8 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -105,7 +105,7 @@ public class ReportService {
 	public Collection<Report> findReportByPrincipal() {
 		Referee principal;
 		Collection<Report> res;
-		Collection<Report> allReports;
+		Collection<Report> reports;
 		Collection<Complaint> complaints;
 
 		principal = this.refereeService.findByPrincipal();
@@ -114,13 +114,13 @@ public class ReportService {
 		complaints = principal.getComplaints();
 		Assert.notNull(complaints);
 
-		allReports = this.findAll();
-		Assert.notNull(allReports);
+		reports = this.findAll();
+		Assert.notNull(reports);
 
-		res = new HashSet<Report>();
-		for (Complaint complaint : complaints) {
-			for (Report report : allReports) {
-				if (complaint.equals(report.getComplaint())) {
+		res = new ArrayList<Report>();
+		for (Report report : reports) {
+			for (Complaint complaint : complaints) {
+				if (report.getComplaint() == complaint) {
 					res.add(report);
 				}
 			}

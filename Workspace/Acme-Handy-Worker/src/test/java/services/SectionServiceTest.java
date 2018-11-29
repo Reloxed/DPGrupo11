@@ -40,21 +40,6 @@ public class SectionServiceTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 
-	// HandyWorker
-	@Test
-	public void testFindOne0() {
-		Section res;
-		HandyWorker principal;
-
-		super.authenticate("handyWorker2");
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = this.sectionService.findOne(2337);
-		Assert.notNull(res);
-		Assert.isTrue(res.getId() == 2337);
-	}
-
 	@Test
 	public void testFindAll0() {
 		Collection<Section> res;
@@ -69,7 +54,6 @@ public class SectionServiceTest extends AbstractTest {
 		Assert.isTrue(res.size() == 2);
 	}
 
-	// Customer
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOne1() {
 		Section res;
@@ -114,6 +98,9 @@ public class SectionServiceTest extends AbstractTest {
 
 		saved = this.sectionService.save(res);
 		Assert.notNull(saved);
+
+		res = this.sectionService.findOne(saved.getId());
+		Assert.notNull(res);
 	}
 
 	@Test(expected = ConstraintViolationException.class)
