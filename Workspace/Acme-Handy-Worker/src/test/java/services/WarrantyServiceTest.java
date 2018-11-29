@@ -118,7 +118,6 @@ public class WarrantyServiceTest extends AbstractTest {
 		Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
 		Administrator principal = this.administratorService.findByPrincipal();
-		System.out.println(principal.getIsSuspicious());
 		Warranty found = this.warrantyService.findOne(res.getId());
 		Assert.notNull(found);
 		super.unauthenticate();

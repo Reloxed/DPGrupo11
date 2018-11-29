@@ -171,7 +171,7 @@ public class NoteService {
 				|| principal instanceof Referee
 				|| principal instanceof HandyWorker);
 
-		Assert.isTrue(report.getIsFinal());
+		//Assert.isTrue(!report.getIsFinal());
 		this.noteRepository.delete(note);
 		updated = new ArrayList<Note>(notes);
 		updated.remove(note);
