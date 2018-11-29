@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
@@ -31,8 +32,6 @@ public class HandyWorkerService {
 	private HandyWorkerRepository	handyWorkerRepository;
 
 	//Supporting services ----------
-	@Autowired
-	private ApplicationService		applicationService;
 
 	@Autowired
 	private MessageBoxService		messageBoxService;
@@ -65,42 +64,82 @@ public class HandyWorkerService {
 		return result;
 
 	}
+	
+	public HandyWorker create() {
+		HandyWorker result;
+		Actor principal;
+		
+		Authority authority = new Authority();
+		UserAccount ua = new UserAccount();
+		
+		authority.setAuthority(Authority.HANDYWORKER);
+		ua.addAuthority(authority);
+	
+		
+		try{
+			principal=this.actorService.findByPrincipal();
+			Assert.isNull(principal);
+			
+			return null;
+			
+		}catch(IllegalArgumentException e){
+			
+			result = new HandyWorker();
+			
+			result.setUserAccount(ua);
+			
+			result.setIsSuspicious(false);
+			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			result.setApplications(new HashSet<Application>());
+			result.setTutorial(new HashSet<Tutorial>());
+			
+			return result;
+		}
+		
+		
+
+	
+		
+
+	}
 
 	public HandyWorker save(final HandyWorker handyWorker) {
 		HandyWorker saved;
 		Assert.notNull(handyWorker);
-
+		
 		if (handyWorker.getId() == 0) {
-			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-			handyWorker.getUserAccount().setPassword(passwordEncoder.encodePassword(handyWorker.getUserAccount().getPassword(), null));
+			try{
+				Actor principal;
+				principal =this.actorService.findByPrincipal();
+				Assert.isNull(principal);
+			} catch(IllegalArgumentException e){
+				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+				
+				handyWorker.getUserAccount()
+				    .setPassword(passwordEncoder.encodePassword
+						(handyWorker.getUserAccount().getPassword(),null));
+			}
+			
 		} else {
+			
 			HandyWorker principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
+			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
+			handyWorker.setMake(principal.getName());
+			handyWorker.setFinder(new Finder());
+			handyWorker.setCurriculum(new Curriculum());
+			handyWorker.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			
 		}
-		saved = this.handyWorkerRepository.save(handyWorker);
+		saved = this.handyWorkerRepository.saveAndFlush(handyWorker);
 		
 		return saved;
 
 	}
 
-	public HandyWorker create() {
-		HandyWorker result;
-		Actor principal;
-		
-		principal=this.actorService.findByPrincipal();
-		Assert.notNull(principal);
-		
-		result = new HandyWorker();
-		
-		
-		result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
-		result.setCurriculum(new Curriculum());
-		result.setFinder(new Finder());
-		result.setMake("");
-		return result;
-
-	}
+	
 
 	//Other business methods--------
 	//handyworker can write a tutorial,a note,may endorse,
@@ -117,6 +156,7 @@ public class HandyWorkerService {
 
 		return res;
 	}
+
 
 	public HandyWorker findHandyWorkerByUserAccount(final int userAccountId) {
 		Assert.isTrue(userAccountId != 0);

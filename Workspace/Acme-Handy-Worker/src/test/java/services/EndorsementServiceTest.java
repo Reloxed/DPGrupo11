@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import domain.Endorsement;
+import domain.Endorser;
 
 
 import utilities.AbstractTest;
@@ -30,8 +31,11 @@ public class EndorsementServiceTest extends AbstractTest {
 	@Autowired
 	private EndorsementService endorsementService;
 	
+	@Autowired
+	private EndorserService endorserService;
 	
 
+	
 	
 	//Tests ---------------------------------------
 	
@@ -54,15 +58,44 @@ public class EndorsementServiceTest extends AbstractTest {
 	
 	@Test
 	public void testCreateAndSave(){
-	
+		Endorser principal;
+		Endorsement result;
 		
+		Endorsement saved;
+		
+		super.authenticate("handyWorker2");
+		
+		principal=this.endorserService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result=this.endorsementService.create();
+		result.setSender(this.endorsementService.findOne(2425).getSender());
+		result.setRecipient(this.endorsementService.findOne(2425).getRecipient());
+		result.setComment("saludos");
+		saved=this.endorsementService.save(result);
+		Assert.notNull(saved);
+		super.unauthenticate();
 		
 	}
 	
 	
 	@Test
 	public void testDelete(){
+		Endorser principal;
+		Endorsement toDelete;
 		
+		super.authenticate("handyWorker2");
+		
+		principal=this.endorserService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		toDelete=this.endorsementService.findOne(2425);
+		Assert.notNull(toDelete);
+		this.endorsementService.delete(toDelete);
+		
+		
+		
+		super.unauthenticate();
 		
 		
 		

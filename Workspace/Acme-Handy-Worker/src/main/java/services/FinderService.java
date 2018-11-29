@@ -9,7 +9,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +17,11 @@ import org.springframework.util.Assert;
 
 
 
-import domain.Category;
+
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
-import domain.Warranty;
+
 
 
 
@@ -36,12 +36,11 @@ public class FinderService {
 	@Autowired
 	private FinderRepository finderRepository;
 	
-	//Un usuario no autenticado pueda hacer busquedas como contemplo eso?
+	
 	
 	//Supporting services ----------
-	//@Autowired
-	//private FixUpTaskService fixUptaskService;
-	
+
+	@Autowired
 	private HandyWorkerService handyWorkerService;
 	
 	//Constructor -----------------------
@@ -62,7 +61,7 @@ public class FinderService {
 		Assert.notNull(principal);
 		
 		result=new Finder();
-		//tengo que saber que handyWorker va a realizar la busqueda exactamente para algo?
+		
 		result.setFixuptask(new ArrayList<FixUpTask>());
 		result.setSearchMoment(new Date(System.currentTimeMillis()-1));
 		
@@ -107,11 +106,12 @@ public class FinderService {
 		principal=this.handyWorkerService.findByPrincipal();
 		
 		Assert.notNull(principal);
-		Assert.isTrue(finderId.getId()==principal.getFinder().getId());
+		//Assert.isTrue(finderId.getId()==principal.getFinder().getId());
 		
 		currentMoment=new Date(System.currentTimeMillis() - 1);
 		
 		finderId.setSearchMoment(currentMoment);
+		
 		
 		if(finderId.getStartMoment()!=null && finderId.getEndMoment()!=null ){
 			Assert.isTrue(finderId.getStartMoment().before(finderId.getEndMoment()));
@@ -120,10 +120,11 @@ public class FinderService {
 			Assert.isTrue(finderId.getPriceHigh()>=finderId.getPriceLow());
 		}
 		
+		
 		result=this.finderRepository.save(finderId);
 		Assert.notNull(result);
 
-		Assert.isTrue(finderId.getId()!=0);
+		//Assert.isTrue(finderId.getId()!=0);
 		
 		return result;
 		

@@ -86,7 +86,7 @@ public class EndorserRecordService {
 		Assert.notNull(endorserRecord.getLinkedinLink());
 		Assert.notNull(endorserRecord.getPhoneNumber());
 		endorsersRecord=principal.getCurriculum().getEndorserRecords();
-		result=this.endorserRecordRepository.save(endorserRecord);
+		result=this.endorserRecordRepository.saveAndFlush(endorserRecord);
 		Assert.notNull(result);
 	
 		 
