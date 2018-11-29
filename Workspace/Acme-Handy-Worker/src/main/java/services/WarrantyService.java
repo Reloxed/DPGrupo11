@@ -1,7 +1,7 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.transaction.Transactional;
 
@@ -37,7 +37,9 @@ public class WarrantyService {
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-		return new Warranty();
+		Warranty w = new Warranty();
+		w.setIsFinal(false);
+		return w;
 	}
 
 	public Collection<Warranty> findAll() {
@@ -56,27 +58,18 @@ public class WarrantyService {
 		return result;
 	}
 
-	public Collection<Warranty> findFinalWarranties() {
-		Collection<Warranty> result = Collections.<Warranty> emptyList();
-
-		for (Warranty w : this.warrantyRepository.findAll()) {
-			if (w.getIsFinal() == true) {
-				result.add(w);
-			}
-		}
-
-		return result;
-	}
-
-	public Warranty save(Warranty w) {
+	
+	public Warranty save(Warranty w){
 		Administrator principal;
 		Warranty result;
 		Assert.notNull(w);
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-
-		Assert.isTrue(w.getIsFinal() == false);
+		
+		if(w.getId() == 0){
+			Assert.isTrue(w.getIsFinal() == false);	
+		}
 
 		boolean containsSpam = false;
 		String[] spamWords = this.systemConfigurationService
@@ -124,10 +117,10 @@ public class WarrantyService {
 				break;
 			}
 		}
-
-		Assert.isTrue(principal.getIsSuspicious() == false);
-		result = this.warrantyRepository.save(w);
-
+		
+//		Assert.isTrue(principal.getIsSuspicious() == false);
+		result = this.warrantyRepository.saveAndFlush(w);
+		principal = this.administratorService.save(principal);
 		return result;
 	}
 
@@ -143,7 +136,19 @@ public class WarrantyService {
 
 		this.warrantyRepository.delete(w);
 	}
-
-	// Other business methods
-
+	
+	//Other business methods
+	
+	public Collection<Warranty> findFinalWarranties(){
+		Collection<Warranty> result = new ArrayList<>();
+		
+		for(Warranty w: this.warrantyRepository.findAll()){
+			if(w.getIsFinal() == true){
+				result.add(w);
+			}
+		}
+		
+		return result;
+	}
+	
 }
