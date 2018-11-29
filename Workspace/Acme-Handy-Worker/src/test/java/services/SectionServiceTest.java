@@ -2,8 +2,6 @@ package services;
 
 import java.util.Collection;
 
-import javax.validation.ConstraintViolationException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +91,7 @@ public class SectionServiceTest extends AbstractTest {
 		Assert.notNull(principal);
 
 		res = this.sectionService.create();
-		res.setTitle("Titulo");
+		res.setTitle("Titulo sexo");
 		res.setText("Text");
 
 		saved = this.sectionService.save(res);
@@ -103,7 +101,7 @@ public class SectionServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	@Test(expected = ConstraintViolationException.class)
+	@Test(expected = NullPointerException.class)
 	public void testCreateAndSave1() {
 		Section res;
 		Section saved;

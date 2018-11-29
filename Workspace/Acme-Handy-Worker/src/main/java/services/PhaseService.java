@@ -27,6 +27,9 @@ public class PhaseService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Phase create() {
@@ -62,6 +65,40 @@ public class PhaseService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
+
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : description) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			String[] title = phase.getTitle().split("(¿¡,.-_/!?) ");
+			for (String word : spamWords) {
+				for (String titleWord : title) {
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+		}
+
+		System.out.println("¿Contiene spam? " + containsSpam);
 
 		return this.phaseRepository.saveAndFlush(phase);
 	}

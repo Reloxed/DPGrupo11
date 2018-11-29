@@ -43,7 +43,6 @@ public class ReportServiceTest extends AbstractTest {
 		res = this.reportService.findReportByPrincipal();
 		Assert.notEmpty(res);
 
-		System.out.println(res);
 	}
 
 	@Test
@@ -59,7 +58,7 @@ public class ReportServiceTest extends AbstractTest {
 		res = this.reportService.create();
 		res.setComplaint(this.complaintService.findOne(2433));
 		res.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		res.setDescription("Description");
+		res.setDescription("Description nigeria-sexo");
 		res.setIsFinal(false);
 
 		saved = this.reportService.save(res);

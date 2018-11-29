@@ -89,7 +89,7 @@ public class WarrantyService {
 		}
 
 		containsSpam = false;
-		String[] terms = w.getTerms().split(" ");
+		String[] terms = w.getTerms().split("(¿¡,.-_/!?) ");
 		for (String word : spamWords) {
 			for (String termsWord : terms) {
 				if (termsWord.toLowerCase().contains(word.toLowerCase())) {
@@ -104,7 +104,7 @@ public class WarrantyService {
 		}
 
 		containsSpam = false;
-		String[] laws = w.getLaws().split(",");
+		String[] laws = w.getLaws().split("(¿¡,.-_/!?) ");
 		for (String word : spamWords) {
 			for (String lawsWord : laws) {
 				if (lawsWord.toLowerCase().contains(word.toLowerCase())) {
