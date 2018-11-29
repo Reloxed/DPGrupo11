@@ -31,6 +31,9 @@ public class SectionService {
 	@Autowired
 	private TutorialService tutorialService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public Section create() {
@@ -76,6 +79,41 @@ public class SectionService {
 		Assert.notNull(principal);
 
 		Assert.notNull(section);
+
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] text = section.getText().split("(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : text) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			String[] title = section.getTitle().split("(¿¡,.-_/!?) ");
+			for (String word : spamWords) {
+				for (String titleWord : title) {
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+
+		}
+
+		System.out.println("¿Contiene spam? " + containsSpam);
 
 		res = this.sectionRepository.save(section);
 		Assert.notNull(res);

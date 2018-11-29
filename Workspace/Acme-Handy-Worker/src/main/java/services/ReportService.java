@@ -89,6 +89,8 @@ public class ReportService {
 			}
 		}
 
+		System.out.println("¿Contiene spam? " + containsSpam);
+
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
 

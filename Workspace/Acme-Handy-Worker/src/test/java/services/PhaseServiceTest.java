@@ -55,7 +55,7 @@ public class PhaseServiceTest extends AbstractTest {
 		res = this.phaseService.create();
 		res.setStartMoment(new Date(System.currentTimeMillis() - 1));
 		res.setEndMoment(new Date(1564865498468L));
-		res.setTitle("Title");
+		res.setTitle("Title Nigeria");
 		res.setDescription("Description");
 		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
 

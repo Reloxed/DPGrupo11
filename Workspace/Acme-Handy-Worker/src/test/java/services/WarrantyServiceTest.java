@@ -26,7 +26,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	private WarrantyService warrantyService;
 
 	// Supporting services ----------------------------------------------
-	
+
 	@Autowired
 	private AdministratorService administratorService;
 
@@ -106,13 +106,13 @@ public class WarrantyServiceTest extends AbstractTest {
 		Assert.notNull(found);
 		super.unauthenticate();
 	}
-	
+
 	// Save con spam
 	@Test
 	public void testSave4() {
 		super.authenticate("admin1");
 		Warranty w = this.warrantyService.create();
-		w.setTitle("Titulo");
+		w.setTitle("Titulo sexo-nigeria");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
 		Warranty res = this.warrantyService.save(w);
@@ -154,10 +154,10 @@ public class WarrantyServiceTest extends AbstractTest {
 		Assert.isTrue(!this.warrantyService.findAll().contains(res));
 		super.unauthenticate();
 	}
-	
+
 	// FindAllFinals
 	@Test
-	public void testFindFinals(){
+	public void testFindFinals() {
 		super.authenticate("admin1");
 		Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
@@ -167,7 +167,8 @@ public class WarrantyServiceTest extends AbstractTest {
 		res.setIsFinal(true);
 		Warranty finalW = this.warrantyService.save(res);
 		super.unauthenticate();
-		Collection<Warranty> finalWarranties = this.warrantyService.findFinalWarranties();
+		Collection<Warranty> finalWarranties = this.warrantyService
+				.findFinalWarranties();
 		Assert.notEmpty(finalWarranties);
 	}
 }
