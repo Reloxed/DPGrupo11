@@ -50,12 +50,13 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	//Tests ---------------------------------------
 
-	@Test
+	//id Incorrecta
+	@Test(expected = IllegalArgumentException.class)
 	public void TestFindOne() {
 		FixUpTask result;
-		result = this.fixUpTaskService.findOne(2427);
+		result = this.fixUpTaskService.findOne(225);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId()==2427);
+		
 
 	}
 
@@ -93,8 +94,8 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 		result.setStartMoment(startMoment.getTime());
 		result.setEndMoment(endMoment.getTime());
-		result.setCategory(this.categoryService.findOne(2391));
-		result.setWarranty(this.warrantyService.findOne(2415));
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
 		result.setApplications(this.applicationService.findAll());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
@@ -112,7 +113,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.fixUpTaskService.findOne(2428);
+		result = this.fixUpTaskService.findAll().iterator().next();
 		result.setApplications(new ArrayList<Application>());
 		if (result.getApplications().isEmpty())
 			this.fixUpTaskService.delete(result);
@@ -132,7 +133,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.fixUpTaskService.findOne(2428);
+		result = this.fixUpTaskService.findAll().iterator().next();
 
 		try {
 			this.fixUpTaskService.delete(result);

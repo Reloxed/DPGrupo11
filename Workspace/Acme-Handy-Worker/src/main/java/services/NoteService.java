@@ -28,20 +28,10 @@ public class NoteService {
 	private NoteRepository noteRepository;
 
 	// Supporting services -------------------
-	@Autowired
-	private CustomerService customerService;
-
-	@Autowired
-	private RefereeService refereeService;
-
-	@Autowired
-	private HandyWorkerService handyWorkerService;
-
+	
 	@Autowired
 	private ActorService actorService;
 
-	@Autowired
-	private ReportService reportService;
 
 	// CRUD Methods --------------------------------
 
@@ -113,7 +103,7 @@ public class NoteService {
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		note.setReport(report);
 		Assert.isTrue(report.getIsFinal());
-		result = this.noteRepository.save(note);
+		result = this.noteRepository.saveAndFlush(note);
 		Assert.notNull(result);
 
 		notes = new ArrayList<Note>();
@@ -125,7 +115,6 @@ public class NoteService {
 		return result;
 
 	}
-
 
 
 	public void delete(Note note){
@@ -148,7 +137,7 @@ public class NoteService {
 				|| principal instanceof Referee
 				|| principal instanceof HandyWorker);
 
-		Assert.isTrue(!report.getIsFinal());
+		Assert.isTrue(report.getIsFinal());
 		this.noteRepository.delete(note);
 		updated = new ArrayList<Note>(notes);
 		updated.remove(note);

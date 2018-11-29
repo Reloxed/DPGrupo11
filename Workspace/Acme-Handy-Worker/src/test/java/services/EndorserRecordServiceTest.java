@@ -43,7 +43,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.authenticate("handyWorker1");
 		res = this.endorserRecordService.findByPrincipal();
 		Assert.notNull(res);
-		//Assert.isTrue(res.size() == 1);
+		
 		super.unauthenticate();
 	}
 	
@@ -61,15 +61,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		
 	}
 	
-	@Test
-	public void testFindOne(){
-		EndorserRecord endorserRecordId;
-		endorserRecordId=this.endorserRecordService.findOne(2325);
-		Assert.notNull(endorserRecordId);
-		Assert.isTrue(endorserRecordId.getId()==2325);
-		
-	}
-	
+
 	@Test
 	public void testCreateAndSave(){
 		EndorserRecord result;
@@ -78,6 +70,7 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		super.authenticate("handyWorker1");
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
+		
 		result=this.endorserRecordService.create();
 		result.setFullName("Jesus");
 		result.setEmail("jesus9619@gmail.com");
@@ -93,20 +86,23 @@ public class EndorserRecordServiceTest extends AbstractTest {
 	@Test
 	public void testDelete(){
 		
-			EndorserRecord toDelete;
+			EndorserRecord toDelete= new EndorserRecord();
 		    Collection<EndorserRecord> listEndorserRecord;
 		    HandyWorker principal;
 		   
 
 		    
-		    super.authenticate("handyWorker1");
+		    super.authenticate("handyWorker2");
 		    principal = this.handyWorkerService.findByPrincipal();
-		    System.out.println(principal);
-		    Assert.notNull(principal);
 		    
-		    toDelete = this.endorserRecordService.findOne(2325);
-		    this.endorserRecordService.delete(toDelete);
+		    Assert.notNull(principal);
 		    listEndorserRecord = principal.getCurriculum().getEndorserRecords();
+		    
+		    toDelete=listEndorserRecord.iterator().next();
+		    
+		    this.endorserRecordService.delete(toDelete);
+		    
+		    
 		    Assert.isTrue(!listEndorserRecord.contains(toDelete));
 		    
 		    super.unauthenticate();

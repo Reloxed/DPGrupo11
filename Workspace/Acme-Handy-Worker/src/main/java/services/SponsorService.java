@@ -42,7 +42,7 @@ public class SponsorService {
 	// Simple CRUD Methods
 
 	public Sponsor create() {
-		Sponsor result;
+		Sponsor result = new Sponsor();
 		Collection<MessageBox> messageBoxes;
 		Actor principal;
 
@@ -54,11 +54,7 @@ public class SponsorService {
 		try {
 			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
-
-			return null;
 		} catch (IllegalArgumentException e) {
-			result = new Sponsor();
-
 			result.setUserAccount(ua);
 
 			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
@@ -67,9 +63,8 @@ public class SponsorService {
 			result.setMessageBoxes(messageBoxes);
 			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 			result.setSponsorships(Collections.<Sponsorship> emptyList());
-
-			return result;
 		}
+		return result;
 
 	}
 

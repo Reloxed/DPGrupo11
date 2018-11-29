@@ -12,11 +12,11 @@ import org.springframework.util.Assert;
 
 import repositories.FixUpTaskRepository;
 import domain.Application;
-import domain.Category;
+
 import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.Warranty;
+
 
 @Service
 @Transactional
@@ -68,7 +68,7 @@ public class FixUpTaskService {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
-		//Assert.notNull(result);
+
 
 		return result;
 

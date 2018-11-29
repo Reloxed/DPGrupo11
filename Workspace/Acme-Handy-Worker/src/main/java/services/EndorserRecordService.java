@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 
-import domain.Curriculum;
+
 import domain.EndorserRecord;
 import domain.HandyWorker;
 import repositories.EndorserRecordRepository;
@@ -86,7 +86,7 @@ public class EndorserRecordService {
 		Assert.notNull(endorserRecord.getLinkedinLink());
 		Assert.notNull(endorserRecord.getPhoneNumber());
 		endorsersRecord=principal.getCurriculum().getEndorserRecords();
-		result=this.endorserRecordRepository.save(endorserRecord);
+		result=this.endorserRecordRepository.saveAndFlush(endorserRecord);
 		Assert.notNull(result);
 	
 		 
@@ -97,25 +97,25 @@ public class EndorserRecordService {
 		
 	}
 	
-	public void  delete(final EndorserRecord endorserRecord){
+	public void  delete(EndorserRecord endorserRecord){
 		
 		HandyWorker principal;
 		Collection<EndorserRecord> collectionEndorserRecords;
-		Curriculum curriculumHW;
+		
 		
 		Assert.notNull(endorserRecord);
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		curriculumHW=principal.getCurriculum();
-		Assert.notNull(curriculumHW);
+		collectionEndorserRecords=principal.getCurriculum().getEndorserRecords();
 		
-		collectionEndorserRecords=curriculumHW.getEndorserRecords();
-		
-		this.endorserRecordRepository.delete(endorserRecord);
 		collectionEndorserRecords.remove(endorserRecord);
 		
-		curriculumHW.setEndorserRecords(collectionEndorserRecords);
+		
+		this.endorserRecordRepository.delete(endorserRecord);
+		
+		principal.getCurriculum().setEndorserRecords(collectionEndorserRecords);
+		
 		
 	}
 	

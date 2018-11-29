@@ -11,11 +11,9 @@ import org.springframework.util.Assert;
 import domain.Endorsement;
 import domain.Endorser;
 
-import repositories.CustomerRepository;
+
 import repositories.EndorsementRepository;
-import repositories.EndorserRepository;
-import repositories.HandyWorkerRepository;
-import security.UserAccount;
+
 
 @Service
 @Transactional
@@ -40,8 +38,7 @@ public class EndorsementService {
 	
 	//Simple CRUD methods-------
 	public Endorsement create(){
-		//comprobar autoridades endorser es un handyworker o un customer?
-		//comprobarlo
+
 		Endorsement result;
 		Endorser endorser;
 		
@@ -49,10 +46,9 @@ public class EndorsementService {
 		Assert.notNull(endorser);
 		
 		result=new Endorsement();
-		result.setSender(endorser);
-		result.setRecipient(endorser);
+	
 		result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
-		result.setComment("");
+		
 		
 		return result;
 		
@@ -69,7 +65,6 @@ public class EndorsementService {
 		Endorsement result;
 		
 		result=this.endorsementRepository.findOne(endorsementId);
-		Assert.notNull(result);
 		
 		return result;
 
@@ -84,10 +79,10 @@ public class EndorsementService {
 		Assert.notNull(endorsement.getPublishedMoment());
 		Assert.notNull(endorsement.getComment());
 		
-		
 		principal=this.endorserService.findByPrincipal();
+		Assert.isTrue(endorsement.getSender().getId()==principal.getId());
 		Assert.notNull(principal);
-		Assert.notNull(endorsement.getId()==0);
+		Assert.isTrue(endorsement.getId()==0);
 		result=this.endorsementRepository.save(endorsement);
 		
 		return result;
@@ -113,19 +108,6 @@ public class EndorsementService {
 	
 	//Other business methods--------
 	
-	
-	//checkear que el actor que envía elimina o hace cualquien accion es el sender
-	
-	/*public void isSender(){
-		
-	}*/
-	
-	
-	public Double  computeScore(Endorser actor){
-		
-		return null;
-	
-	}
 	
 	
 }

@@ -80,7 +80,7 @@ public class UtilityService {
 		String makes = this.systemConfigurationService
 				.findMySystemConfiguration().getListCreditCardMakes();
 		List<String> listCCMakes = new ArrayList<String>(Arrays.asList(makes
-				.split(" , ")));
+				.split(",")));
 		return listCCMakes;
 	}
 

@@ -1,11 +1,11 @@
-
 package services;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
@@ -19,13 +19,15 @@ public class SystemConfigurationService {
 	// Managed repository
 
 	@Autowired
-	private SystemConfigurationRepository	systemConfigurationRepository;
+	private SystemConfigurationRepository systemConfigurationRepository;
 
 	// Supporting services
 
 	@Autowired
-	private AdministratorService			administratorService;
+	private AdministratorService administratorService;
 
+	@Autowired
+	private ActorService actorService;
 
 	// Simple CRUD Methods
 
@@ -34,17 +36,23 @@ public class SystemConfigurationService {
 
 		final SystemConfiguration systemConfiguration = new SystemConfiguration();
 		systemConfiguration.setSystemName("Acme-Handy-Worker");
-		systemConfiguration.setWelcomeMessageEn("Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
-		systemConfiguration.setWelcomeMessageEs("¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
-		systemConfiguration.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
+		systemConfiguration
+				.setWelcomeMessageEn("Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
+		systemConfiguration
+				.setWelcomeMessageEs("¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
+		systemConfiguration
+				.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
 		systemConfiguration.setVAT(0.21);
 		systemConfiguration.setListCreditCardMakes("VISA,MASTER,DINNERS,AMEX");
 		systemConfiguration.setCountryCode("+034");
 		systemConfiguration.setTimeResultsCached(1);
 		systemConfiguration.setMaxResults(10);
-		systemConfiguration.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
-		systemConfiguration.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
-		systemConfiguration.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
+		systemConfiguration
+				.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
+		systemConfiguration
+				.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
+		systemConfiguration
+				.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
 		return systemConfiguration;
 	}
 
@@ -61,21 +69,26 @@ public class SystemConfigurationService {
 		Assert.notNull(this.administratorService.findByPrincipal());
 		SystemConfiguration result;
 
-		result = this.systemConfigurationRepository.findOne(systemConfigurationId);
+		result = this.systemConfigurationRepository
+				.findOne(systemConfigurationId);
 
 		return result;
 	}
 
-	public SystemConfiguration save(final SystemConfiguration systemConfiguration) {
+	public SystemConfiguration save(
+			final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
 		Administrator principal;
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(systemConfiguration.getId() == this.systemConfigurationRepository.findAll().get(0).getId());
+		
+		
+		systemConfiguration.setId(this.systemConfigurationRepository.findAll().get(0).getId());
+		
 		SystemConfiguration result;
-		result = this.systemConfigurationRepository.save(systemConfiguration);
+		result = this.systemConfigurationRepository.saveAndFlush(systemConfiguration);
 		return result;
 
 	}
@@ -83,7 +96,7 @@ public class SystemConfigurationService {
 	// Other business methods
 
 	public SystemConfiguration findMySystemConfiguration() {
-		Assert.notNull(this.administratorService.findByPrincipal());
+		Assert.notNull(this.actorService.findByPrincipal());
 		final SystemConfiguration result;
 
 		result = this.systemConfigurationRepository.findAll().get(0);
@@ -94,7 +107,8 @@ public class SystemConfigurationService {
 	public String findSpamWords() {
 		final String result;
 
-		result = this.systemConfigurationRepository.findAll().get(0).getSpamWords();
+		result = this.systemConfigurationRepository.findAll().get(0)
+				.getSpamWords();
 
 		return result;
 	}

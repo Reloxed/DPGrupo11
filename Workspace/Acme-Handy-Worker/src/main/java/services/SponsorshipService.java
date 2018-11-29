@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
-import domain.CreditCard;
 import domain.Sponsor;
 import domain.Sponsorship;
 import domain.Tutorial;
@@ -89,14 +89,14 @@ public class SponsorshipService {
 		result = this.sponsorshipRepository.saveAndFlush(s);
 		Assert.notNull(result);
 		
-		sponsorships = Collections.<Sponsorship> emptyList();
+		sponsorships = new ArrayList<>();
 		sponsorships.addAll(principal.getSponsorships());
 		sponsorships.add(s);
 		principal.setSponsorships(sponsorships);
 		
 		for(Tutorial t: this.tutorialService.findAll() ){
 			Collection<Sponsorship> aux;
-			aux = Collections.<Sponsorship> emptyList();
+			aux = new ArrayList<>();
 			aux.addAll(t.getSponsorships());
 			aux.add(s);
 			t.setSponsorships(aux);
@@ -114,14 +114,14 @@ public class SponsorshipService {
 		principal = this.sponsorService.findByPrincipal();
 		Assert.notNull(principal);
 		
-		sponsorships = Collections.<Sponsorship> emptyList();
+		sponsorships = new ArrayList<>();
 		sponsorships.addAll(principal.getSponsorships());
 		sponsorships.remove(s);
 		principal.setSponsorships(sponsorships);
 		
 		for(Tutorial t: this.tutorialService.findAll() ){
 			Collection<Sponsorship> aux;
-			aux = Collections.<Sponsorship> emptyList();
+			aux = new ArrayList<>();
 			aux.addAll(t.getSponsorships());
 			aux.remove(s);
 			t.setSponsorships(aux);
@@ -135,7 +135,7 @@ public class SponsorshipService {
 	public Collection<Sponsorship> findByCreditCardId(int creditCardId) {
 		Collection <Sponsorship> res = new ArrayList<>();
 		
-		res = this.sponsorshipRepository.findByCreditCardId(creditCardId);
+		res.addAll(this.sponsorshipRepository.findByCreditCardId(creditCardId));
 
 		return res;
 	}

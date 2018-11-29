@@ -86,7 +86,7 @@ public class SystemConfiguration extends DomainEntity {
 		this.listCreditCardMakes = listCreditCardMakes;
 	}
 
-	@Pattern(regexp = "^\\+[1-9]\\d{0,2}$")
+	@Pattern(regexp = "^\\+[0-9]{3}$")
 	@NotBlank
 	public String getCountryCode() {
 		return this.countryCode;

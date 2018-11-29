@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -10,9 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.MessageBoxRepository;
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.HandyWorker;
 import domain.MessageBox;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +27,8 @@ public class MessageBoxServiceTest extends AbstractTest{
 	@Autowired
 	private MessageBoxService messageBoxService;
 
+	@Autowired
+	private MessageBoxRepository messageBoxRepository;
 	@Autowired
 	private ActorService actorService;
 
@@ -46,14 +49,105 @@ public class MessageBoxServiceTest extends AbstractTest{
 
 	}
 	@Test
-	public void findInBoxActor(){
-		super.authenticate("administrator2");
+	public void testSave(){
+		super.authenticate("Sponsor2");
+		Actor principal;
+		MessageBox box,saved;
+		Collection<MessageBox>boxes;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		boxes = principal.getMessageBoxes();
+		Assert.notNull(boxes);
+		
+		Assert.isTrue(boxes.size()==4);
+		
+		box = this.messageBoxService.create();
+		Assert.notNull(box);
+		box.setName("Test");
+		saved = this.messageBoxService.save(box);
+		Assert.notNull(saved);
+		this.messageBoxService.findOne(saved.getId());
+		
+		Assert.isTrue(boxes.size()==5);
+		
+		super.unauthenticate();
+		
+	}
+	
+	@Test
+	public void testDelete(){
+		super.authenticate("handyWorker2");
+		Actor principal;
+		MessageBox toDelete,box;
+		Collection<MessageBox>boxes;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		box = this.messageBoxService.create();
+		Assert.notNull(box);
+		box.setName("Another box");
+		toDelete = this.messageBoxService.save(box);
+		Assert.notNull(toDelete);
+		
+		boxes = new ArrayList<MessageBox>();
+		boxes = principal.getMessageBoxes();
+		
+		this.messageBoxService.delete(toDelete);
+		
+		Assert.isTrue(!boxes.contains(toDelete));
+		
+	}
+	@Test
+	public void testFindInBoxActor(){
+		super.authenticate("customer1");
 		Actor principal;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
 		this.messageBoxService.findInBoxActor(principal);
+
+		super.unauthenticate();
+	}
+	
+	@Test
+	public void testFindOutBoxActor(){
+		super.authenticate("customer1");
+		Actor principal;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.messageBoxService.findOutBoxActor(principal);
+
+		super.unauthenticate();
+	}
+	
+	@Test
+	public void testFindTrashBoxActor(){
+		super.authenticate("customer1");
+		Actor principal;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.messageBoxService.findTrashBoxActor(principal);
+
+		super.unauthenticate();
+	}
+	
+	@Test
+	public void testFindSpamBoxActor(){
+		super.authenticate("customer1");
+		Actor principal;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		this.messageBoxService.findSpamBoxActor(principal);
 
 		super.unauthenticate();
 	}

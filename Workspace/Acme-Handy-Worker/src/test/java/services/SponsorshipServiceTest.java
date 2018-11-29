@@ -2,6 +2,8 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.CreditCard;
 import domain.Sponsorship;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,10 +28,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 	private SponsorshipService sponsorshipService;
 
 	// Supporting services -----------------------------------------------------
-	
+
 	@Autowired
 	private CreditCardService creditCardService;
-	
+
 	@Autowired
 	private SponsorService sponsorService;
 
@@ -100,14 +103,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	// FindOne correcto
-	@Test
-	public void testFindOne1() {
-		Sponsorship res;
-		res = this.sponsorshipService.findOne(2419);
-		Assert.notNull(res);
-	}
-
 	// FindOne con id incorrecta
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOne2() {
@@ -115,19 +110,149 @@ public class SponsorshipServiceTest extends AbstractTest {
 		res = this.sponsorshipService.findOne(23);
 		Assert.notNull(res);
 	}
-	
+
 	// Save correcto
 	@Test
-	public void testSave1(){
+	public void testSave1() {
 		Sponsorship res;
 		super.authenticate("sponsor1");
 		Sponsorship s = this.sponsorshipService.create();
 		s.setBanner("http://www.url.com");
 		s.setTargetPage("http://www.targetpage.com");
-		s.setCreditCard(this.creditCardService.findOne(2335));
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		cc = this.creditCardService.save(cc);
+		s.setCreditCard(cc);
 		res = this.sponsorshipService.save(s);
 		Assert.notNull(res);
-		Assert.isTrue(this.sponsorService.findOne(2314).getSponsorships().contains(s));
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
 		super.unauthenticate();
+	}
+
+	// Save por un actor que no es un Sponsor
+	@Test(expected = IllegalArgumentException.class)
+	public void testSave2() {
+		Sponsorship res;
+		super.authenticate("handyWorker1");
+		Sponsorship s = this.sponsorshipService.create();
+		s.setBanner("http://www.url.com");
+		s.setTargetPage("http://www.targetpage.com");
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		cc = this.creditCardService.save(cc);
+		s.setCreditCard(cc);
+		res = this.sponsorshipService.save(s);
+		Assert.notNull(res);
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
+		super.unauthenticate();
+	}
+
+	// Save con un campo erróneo
+	@Test(expected = ConstraintViolationException.class)
+	public void testSave3() {
+		Sponsorship res;
+		super.authenticate("sponsor1");
+		Sponsorship s = this.sponsorshipService.create();
+		s.setBanner("url");
+		s.setTargetPage("http://www.targetpage.com");
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		cc = this.creditCardService.save(cc);
+		s.setCreditCard(cc);
+		res = this.sponsorshipService.save(s);
+		Assert.notNull(res);
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
+		super.unauthenticate();
+	}
+
+	// Save sin una creditCard
+	@Test(expected = ConstraintViolationException.class)
+	public void testSave4() {
+		Sponsorship res;
+		super.authenticate("sponsor1");
+		Sponsorship s = this.sponsorshipService.create();
+		s.setBanner("http://www.url.com");
+		s.setTargetPage("http://www.targetpage.com");
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		cc = this.creditCardService.save(cc);
+		// s.setCreditCard(cc);
+		res = this.sponsorshipService.save(s);
+		Assert.notNull(res);
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
+		super.unauthenticate();
+	}
+
+	// Delete correcto
+	@Test
+	public void testDelete1() {
+		super.authenticate("sponsor1");
+		Collection<Sponsorship> res = this.sponsorshipService.findByPrincipal();
+		Assert.notEmpty(res);
+		Sponsorship s = this.sponsorshipService.findOne(res.iterator().next()
+				.getId());
+		this.sponsorshipService.delete(s);
+		res = this.sponsorshipService.findByPrincipal();
+		Assert.isTrue(!res.contains(s));
+		super.unauthenticate();
+	}
+
+	// Delete con actor erroneo
+	@Test (expected = IllegalArgumentException.class)
+	public void testDelete2() {
+		super.authenticate("handyWorker1");
+		Collection<Sponsorship> res = this.sponsorshipService.findByPrincipal();
+		Assert.notEmpty(res);
+		Sponsorship s = this.sponsorshipService.findOne(res.iterator().next()
+				.getId());
+		this.sponsorshipService.delete(s);
+		res = this.sponsorshipService.findByPrincipal();
+		Assert.isTrue(!res.contains(s));
+		super.unauthenticate();
+	}
+	
+	//FindByCreditCardId correcto
+	@Test
+	public void testFindByCreditCardId1(){
+		Sponsorship res;
+		super.authenticate("sponsor1");
+		Sponsorship s = this.sponsorshipService.create();
+		s.setBanner("http://www.url.com");
+		s.setTargetPage("http://www.targetpage.com");
+		CreditCard cc = this.creditCardService.create();
+		cc.setBrandName("VISA");
+		cc.setHolderName("Mario Casasje");
+		cc.setNumber("1234567890123456");
+		cc.setExpirationMonth(1);
+		cc.setExpirationYear(24);
+		cc.setCVV(100);
+		cc = this.creditCardService.save(cc);
+		s.setCreditCard(cc);
+		res = this.sponsorshipService.save(s);
+		Assert.notNull(res);
+		Assert.isTrue(res.getSponsor().getSponsorships().contains(s));
+		super.unauthenticate();
+		Collection<Sponsorship> sponsorships = this.sponsorshipService.findByCreditCardId(s.getCreditCard().getId());
+		Assert.notEmpty(sponsorships);
 	}
 }

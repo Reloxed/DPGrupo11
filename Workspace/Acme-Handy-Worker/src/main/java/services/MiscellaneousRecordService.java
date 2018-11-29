@@ -65,7 +65,7 @@ public class MiscellaneousRecordService {
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
 
 
-		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
+		result = this.miscellaneousRecordRepository.saveAndFlush(miscellaneousRecord);
 		Assert.notNull(result);
 		
 		miscellaneousRecords.add(result);

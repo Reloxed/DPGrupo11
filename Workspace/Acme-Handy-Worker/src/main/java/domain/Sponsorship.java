@@ -64,7 +64,4 @@ public class Sponsorship extends DomainEntity {
 	public void setSponsor(Sponsor sponsor) {
 		this.sponsor = sponsor;
 	}
-
-	
-	
 }
