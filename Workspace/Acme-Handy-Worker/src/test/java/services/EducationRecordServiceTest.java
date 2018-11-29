@@ -227,6 +227,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 
 		super.unauthenticate();
 	}
+	
 
 }
 
