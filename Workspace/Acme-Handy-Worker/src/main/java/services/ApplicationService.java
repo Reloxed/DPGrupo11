@@ -41,9 +41,6 @@ public class ApplicationService {
 	@Autowired
 	private MessageService				messageService;
 
-	@Autowired
-	private CreditCardService			creditCardService;
-
 
 	// Simple CRUD methods ---------------------------
 
@@ -69,7 +66,7 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		String[] spamWords, comments;
-		final String bodyHandyWorker, bodyCustomer;
+		final String bodyHW, bodyCustomer;
 		boolean containsSpam;
 
 		Assert.notNull(a);
@@ -121,10 +118,10 @@ public class ApplicationService {
 
 		}
 
-		bodyCustomer = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
-		bodyHandyWorker = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
-		this.messageService.createAndSaveStatus(applicant, bodyCustomer, result.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyHandyWorker, result.getRegisteredMoment());
+		bodyHW = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		this.messageService.createAndSaveStatus(applicant, bodyHW, result.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyCustomer, result.getRegisteredMoment());
 
 		return result;
 	}
@@ -146,11 +143,9 @@ public class ApplicationService {
 
 	// Other business methods --------------------------
 
-	public void accept(final Application a) {
+	public void accept(final Application a, final CreditCard creditCard) {
 		final Customer customer;
 		final String bodyCustomer, bodyHandyWorker;
-		final CreditCard creditCard;
-		final CreditCard saved;
 
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() != 0);
@@ -168,20 +163,18 @@ public class ApplicationService {
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 
-		if (a.getStatus() == "ACCEPTED") {
-			creditCard = this.creditCardService.create();
-			saved = this.creditCardService.save(creditCard);
-			Assert.isTrue(this.creditCardService.findAll().contains(saved));
-		}
+		if (a.getStatus() == "ACCEPTED")
+			a.setCreditCard(creditCard);
+
 	}
 
 	public void reject(final Application a) {
 		final Customer customer;
 		final String bodyCustomer, bodyHandyWorker;
+		Application saved;
 
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() != 0);
-		System.out.println("Id de la application: " + a.getId());
 
 		customer = this.customerService.findByPrincipal();
 		Assert.notNull(customer);
@@ -189,10 +182,10 @@ public class ApplicationService {
 		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
 		Assert.isTrue(a.getStatus() == "PENDING");
 		a.setStatus("REJECTED");
-		this.applicationRepository.saveAndFlush(a);
+		saved = this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 	}

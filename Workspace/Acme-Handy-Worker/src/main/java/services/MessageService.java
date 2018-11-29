@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import domain.Actor;
 import domain.Administrator;
 import domain.Message;
 import domain.MessageBox;
-import domain.SystemConfiguration;
 
 @Service
 @Transactional
@@ -24,27 +24,26 @@ public class MessageService {
 	// Managed repository ---------------------
 
 	@Autowired
-	private MessageRepository messageRepository;
+	private MessageRepository			messageRepository;
 
 	//Supporting services -------------------
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private SystemConfigurationService systemConfiguratoinService;
+	private SystemConfigurationService	systemConfiguratoinService;
 
 	@Autowired
-	private MessageBoxService messageBoxService;
+	private MessageBoxService			messageBoxService;
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService		administratorService;
 
 
 	//CRUD Methods --------------------------------
 
-
-	public Message create(){
+	public Message create() {
 		Message result;
 		Actor principal;
 		Collection<MessageBox> messageBoxes;
@@ -53,51 +52,48 @@ public class MessageService {
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		messageBoxes = new ArrayList<MessageBox>();	
+		messageBoxes = new ArrayList<MessageBox>();
 		recipients = new ArrayList<Actor>();
 
 		result = new Message();
 		result.setSender(principal);
 		result.setMessageBoxes(messageBoxes);
 		result.setRecipients(recipients);
-		result.setSendMoment(new Date(System.currentTimeMillis()-1));
-
+		result.setSendMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
 
-	public Message save(final Message message){
+	public Message save(final Message message) {
 		Actor principal;
-		Message result,saved,copy,principalMessage; //copy is the message that is saved into principal outBox
-		Collection<MessageBox>inBoxesRecipients;
-		Collection<MessageBox>copyOutBoxes;
-		Collection<Message>messages;
-		Collection<Message>updated,updated2;
+		Message result, saved, copy, principalMessage; //copy is the message that is saved into principal outBox
+		Collection<MessageBox> inBoxesRecipients;
+		Collection<MessageBox> copyOutBoxes;
+		Collection<Message> messages;
+		Collection<Message> updated, updated2;
 		MessageBox inBox;
 		MessageBox outBoxPrincipal;
-		Collection<Actor>recipients;
+		Collection<Actor> recipients;
 		boolean isSpam;
-		
+
 		result = this.create();
 		messages = new ArrayList<Message>();
 		updated2 = new ArrayList<Message>();
 		recipients = new ArrayList<Actor>();
 		copyOutBoxes = new ArrayList<MessageBox>();
 		inBoxesRecipients = new ArrayList<MessageBox>();
-		
+
 		Assert.notNull(message);
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.notNull(message.getSender());
 		Assert.notNull(message.getSendMoment());
-		
-		
+
 		recipients = message.getRecipients();
 		Assert.notNull(recipients);
 		isSpam = false;
-		
 
 		result.setSubject(message.getSubject());
 		result.setBody(message.getBody());
@@ -105,29 +101,27 @@ public class MessageService {
 		result.setTags(message.getTags());
 		result.setRecipients(recipients);
 		result.setIsSpam(isSpam);
-		
-		
-		
-		for(Actor a: recipients){
-			inBox =this.messageBoxService.findInBoxActor(a);
+
+		for (final Actor a : recipients) {
+			inBox = this.messageBoxService.findInBoxActor(a);
 			messages = inBox.getMessages();
 			updated = new ArrayList<Message>(messages);
 			updated.add(result);
 			inBox.setMessages(updated);
-			Assert.isTrue(!(inBox.getMessages().size()==0));
+			Assert.isTrue(!(inBox.getMessages().size() == 0));
 			inBoxesRecipients.add(inBox);
 			Assert.notNull(inBoxesRecipients);
 		}
-		
+
 		result.setMessageBoxes(inBoxesRecipients);
-		
+
 		saved = this.messageRepository.saveAndFlush(result);
 		Assert.notNull(saved);
-		System.out.println("Message saved: \n"+saved);
+		System.out.println("Message saved: \n" + saved);
 		Assert.isTrue(this.messageRepository.findAll().contains(saved));
-		
-		System.out.println("Saved messageBoxes: \n"+ saved.getMessageBoxes());
-		
+
+		System.out.println("Saved messageBoxes: \n" + saved.getMessageBoxes());
+
 		copy = this.create();
 		copy.setSubject(saved.getSubject());
 		copy.setBody(saved.getBody());
@@ -136,124 +130,122 @@ public class MessageService {
 		copy.setSender(saved.getSender());
 		copy.setRecipients(saved.getRecipients());
 		copy.setIsSpam(saved.getIsSpam());
-		
-		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);		
+
+		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
 		Assert.notNull(outBoxPrincipal);
-		
-		Collection<Message>outBoxMessages = outBoxPrincipal.getMessages();
+
+		final Collection<Message> outBoxMessages = outBoxPrincipal.getMessages();
 		Assert.notNull(outBoxMessages);
 		outBoxMessages.add(copy);
-		
-		
+
 		updated2 = outBoxPrincipal.getMessages();
 		Assert.notNull(updated2);
 		updated2.add(copy);
 		outBoxPrincipal.setMessages(updated2);
-		
+
 		copyOutBoxes = saved.getMessageBoxes();
 		Assert.notNull(copyOutBoxes);
 		copyOutBoxes.removeAll(inBoxesRecipients);
 		copyOutBoxes.add(outBoxPrincipal);
 		copy.setMessageBoxes(copyOutBoxes);
-		
+
 		principalMessage = this.messageRepository.saveAndFlush(copy);
-		
+
 		Assert.isTrue(this.messageRepository.findAll().contains(principalMessage));
-		
-		
-		System.out.println("Copy message: \n"+ principalMessage);
-		
+
+		System.out.println("Copy message: \n" + principalMessage);
+
 		return saved;
-		
-		
-		
-		
-		/*Actor principal;
-		Message result;
-		Date sendMoment;
-		boolean isSpam;
-		//String spamWords;
-		Collection<MessageBox> copyMessageBox;//Principal's outBox
-		Collection<MessageBox> messageBoxes;//Recipients' inBoxes
-		Message copy;
 
-		Assert.notNull(message);
+		/*
+		 * Actor principal;
+		 * Message result;
+		 * Date sendMoment;
+		 * boolean isSpam;
+		 * //String spamWords;
+		 * Collection<MessageBox> copyMessageBox;//Principal's outBox
+		 * Collection<MessageBox> messageBoxes;//Recipients' inBoxes
+		 * Message copy;
+		 * 
+		 * Assert.notNull(message);
+		 * 
+		 * principal = this.actorService.findByPrincipal();
+		 * Assert.notNull(principal);
+		 * 
+		 * sendMoment = new Date(System.currentTimeMillis()-1);
+		 * isSpam = false;
+		 * 
+		 * /*SystemConfiguration sc = this.systemConfiguratoinService.findMySystemConfiguration();
+		 * spamWords = sc.getSpamWords().trim();
+		 * String[]splitSpamWords = spamWords.split(",");
+		 * 
+		 * for(final String spam: splitSpamWords){
+		 * if(message.getSubject().toLowerCase().contains(spam.toLowerCase())){
+		 * isSpam = true;
+		 * principal.setIsSuspicious(true);
+		 * break;
+		 * }else if(message.getBody().toLowerCase().contains(spam.toLowerCase())){
+		 * isSpam = true;
+		 * principal.setIsSuspicious(true);
+		 * break;
+		 * }
+		 * }
+		 */
 
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
-
-		sendMoment = new Date(System.currentTimeMillis()-1);
-		isSpam = false;
-
-		/*SystemConfiguration sc = this.systemConfiguratoinService.findMySystemConfiguration();
-		spamWords = sc.getSpamWords().trim();
-		String[]splitSpamWords = spamWords.split(",");
-
-		for(final String spam: splitSpamWords){
-			if(message.getSubject().toLowerCase().contains(spam.toLowerCase())){
-				isSpam = true;
-				principal.setIsSuspicious(true);
-				break;
-			}else if(message.getBody().toLowerCase().contains(spam.toLowerCase())){
-				isSpam = true;
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}*/
-
-		/*message.setSendMoment(sendMoment);
-		message.setIsSpam(isSpam);
-		message.setSender(principal);
-
-		Collection<Actor>recipients = message.getRecipients();
-		messageBoxes = new ArrayList<MessageBox>();
-		for(final Actor a: recipients){
-			Assert.isTrue(a.getId() != principal.getId());
-			MessageBox inBox = this.messageBoxService.findInBoxActor(a);
-			Assert.notNull(inBox);
-			messageBoxes.add(inBox);
-
-		}
-
-		message.setMessageBoxes(messageBoxes);
-
-		/*if(isSpam = true){
-			for(final Actor a : recipients){
-				MessageBox spamBox = this.messageBoxService.findSpamBoxActor(a);
-				Assert.notNull(spamBox);
-				messageBoxes.add(spamBox);
-
-			}
-
-			message.setMessageBoxes(messageBoxes);
-			principal.setIsSuspicious(true);
-		}
-
-		result = this.messageRepository.save(message);
-		Assert.notNull(result);
-
-		copy = new Message();
-
-		copy.setSubject(message.getSubject());
-		copy.setBody(message.getBody());
-		copy.setSendMoment(message.getSendMoment());
-		copy.setIsSpam(message.getIsSpam());
-		copy.setPriority(message.getPriority());
-		copy.setRecipients(message.getRecipients());
-		copy.setSender(message.getSender());
-
-		MessageBox outBox = this.messageBoxService.findOutBoxActor(principal);
-		copyMessageBox = new ArrayList<MessageBox>();
-		copyMessageBox.add(outBox);
-		copy.setMessageBoxes(copyMessageBox);
-
-		this.messageRepository.save(copy);
-
-		return result;
-*/
+		/*
+		 * message.setSendMoment(sendMoment);
+		 * message.setIsSpam(isSpam);
+		 * message.setSender(principal);
+		 * 
+		 * Collection<Actor>recipients = message.getRecipients();
+		 * messageBoxes = new ArrayList<MessageBox>();
+		 * for(final Actor a: recipients){
+		 * Assert.isTrue(a.getId() != principal.getId());
+		 * MessageBox inBox = this.messageBoxService.findInBoxActor(a);
+		 * Assert.notNull(inBox);
+		 * messageBoxes.add(inBox);
+		 * 
+		 * }
+		 * 
+		 * message.setMessageBoxes(messageBoxes);
+		 * 
+		 * /*if(isSpam = true){
+		 * for(final Actor a : recipients){
+		 * MessageBox spamBox = this.messageBoxService.findSpamBoxActor(a);
+		 * Assert.notNull(spamBox);
+		 * messageBoxes.add(spamBox);
+		 * 
+		 * }
+		 * 
+		 * message.setMessageBoxes(messageBoxes);
+		 * principal.setIsSuspicious(true);
+		 * }
+		 * 
+		 * result = this.messageRepository.save(message);
+		 * Assert.notNull(result);
+		 * 
+		 * copy = new Message();
+		 * 
+		 * copy.setSubject(message.getSubject());
+		 * copy.setBody(message.getBody());
+		 * copy.setSendMoment(message.getSendMoment());
+		 * copy.setIsSpam(message.getIsSpam());
+		 * copy.setPriority(message.getPriority());
+		 * copy.setRecipients(message.getRecipients());
+		 * copy.setSender(message.getSender());
+		 * 
+		 * MessageBox outBox = this.messageBoxService.findOutBoxActor(principal);
+		 * copyMessageBox = new ArrayList<MessageBox>();
+		 * copyMessageBox.add(outBox);
+		 * copy.setMessageBoxes(copyMessageBox);
+		 * 
+		 * this.messageRepository.save(copy);
+		 * 
+		 * return result;
+		 */
 	}
 
-	public void delete(final Message message){
+	public void delete(final Message message) {
 		Actor principal;
 		Collection<MessageBox> messageBoxesActor;//message boxes from principal actor
 		Collection<MessageBox> messageBoxesMessage;//message boxes where message appears
@@ -261,7 +253,7 @@ public class MessageService {
 		Collection<Message> allMessages;
 
 		Assert.notNull(message);
-		Assert.isTrue(message.getId()!=0);
+		Assert.isTrue(message.getId() != 0);
 
 		//Pick principal actor
 		principal = this.actorService.findByPrincipal();
@@ -272,8 +264,8 @@ public class MessageService {
 		Assert.notNull(messageBoxesActor);
 
 		allMessages = new ArrayList<Message>();
-		for(final MessageBox mb : messageBoxesActor){
-			Collection<Message> m = mb.getMessages();
+		for (final MessageBox mb : messageBoxesActor) {
+			final Collection<Message> m = mb.getMessages();
 			allMessages.addAll(m);
 		}
 
@@ -283,18 +275,17 @@ public class MessageService {
 		messageBoxesMessage = message.getMessageBoxes();
 		Assert.notNull(messageBoxesMessage);
 
-		for(final MessageBox mb : messageBoxesMessage){
-			if(mb.getIsPredefined() && mb.getName().equals("trsh box")){
+		for (final MessageBox mb : messageBoxesMessage)
+			if (mb.getIsPredefined() && mb.getName().equals("trsh box"))
 				this.messageRepository.delete(message);
-			}else{
+			else {
 				trashBox = this.messageBoxService.findTrashBoxActor(principal);
-				this.move(message,trashBox);
+				this.move(message, trashBox);
 			}
-		}
 
 	}
 
-	public Message findOne(final int messageId){
+	public Message findOne(final int messageId) {
 		Message result;
 
 		result = this.messageRepository.findOne(messageId);
@@ -303,8 +294,8 @@ public class MessageService {
 		return result;
 	}
 
-	public Collection<Message> findAll(){
-		Collection<Message>result;
+	public Collection<Message> findAll() {
+		Collection<Message> result;
 
 		result = this.messageRepository.findAll();
 		Assert.notNull(result);
@@ -314,11 +305,11 @@ public class MessageService {
 
 	//Other business methods -----------------------------
 
-	public void move(final Message message, final MessageBox destination){
+	public void move(final Message message, final MessageBox destination) {
 		Actor principal;
 		Collection<MessageBox> origin;
 		Collection<Message> allMessagesOrigin;
-		Collection<Message>allMessagesDestination;
+		final Collection<Message> allMessagesDestination;
 		Collection<MessageBox> messageBoxesMessage;
 		Collection<Message> updatedOriginBox;
 		Collection<Message> updatedDestinationBox;
@@ -326,20 +317,20 @@ public class MessageService {
 
 		Assert.notNull(message);
 		Assert.notNull(destination);
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		Assert.isTrue(message.getId()!=0);
-		Assert.isTrue(destination.getId()!=0);
-		
+
+		Assert.isTrue(message.getId() != 0);
+		Assert.isTrue(destination.getId() != 0);
+
 		updatedOriginBox = new ArrayList<Message>();
 		origin = new ArrayList<MessageBox>();
 		allMessagesOrigin = new ArrayList<Message>();
 		messageBoxesMessage = new ArrayList<MessageBox>();
-		
+
 		origin = message.getMessageBoxes();
-		for(MessageBox  mb : origin){
+		for (final MessageBox mb : origin) {
 			allMessagesOrigin.addAll(mb.getMessages());
 			Assert.notNull(allMessagesOrigin);
 		}
@@ -347,30 +338,27 @@ public class MessageService {
 		//Assert.isTrue(principal.getMessageBoxes().contains(origin));
 		//Assert.isTrue(principal.getMessageBoxes().contains(destination));
 		messageBoxesMessage.add(destination);
-		
+
 		message.setMessageBoxes(messageBoxesMessage);
-		
+
 		result = this.messageRepository.saveAndFlush(message);
-		
-		if(allMessagesOrigin.contains(result)){
+
+		if (allMessagesOrigin.contains(result)) {
 			Assert.isTrue(allMessagesOrigin.contains(result));
 			allMessagesOrigin.remove(result);
-			
+
 		}
 		updatedOriginBox = allMessagesOrigin;
-		for(MessageBox box : origin){
+		for (final MessageBox box : origin)
 			box.setMessages(updatedOriginBox);
-		}
-		
+
 		updatedDestinationBox = destination.getMessages();
 		Assert.isTrue(!updatedDestinationBox.contains(result));
 		updatedDestinationBox.add(result);
-		
-		
+
 	}
 
-
-	public void broadcast(final Message m){
+	public void broadcast(final Message m) {
 		Administrator principal;
 		String subject;
 		String body;
@@ -378,11 +366,11 @@ public class MessageService {
 		Collection<Actor> recipients;
 
 		Collection<Actor> actorsBroadcast;
-		Collection<MessageBox>inBoxRecipients;
+		Collection<MessageBox> inBoxRecipients;
 
 		Collection<Actor> sender;
 		Collection<MessageBox> outBoxSender;
-		Collection<Message>messages;
+		Collection<Message> messages;
 
 		boolean isSpam;
 		Date sendMoment;
@@ -399,7 +387,7 @@ public class MessageService {
 		priority = m.getPriority();
 		isSpam = false;
 
-		sendMoment = new Date(System.currentTimeMillis()-1);
+		sendMoment = new Date(System.currentTimeMillis() - 1);
 
 		recipients = this.actorService.findAll();
 
@@ -407,8 +395,8 @@ public class MessageService {
 		inBoxRecipients = new ArrayList<MessageBox>();
 		messages = new ArrayList<Message>();
 
-		for(final Actor a : recipients){
-			if(!(a instanceof Administrator)){
+		for (final Actor a : recipients)
+			if (!(a instanceof Administrator)) {
 				final Message message = new Message();
 
 				message.setSubject(subject);
@@ -422,7 +410,7 @@ public class MessageService {
 				message.setIsSpam(isSpam);
 				message.setSendMoment(sendMoment);
 
-				MessageBox inBox = this.messageBoxService.findInBoxActor(a);
+				final MessageBox inBox = this.messageBoxService.findInBoxActor(a);
 				messages = inBox.getMessages();
 				messages.add(message);
 				inBox.setMessages(messages);
@@ -433,8 +421,6 @@ public class MessageService {
 
 			}
 
-		}
-
 		outBoxMessage = new Message();
 		outBoxMessage.setSubject(subject);
 		outBoxMessage.setBody(body);
@@ -443,7 +429,7 @@ public class MessageService {
 		outBoxMessage.setIsSpam(isSpam);
 		outBoxMessage.setSendMoment(sendMoment);
 
-		MessageBox outBox = this.messageBoxService.findOutBoxActor(principal);
+		final MessageBox outBox = this.messageBoxService.findOutBoxActor(principal);
 		outBoxSender = new ArrayList<MessageBox>();
 		outBoxSender.add(outBox);
 		outBoxMessage.setMessageBoxes(outBoxSender);
@@ -455,10 +441,10 @@ public class MessageService {
 		this.messageRepository.save(outBoxMessage);
 	}
 
-	public Message createAndSaveStatus(final Actor actor, final String body,final Date moment){
+	public Message createAndSaveStatus(final Actor actor, final String body, final Date moment) {
 		Message result;
-		Collection<Actor>recipients;
-		Collection<MessageBox>boxes;
+		Collection<Actor> recipients;
+		Collection<MessageBox> boxes;
 		MessageBox outBox;
 		MessageBox inBox;
 		recipients = new ArrayList<Actor>();
@@ -477,6 +463,7 @@ public class MessageService {
 		result.setMessageBoxes(boxes);
 		result.setBody(body);
 		result.setSubject("Status updated");
+		result.setPriority("NEUTRAL");
 
 		this.messageRepository.save(result);
 

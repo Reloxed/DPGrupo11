@@ -47,7 +47,7 @@ public class AdministratorServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void saveTest() {
+	public void testSave() {
 		super.authenticate("admin1");
 
 		Administrator admin, savedAdmin;
@@ -56,6 +56,7 @@ public class AdministratorServiceTest extends AbstractTest {
 		Collection<Authority> authorities;
 
 		// Creamos un nuevo userAccount
+
 		authorities = new HashSet<>();
 		authorityAdmin = new Authority();
 		authorityAdmin.setAuthority(Authority.ADMINISTRATOR);
@@ -77,6 +78,92 @@ public class AdministratorServiceTest extends AbstractTest {
 		savedAdmin = this.administratorService.save(admin);
 		Assert.isTrue(this.actorService.findAll().contains(savedAdmin));
 
+		super.unauthenticate();
+	}
+
+	// Intentando crear un administrador estando logueado con otro rol
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testSaveFail() {
+		super.authenticate("customer1");
+
+		Administrator admin, savedAdmin;
+		final UserAccount adminAccount;
+		Authority authorityAdmin;
+		Collection<Authority> authorities;
+
+		// Creamos un nuevo userAccount
+
+		authorities = new HashSet<>();
+		authorityAdmin = new Authority();
+		authorityAdmin.setAuthority(Authority.ADMINISTRATOR);
+		authorities.add(authorityAdmin);
+		adminAccount = new UserAccount();
+		adminAccount.setUsername("administratorTest");
+		adminAccount.setPassword("administratorTestPassword");
+		adminAccount.setAuthorities(authorities);
+
+		// Creamos el nuevo administrador
+
+		admin = this.administratorService.create();
+		admin.setAddress("Avenida 1");
+		admin.setEmail("admint1@gmail.com");
+		admin.setName("Lucia");
+		admin.setSurname("del Carmen");
+		admin.setPhoneNumber("954123456");
+		admin.setUserAccount(adminAccount);
+		savedAdmin = this.administratorService.save(admin);
+		Assert.isTrue(this.actorService.findAll().contains(savedAdmin));
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindOne() {
+		super.authenticate("admin1");
+
+		Administrator admin, savedAdmin, found;
+		final UserAccount adminAccount;
+		Authority authorityAdmin;
+		Collection<Authority> authorities;
+
+		// Creamos un nuevo userAccount
+
+		authorities = new HashSet<>();
+		authorityAdmin = new Authority();
+		authorityAdmin.setAuthority(Authority.ADMINISTRATOR);
+		authorities.add(authorityAdmin);
+		adminAccount = new UserAccount();
+		adminAccount.setUsername("administratorTest");
+		adminAccount.setPassword("administratorTestPassword");
+		adminAccount.setAuthorities(authorities);
+
+		// Creamos el nuevo administrador
+
+		admin = this.administratorService.create();
+		admin.setAddress("Avenida 1");
+		admin.setEmail("admint1@gmail.com");
+		admin.setName("Lucia");
+		admin.setSurname("del Carmen");
+		admin.setPhoneNumber("954123456");
+		admin.setUserAccount(adminAccount);
+		savedAdmin = this.administratorService.save(admin);
+		Assert.isTrue(this.actorService.findAll().contains(savedAdmin));
+
+		found = this.administratorService.findOne(savedAdmin.getId());
+		Assert.isTrue(found.getName().equals("Lucia"));
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindAll() {
+		super.authenticate("admin1");
+		Collection<Administrator> administrators = null;
+
+		administrators = this.administratorService.findAll();
+
+		Assert.notNull(administrators);
+		Assert.isTrue(administrators.size() == 2);
 		super.unauthenticate();
 	}
 
