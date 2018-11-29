@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import domain.Curriculum;
+import domain.Finder;
 import domain.HandyWorker;
 
 import utilities.AbstractTest;
@@ -28,6 +30,10 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 	
+	@Autowired
+	private FinderService finderService;
+	@Autowired
+	private CurriculumService curriculumService;
 	
 
 	
@@ -53,20 +59,51 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void testCreateAndSave(){
+	public void testSave(){
+		
+	HandyWorker res;
 	
+	super.authenticate("handyWorker1");
+	
+	HandyWorker s=this.handyWorkerService.findOne(2423);
+	s.setMake("pepe");
+	s.setFinder(new Finder());
+	s.setCurriculum(this.curriculumService.findOne(2321));
+	//s.getUserAccount().setUsername("WNPGG");
+	//s.getUserAccount().setPassword("123456abc");
+	res = this.handyWorkerService.save(s);
+	
+	Assert.notNull(res);
+	
+	
+	super.unauthenticate();
 		
 		
 	}
-	
 	
 	@Test
-	public void testDelete(){
+	public void testCreateAndSave(){
+		HandyWorker result;
+		HandyWorker saved;
+		super.authenticate("handyWorker1");
+		result=this.handyWorkerService.findByPrincipal();
+		Assert.notNull(result);
+		
+		result=this.handyWorkerService.create();
+		result.setMake("pepito");
+		result.setFinder(new Finder());
+		result.setCurriculum(new Curriculum());
 		
 		
 		
 		
+		saved=this.handyWorkerService.save(result);
+		Assert.notNull(saved);
+		super.unauthenticate();
 	}
+	
+	
+
 	
 	
 	

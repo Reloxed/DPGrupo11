@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
 
 import domain.Finder;
 import domain.HandyWorker;
+
 
 import utilities.AbstractTest;
 
@@ -44,9 +46,9 @@ public class FinderServiceTest extends AbstractTest {
 	public void TestFindOne(){
 		Finder result;
 	
-		result=this.finderService.findOne(2418);
+		result=this.finderService.findOne(2417);
 		Assert.notNull(result);
-		Assert.isTrue(result.getId()==2418);
+		Assert.isTrue(result.getId()==2417);
 	
 		
 		
@@ -63,16 +65,37 @@ public class FinderServiceTest extends AbstractTest {
 	
 	@Test
 	public void testCreateAndSave(){
-	
+		Finder result;
+		Finder saved;
+		HandyWorker principal;
+		super.authenticate("handyWorker2");
 		
+		principal=this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result=this.finderService.create();
+		
+		result.setSearchMoment(new Date(System.currentTimeMillis()-1));
+		result.setKeyWord("clave");
+		saved=this.finderService.save(result);
+		Assert.notNull(saved);
+		
+		super.unauthenticate();
 		
 	}
 	
 	
 	@Test
 	public void testDelete(){
+		Finder result;
+		
+		super.authenticate("handyWorker2");
 		
 		
+		
+		
+		
+		super.unauthenticate();
 		
 		
 	}
