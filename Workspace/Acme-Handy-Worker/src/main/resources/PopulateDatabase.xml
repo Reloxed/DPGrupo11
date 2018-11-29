@@ -366,7 +366,7 @@
 		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+034" />
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 		<property name="spamWords"
