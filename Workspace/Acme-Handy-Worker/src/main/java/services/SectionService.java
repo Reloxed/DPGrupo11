@@ -77,8 +77,9 @@ public class SectionService {
 
 		Assert.notNull(section);
 
-		res = this.sectionRepository.saveAndFlush(section);
-
+		res = this.sectionRepository.save(section);
+		Assert.notNull(res);
+		this.sectionRepository.flush();
 		return res;
 	}
 
