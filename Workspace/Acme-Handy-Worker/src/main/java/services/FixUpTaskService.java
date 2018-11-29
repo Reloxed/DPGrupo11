@@ -129,9 +129,9 @@ public class FixUpTaskService {
 	}
 
 	// Other business methods--------
-	// resitricciones de datos y restricciones de acceso
+	
 
-	//deberian de ir en el servico del admin
+	
 	public Double[] findApplicationsNumberOperations() {
 		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;

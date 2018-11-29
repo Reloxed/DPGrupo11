@@ -52,9 +52,9 @@ public class HandyWorker extends Endorser {
 		this.applications = applications;
 	}
 
-	@NotNull
+	
 	@Valid
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public Finder getFinder() {
 		return finder;
 	}
