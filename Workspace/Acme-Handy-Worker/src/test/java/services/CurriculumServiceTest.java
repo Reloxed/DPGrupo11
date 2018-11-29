@@ -35,7 +35,7 @@ public class CurriculumServiceTest extends AbstractTest{
 	}
 	
 	@Test
-	public void testCreateCurriculum() {
+	public void testSaveCurriculum() {
 		Curriculum curriculum;
 
 		String username = "handyWorker1";
