@@ -2,9 +2,10 @@ package services;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
@@ -82,10 +83,12 @@ public class SystemConfigurationService {
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(systemConfiguration.getId() == this.systemConfigurationRepository
-				.findAll().get(0).getId());
+		
+		
+		systemConfiguration.setId(this.systemConfigurationRepository.findAll().get(0).getId());
+		
 		SystemConfiguration result;
-		result = this.systemConfigurationRepository.save(systemConfiguration);
+		result = this.systemConfigurationRepository.saveAndFlush(systemConfiguration);
 		return result;
 
 	}
