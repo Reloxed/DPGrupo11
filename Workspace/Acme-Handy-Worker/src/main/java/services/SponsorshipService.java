@@ -86,8 +86,9 @@ public class SponsorshipService {
 		principal = this.sponsorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.sponsorshipRepository.saveAndFlush(s);
+		result = this.sponsorshipRepository.save(s);
 		Assert.notNull(result);
+		this.sponsorshipRepository.flush();
 		
 		sponsorships = new ArrayList<>();
 		sponsorships.addAll(principal.getSponsorships());

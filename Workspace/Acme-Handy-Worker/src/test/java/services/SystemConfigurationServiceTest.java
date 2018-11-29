@@ -110,7 +110,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 
 	// Save modificando
 	@Test
-	public void testSave3(){
+	public void testSave3() {
 		SystemConfiguration res;
 		super.authenticate("admin1");
 		res = this.systemConfigurationService.create();
@@ -118,20 +118,49 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 		res.setVAT(0.1);
 		res = this.systemConfigurationService.save(res);
 		Assert.notNull(res);
-		Assert.isTrue(this.systemConfigurationService.findAll().contains(this.systemConfigurationService.findOne(res.getId())));
+		Assert.isTrue(this.systemConfigurationService.findAll().contains(
+				this.systemConfigurationService.findOne(res.getId())));
 		super.unauthenticate();
 	}
-	
-	//Save modificando un dato erroneo
-	@Test (expected = ConstraintViolationException.class)
-	public void testSave4(){
+
+	// Save modificando un dato erroneo
+	@Test(expected = ConstraintViolationException.class)
+	public void testSave4() {
 		SystemConfiguration res;
 		super.authenticate("admin1");
 		res = this.systemConfigurationService.create();
 		res.setMaxResults(-20);
 		res = this.systemConfigurationService.save(res);
 		Assert.notNull(res);
-		Assert.isTrue(this.systemConfigurationService.findAll().contains(this.systemConfigurationService.findOne(res.getId())));
+		Assert.isTrue(this.systemConfigurationService.findAll().contains(
+				this.systemConfigurationService.findOne(res.getId())));
 		super.unauthenticate();
 	}
+
+	// FindMySystemConfiguration correcto
+	@Test
+	public void testFindMySystemConfiguration1(){
+		SystemConfiguration res;
+		super.authenticate("customer1");
+		res = this.systemConfigurationService.findMySystemConfiguration();
+		Assert.notNull(res);
+		super.unauthenticate();
+	}
+	
+	// FindMySystemConfiguration sin nadie logueado
+	@Test(expected = IllegalArgumentException.class)
+	public void testFindMySystemConfiguration2(){
+		SystemConfiguration res;
+		res = this.systemConfigurationService.findMySystemConfiguration();
+		Assert.notNull(res);
+	}
+	
+	// SpamWords correcto
+	@Test
+	public void testSpamWords1(){
+		String res;
+		res = this.systemConfigurationService.findSpamWords();
+		Assert.isTrue(!res.isEmpty());
+	}
+	
 }
