@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Curriculum;
 import domain.EducationRecord;
 import domain.HandyWorker;
 
@@ -27,6 +26,8 @@ public class EducationRecordServiceTest extends AbstractTest{
 
 	@Autowired
 	private EducationRecordService educationRecordService;	
+	
+	// Supporting Services ----------------------------------------------------
 	
 	@Autowired
 	private HandyWorkerService handyWorkerService;

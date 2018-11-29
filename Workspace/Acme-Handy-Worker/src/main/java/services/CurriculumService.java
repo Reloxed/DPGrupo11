@@ -32,21 +32,6 @@ public class CurriculumService {
 	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private PersonalRecordService personalRecordService;
-
-	@Autowired
-	private EducationRecordService educationRecordService;
-
-	@Autowired
-	private ProfessionalRecordService professionalRecordService;
-
-	@Autowired
-	private EndorserRecordService endorserRecordService;
-
-	@Autowired
-	private MiscellaneousRecordService miscellaneousRecordService;
-
-	@Autowired
 	private UtilityService utilityService;
 
 	// Simple CRUD Methods
