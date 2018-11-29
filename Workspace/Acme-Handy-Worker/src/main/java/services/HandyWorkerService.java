@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import org.springframework.util.Assert;
 
 import repositories.HandyWorkerRepository;
@@ -18,9 +17,7 @@ import security.UserAccount;
 import domain.Actor;
 import domain.Application;
 import domain.Curriculum;
-import domain.Finder;
 import domain.HandyWorker;
-
 import domain.Tutorial;
 
 @Service
@@ -40,8 +37,6 @@ public class HandyWorkerService {
 	@Autowired
 	private ActorService actorService;
 
-	@Autowired
-	private FinderService finderService;
 
 	// Constructor ----------------------------------------------------
 	public HandyWorkerService() {
