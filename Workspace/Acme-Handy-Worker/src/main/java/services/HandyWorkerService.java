@@ -64,42 +64,7 @@ public class HandyWorkerService {
 		return result;
 
 	}
-
-	public HandyWorker save(final HandyWorker handyWorker) {
-		HandyWorker saved;
-		Assert.notNull(handyWorker);
-		
-		if (handyWorker.getId() == 0) {
-			try{
-				Actor principal;
-				principal =this.actorService.findByPrincipal();
-				Assert.isNull(principal);
-			} catch(IllegalArgumentException e){
-				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				
-				handyWorker.getUserAccount()
-				    .setPassword(passwordEncoder.encodePassword
-						(handyWorker.getUserAccount().getPassword(),null));
-			}
-			
-		} else {
-			
-			HandyWorker principal;
-			principal = this.findByPrincipal();
-			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
-			handyWorker.setMake(principal.getName());
-			handyWorker.setFinder(new Finder());
-			handyWorker.setCurriculum(new Curriculum());
-			
-		}
-		saved = this.handyWorkerRepository.saveAndFlush(handyWorker);
-		
-		return saved;
-
-	}
-
+	
 	public HandyWorker create() {
 		HandyWorker result;
 		Actor principal;
@@ -137,6 +102,44 @@ public class HandyWorkerService {
 		
 
 	}
+
+	public HandyWorker save(final HandyWorker handyWorker) {
+		HandyWorker saved;
+		Assert.notNull(handyWorker);
+		
+		if (handyWorker.getId() == 0) {
+			try{
+				Actor principal;
+				principal =this.actorService.findByPrincipal();
+				Assert.isNull(principal);
+			} catch(IllegalArgumentException e){
+				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+				
+				handyWorker.getUserAccount()
+				    .setPassword(passwordEncoder.encodePassword
+						(handyWorker.getUserAccount().getPassword(),null));
+			}
+			
+		} else {
+			
+			HandyWorker principal;
+			principal = this.findByPrincipal();
+			Assert.notNull(principal);
+			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
+			handyWorker.setMake(principal.getName());
+			handyWorker.setFinder(new Finder());
+			handyWorker.setCurriculum(new Curriculum());
+			handyWorker.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			
+		}
+		saved = this.handyWorkerRepository.saveAndFlush(handyWorker);
+		
+		return saved;
+
+	}
+
+	
 
 	//Other business methods--------
 	//handyworker can write a tutorial,a note,may endorse,

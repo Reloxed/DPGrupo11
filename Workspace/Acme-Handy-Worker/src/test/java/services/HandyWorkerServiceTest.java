@@ -1,6 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -11,9 +14,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import domain.Application;
 import domain.Curriculum;
 import domain.Finder;
 import domain.HandyWorker;
+import domain.MessageBox;
+import domain.Tutorial;
 
 import utilities.AbstractTest;
 
@@ -34,6 +40,9 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	private FinderService finderService;
 	@Autowired
 	private CurriculumService curriculumService;
+	
+	@Autowired
+	private MessageBoxService messageBoxService;
 	
 
 	
@@ -57,7 +66,7 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		Assert.isTrue(result.size()==2);
 		
 	}
-	
+	/*
 	@Test
 	public void testSave(){
 		
@@ -80,7 +89,7 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		
 		
 	}
-	
+	*/
 	@Test
 	public void testCreateAndSave(){
 		HandyWorker result;
@@ -90,11 +99,21 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		Assert.notNull(result);
 		
 		result=this.handyWorkerService.create();
+		
+		result.getUserAccount().setUsername("Carlos");
+		result.getUserAccount().setPassword("p912yp3");
+		result.setIsSuspicious(false);
+		
+		
+		Collection <MessageBox> mensajes=new ArrayList<MessageBox>();
+		mensajes.add(this.messageBoxService.findOne(2377));
+		result.setMessageBoxes(mensajes);
+		result.setApplications(new HashSet<Application>());
+		result.setTutorial(new HashSet<Tutorial>());
+		
 		result.setMake("pepito");
-		result.setFinder(new Finder());
-		result.setCurriculum(new Curriculum());
-		
-		
+		result.setFinder(this.finderService.findOne(2417));
+		result.setCurriculum(this.curriculumService.findOne(2331));
 		
 		
 		saved=this.handyWorkerService.save(result);
