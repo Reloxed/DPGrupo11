@@ -94,7 +94,7 @@ public class CurriculumServiceTest extends AbstractTest{
 		personalRecord = curriculum.getPersonalRecord();
 		personalRecord.setFullName("Me llamo Ralph");
 		personalRecord.setEmail("ralphnoestonto@yahoo.es");
-		personalRecord.setLinkedinLink("https://es.linkedin.com/in/ralph");
+		personalRecord.setLinkedinLink("https://www.linkedin.com/in/ralph");
 		personalRecord.setPhoneNumber("697561248");
 		savedPR = this.personalRecordService.save(personalRecord);
 		Assert.notNull(savedPR);
