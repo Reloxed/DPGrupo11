@@ -46,10 +46,6 @@ public class EndorserRecordService {
 		result= new EndorserRecord();
 		Assert.notNull(result);
 		
-		result.setFullName("FullName");
-		result.setEmail("Email@.com");
-		result.setPhoneNumber("PhoneNumber");
-		result.setLinkedinLink("linkedinlink.com");
 		
 		
 		return result;
@@ -84,6 +80,9 @@ public class EndorserRecordService {
 		Assert.notNull(endorserRecord.getFullName());
 		Assert.notNull(endorserRecord.getEmail());
 		Assert.notNull(endorserRecord.getLinkedinLink());
+		
+		Assert.isTrue(endorserRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
+		
 		Assert.notNull(endorserRecord.getPhoneNumber());
 		endorsersRecord=principal.getCurriculum().getEndorserRecords();
 		result=this.endorserRecordRepository.saveAndFlush(endorserRecord);

@@ -12,11 +12,9 @@ import org.springframework.util.Assert;
 
 import repositories.FixUpTaskRepository;
 import domain.Application;
-
 import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
-
 
 @Service
 @Transactional
@@ -53,12 +51,8 @@ public class FixUpTaskService {
 		result.setTicker(this.utilityService.generateTicker());
 		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 
-
-
 		result.setApplications(new HashSet<Application>());
-		result.setComplaints(new HashSet<Complaint> ());
-
-
+		result.setComplaints(new HashSet<Complaint>());
 
 		return result;
 
@@ -68,7 +62,6 @@ public class FixUpTaskService {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
-
 
 		return result;
 
@@ -88,8 +81,7 @@ public class FixUpTaskService {
 		FixUpTask result;
 		Customer principal;
 
-
-		Assert.isTrue(fixUpTask.getId()==0);
+		Assert.isTrue(fixUpTask.getId() == 0);
 		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getEndMoment());
 		Assert.notNull(fixUpTask.getStartMoment());
@@ -100,10 +92,12 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.notNull(fixUpTask.getWarranty());
 
-		principal=this.customerService.findByPrincipal();
+		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
+
+		principal.getFixUpTasks().add(result);
 
 		return result;
 
@@ -129,9 +123,7 @@ public class FixUpTaskService {
 	}
 
 	// Other business methods--------
-	
 
-	
 	public Double[] findApplicationsNumberOperations() {
 		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;

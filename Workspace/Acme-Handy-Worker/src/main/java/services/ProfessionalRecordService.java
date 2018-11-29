@@ -27,6 +27,9 @@ public class ProfessionalRecordService {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
 	// Simple CRUD methods -----------------------------------
 
 	public ProfessionalRecord create() {
@@ -65,6 +68,56 @@ public class ProfessionalRecordService {
 		Assert.notNull(principal.getCurriculum());
 
 		Assert.notNull(professionalRecord);
+
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] comments = professionalRecord.getComments().split(
+				"(¿¡,.-_/!?) ");
+		for (String word : spamWords) {
+			for (String titleWord : comments) {
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			String[] role = professionalRecord.getRole().split("(¿¡,.-_/!?) ");
+			for (String word : spamWords) {
+				for (String titleWord : role) {
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+			if (!containsSpam) {
+				String[] companyName = professionalRecord.getRole().split(
+						"(¿¡,.-_/!?) ");
+				for (String word : spamWords) {
+					for (String titleWord : companyName) {
+						if (titleWord.toLowerCase()
+								.contains(word.toLowerCase())) {
+							containsSpam = true;
+							break;
+						}
+					}
+					if (containsSpam) {
+						principal.setIsSuspicious(true);
+						break;
+					}
+				}
+			}
+		}
 
 		if (professionalRecord.getEndDate() != null) {
 			Assert.isTrue(professionalRecord.getStartDate().before(
