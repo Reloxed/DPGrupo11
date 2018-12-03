@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -20,15 +21,16 @@ public class ProfessionalRecordService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private ProfessionalRecordRepository professionalRecordRepository;
+	private ProfessionalRecordRepository	professionalRecordRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService				handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService		systemConfigurationService;
+
 
 	// Simple CRUD methods -----------------------------------
 
@@ -44,7 +46,7 @@ public class ProfessionalRecordService {
 		return res;
 	}
 
-	public ProfessionalRecord findOne(int professionalRecordId) {
+	public ProfessionalRecord findOne(final int professionalRecordId) {
 		ProfessionalRecord res;
 		res = this.professionalRecordRepository.findOne(professionalRecordId);
 		Assert.notNull(res);
@@ -58,7 +60,7 @@ public class ProfessionalRecordService {
 		return res;
 	}
 
-	public ProfessionalRecord save(ProfessionalRecord professionalRecord) {
+	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {
 		HandyWorker principal;
 		ProfessionalRecord res;
 		Collection<ProfessionalRecord> professionalRecords;
@@ -70,18 +72,15 @@ public class ProfessionalRecordService {
 		Assert.notNull(professionalRecord);
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
 		if (professionalRecord.getComments() != null) {
-			String[] comments = professionalRecord.getComments().split(
-					"(에,.-_/!?) ");
-			for (String word : spamWords) {
-				for (String titleWord : comments) {
+			final String[] comments = professionalRecord.getComments().split("(에,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : comments)
 					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}
-				}
 				if (containsSpam) {
 					principal.setIsSuspicious(true);
 					break;
@@ -89,71 +88,56 @@ public class ProfessionalRecordService {
 			}
 			if (!containsSpam) {
 				if (professionalRecord.getRole() != null) {
-					String[] role = professionalRecord.getRole().split(
-							"(에,.-_/!?) ");
-					for (String word : spamWords) {
-						for (String titleWord : role) {
-							if (titleWord.toLowerCase().contains(
-									word.toLowerCase())) {
+					final String[] role = professionalRecord.getRole().split("(에,.-_/!?) ");
+					for (final String word : spamWords) {
+						for (final String titleWord : role)
+							if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 								containsSpam = true;
 								break;
 							}
-						}
 						if (containsSpam) {
 							principal.setIsSuspicious(true);
 							break;
 						}
 					}
 				}
-				if (!containsSpam) {
+				if (!containsSpam)
 					if (professionalRecord.getCompanyName() != null) {
-						String[] companyName = professionalRecord.getRole()
-								.split("(에,.-_/!?) ");
-						for (String word : spamWords) {
-							for (String titleWord : companyName) {
-								if (titleWord.toLowerCase().contains(
-										word.toLowerCase())) {
+						final String[] companyName = professionalRecord.getRole().split("(에,.-_/!?) ");
+						for (final String word : spamWords) {
+							for (final String titleWord : companyName)
+								if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 									containsSpam = true;
 									break;
 								}
-							}
 							if (containsSpam) {
 								principal.setIsSuspicious(true);
 								break;
 							}
 						}
 					}
-				}
 			}
 		}
 
-		System.out.println("풠ontiene spam?" + containsSpam);
+		if (professionalRecord.getEndDate() != null)
+			Assert.isTrue(professionalRecord.getStartDate().before(professionalRecord.getEndDate()));
+		else
+			Assert.isTrue(professionalRecord.getStartDate().before(new Date(System.currentTimeMillis())));
 
-		if (professionalRecord.getEndDate() != null) {
-			Assert.isTrue(professionalRecord.getStartDate().before(
-					professionalRecord.getEndDate()));
-		} else {
-			Assert.isTrue(professionalRecord.getStartDate().before(
-					new Date(System.currentTimeMillis())));
-		}
+		professionalRecords = principal.getCurriculum().getProfessionalRecords();
 
-		professionalRecords = principal.getCurriculum()
-				.getProfessionalRecords();
-
-		res = this.professionalRecordRepository
-				.saveAndFlush(professionalRecord);
+		res = this.professionalRecordRepository.saveAndFlush(professionalRecord);
 		Assert.notNull(res);
 
 		if (professionalRecord.getId() == 0) {
 			professionalRecords.add(res);
-			principal.getCurriculum().setProfessionalRecords(
-					professionalRecords);
+			principal.getCurriculum().setProfessionalRecords(professionalRecords);
 		}
 
 		return res;
 	}
 
-	public void delete(ProfessionalRecord professionalRecord) {
+	public void delete(final ProfessionalRecord professionalRecord) {
 		HandyWorker principal;
 		Collection<ProfessionalRecord> professionalRecords;
 
@@ -163,8 +147,7 @@ public class ProfessionalRecordService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		professionalRecords = principal.getCurriculum()
-				.getProfessionalRecords();
+		professionalRecords = principal.getCurriculum().getProfessionalRecords();
 
 		professionalRecords.remove(professionalRecord);
 

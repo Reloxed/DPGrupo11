@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -16,50 +17,50 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class HandyWorker extends Endorser {
 
-	private double score;
-	private String make;
-	private Collection<Tutorial> tutorial;
-	private Collection<Application> applications;
-	private Finder finder;
-	private Curriculum curriculum;
+	private double					score;
+	private String					make;
+	private Collection<Tutorial>	tutorial;
+	private Collection<Application>	applications;
+	private Finder					finder;
+	private Curriculum				curriculum;
+
 
 	@NotBlank
 	public String getMake() {
-		return make;
+		return this.make;
 	}
-	
-	public void setMake(String make) {
+
+	public void setMake(final String make) {
 		this.make = make;
 	}
 
 	@Valid
 	@OneToMany
 	public Collection<Tutorial> getTutorial() {
-		return tutorial;
+		return this.tutorial;
 	}
 
-	public void setTutorial(Collection<Tutorial> tutorial) {
+	public void setTutorial(final Collection<Tutorial> tutorial) {
 		this.tutorial = tutorial;
 	}
 
 	@Valid
-	@OneToMany(mappedBy="applicant")
+	@OneToMany(mappedBy = "applicant")
 	public Collection<Application> getApplications() {
-		return applications;
+		return this.applications;
 	}
 
-	public void setApplications(Collection<Application> applications) {
+	public void setApplications(final Collection<Application> applications) {
 		this.applications = applications;
 	}
 
-	
 	@Valid
 	@OneToOne(optional = true)
 	public Finder getFinder() {
-		return finder;
+		return this.finder;
 	}
 
-	public void setFinder(Finder finder) {
+	public void setFinder(final Finder finder) {
 		this.finder = finder;
 	}
 
@@ -67,18 +68,18 @@ public class HandyWorker extends Endorser {
 	@Valid
 	@OneToOne(optional = true)
 	public Curriculum getCurriculum() {
-		return curriculum;
+		return this.curriculum;
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 
 	public double getScore() {
-		return score;
+		return this.score;
 	}
 
-	public void setScore(double score) {
+	public void setScore(final double score) {
 		this.score = score;
 	}
 }

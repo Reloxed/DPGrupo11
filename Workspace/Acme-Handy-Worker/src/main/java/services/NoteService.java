@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -25,20 +26,19 @@ public class NoteService {
 	// Managed repository ----------------------------
 
 	@Autowired
-	private NoteRepository noteRepository;
+	private NoteRepository				noteRepository;
 
 	// Supporting services -------------------
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	// CRUD Methods --------------------------------
 
-	
 	public Note create() {
 		Actor principal;
 		Note result;
@@ -66,28 +66,24 @@ public class NoteService {
 
 		}
 
-
-		result.setPublishedMoment(new Date(System.currentTimeMillis()-1));
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		return result;
-	}		
+	}
 
-
-
-	public Note save(Note note){
+	public Note save(final Note note) {
 		Note result;
 		Report report;
 		Actor principal;
-		Collection<Note>notes,updated;
+		Collection<Note> notes, updated;
 
 		Assert.notNull(note);
-		Assert.isTrue(note.getId()==0);
+		Assert.isTrue(note.getId() == 0);
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
 		report = note.getReport();
 		Assert.notNull(report);
-
 
 		if (principal instanceof Referee) {
 
@@ -104,34 +100,20 @@ public class NoteService {
 
 		}
 
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] customerComments = note.getCustomerComment().split(
-				"(에,.-_/!?) ");
-		String[] refereeComments = note.getRefereeComment().split(
-				"(에,.-_/!?) ");
-		String[] handyComments = note.getHandyWorkerComment().split(
-				"(에,.-_/!?) ");
-		for(String word: spamWords){
-			for(String customerWord : customerComments){
-				if(customerWord.toLowerCase().contains(word.toLowerCase())){
-
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] customerComments = note.getCustomerComment().split("(에,.-_/!?) ");
+		final String[] refereeComments = note.getRefereeComment().split("(에,.-_/!?) ");
+		final String[] handyComments = note.getHandyWorkerComment().split("(에,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String customerWord : customerComments)
+				if (customerWord.toLowerCase().contains(word.toLowerCase()))
 					principal.setIsSuspicious(true);
-
-				}
-			}
-			for(String refereeWord : refereeComments){
-				if(refereeWord.toLowerCase().contains(word.toLowerCase())){
-
+			for (final String refereeWord : refereeComments)
+				if (refereeWord.toLowerCase().contains(word.toLowerCase()))
 					principal.setIsSuspicious(true);
-				}
-			}
-			for(String handyWord : handyComments){
-				if(handyWord.toLowerCase().contains(word.toLowerCase())){
-
+			for (final String handyWord : handyComments)
+				if (handyWord.toLowerCase().contains(word.toLowerCase()))
 					principal.setIsSuspicious(true);
-				}
-			}
 		}
 
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
@@ -150,8 +132,7 @@ public class NoteService {
 
 	}
 
-
-	public void delete(Note note){
+	public void delete(final Note note) {
 		Actor principal;
 		Report report;
 		Collection<Note> notes, updated;
@@ -166,10 +147,7 @@ public class NoteService {
 		notes = this.noteRepository.findAll();
 		Assert.notNull(notes);
 
-
-		Assert.isTrue(principal instanceof Customer
-				|| principal instanceof Referee
-				|| principal instanceof HandyWorker);
+		Assert.isTrue(principal instanceof Customer || principal instanceof Referee || principal instanceof HandyWorker);
 
 		Assert.isTrue(report.getIsFinal());
 		this.noteRepository.delete(note);
@@ -179,8 +157,7 @@ public class NoteService {
 		report.setNotes(updated);
 	}
 
-
-	public Note findOne(final int id){
+	public Note findOne(final int id) {
 		Note result;
 
 		result = this.noteRepository.findOne(id);

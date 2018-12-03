@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -15,20 +16,22 @@ import domain.Administrator;
 import domain.Warranty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class WarrantyServiceTest extends AbstractTest {
 
 	// Service under test -----------------------------------------------
 
 	@Autowired
-	private WarrantyService warrantyService;
+	private WarrantyService			warrantyService;
 
 	// Supporting services ----------------------------------------------
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
+
 
 	// Tests ------------------------------------------------------------
 
@@ -66,13 +69,13 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testSaveAndFindOne() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
-		Warranty found = this.warrantyService.findOne(res.getId());
+		final Warranty found = this.warrantyService.findOne(res.getId());
 		Assert.notNull(found);
 		super.unauthenticate();
 	}
@@ -81,13 +84,13 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSave2() {
 		super.authenticate("customer1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
-		Warranty found = this.warrantyService.findOne(res.getId());
+		final Warranty found = this.warrantyService.findOne(res.getId());
 		Assert.notNull(found);
 		super.unauthenticate();
 	}
@@ -96,13 +99,13 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test(expected = NullPointerException.class)
 	public void testSave3() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		// w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
-		Warranty found = this.warrantyService.findOne(res.getId());
+		final Warranty found = this.warrantyService.findOne(res.getId());
 		Assert.notNull(found);
 		super.unauthenticate();
 	}
@@ -111,15 +114,15 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testSave4() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo sexo-nigeria");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
-		Administrator principal = this.administratorService.findByPrincipal();
+		final Administrator principal = this.administratorService.findByPrincipal();
 		System.out.println(principal.getIsSuspicious());
-		Warranty found = this.warrantyService.findOne(res.getId());
+		final Warranty found = this.warrantyService.findOne(res.getId());
 		Assert.notNull(found);
 		super.unauthenticate();
 	}
@@ -128,11 +131,11 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testDelete1() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
 		this.warrantyService.delete(res);
 		Assert.isTrue(!this.warrantyService.findAll().contains(res));
@@ -143,12 +146,12 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testDelete2() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
 		w.setIsFinal(true);
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
 		this.warrantyService.delete(res);
 		Assert.isTrue(!this.warrantyService.findAll().contains(res));
@@ -159,16 +162,15 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testFindFinals() {
 		super.authenticate("admin1");
-		Warranty w = this.warrantyService.create();
+		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
-		Warranty res = this.warrantyService.save(w);
+		final Warranty res = this.warrantyService.save(w);
 		res.setIsFinal(true);
-		Warranty finalW = this.warrantyService.save(res);
+		this.warrantyService.save(res);
 		super.unauthenticate();
-		Collection<Warranty> finalWarranties = this.warrantyService
-				.findFinalWarranties();
+		final Collection<Warranty> finalWarranties = this.warrantyService.findFinalWarranties();
 		Assert.notEmpty(finalWarranties);
 	}
 }

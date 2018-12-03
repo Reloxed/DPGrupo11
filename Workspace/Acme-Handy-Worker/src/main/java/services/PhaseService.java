@@ -1,6 +1,6 @@
+
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -20,15 +20,16 @@ public class PhaseService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private PhaseRepository phaseRepository;
+	private PhaseRepository				phaseRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
 
 	// Simple CRUD methods -----------------------------------
 
@@ -44,7 +45,7 @@ public class PhaseService {
 		return res;
 	}
 
-	public Phase findOne(int phaseId) {
+	public Phase findOne(final int phaseId) {
 		Phase res;
 		res = this.phaseRepository.findOne(phaseId);
 		return res;
@@ -56,7 +57,7 @@ public class PhaseService {
 		return res;
 	}
 
-	public Phase save(Phase phase) {
+	public Phase save(final Phase phase) {
 		HandyWorker principal;
 
 		Assert.notNull(phase);
@@ -67,30 +68,27 @@ public class PhaseService {
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String titleWord : description) {
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : description)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
 		if (!containsSpam) {
-			String[] title = phase.getTitle().split("(¿¡,.-_/!?) ");
-			for (String word : spamWords) {
-				for (String titleWord : title) {
+			final String[] title = phase.getTitle().split("(¿¡,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : title)
 					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}
-				}
 				if (containsSpam) {
 					principal.setIsSuspicious(true);
 					break;
@@ -98,12 +96,10 @@ public class PhaseService {
 			}
 		}
 
-		System.out.println("¿Contiene spam? " + containsSpam);
-
 		return this.phaseRepository.saveAndFlush(phase);
 	}
 
-	public void delete(Phase phase) {
+	public void delete(final Phase phase) {
 		HandyWorker principal;
 
 		Assert.notNull(phase);
@@ -116,25 +112,4 @@ public class PhaseService {
 		this.phaseRepository.delete(phase);
 	}
 
-	// Other business methods -----------------------------------
-
-	public Collection<Phase> findPhasesFixUpTask(Phase phase) {
-		Collection<Phase> res;
-		Collection<Phase> phases;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		phases = this.findAll();
-		Assert.notEmpty(phases);
-
-		res = new ArrayList<Phase>();
-		for (Phase phaseFor : phases) {
-			if (phaseFor.getFixUpTask() == phase.getFixUpTask()) {
-				res.add(phaseFor);
-			}
-		}
-		return res;
-	}
 }

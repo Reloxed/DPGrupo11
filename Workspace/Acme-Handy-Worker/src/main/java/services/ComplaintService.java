@@ -54,6 +54,8 @@ public class ComplaintService {
 		Customer customer;
 
 		customer = this.customerService.findByPrincipal();
+		// A complaint cannot be updated once they are saved to the database
+		Assert.isTrue(c.getId() == 0);
 		Assert.notNull(customer);
 		Assert.notNull(c.getFixUpTask());
 		Assert.notNull(c.getDescription());

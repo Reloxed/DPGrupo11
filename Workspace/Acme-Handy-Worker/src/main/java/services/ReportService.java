@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -23,18 +24,19 @@ public class ReportService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private ReportRepository reportRepository;
+	private ReportRepository			reportRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private RefereeService refereeService;
+	private RefereeService				refereeService;
 
 	@Autowired
-	private NoteService noteService;
+	private NoteService					noteService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
 
 	// Simple CRUD methods -----------------------------------
 
@@ -56,40 +58,35 @@ public class ReportService {
 		return res;
 	}
 
-	public Report findOne(int reportId) {
+	public Report findOne(final int reportId) {
 		Report res;
 		res = this.reportRepository.findOne(reportId);
 		return res;
 	}
 
-	public Report save(Report report) {
+	public Report save(final Report report) {
 		Referee principal;
 		Report res;
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(report.getPublishedMoment().before(
-				new Date(System.currentTimeMillis())));
+		Assert.isTrue(report.getPublishedMoment().before(new Date(System.currentTimeMillis())));
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] comments = report.getDescription().split("(¿¡,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String titleWord : comments) {
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] comments = report.getDescription().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : comments)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
-
-		System.out.println("¿Contiene spam? " + containsSpam);
 
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
@@ -97,7 +94,7 @@ public class ReportService {
 		return res;
 	}
 
-	public void delete(Report report) {
+	public void delete(final Report report) {
 		Referee principal;
 		Collection<Report> reports;
 
@@ -112,11 +109,9 @@ public class ReportService {
 		Assert.notEmpty(reports);
 		Assert.isTrue(reports.contains(report));
 
-		if (report.getNotes().size() != 0) {
-			for (Note note : report.getNotes()) {
+		if (report.getNotes().size() != 0)
+			for (final Note note : report.getNotes())
 				this.noteService.delete(note);
-			}
-		}
 
 		this.reportRepository.delete(report.getId());
 
@@ -140,13 +135,10 @@ public class ReportService {
 		Assert.notNull(reports);
 
 		res = new ArrayList<Report>();
-		for (Report report : reports) {
-			for (Complaint complaint : complaints) {
-				if (report.getComplaint() == complaint) {
+		for (final Report report : reports)
+			for (final Complaint complaint : complaints)
+				if (report.getComplaint() == complaint)
 					res.add(report);
-				}
-			}
-		}
 
 		return res;
 	}
