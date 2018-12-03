@@ -37,19 +37,6 @@
 		<security:intercept-url pattern="/security/login.do" access="permitAll" />
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" />
 
-		<security:intercept-url pattern="/actor/administrator/**" access="hasRole('ADMIN')" />
-		
-		<security:intercept-url pattern="/announcement/administrator/**" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/announcement/customer/**" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/announcement/reviewer/**" access="hasRole('REVIEWER')" />
-		
-		<security:intercept-url pattern="/certification/administrator/**" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/certification/customer/**" access="hasRole('CUSTOMER')" />
-		
-		<security:intercept-url pattern="/exam/**" access="isAuthenticated()" />
-	
-		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
-
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 
