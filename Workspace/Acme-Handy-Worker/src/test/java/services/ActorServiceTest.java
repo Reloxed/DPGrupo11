@@ -133,6 +133,7 @@ public class ActorServiceTest extends AbstractTest {
 		result.setFinder(this.finderService.findAll().iterator().next());
 		result.setCurriculum(this.curriculumService.findAll().iterator().next());
 
+		
 		saved = this.handyWorkerService.save(result);
 		Assert.notNull(saved);
 		super.unauthenticate();

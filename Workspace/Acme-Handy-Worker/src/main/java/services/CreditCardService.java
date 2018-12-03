@@ -14,12 +14,9 @@ import org.springframework.util.Assert;
 import repositories.CreditCardRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Application;
 import domain.CreditCard;
 import domain.Customer;
-import domain.FixUpTask;
 import domain.Sponsor;
-import domain.Sponsorship;
 
 @Service
 @Transactional

@@ -28,15 +28,17 @@ public class NoteService {
 	private NoteRepository noteRepository;
 
 	// Supporting services -------------------
-	
+
 	@Autowired
 	private ActorService actorService;
+
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 
 	// CRUD Methods --------------------------------
 
-	// check in referee that the report is saves in final mode to create the
-	// note.
+	
 	public Note create() {
 		Actor principal;
 		Note result;
@@ -78,13 +80,14 @@ public class NoteService {
 		Collection<Note>notes,updated;
 
 		Assert.notNull(note);
-		Assert.isTrue(note.getId()==0);//notes cannot be updated or deleted once they are saved to the database
+		Assert.isTrue(note.getId()==0);
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
 		report = note.getReport();
 		Assert.notNull(report);
+
 
 		if (principal instanceof Referee) {
 
@@ -100,6 +103,37 @@ public class NoteService {
 			note.setHandyWorkerComment(note.getHandyWorkerComment());
 
 		}
+
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		String[] customerComments = note.getCustomerComment().split(
+				"(¿¡,.-_/!?) ");
+		String[] refereeComments = note.getRefereeComment().split(
+				"(¿¡,.-_/!?) ");
+		String[] handyComments = note.getHandyWorkerComment().split(
+				"(¿¡,.-_/!?) ");
+		for(String word: spamWords){
+			for(String customerWord : customerComments){
+				if(customerWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+
+				}
+			}
+			for(String refereeWord : refereeComments){
+				if(refereeWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+				}
+			}
+			for(String handyWord : handyComments){
+				if(handyWord.toLowerCase().contains(word.toLowerCase())){
+
+					principal.setIsSuspicious(true);
+				}
+			}
+		}
+
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		note.setReport(report);
 		Assert.isTrue(report.getIsFinal());

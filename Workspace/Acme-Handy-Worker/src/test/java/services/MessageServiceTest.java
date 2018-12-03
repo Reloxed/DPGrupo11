@@ -13,8 +13,10 @@ import org.springframework.util.Assert;
 
 import repositories.CustomerRepository;
 import repositories.HandyWorkerRepository;
+import repositories.MessageBoxRepository;
 import utilities.AbstractTest;
 import domain.Actor;
+import domain.Administrator;
 import domain.Message;
 import domain.MessageBox;
 
@@ -38,11 +40,14 @@ public class MessageServiceTest extends AbstractTest {
 	@Autowired
 	private MessageBoxService messageBoxService;
 
-	
+	@Autowired
+	private MessageBoxRepository messageBoxRepository;
 
 	@Autowired
 	private HandyWorkerRepository handyWorkerRepository;
-
+	
+	@Autowired
+	private AdministratorService administratorService;
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -69,29 +74,25 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
-		super.authenticate("handyworker2");
+		super.authenticate("customer1");
 		Message message, saved;
 		Actor principal;
 		Actor recipient1;
 		Actor recipient2;
-		Collection<Message> messagesInBox;
-		
-		MessageBox inboxes;
-		//Collection<Message> messagesOutBox;
 		Collection<Message> messages;
 		Collection<Actor> recipients;
 		MessageBox outBoxPrincipal;
 		Collection<MessageBox> inBoxRecipients;
-		//Collection<MessageBox>boxes;
+		
 		MessageBox inBoxRecipient1;
 		MessageBox inBoxRecipient2;
+		
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		//boxes = new ArrayList<MessageBox>();
+	
 		recipients = new ArrayList<Actor>();
-		messagesInBox = new ArrayList<Message>();
 		inBoxRecipients = new ArrayList<MessageBox>();
 		messages = new ArrayList<Message>();
 
@@ -106,7 +107,7 @@ public class MessageServiceTest extends AbstractTest {
 
 		message = this.messageService.create();
 		Assert.notNull(message);
-		message.setSubject("Test");
+		message.setSubject("sample");
 		message.setBody("My body sample");
 		message.setPriority("LOW");
 		message.setTags("no spam");
@@ -118,17 +119,17 @@ public class MessageServiceTest extends AbstractTest {
 		Assert.notNull(inBoxRecipients);
 		message.setRecipients(recipients);
 		message.setMessageBoxes(inBoxRecipients);
-		//outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
+		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
 
 		saved = this.messageService.save(message);
 		Assert.notNull(saved);
-
+		Assert.isTrue(principal.getIsSuspicious()==false);
 		messages = this.messageService.findAll();
 
 		Assert.isTrue(messages.contains(saved));
-
-
-		
+		Assert.isTrue(principal.getIsSuspicious()==false);
+		Assert.isTrue(saved.getIsSpam()==false);
+	
 		Assert.isTrue(inBoxRecipient1.getMessages().size()==1 && inBoxRecipient1.getMessages().contains(saved));
 		Assert.isTrue(inBoxRecipient2.getMessages().size()==1 && inBoxRecipient2.getMessages().contains(saved));
 		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
@@ -151,37 +152,61 @@ public class MessageServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 	}
+	
+	@Test
+	public void testSaveSpam(){
+		super.authenticate("handyWorker2");
+		Message message,saved;
+		Actor principal;
+		Actor recipient1;
+		Collection<Actor>recipients;
+		MessageBox trashRecipient1;
+		Collection<MessageBox>trashBoxRecipients;
+		Collection<Message>messages;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		recipients = new ArrayList<Actor>();
+		messages = new ArrayList<Message>();
+		trashBoxRecipients = new ArrayList<MessageBox>();
+		recipient1 = this.customerRepository.findOne(2335);
+		Assert.notNull(recipient1);
+		
+		recipients.add(recipient1);
+		Assert.notNull(recipients);
+		
+		message = this.messageService.create();
+		Assert.notNull(message);
+		message.setSubject("sex");
+		message.setBody("My body sample");
+		message.setPriority("LOW");
+		message.setTags("no spam");
+		message.setIsSpam(false);
+		
+		trashRecipient1 = this.messageBoxService.findTrashBoxActor(recipient1);
+		Assert.notNull(trashRecipient1);
+		trashBoxRecipients.add(trashRecipient1);
+		message.setRecipients(recipients);
+		message.setMessageBoxes(trashBoxRecipients);
+		
+		saved = this.messageService.save(message);
+		
+		messages = this.messageService.findAll();
+		Assert.notNull(messages);
+		Assert.isTrue(messages.contains(saved));
+		Assert.isTrue(principal.getIsSuspicious());
+		Assert.isTrue(trashRecipient1.getMessages().contains(saved));
+		Assert.isTrue(trashRecipient1.getMessages().size()==1);
+	}
 
-
-	/*
-	 * outBoxPrincipal = this.messageBoxService.findInBoxActor(principal);
-	 * Assert.notNull(outBoxPrincipal);
-	 * 
-	 * for(Actor a: recipients){ MessageBox inBox =
-	 * this.messageBoxService.findInBoxActor(a); inBoxRecipients.add(inBox);
-	 * 
-	 * } for(MessageBox mb : inBoxRecipients){
-	 * messagesInBox.addAll(mb.getMessages()); } messagesOutBox =
-	 * outBoxPrincipal.getMessages();
-	 * 
-	 * Assert.notNull(messagesOutBox); Assert.notNull(inBoxRecipients);
-	 * 
-	 * Assert.isTrue(principal.getMessageBoxes().contains(outBoxPrincipal));
-	 * Assert
-	 * .isTrue(recipient1.getMessageBoxes().contains(inBoxRecipients));
-	 * Assert
-	 * .isTrue(recipient2.getMessageBoxes().contains(inBoxRecipients));
-	 * Assert.isTrue(messagesInBox.contains(message));
-	 */
-
+	
 	@Test
 	public void move(){
 		super.authenticate("Sponsor2");
-		Message toMove,saved;
-		Actor recipient,principal;
+		Message toMove;
+		Actor principal;
 		MessageBox destination;
-		Collection<Message>allMessages;
-		Collection<Actor>recipients;
 		Collection<MessageBox>boxes;
 		Collection<MessageBox>boxesAftterMove;
 		
@@ -216,39 +241,7 @@ public class MessageServiceTest extends AbstractTest {
 		
 		
 	}
-		/*recipients = new ArrayList<Actor>();
-		boxesPrincipal = new ArrayList<MessageBox>();
-		origin = new ArrayList<MessageBox>();
 		
-		recipient = this.actorService.findOne(2335);
-		Assert.notNull(recipient);
-		recipients.add(recipient);
-		System.out.println("Message's recipients: \n"+recipients);
-		
-		result = this.messageService.create();
-		result.setSubject("Move");
-		result.setBody("Move");
-		result.setPriority("LOW");
-		result.setRecipients(recipients);
-		result.setTags("lel");
-		result.setIsSpam(false);
-		boxesPrincipal = this.messageBoxService.findAllByPrincipal();
-		result.setMessageBoxes(boxesPrincipal);
-		saved = this.messageService.save(result);
-		Assert.notNull(saved);
-		
-		destination = this.messageBoxService.findTrashBoxActor(recipient);
-		Assert.notNull(destination);
-		
-		this.messageService.move(saved, destination);
-		
-		allMessages = this.messageService.findAll();
-		
-		Assert.isTrue(allMessages.contains(saved));
-		
-		Assert.isTrue(destination.getMessages().contains(saved));
-		
-	*/
 
 	@Test
 	public void testDelete(){
@@ -280,15 +273,30 @@ public class MessageServiceTest extends AbstractTest {
 	
 	@Test
 	public void testBroadcast(){
-		super.authenticate("administrator2");
+		super.authenticate("admin2");
 		Message result;
+		MessageBox inBox1;
+		MessageBox outBoxAdmin;
+		Administrator principal;
 		
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 		result = this.messageService.findOne(2406);
 		Assert.notNull(result);
 		
+		
 		this.messageService.broadcast(result);
 		
+		outBoxAdmin = this.messageBoxRepository.findOutBoxActorId(2354);
+		System.out.println(outBoxAdmin.getMessages());
+		System.out.println(result);
+		inBox1 = this.messageBoxRepository.findInBoxActorId(2453);
+		System.out.println(inBox1.getMessages());
+		
+		Assert.isTrue(inBox1.getMessages().contains(result));
 		super.unauthenticate();
+		
 	}
 
 

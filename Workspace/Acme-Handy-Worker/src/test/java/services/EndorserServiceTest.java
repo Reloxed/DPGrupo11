@@ -48,9 +48,9 @@ public class EndorserServiceTest extends AbstractTest{
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testNotFindOneEndorser(){
-		Endorser endorser;
-		
-		endorser = this.endorserService.findOne(81238);
+		Endorser endorser, endorser0;
+		endorser0 = this.endorserService.findByPrincipal();
+		endorser = this.endorserService.findOne(endorser0.getId());
 		Assert.notNull(endorser);
 		
 	}

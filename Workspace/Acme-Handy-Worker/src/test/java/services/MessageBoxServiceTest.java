@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.MessageBoxRepository;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.MessageBox;
@@ -27,8 +26,7 @@ public class MessageBoxServiceTest extends AbstractTest{
 	@Autowired
 	private MessageBoxService messageBoxService;
 
-	@Autowired
-	private MessageBoxRepository messageBoxRepository;
+
 	@Autowired
 	private ActorService actorService;
 

@@ -32,21 +32,6 @@ public class CurriculumService {
 	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private PersonalRecordService personalRecordService;
-
-	@Autowired
-	private EducationRecordService educationRecordService;
-
-	@Autowired
-	private ProfessionalRecordService professionalRecordService;
-
-	@Autowired
-	private EndorserRecordService endorserRecordService;
-
-	@Autowired
-	private MiscellaneousRecordService miscellaneousRecordService;
-
-	@Autowired
 	private UtilityService utilityService;
 
 	// Simple CRUD Methods
@@ -101,9 +86,10 @@ public class CurriculumService {
 		HandyWorker author;
 		author = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(author);
-		if (curriculum.getId() != 0)
+		if (curriculum.getId() != 0){
 			Assert.isTrue(curriculum.getTicker().equals(
 					author.getCurriculum().getTicker()));
+		}
 		Assert.notNull(curriculum.getPersonalRecord());
 		result = this.curriculumRepository.save(curriculum);
 		this.curriculumRepository.flush();
@@ -119,18 +105,8 @@ public class CurriculumService {
 
 		Assert.isTrue(author.getCurriculum().equals(curriculum));
 
-		this.personalRecordService.delete(curriculum.getPersonalRecord());
-		for (final EducationRecord edRec : curriculum.getEducationRecords())
-			this.educationRecordService.delete(edRec);
-		for (final ProfessionalRecord profRec : curriculum
-				.getProfessionalRecords())
-			this.professionalRecordService.delete(profRec);
-		for (final EndorserRecord endRec : curriculum.getEndorserRecords())
-			this.endorserRecordService.delete(endRec);
-		for (final MiscellaneousRecord miscRec : curriculum
-				.getMiscellaneousRecords())
-			this.miscellaneousRecordService.delete(miscRec);
 		this.curriculumRepository.delete(curriculum);
+		author.setCurriculum(null);
 	}
 
 	// Other business methods

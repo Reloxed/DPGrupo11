@@ -32,9 +32,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Autowired
 	private CreditCardService creditCardService;
 
-	@Autowired
-	private SponsorService sponsorService;
-
 	// Tests -------------------------------------------------------------------
 
 	// Create correcto

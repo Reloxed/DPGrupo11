@@ -19,8 +19,6 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import aj.org.objectweb.asm.Type;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
