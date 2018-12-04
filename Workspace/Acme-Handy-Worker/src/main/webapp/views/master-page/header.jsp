@@ -16,7 +16,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/FixItFelix icon.jpeg"
+	<a href="#"><img src="images/Default logo.jpg"
 		alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
@@ -141,6 +141,15 @@
 					<li><a href="handyworker/tutorial-create.do"><spring:message
 								code="master.page.handyworker.tutorial.create" /></a></li>
 				</ul></li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.handyworker.endorsements" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="handyworker/endorsements.do"><spring:message
+								code="master.page.handyworker.endorsements.show" /></a></li>
+					<li><a href="handyworker/endorsement-create.do"><spring:message
+								code="master.page.handyworker.endorsement.create" /></a></li>
+				</ul></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('SPONSOR')">
@@ -182,6 +191,7 @@
 	</ul>
 </div>
 
+<%--TODO Cambiar el sitio del idioma --%>
 <div>
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
