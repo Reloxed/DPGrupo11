@@ -16,7 +16,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/FixItFelix icon.jpeg"
+	<a href="#"><img src="images/Default logo.jpg"
 		alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
@@ -191,6 +191,7 @@
 	</ul>
 </div>
 
+<%--TODO Cambiar el sitio del idioma --%>
 <div>
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
