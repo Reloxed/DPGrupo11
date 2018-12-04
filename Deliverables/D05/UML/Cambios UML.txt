@@ -1,0 +1,13 @@
+En el conceptual:
+
+- cambiados algunos nombres de atributos a xxxxmoment
+- cambio de nombre de entidad de Endorsable a Endorser
+- Eliminado el atributo creditCard de SponsorShip y de Application, se habian quedado puestos tras convertir CreditCard a entidad
+- Añadido {ordered by date} a la relacion messageBox-message
+- 
+
+
+En el de dominio:
+
+- Eliminada nota duplicada
+- 

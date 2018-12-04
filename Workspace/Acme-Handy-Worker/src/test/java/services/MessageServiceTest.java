@@ -30,8 +30,6 @@ public class MessageServiceTest extends AbstractTest {
 	@Autowired
 	private MessageService messageService;
 
-
-
 	@Autowired
 	private ActorService actorService;
 
@@ -95,7 +93,8 @@ public class MessageServiceTest extends AbstractTest {
 		recipients = new ArrayList<Actor>();
 		inBoxRecipients = new ArrayList<MessageBox>();
 		messages = new ArrayList<Message>();
-
+		
+		
 		recipient1 = this.handyWorkerRepository.findOne(2453);
 		Assert.notNull(recipient1);
 		recipient2 = this.customerRepository.findOne(2335);

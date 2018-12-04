@@ -1,0 +1,3 @@
+- attachments en los records: nombre y [0..1]
+- restriccion digitos en finder
+- restriccion de tiempo en phase

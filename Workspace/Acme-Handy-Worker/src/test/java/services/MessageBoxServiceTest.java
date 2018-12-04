@@ -154,11 +154,13 @@ public class MessageBoxServiceTest extends AbstractTest{
 	public void testFindOne(){
 		Actor principal;
 		MessageBox box;
+		Collection<MessageBox> collMB;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-
-		box = this.messageBoxService.findOne(2377);
+		
+		collMB = this.messageBoxService.findAllByPrincipal();
+		box = this.messageBoxService.findOne(collMB.iterator().next().getId());
 		Assert.notNull(box);
 
 	}
