@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -20,16 +21,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
-	
-	private String keyWord;
-	private Double priceLow;
-	private Double priceHigh;
-	private Date startMoment;
-	private Date endMoment;
-	private Date searchMoment;
-	private Category category;
-	private Warranty warranty;
-	private Collection<FixUpTask> fixuptask;
+
+	private String					keyWord;
+	private Double					priceLow;
+	private Double					priceHigh;
+	private Date					startMoment;
+	private Date					endMoment;
+	private Date					searchMoment;
+	private Category				category;
+	private Warranty				warranty;
+	private Collection<FixUpTask>	fixUpTask;
+
 
 	public String getKeyWord() {
 		return this.keyWord;
@@ -100,11 +102,11 @@ public class Finder extends DomainEntity {
 	@Valid
 	@OneToMany
 	public Collection<FixUpTask> getFixuptask() {
-		return this.fixuptask;
+		return this.fixUpTask;
 	}
 
 	public void setFixuptask(final Collection<FixUpTask> fixuptask) {
-		this.fixuptask = fixuptask;
+		this.fixUpTask = fixuptask;
 	}
 
 	@Past

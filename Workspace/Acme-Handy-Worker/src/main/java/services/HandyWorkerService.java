@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -27,15 +28,15 @@ public class HandyWorkerService {
 	// Managed repository-----------
 
 	@Autowired
-	private HandyWorkerRepository handyWorkerRepository;
+	private HandyWorkerRepository	handyWorkerRepository;
 
 	// Supporting services ----------
 
 	@Autowired
-	private MessageBoxService messageBoxService;
+	private MessageBoxService		messageBoxService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 
 
 	// Constructor ----------------------------------------------------
@@ -69,8 +70,8 @@ public class HandyWorkerService {
 		HandyWorker result;
 		Actor principal;
 
-		Authority authority = new Authority();
-		UserAccount ua = new UserAccount();
+		final Authority authority = new Authority();
+		final UserAccount ua = new UserAccount();
 
 		try {
 			principal = this.actorService.findByPrincipal();
@@ -78,7 +79,7 @@ public class HandyWorkerService {
 
 			return null;
 
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 
 			result = new HandyWorker();
 
@@ -86,10 +87,9 @@ public class HandyWorkerService {
 			ua.addAuthority(authority);
 
 			result.setUserAccount(ua);
-
+			result.setMake(result.getName() + result.getMiddleName() + result.getSurname());
 			result.setIsSuspicious(false);
-			result.setMessageBoxes(this.messageBoxService
-					.createSystemMessageBoxes());
+			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
 			result.setTutorial(new HashSet<Tutorial>());
 			return result;
@@ -100,32 +100,24 @@ public class HandyWorkerService {
 		HandyWorker saved;
 		Assert.notNull(handyWorker);
 
-		if (handyWorker.getId() == 0) {
+		if (handyWorker.getId() == 0)
 			try {
 				Actor principal;
 				principal = this.actorService.findByPrincipal();
 				Assert.isNull(principal);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-
-				handyWorker.getUserAccount().setPassword(
-						passwordEncoder.encodePassword(handyWorker
-								.getUserAccount().getPassword(), null));
+				handyWorker.getUserAccount().setPassword(passwordEncoder.encodePassword(handyWorker.getUserAccount().getPassword(), null));
 			}
-
-		} else {
+		else {
 
 			HandyWorker principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == handyWorker
-					.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == handyWorker
-					.getIsSuspicious());
-			handyWorker.setMake(principal.getName());
+			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
 			handyWorker.setCurriculum(new Curriculum());
-			handyWorker.setMessageBoxes(this.messageBoxService
-					.createSystemMessageBoxes());
+			handyWorker.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 
 		}
 		saved = this.handyWorkerRepository.save(handyWorker);
@@ -156,8 +148,7 @@ public class HandyWorkerService {
 
 		HandyWorker result;
 
-		result = this.handyWorkerRepository
-				.findHandyWorkerByUserAccount(userAccountId);
+		result = this.handyWorkerRepository.findHandyWorkerByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
@@ -165,15 +156,13 @@ public class HandyWorkerService {
 	}
 
 	public Collection<HandyWorker> findMoreApplicationsThanAvg() {
-		Collection<HandyWorker> colHandys = this.handyWorkerRepository
-				.findMoreApplicationsThanAvg();
+		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findMoreApplicationsThanAvg();
 		return colHandys;
 
 	}
 
 	public Collection<HandyWorker> findTopComplaintsHandyWorkers() {
-		Collection<HandyWorker> colHandys = this.handyWorkerRepository
-				.findTopComplaintsHandyWorkers();
+		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findTopComplaintsHandyWorkers();
 		return colHandys;
 	}
 

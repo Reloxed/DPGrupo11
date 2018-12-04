@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -21,18 +22,19 @@ public class SectionService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private SectionRepository sectionRepository;
+	private SectionRepository			sectionRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private TutorialService tutorialService;
+	private TutorialService				tutorialService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
 
 	// Simple CRUD methods -----------------------------------
 
@@ -59,7 +61,7 @@ public class SectionService {
 		return res;
 	}
 
-	public Section findOne(int sectionId) {
+	public Section findOne(final int sectionId) {
 		Section res;
 		HandyWorker principal;
 
@@ -71,7 +73,7 @@ public class SectionService {
 
 	}
 
-	public Section save(Section section) {
+	public Section save(final Section section) {
 		Section res;
 		HandyWorker principal;
 
@@ -81,30 +83,27 @@ public class SectionService {
 		Assert.notNull(section);
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] text = section.getText().split("(¿¡,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String titleWord : text) {
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] text = section.getText().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : text)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
 		if (!containsSpam) {
-			String[] title = section.getTitle().split("(¿¡,.-_/!?) ");
-			for (String word : spamWords) {
-				for (String titleWord : title) {
+			final String[] title = section.getTitle().split("(¿¡,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : title)
 					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}
-				}
 				if (containsSpam) {
 					principal.setIsSuspicious(true);
 					break;
@@ -113,15 +112,13 @@ public class SectionService {
 
 		}
 
-		System.out.println("¿Contiene spam? " + containsSpam);
-
 		res = this.sectionRepository.save(section);
 		Assert.notNull(res);
 		this.sectionRepository.flush();
 		return res;
 	}
 
-	public void delete(Section section) {
+	public void delete(final Section section) {
 		HandyWorker principal;
 		Collection<Section> sections;
 		Tutorial tutorial;
@@ -132,8 +129,7 @@ public class SectionService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		tutorial = this.tutorialService
-				.findTutorialBySectionId(section.getId());
+		tutorial = this.tutorialService.findTutorialBySectionId(section.getId());
 		Assert.notNull(tutorial);
 		Assert.isTrue(tutorial.getSections().contains(section));
 
@@ -160,9 +156,8 @@ public class SectionService {
 		tutorials = principal.getTutorial();
 
 		res = new ArrayList<Section>();
-		for (Tutorial tutorial : tutorials) {
+		for (final Tutorial tutorial : tutorials)
 			res.addAll(tutorial.getSections());
-		}
 
 		return res;
 	}
