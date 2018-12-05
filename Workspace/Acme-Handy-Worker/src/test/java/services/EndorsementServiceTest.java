@@ -72,7 +72,7 @@ public class EndorsementServiceTest extends AbstractTest {
 		result=this.endorsementService.create();
 		result.setSender(this.endorsementService.findAll().iterator().next().getSender());
 		result.setRecipient(this.endorsementService.findAll().iterator().next().getRecipient());
-		result.setComment("saludos");
+		result.setComments("saludos");
 		saved=this.endorsementService.save(result);
 		Assert.notNull(saved);
 		super.unauthenticate();

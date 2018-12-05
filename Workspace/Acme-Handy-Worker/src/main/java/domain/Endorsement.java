@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Endorsement extends DomainEntity {
 
 	private Date			publishedMoment;
-	private String			comment;
+	private String			comments;
 	private Endorser 		sender;
 	private Endorser 		recipient;
 	
@@ -41,12 +41,12 @@ public class Endorsement extends DomainEntity {
 	}
 
 	@NotBlank
-	public String getComment() {
-		return this.comment;
+	public String getComments() {
+		return this.comments;
 	}
 
-	public void setComment(final String comment) {
-		this.comment = comment;
+	public void setComments(final String comment) {
+		this.comments = comment;
 	}
 	@Valid
 	@NotNull

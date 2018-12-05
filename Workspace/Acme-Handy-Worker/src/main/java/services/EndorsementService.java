@@ -77,7 +77,7 @@ public class EndorsementService {
 		Assert.isTrue(endorsement.getSender()!=null);
 		Assert.isTrue(endorsement.getRecipient()!=null);
 		Assert.notNull(endorsement.getPublishedMoment());
-		Assert.notNull(endorsement.getComment());
+		Assert.notNull(endorsement.getComments());
 		
 		principal=this.endorserService.findByPrincipal();
 		Assert.isTrue(endorsement.getSender().getId()==principal.getId());
