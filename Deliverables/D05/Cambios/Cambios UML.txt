@@ -1,0 +1,8 @@
+- cambiados algunos nombres de atributos a xxxxmoment
+- cambio de nombre de entidad de Endorsable a Endorser
+- Eliminado el atributo creditCard de SponsorShip y de Application, se habian quedado puestos tras convertir CreditCard a entidad
+- Añadido {ordered by date} a la relacion messageBox-message
+- cambios en la multiplicidad de las relaciones con CreditCard -> deben ser 0..* en vez de 1..*
+- añadida restriccion digitos en finder
+- Restricción para ordenar como se muestran los Records en el Curriculum.
+- Cambio en la multiplicidad de la relacion HW-Finder a 0..1 finder

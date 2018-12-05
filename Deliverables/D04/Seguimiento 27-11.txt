@@ -1,0 +1,22 @@
+Lo primero, comparar con la herramienta de la barra de tareas las dos carpetas para ver donde esta el error.
+
+MODELO DE DOMINIO:
+
+- Restricción para ordenar como se muestran los Records en el Curriculum.
+- Translation se podría poner de forma generalizada y no solo para Category. También se podría implementar como un Map<String, String> con name y Language como atributos. LO DEJAREMOS PARA LA SIGUIENTE ENTREGA.
+
+REPOS:
+
+- Application: Query numero 3, mejor count de las que tengan PENDING en una sola query, luego otra con un count de todas las applications que hay, y en servicio se hace la operación.
+
+SERVICIOS:
+
+- Falta garantizar que un ticker sea único en el generateTicker()
+- Falta borrar en el customer una fixUpTask cuando se elimina.
+- Falta comprobar en Application para cuando se hace un save con la application ACCEPTED, se tenga que guardar una credit card
+
+DUDAS
+
+- El administrador solo hace lo que está en los requisitos.
+- En userAccount hay un atributo que hay que poner en false y ponerlo persistente para saber si un usuario está baneado.
+- El saveAndFlush esta perfe.

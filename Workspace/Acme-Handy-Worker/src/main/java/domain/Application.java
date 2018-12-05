@@ -6,7 +6,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -25,7 +24,7 @@ public class Application extends DomainEntity {
 	private Date registeredMoment;
 	private String status;
 	private Double offeredPrice;
-	private String comment;
+	private String comments;
 	private CreditCard creditCard;
 	private FixUpTask fixUpTask;
 	private HandyWorker applicant;
@@ -50,16 +49,16 @@ public class Application extends DomainEntity {
 	}
 
 	@NotNull
-	public String getComment() {
-		return this.comment;
+	public String getComments() {
+		return this.comments;
 	}
 
-	public void setComment(final String comment) {
-		this.comment = comment;
+	public void setComments(final String comment) {
+		this.comments = comment;
 	}
 
 	@Valid
-	@OneToOne(optional = true)
+	@ManyToOne(optional = true)
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}

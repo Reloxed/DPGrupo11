@@ -79,7 +79,7 @@ public class ApplicationService {
 			registeredMoment = new Date(System.currentTimeMillis() - 1);
 			Assert.isTrue(registeredMoment.after(fixUpTask.getPublishedMoment())); // The fixUpTask must be published.
 			a.setRegisteredMoment(registeredMoment);
-			a.setComment(new String());
+			a.setComments(new String());
 		}
 
 		a.setApplicant(applicant);
@@ -103,7 +103,7 @@ public class ApplicationService {
 
 		containsSpam = false;
 		spamWords = this.systemConfigurationService.findSpamWords().split(",");
-		comments = result.getComment().split(",");
+		comments = result.getComments().split(",");
 		for (final String word : spamWords) {
 
 			for (final String comment : comments)

@@ -59,7 +59,10 @@ public class MessageService {
 		result.setSender(principal);
 		result.setMessageBoxes(messageBoxes);
 		result.setRecipients(recipients);
-		result.setSendMoment(new Date(System.currentTimeMillis() - 1));
+
+		result.setSendMoment(new Date(System.currentTimeMillis()-1));
+		result.setPriority("NEUTRAL");
+
 
 		return result;
 	}
@@ -104,7 +107,7 @@ public class MessageService {
 
 		result.setSubject(message.getSubject());
 		result.setBody(message.getBody());
-		result.setPriority(message.getPriority());
+		result.setPriority("NEUTRAL");
 		result.setTags(message.getTags());
 		result.setRecipients(recipients);
 
