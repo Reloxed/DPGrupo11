@@ -46,37 +46,48 @@ public class PopulateDatabase {
 			System.out.println("---------------------");
 			System.out.println();
 
-			System.out.printf("Initialising persistence context `%s'.%n", DatabaseConfig.PersistenceUnit);
+			System.out.printf("Initialising persistence context `%s'.%n",
+					DatabaseConfig.PersistenceUnit);
 			databaseUtil = new DatabaseUtil();
 			databaseUtil.initialise();
 
-			System.out.printf("Creating database `%s' (%s).%n", databaseUtil.getDatabaseName(), databaseUtil.getDatabaseDialectName());
+			System.out.printf("Creating database `%s' (%s).%n",
+					databaseUtil.getDatabaseName(),
+					databaseUtil.getDatabaseDialectName());
 			databaseUtil.recreateDatabase();
 
-			System.out.printf("Reading web of entities from `%s'.", DatabaseConfig.entitySpecificationFilename);
-			populationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
+			System.out.printf("Reading web of entities from `%s'.",
+					DatabaseConfig.entitySpecificationFilename);
+			populationContext = new ClassPathXmlApplicationContext(
+					"classpath:PopulateDatabase.xml");
 			entityMap = populationContext.getBeansOfType(DomainEntity.class);
 			System.out.printf(" (%d entities found).%n", entityMap.size());
 
-			System.out.printf("Computing a topological order for your entities.%n");
+			System.out
+					.printf("Computing a topological order for your entities.%n");
 			sortedEntities = PopulateDatabase.sort(databaseUtil, entityMap);
 
-			System.out.printf("Trying to save the best order found.  What out for exceptions!%n");
+			System.out
+					.printf("Trying to save the best order found.  What out for exceptions!%n");
 			PopulateDatabase.persist(databaseUtil, sortedEntities);
 
-			System.out.printf("Saving entity map to `%s'.%n", DatabaseConfig.entityMapFilename);
+			System.out.printf("Saving entity map to `%s'.%n",
+					DatabaseConfig.entityMapFilename);
 			PopulateDatabase.saveEntityMap(databaseUtil, sortedEntities);
 		} catch (final Throwable oops) {
 			ThrowablePrinter.print(oops);
 		} finally {
 			if (databaseUtil != null) {
-				System.out.printf("Shutting persistence context `%s' down.%n", DatabaseConfig.PersistenceUnit);
+				System.out.printf("Shutting persistence context `%s' down.%n",
+						DatabaseConfig.PersistenceUnit);
 				databaseUtil.shutdown();
 			}
 		}
 	}
 
-	protected static List<Entry<String, DomainEntity>> sort(final DatabaseUtil databaseUtil, final Map<String, DomainEntity> entityMap) {
+	protected static List<Entry<String, DomainEntity>> sort(
+			final DatabaseUtil databaseUtil,
+			final Map<String, DomainEntity> entityMap) {
 		LinkedList<Entry<String, DomainEntity>> result;
 		LinkedList<Entry<String, DomainEntity>> cache;
 		Entry<String, DomainEntity> entry;
@@ -123,7 +134,8 @@ public class PopulateDatabase {
 		return result;
 	}
 
-	protected static void persist(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities) {
+	protected static void persist(final DatabaseUtil databaseUtil,
+			final List<Entry<String, DomainEntity>> sortedEntities) {
 		String name;
 		DomainEntity entity;
 
@@ -141,7 +153,8 @@ public class PopulateDatabase {
 		System.out.println();
 	}
 
-	private static void saveEntityMap(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities) {
+	private static void saveEntityMap(final DatabaseUtil databaseUtil,
+			final List<Entry<String, DomainEntity>> sortedEntities) {
 		Properties map;
 
 		map = new Properties();
@@ -154,14 +167,16 @@ public class PopulateDatabase {
 			map.put(key, value);
 		}
 
-		try (OutputStream stream = new FileOutputStream(DatabaseConfig.entityMapFilename)) {
+		try (OutputStream stream = new FileOutputStream(
+				DatabaseConfig.entityMapFilename)) {
 			map.store(stream, DatabaseConfig.entityMapFilename);
 		} catch (final Throwable oops) {
 			throw new RuntimeException(oops);
 		}
 	}
 
-	protected static void cleanEntities(final LinkedList<Entry<String, DomainEntity>> result) {
+	protected static void cleanEntities(
+			final LinkedList<Entry<String, DomainEntity>> result) {
 		for (final Entry<String, DomainEntity> entry : result) {
 			DomainEntity entity;
 
