@@ -1,7 +1,6 @@
 
 package domain;
 
-
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -21,11 +20,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Endorsement extends DomainEntity {
 
-	private Date			publishedMoment;
-	private String			comments;
-	private Endorser 		sender;
-	private Endorser 		recipient;
-	
+	private Date		publishedMoment;
+	private String		comments;
+	private Endorser	sender;
+	private Endorser	recipient;
 
 
 	@Past
@@ -52,28 +50,21 @@ public class Endorsement extends DomainEntity {
 	@NotNull
 	@ManyToOne(optional = false)
 	public Endorser getSender() {
-		return sender;
+		return this.sender;
 	}
 
-	public void setSender(Endorser sender) {
+	public void setSender(final Endorser sender) {
 		this.sender = sender;
 	}
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
 	public Endorser getRecipient() {
-		return recipient;
+		return this.recipient;
 	}
 
-	public void setRecipient(Endorser recipient) {
+	public void setRecipient(final Endorser recipient) {
 		this.recipient = recipient;
 	}
-
-
-
-
-
-
-
 
 }
