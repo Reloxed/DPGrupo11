@@ -42,6 +42,12 @@ public class ApplicationService {
 	private MessageService				messageService;
 
 
+	// Constructors ------------------------------------
+
+	public ApplicationService() {
+		super();
+	}
+
 	// Simple CRUD methods ---------------------------
 
 	public Application create() {

@@ -32,6 +32,12 @@ public class ComplaintService {
 	private UtilityService		utilityService;
 
 
+	// Constructors ------------------------------------
+
+	public ComplaintService() {
+		super();
+	}
+
 	// CRUD methods -----------------------------------------
 
 	public Complaint create() {

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -29,15 +30,22 @@ public class SponsorService {
 	// Managed repository
 
 	@Autowired
-	private SponsorRepository sponsorRepository;
+	private SponsorRepository	sponsorRepository;
 
 	// Supporting services
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private MessageBoxService messageBoxService;
+	private MessageBoxService	messageBoxService;
+
+
+	// Constructors ------------------------------------
+
+	public SponsorService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -99,8 +107,7 @@ public class SponsorService {
 	public Sponsor findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Sponsor result;
-		result = this.sponsorRepository
-				.findByUserAccountId(userAccount.getId());
+		result = this.sponsorRepository.findByUserAccountId(userAccount.getId());
 		return result;
 	}
 
@@ -115,16 +122,13 @@ public class SponsorService {
 				Assert.isNull(principal);
 			} catch (IllegalArgumentException e) {
 				Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				s.getUserAccount().setPassword(
-						passwordEncoder.encodePassword(s.getUserAccount()
-								.getPassword(), null));
+				s.getUserAccount().setPassword(passwordEncoder.encodePassword(s.getUserAccount().getPassword(), null));
 			}
 		} else {
 			Sponsor principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == s
-					.getUserAccount().getId());
+			Assert.isTrue(principal.getUserAccount().getId() == s.getUserAccount().getId());
 			Assert.isTrue(principal.getIsSuspicious() == s.getIsSuspicious());
 		}
 
@@ -139,7 +143,7 @@ public class SponsorService {
 
 		res = this.sponsorRepository.findByCreditCardId(creditCardId);
 		Assert.notNull(res);
-		
+
 		return res;
 	}
 
