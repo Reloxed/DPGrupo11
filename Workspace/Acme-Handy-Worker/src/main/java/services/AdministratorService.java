@@ -36,6 +36,12 @@ public class AdministratorService {
 	private MessageBoxService		messageBoxService;
 
 
+	// Constructors ------------------------------------
+
+	public AdministratorService() {
+		super();
+	}
+
 	// Simple CRUDs methods
 
 	public Administrator create() {

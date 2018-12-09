@@ -37,6 +37,12 @@ public class NoteService {
 	private SystemConfigurationService	systemConfigurationService;
 
 
+	// Constructors ------------------------------------
+
+	public NoteService() {
+		super();
+	}
+
 	// CRUD Methods --------------------------------
 
 	public Note create() {

@@ -39,25 +39,29 @@ public class CustomerService {
 	private MessageBoxService	messageBoxService;
 
 
+	// Constructors ------------------------------------
+
+	public CustomerService() {
+		super();
+	}
+
 	// Simple CRUD Methods
 
 	public Customer create() {
 		Customer result = null;
 		Collection<MessageBox> messageBoxes;
 		Actor principal;
-		Authority authority = new Authority();
-		UserAccount userAccount = new UserAccount();
+		final Authority authority = new Authority();
+		final UserAccount userAccount = new UserAccount();
 
-		
-		
 		try {
 			principal = this.findByPrincipal();
 			Assert.isNull(principal);
-			
-		} catch (IllegalArgumentException e){
-			
+
+		} catch (final IllegalArgumentException e) {
+
 			result = new Customer();
-			
+
 			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
 
 			result.setMessageBoxes(messageBoxes);
@@ -88,17 +92,17 @@ public class CustomerService {
 		Assert.notNull(customer);
 		Customer cus;
 
-		if (customer.getId() == 0) {
+		if (customer.getId() == 0)
 			try {
 				Actor principal;
 				principal = this.findByPrincipal();
 				Assert.isNull(principal);
-				
-			} catch (IllegalArgumentException e){
+
+			} catch (final IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 				customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
 			}
-		} else {
+		else {
 			Customer principalC;
 			principalC = this.findByPrincipal();
 			Assert.notNull(principalC);
@@ -152,12 +156,11 @@ public class CustomerService {
 	}
 
 	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
-		List<Customer> collC = this.customerTenPercentMoraThanAverage();
-		if(collC.size()<3) {
+		final List<Customer> collC = this.customerTenPercentMoraThanAverage();
+		if (collC.size() < 3)
 			return collC;
-		} else {
+		else
 			return collC.subList(0, 3);
-		}
 	}
 
 	public List<Customer> customerTenPercentMoraThanAverage() {

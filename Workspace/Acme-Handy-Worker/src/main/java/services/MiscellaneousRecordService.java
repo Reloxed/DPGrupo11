@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -20,21 +21,22 @@ public class MiscellaneousRecordService {
 	// Managed repository -----------------
 
 	@Autowired
-	private MiscellaneousRecordRepository miscellaneousRecordRepository;
+	private MiscellaneousRecordRepository	miscellaneousRecordRepository;
 
 	//Supporting services -------------------
+
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService				handyWorkerService;
+
 
 	//Constructor
-	
-	public MiscellaneousRecordService(){
+
+	public MiscellaneousRecordService() {
 		super();
 	}
-	
-	
+
 	//CRUD Methods --------------------------------
-	public MiscellaneousRecord create(){
+	public MiscellaneousRecord create() {
 		MiscellaneousRecord result;
 		HandyWorker principal;
 
@@ -46,13 +48,12 @@ public class MiscellaneousRecordService {
 
 		return result;
 	}
-	
-	
-	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord){
+
+	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
 
 		MiscellaneousRecord result;
 		HandyWorker principal;
-		Collection<MiscellaneousRecord>miscellaneousRecords;
+		Collection<MiscellaneousRecord> miscellaneousRecords;
 		Curriculum curriculumHW;
 
 		Assert.notNull(miscellaneousRecord);
@@ -64,54 +65,49 @@ public class MiscellaneousRecordService {
 		Assert.notNull(curriculumHW);
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
 
-
 		result = this.miscellaneousRecordRepository.saveAndFlush(miscellaneousRecord);
 		Assert.notNull(result);
-		
+
 		miscellaneousRecords.add(result);
 		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
-		
-		
+
 		return result;
 
 	}
-	public MiscellaneousRecord findOne(final int miscellaneousRecordId){
+	public MiscellaneousRecord findOne(final int miscellaneousRecordId) {
 		MiscellaneousRecord result;
 		result = this.miscellaneousRecordRepository.findOne(miscellaneousRecordId);
 		Assert.notNull(result);
 		return result;
 	}
-	public Collection<MiscellaneousRecord> findAll(){
-		Collection<MiscellaneousRecord>result;
+	public Collection<MiscellaneousRecord> findAll() {
+		Collection<MiscellaneousRecord> result;
 		result = this.miscellaneousRecordRepository.findAll();
 		Assert.notNull(result);
 		return result;
 	}
 
-	public void delete(final MiscellaneousRecord miscellaneousRecord){
+	public void delete(final MiscellaneousRecord miscellaneousRecord) {
 		HandyWorker principal;
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 		Curriculum curriculumHW;
-		
+
 		Assert.notNull(miscellaneousRecord);
-		
+
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		curriculumHW = principal.getCurriculum();
 		Assert.notNull(curriculumHW);
-		
+
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
-		
+
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 		miscellaneousRecords.remove(miscellaneousRecord);
-		
-		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
-		
-		
-	}
-	
 
+		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
+
+	}
 
 	//Other business methods -----------------------------
 }

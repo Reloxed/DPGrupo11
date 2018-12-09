@@ -42,6 +42,12 @@ public class ActorService {
 	private RefereeService			refereeService;
 
 
+	// Constructors ------------------------------------
+
+	public ActorService() {
+		super();
+	}
+
 	// Simple CRUDs methods ------------------------
 
 	public Collection<Actor> findAll() {

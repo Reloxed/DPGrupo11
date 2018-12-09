@@ -1,3 +1,4 @@
+
 package services;
 
 import java.security.SecureRandom;
@@ -21,13 +22,20 @@ public class UtilityService {
 	// Supporting Services ------------------------------------
 
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService			fixUpTaskService;
 
 	@Autowired
-	private CurriculumService curriculumService;
+	private CurriculumService			curriculumService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
+
+	// Constructors ------------------------------------
+
+	public UtilityService() {
+		super();
+	}
 
 	// Utility methods ----------------------------------------
 
@@ -47,14 +55,12 @@ public class UtilityService {
 		while (unique == false) {
 			alphaNum = this.randomString();
 			uniqueTicker = year + month + day + "-" + alphaNum;
-			for (FixUpTask fixUpTask : fixUpTaskService.findAll()) {
+			for (final FixUpTask fixUpTask : this.fixUpTaskService.findAll())
 				if (fixUpTask.getTicker().equals(uniqueTicker))
 					continue;
-			}
-			for (Curriculum curriculum : curriculumService.findAll()) {
+			for (final Curriculum curriculum : this.curriculumService.findAll())
 				if (curriculum.getTicker().equals(uniqueTicker))
 					continue;
-			}
 			unique = true;
 		}
 		return uniqueTicker;
@@ -69,45 +75,36 @@ public class UtilityService {
 		final StringBuilder stringBuilder = new StringBuilder(length);
 
 		for (int i = 0; i < length; i++)
-			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars
-					.length())));
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars.length())));
 		return stringBuilder.toString();
 
 	}
 
 	public List<String> getCreditCardMakes() {
 
-		String makes = this.systemConfigurationService
-				.findMySystemConfiguration().getListCreditCardMakes();
-		List<String> listCCMakes = new ArrayList<String>(Arrays.asList(makes
-				.split(",")));
+		final String makes = this.systemConfigurationService.findMySystemConfiguration().getListCreditCardMakes();
+		final List<String> listCCMakes = new ArrayList<String>(Arrays.asList(makes.split(",")));
 		return listCCMakes;
 	}
 
 	public List<String> getNegativeWords() {
 
-		String makes = this.systemConfigurationService
-				.findMySystemConfiguration().getNegativeWords();
-		List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes
-				.split(" , ")));
+		final String makes = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords();
+		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listNegWords;
 	}
 
 	public List<String> getPositiveWords() {
 
-		String makes = this.systemConfigurationService
-				.findMySystemConfiguration().getPositiveWords();
-		List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes
-				.split(" , ")));
+		final String makes = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords();
+		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listPosWords;
 	}
 
 	public List<String> getSpamWords() {
 
-		String makes = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords();
-		List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes
-				.split(" , ")));
+		final String makes = this.systemConfigurationService.findMySystemConfiguration().getSpamWords();
+		final List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listSpamWords;
 	}
 

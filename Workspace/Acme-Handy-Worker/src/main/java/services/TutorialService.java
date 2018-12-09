@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -22,18 +23,25 @@ public class TutorialService {
 	// Managed repository
 
 	@Autowired
-	private TutorialRepository tutorialRepository;
+	private TutorialRepository			tutorialRepository;
 
 	// Supporting services
 
 	@Autowired
-	private SponsorshipService sponsorshipService;
+	private SponsorshipService			sponsorshipService;
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
+
+	// Constructors ------------------------------------
+
+	public TutorialService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -46,10 +54,10 @@ public class TutorialService {
 
 		result = new Tutorial();
 
-		Collection<Section> sections = new ArrayList<Section>();
+		final Collection<Section> sections = new ArrayList<Section>();
 		result.setSections(sections);
-		
-		Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
+
+		final Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
 		result.setSponsorships(sponsorships);
 
 		return result;
@@ -63,7 +71,7 @@ public class TutorialService {
 		return tutorials;
 	}
 
-	public Tutorial findOne(int tutorialId) {
+	public Tutorial findOne(final int tutorialId) {
 		Tutorial result;
 
 		result = this.tutorialRepository.findOne(tutorialId);
@@ -71,7 +79,7 @@ public class TutorialService {
 		return result;
 	}
 
-	public Tutorial save(Tutorial t) {
+	public Tutorial save(final Tutorial t) {
 		Assert.notNull(t);
 		Tutorial result;
 		HandyWorker principal;
@@ -90,21 +98,18 @@ public class TutorialService {
 			sponsorships = new ArrayList<>();
 			sponsorships.addAll(this.sponsorshipService.findAll());
 			t.setSponsorships(sponsorships);
-		} else {
+		} else
 			Assert.isTrue(principal.getTutorial().contains(t));
-		}
 
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService.findSpamWords()
-				.split(",");
-		String[] title = t.getTitle().split(" ");
-		for (String word : spamWords) {
-			for (String titleWord : title) {
+		final String[] spamWords = this.systemConfigurationService.findSpamWords().split(",");
+		final String[] title = t.getTitle().split(" ");
+		for (final String word : spamWords) {
+			for (final String titleWord : title)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
@@ -112,14 +117,13 @@ public class TutorialService {
 		}
 		if (principal.getIsSuspicious() == false) {
 			containsSpam = false;
-			String[] summary = t.getSummary().split(" ");
-			for (String word : spamWords) {
-				for (String summaryWord : summary) {
+			final String[] summary = t.getSummary().split(" ");
+			for (final String word : spamWords) {
+				for (final String summaryWord : summary)
 					if (summaryWord.toLowerCase().contains(word.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}
-				}
 				if (containsSpam) {
 					principal.setIsSuspicious(true);
 					break;
@@ -129,12 +133,12 @@ public class TutorialService {
 		result = this.tutorialRepository.save(t);
 		Assert.notNull(result);
 		System.out.println(result.getVersion());
-//		this.tutorialRepository.flush();
-//		principal = this.handyWorkerService.save(principal);
+		//		this.tutorialRepository.flush();
+		//		principal = this.handyWorkerService.save(principal);
 		return result;
 	}
 
-	public void delete(Tutorial t) {
+	public void delete(final Tutorial t) {
 		Assert.notNull(t);
 		Assert.isTrue(t.getId() != 0);
 
@@ -156,7 +160,7 @@ public class TutorialService {
 
 	// Other business methods
 
-	public Tutorial findTutorialBySectionId(int sectionId) {
+	public Tutorial findTutorialBySectionId(final int sectionId) {
 		Tutorial res;
 
 		res = this.tutorialRepository.findTutorialBySectionId(sectionId);

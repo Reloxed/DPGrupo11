@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -19,16 +20,23 @@ public class PersonalRecordService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private PersonalRecordRepository personalRecordRepository;
+	private PersonalRecordRepository	personalRecordRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
+
+
+	// Constructors ------------------------------------
+
+	public PersonalRecordService() {
+		super();
+	}
 
 	// Simple CRUD methods -----------------------------------
 
-	public PersonalRecord findOne(int personalRecordId) {
+	public PersonalRecord findOne(final int personalRecordId) {
 		PersonalRecord res;
 		res = this.personalRecordRepository.findOne(personalRecordId);
 		return res;
@@ -52,7 +60,7 @@ public class PersonalRecordService {
 		return res;
 	}
 
-	public PersonalRecord save(PersonalRecord personalRecord) {
+	public PersonalRecord save(final PersonalRecord personalRecord) {
 		HandyWorker principal;
 		PersonalRecord res;
 
@@ -60,15 +68,14 @@ public class PersonalRecordService {
 		Assert.notNull(principal);
 
 		Assert.notNull(personalRecord);
-		Assert.isTrue(personalRecord.getLinkedinLink().startsWith(
-				"https://www.linkedin.com/"));
+		Assert.isTrue(personalRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
 
 		res = personalRecord;
 
 		return this.personalRecordRepository.saveAndFlush(res);
 	}
 
-	public void delete(PersonalRecord personalRecord) {
+	public void delete(final PersonalRecord personalRecord) {
 		HandyWorker principal;
 
 		Assert.notNull(personalRecord);
@@ -77,8 +84,7 @@ public class PersonalRecordService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(principal.getCurriculum().getPersonalRecord()
-				.equals(personalRecord));
+		Assert.isTrue(principal.getCurriculum().getPersonalRecord().equals(personalRecord));
 
 		this.personalRecordRepository.delete(personalRecord);
 

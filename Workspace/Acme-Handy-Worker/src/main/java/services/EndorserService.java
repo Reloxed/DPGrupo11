@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -16,28 +17,35 @@ import domain.Endorser;
 @Service
 @Transactional
 public class EndorserService {
-	
+
 	// Managed Repository
-	
+
 	@Autowired
-	private EndorserRepository endorserRepository;
-		
+	private EndorserRepository	endorserRepository;
+
+
 	// Supporting Services
-		
+
+	// Constructors ------------------------------------
+
+	public EndorserService() {
+		super();
+	}
+
 	// Simple CRUD Methods
-	
-	public Collection<Endorser> findAll(){
+
+	public Collection<Endorser> findAll() {
 		Collection<Endorser> collEnd = new ArrayList<>();
-		collEnd = endorserRepository.findAll();
+		collEnd = this.endorserRepository.findAll();
 		return collEnd;
 	}
-	
-	public Endorser findOne(int endorserId) {
-		Integer id = endorserId;
-		Endorser endorser = endorserRepository.findOne(id);	
+
+	public Endorser findOne(final int endorserId) {
+		final Integer id = endorserId;
+		final Endorser endorser = this.endorserRepository.findOne(id);
 		return endorser;
 	}
-	
+
 	// Other business methods
 
 	public Endorser findByPrincipal() {

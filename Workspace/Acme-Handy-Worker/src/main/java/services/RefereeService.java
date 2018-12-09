@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -25,15 +26,22 @@ public class RefereeService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private RefereeRepository refereeRepository;
+	private RefereeRepository		refereeRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	private MessageBoxService messageBoxService;
+	private MessageBoxService		messageBoxService;
+
+
+	// Constructors ------------------------------------
+
+	public RefereeService() {
+		super();
+	}
 
 	// Simple CRUD methods -----------------------------------
 
@@ -54,9 +62,9 @@ public class RefereeService {
 		res.setMessageBoxes(messageBoxes);
 		res.setSocialProfiles(Collections.<SocialProfile> emptyList());
 
-		Authority authority = new Authority();
+		final Authority authority = new Authority();
 		authority.setAuthority(Authority.REFEREE);
-		UserAccount userAccount = new UserAccount();
+		final UserAccount userAccount = new UserAccount();
 		userAccount.addAuthority(authority);
 
 		res.setUserAccount(userAccount);
@@ -70,7 +78,7 @@ public class RefereeService {
 		return res;
 	}
 
-	public Referee findOne(int refereeId) {
+	public Referee findOne(final int refereeId) {
 		Referee res;
 		Assert.isTrue(refereeId != 0);
 		res = this.refereeRepository.findOne(refereeId);
@@ -78,7 +86,7 @@ public class RefereeService {
 		return res;
 	}
 
-	public Referee save(Referee referee) {
+	public Referee save(final Referee referee) {
 		Referee res;
 
 		Assert.notNull(referee);
@@ -88,9 +96,7 @@ public class RefereeService {
 			principal = this.administratorService.findByPrincipal();
 			Assert.notNull(principal);
 			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-			referee.getUserAccount().setPassword(
-					passwordEncoder.encodePassword(referee.getUserAccount()
-							.getPassword(), null));
+			referee.getUserAccount().setPassword(passwordEncoder.encodePassword(referee.getUserAccount().getPassword(), null));
 		} else {
 			Referee principal;
 			principal = this.findByPrincipal();

@@ -36,6 +36,12 @@ public class SectionService {
 	private SystemConfigurationService	systemConfigurationService;
 
 
+	// Constructors ------------------------------------
+
+	public SectionService() {
+		super();
+	}
+
 	// Simple CRUD methods -----------------------------------
 
 	public Section create() {

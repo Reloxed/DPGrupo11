@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -20,15 +21,22 @@ public class WarrantyService {
 	// Managed repository
 
 	@Autowired
-	private WarrantyRepository warrantyRepository;
+	private WarrantyRepository			warrantyRepository;
 
 	// Supporting services
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService		administratorService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
+
+	// Constructors ------------------------------------
+
+	public WarrantyService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -37,7 +45,7 @@ public class WarrantyService {
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-		Warranty w = new Warranty();
+		final Warranty w = new Warranty();
 		w.setIsFinal(false);
 		return w;
 	}
@@ -50,7 +58,7 @@ public class WarrantyService {
 		return warranties;
 	}
 
-	public Warranty findOne(int warrantyId) {
+	public Warranty findOne(final int warrantyId) {
 		Warranty result;
 
 		result = this.warrantyRepository.findOne(warrantyId);
@@ -58,73 +66,66 @@ public class WarrantyService {
 		return result;
 	}
 
-	
-	public Warranty save(Warranty w){
+	public Warranty save(final Warranty w) {
 		Administrator principal;
 		Warranty result;
+		boolean containsSpam;
 		Assert.notNull(w);
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
-		
-		if(w.getId() == 0){
-			Assert.isTrue(w.getIsFinal() == false);	
-		}
 
-		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] title = w.getTitle().split("(에,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String titleWord : title) {
+		if (w.getId() == 0)
+			Assert.isTrue(w.getIsFinal() == false);
+
+		containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] title = w.getTitle().split("(에,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : title)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
 
-		containsSpam = false;
-		String[] terms = w.getTerms().split("(에,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String termsWord : terms) {
+		final String[] terms = w.getTerms().split("(에,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String termsWord : terms)
 				if (termsWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
 
-		containsSpam = false;
-		String[] laws = w.getLaws().split("(에,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String lawsWord : laws) {
+		final String[] laws = w.getLaws().split("(에,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String lawsWord : laws)
 				if (lawsWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
-		
-//		Assert.isTrue(principal.getIsSuspicious() == false);
+
+		Assert.isTrue(w.getIsFinal() == false);
 		result = this.warrantyRepository.saveAndFlush(w);
 		principal = this.administratorService.save(principal);
 		return result;
 	}
 
-	public void delete(Warranty w) {
+	public void delete(final Warranty w) {
 		Administrator principal;
 		Assert.notNull(w);
 
@@ -136,19 +137,17 @@ public class WarrantyService {
 
 		this.warrantyRepository.delete(w);
 	}
-	
+
 	//Other business methods
-	
-	public Collection<Warranty> findFinalWarranties(){
-		Collection<Warranty> result = new ArrayList<>();
-		
-		for(Warranty w: this.warrantyRepository.findAll()){
-			if(w.getIsFinal() == true){
+
+	public Collection<Warranty> findFinalWarranties() {
+		final Collection<Warranty> result = new ArrayList<>();
+
+		for (final Warranty w : this.warrantyRepository.findAll())
+			if (w.getIsFinal() == true)
 				result.add(w);
-			}
-		}
-		
+
 		return result;
 	}
-	
+
 }

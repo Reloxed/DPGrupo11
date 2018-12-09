@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -24,15 +25,22 @@ public class CurriculumService {
 	// Managed Repository
 
 	@Autowired
-	private CurriculumRepository curriculumRepository;
+	private CurriculumRepository	curriculumRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
-	private UtilityService utilityService;
+	private UtilityService			utilityService;
+
+
+	// Constructors ------------------------------------
+
+	public CurriculumService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -86,10 +94,8 @@ public class CurriculumService {
 		HandyWorker author;
 		author = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(author);
-		if (curriculum.getId() != 0){
-			Assert.isTrue(curriculum.getTicker().equals(
-					author.getCurriculum().getTicker()));
-		}
+		if (curriculum.getId() != 0)
+			Assert.isTrue(curriculum.getTicker().equals(author.getCurriculum().getTicker()));
 		Assert.notNull(curriculum.getPersonalRecord());
 		result = this.curriculumRepository.save(curriculum);
 		this.curriculumRepository.flush();
