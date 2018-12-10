@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -25,24 +26,31 @@ public class CreditCardService {
 	// Managed Repository
 
 	@Autowired
-	private CreditCardRepository creditCardRepository;
+	private CreditCardRepository	creditCardRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService			customerService;
 
 	@Autowired
-	private SponsorService sponsorService;
+	private SponsorService			sponsorService;
 
 	@Autowired
-	private SponsorshipService sponsorshipService;
+	private SponsorshipService		sponsorshipService;
 
 	@Autowired
-	private ApplicationService applicationService;
+	private ApplicationService		applicationService;
 
 	@Autowired
-	private UtilityService utilityService;
+	private UtilityService			utilityService;
+
+
+	// Constructors ------------------------------------
+
+	public CreditCardService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -56,7 +64,7 @@ public class CreditCardService {
 		try {
 			ownerCustomer = this.customerService.findByPrincipal();
 
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 
 			ownerSponsor = this.sponsorService.findByPrincipal();
 		}
@@ -74,7 +82,7 @@ public class CreditCardService {
 		try {
 			ownerSponsor = this.sponsorService.findByPrincipal();
 
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			ownerCustomer = this.customerService.findByPrincipal();
 		}
 		if (ownerCustomer == null && ownerSponsor == null)
@@ -82,16 +90,14 @@ public class CreditCardService {
 
 		// Según sea un customer o un sponsor, cogemos la lista de sus CC
 		if (ownerCustomer != null)
-			collCC = this.customerService
-					.findCreditCardsByCustomerId(ownerCustomer.getId());
+			collCC = this.customerService.findCreditCardsByCustomerId(ownerCustomer.getId());
 		else
-			collCC = this.sponsorService
-					.findCreditCardsBySponsorId(ownerSponsor.getId());
+			collCC = this.sponsorService.findCreditCardsBySponsorId(ownerSponsor.getId());
 
 		return collCC;
 	}
 
-	public CreditCard findOne(int creditCardId) {
+	public CreditCard findOne(final int creditCardId) {
 		Sponsor ownerSponsor = null;
 		Customer ownerCustomer = null;
 		CreditCard creditCard;
@@ -99,12 +105,11 @@ public class CreditCardService {
 		try {
 			ownerSponsor = this.sponsorService.findByPrincipal();
 
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			ownerCustomer = this.customerService.findByPrincipal();
 		}
-		if (ownerCustomer == null && ownerSponsor == null) {
+		if (ownerCustomer == null && ownerSponsor == null)
 			Assert.notNull(ownerSponsor);
-		}
 
 		// Según sea un customer o un sponsor, vemos si la credit card que pide
 		// es suya
@@ -126,7 +131,7 @@ public class CreditCardService {
 		return creditCard;
 	}
 
-	public CreditCard save (CreditCard creditCard){
+	public CreditCard save(final CreditCard creditCard) {
 
 		Assert.notNull(creditCard);
 
@@ -137,8 +142,8 @@ public class CreditCardService {
 
 		try {
 			ownerSponsor = this.sponsorService.findByPrincipal();
-			
-		} catch (IllegalArgumentException e){
+
+		} catch (final IllegalArgumentException e) {
 			ownerCustomer = this.customerService.findByPrincipal();
 		}
 		if (ownerCustomer == null && ownerSponsor == null)
@@ -146,7 +151,7 @@ public class CreditCardService {
 
 		// Comprobacion de fecha
 		expiration = Calendar.getInstance();
-		expiration.set(creditCard.getExpirationYear(), creditCard.getExpirationMonth()+1, 1);
+		expiration.set(creditCard.getExpirationYear(), creditCard.getExpirationMonth() + 1, 1);
 		Assert.isTrue(expiration.getTime().before(LocalDate.now().toDate()));
 
 		// Comprobacion de que el tipo de tarjeta es uno de los almacenados en systemConf
@@ -156,22 +161,22 @@ public class CreditCardService {
 		Assert.notNull(res);
 		this.creditCardRepository.flush();
 
-//		//Metemos la creditCard en la application o sponsorship correspondiente
-//		if (ownerCustomer != null) {
-//			if (creditCard.getId() == 0)
-//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
-//					for (final Application application : fixUpTasks.getApplications())
-//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
-//							application.setCreditCard(creditCard);
-//							this.applicationService.save(application);
-//						}
-//		} else if (ownerSponsor != null)
-//			if (creditCard.getId() == 0)
-//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
-//					if (sponsorship.getCreditCard() == null) {
-//						sponsorship.setCreditCard(creditCard);
-//						this.sponsorshipService.save(sponsorship);
-//					}
+		//		//Metemos la creditCard en la application o sponsorship correspondiente
+		//		if (ownerCustomer != null) {
+		//			if (creditCard.getId() == 0)
+		//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
+		//					for (final Application application : fixUpTasks.getApplications())
+		//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
+		//							application.setCreditCard(creditCard);
+		//							this.applicationService.save(application);
+		//						}
+		//		} else if (ownerSponsor != null)
+		//			if (creditCard.getId() == 0)
+		//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
+		//					if (sponsorship.getCreditCard() == null) {
+		//						sponsorship.setCreditCard(creditCard);
+		//						this.sponsorshipService.save(sponsorship);
+		//					}
 		return res;
 	}
 
@@ -182,17 +187,12 @@ public class CreditCardService {
 		// Comprobamos que el customer o sponsor que quiere eliminar la CC es el
 		// dueño de la misma
 		final UserAccount userAccount = LoginService.getPrincipal();
-		Assert.isTrue(userAccount.equals(this.customerService
-				.findByCreditCardId(creditCard.getId()).getUserAccount())
-				|| userAccount.equals(this.sponsorService.findByCreditCardId(
-						creditCard.getId()).getUserAccount()));
+		Assert.isTrue(userAccount.equals(this.customerService.findByCreditCardId(creditCard.getId()).getUserAccount()) || userAccount.equals(this.sponsorService.findByCreditCardId(creditCard.getId()).getUserAccount()));
 
 		// Comprobamos que no hay ninguna application ni sponsorship que tenga
 		// asociada la CC a eliminar
-		Assert.isNull(this.applicationService.findByCreditCardId(creditCard
-				.getId()));
-		Assert.isNull(this.sponsorshipService.findByCreditCardId(creditCard
-				.getId()));
+		Assert.isNull(this.applicationService.findByCreditCardId(creditCard.getId()));
+		Assert.isNull(this.sponsorshipService.findByCreditCardId(creditCard.getId()));
 
 		this.creditCardRepository.delete(creditCard);
 	}

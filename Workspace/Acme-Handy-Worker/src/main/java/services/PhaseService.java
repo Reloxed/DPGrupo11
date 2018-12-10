@@ -31,6 +31,12 @@ public class PhaseService {
 	private SystemConfigurationService	systemConfigurationService;
 
 
+	// Constructors ------------------------------------
+
+	public PhaseService() {
+		super();
+	}
+
 	// Simple CRUD methods -----------------------------------
 
 	public Phase create() {

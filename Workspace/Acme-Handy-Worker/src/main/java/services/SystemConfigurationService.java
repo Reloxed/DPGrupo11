@@ -1,5 +1,7 @@
+
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -10,6 +12,8 @@ import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
 import domain.Administrator;
+import domain.Endorsement;
+import domain.Endorser;
 import domain.SystemConfiguration;
 
 @Service
@@ -19,15 +23,22 @@ public class SystemConfigurationService {
 	// Managed repository
 
 	@Autowired
-	private SystemConfigurationRepository systemConfigurationRepository;
+	private SystemConfigurationRepository	systemConfigurationRepository;
 
 	// Supporting services
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService			administratorService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService					actorService;
+
+
+	// Constructors ------------------------------------
+
+	public SystemConfigurationService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -36,23 +47,17 @@ public class SystemConfigurationService {
 
 		final SystemConfiguration systemConfiguration = new SystemConfiguration();
 		systemConfiguration.setSystemName("Acme-Handy-Worker");
-		systemConfiguration
-				.setWelcomeMessageEn("Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
-		systemConfiguration
-				.setWelcomeMessageEs("¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
-		systemConfiguration
-				.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
+		systemConfiguration.setWelcomeMessageEn("Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
+		systemConfiguration.setWelcomeMessageEs("¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
+		systemConfiguration.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
 		systemConfiguration.setVAT(0.21);
 		systemConfiguration.setListCreditCardMakes("VISA,MASTER,DINNERS,AMEX");
 		systemConfiguration.setCountryCode("+034");
 		systemConfiguration.setTimeResultsCached(1);
 		systemConfiguration.setMaxResults(10);
-		systemConfiguration
-				.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
-		systemConfiguration
-				.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
-		systemConfiguration
-				.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
+		systemConfiguration.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
+		systemConfiguration.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
+		systemConfiguration.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
 		return systemConfiguration;
 	}
 
@@ -69,24 +74,20 @@ public class SystemConfigurationService {
 		Assert.notNull(this.administratorService.findByPrincipal());
 		SystemConfiguration result;
 
-		result = this.systemConfigurationRepository
-				.findOne(systemConfigurationId);
+		result = this.systemConfigurationRepository.findOne(systemConfigurationId);
 
 		return result;
 	}
 
-	public SystemConfiguration save(
-			final SystemConfiguration systemConfiguration) {
+	public SystemConfiguration save(final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
 		Administrator principal;
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		
-		
 		systemConfiguration.setId(this.systemConfigurationRepository.findAll().get(0).getId());
-		
+
 		SystemConfiguration result;
 		result = this.systemConfigurationRepository.saveAndFlush(systemConfiguration);
 		return result;
@@ -107,9 +108,36 @@ public class SystemConfigurationService {
 	public String findSpamWords() {
 		final String result;
 
-		result = this.systemConfigurationRepository.findAll().get(0)
-				.getSpamWords();
+		result = this.systemConfigurationRepository.findAll().get(0).getSpamWords();
 
 		return result;
+	}
+
+	public Double generateScore(final Endorser e) {
+		Double res, i;
+		Collection<Endorsement> endorsements;
+		String positives, negatives;
+
+		endorsements = new ArrayList<Endorsement>();
+		positives = this.findMySystemConfiguration().getPositiveWords();
+		negatives = this.findMySystemConfiguration().getNegativeWords();
+		//endorsements.addAll(e.getEndorsements);
+		// TODO: A la espera de ver si la relación endorser-endorsement es bidireccional
+		i = 0.0;
+		res = 0.0;
+		for (final Endorsement en : endorsements) {
+			final String[] s = en.getComments().split(" ");
+			for (final String w : s) {
+				if (positives.contains(w))
+					res++;
+				if (negatives.contains(w))
+					res--;
+				i++;
+			}
+
+		}
+
+		return res / i;
+
 	}
 }

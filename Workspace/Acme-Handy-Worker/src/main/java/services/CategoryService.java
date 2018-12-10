@@ -27,6 +27,12 @@ public class CategoryService {
 	private AdministratorService	administratorService;
 
 
+	// Constructors ------------------------------------
+
+	public CategoryService() {
+		super();
+	}
+
 	// CRUD methods -----------------------------------
 
 	public Category create() {

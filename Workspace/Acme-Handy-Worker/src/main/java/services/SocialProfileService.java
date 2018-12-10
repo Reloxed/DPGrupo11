@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -20,12 +21,19 @@ public class SocialProfileService {
 	// Managed repository
 
 	@Autowired
-	private SocialProfileRepository socialProfileRepository;
+	private SocialProfileRepository	socialProfileRepository;
 
 	// Supporting services
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
+
+
+	// Constructors ------------------------------------
+
+	public SocialProfileService() {
+		super();
+	}
 
 	// Simple CRUD Methods
 
@@ -49,7 +57,7 @@ public class SocialProfileService {
 		return socialProfiles;
 	}
 
-	public SocialProfile findOne(int socialProfileId) {
+	public SocialProfile findOne(final int socialProfileId) {
 		SocialProfile result;
 
 		result = this.socialProfileRepository.findOne(socialProfileId);
@@ -68,7 +76,7 @@ public class SocialProfileService {
 		return result;
 	}
 
-	public SocialProfile save(SocialProfile socialProfile) {
+	public SocialProfile save(final SocialProfile socialProfile) {
 		Actor principal;
 		SocialProfile result;
 		Collection<SocialProfile> socialProfilesUpdated;
@@ -77,9 +85,9 @@ public class SocialProfileService {
 		Assert.notNull(principal);
 		Assert.notNull(socialProfile);
 
-		if (socialProfile.getId() != 0) {
+		if (socialProfile.getId() != 0)
 			Assert.isTrue(principal.getSocialProfiles().contains(socialProfile));
-		} else {
+		else {
 			socialProfilesUpdated = new ArrayList<SocialProfile>();
 			socialProfilesUpdated.addAll(principal.getSocialProfiles());
 			socialProfilesUpdated.add(socialProfile);
@@ -92,7 +100,7 @@ public class SocialProfileService {
 		return result;
 	}
 
-	public void delete(SocialProfile socialProfile) {
+	public void delete(final SocialProfile socialProfile) {
 		Actor principal;
 		Collection<SocialProfile> socialProfilesUpdated;
 

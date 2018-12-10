@@ -40,6 +40,7 @@ public class HandyWorkerService {
 
 
 	// Constructor ----------------------------------------------------
+
 	public HandyWorkerService() {
 		super();
 	}

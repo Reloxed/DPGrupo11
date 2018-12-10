@@ -38,6 +38,12 @@ public class ReportService {
 	private SystemConfigurationService	systemConfigurationService;
 
 
+	// Constructors ------------------------------------
+
+	public ReportService() {
+		super();
+	}
+
 	// Simple CRUD methods -----------------------------------
 
 	public Report create() {

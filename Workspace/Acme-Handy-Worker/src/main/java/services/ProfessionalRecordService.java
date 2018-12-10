@@ -32,6 +32,12 @@ public class ProfessionalRecordService {
 	private SystemConfigurationService		systemConfigurationService;
 
 
+	// Constructors ------------------------------------
+
+	public ProfessionalRecordService() {
+		super();
+	}
+
 	// Simple CRUD methods -----------------------------------
 
 	public ProfessionalRecord create() {

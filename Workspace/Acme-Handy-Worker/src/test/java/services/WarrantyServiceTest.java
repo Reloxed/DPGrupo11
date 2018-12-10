@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Administrator;
 import domain.Warranty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,12 +24,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	// Service under test -----------------------------------------------
 
 	@Autowired
-	private WarrantyService			warrantyService;
-
-	// Supporting services ----------------------------------------------
-
-	@Autowired
-	private AdministratorService	administratorService;
+	private WarrantyService	warrantyService;
 
 
 	// Tests ------------------------------------------------------------
@@ -121,8 +115,7 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty res = this.warrantyService.save(w);
 		Assert.notNull(res);
 
-		Administrator principal = this.administratorService.findByPrincipal();
-		Warranty found = this.warrantyService.findOne(res.getId());
+		final Warranty found = this.warrantyService.findOne(res.getId());
 
 		Assert.notNull(found);
 		super.unauthenticate();

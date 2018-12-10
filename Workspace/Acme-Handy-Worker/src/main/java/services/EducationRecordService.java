@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -17,24 +18,30 @@ import domain.HandyWorker;
 public class EducationRecordService {
 
 	// Managed Repository
-	
+
 	@Autowired
-	private EducationRecordRepository educationRecordRepository;
-		
+	private EducationRecordRepository	educationRecordRepository;
+
 	// Supporting Services
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
-	
+	private HandyWorkerService			handyWorkerService;
+
 	@Autowired
-	private CurriculumService curriculumService;
-	
+	private CurriculumService			curriculumService;
+
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
-	
-		
+	private SystemConfigurationService	systemConfigurationService;
+
+
+	// Constructors ------------------------------------
+
+	public EducationRecordService() {
+		super();
+	}
+
 	// Simple CRUD Methods
-	
+
 	public EducationRecord create() {
 		HandyWorker principal;
 		EducationRecord res;
@@ -48,12 +55,12 @@ public class EducationRecordService {
 		return res;
 	}
 
-	public EducationRecord findOne(int educationRecordId) {
+	public EducationRecord findOne(final int educationRecordId) {
 		EducationRecord res;
 		res = this.educationRecordRepository.findOne(educationRecordId);
 		return res;
 	}
-	
+
 	public Collection<EducationRecord> findAll() {
 		Collection<EducationRecord> educationRecords;
 
@@ -62,78 +69,68 @@ public class EducationRecordService {
 		return educationRecords;
 	}
 
-	public EducationRecord save(EducationRecord educationRecord) {
+	public EducationRecord save(final EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
 
 		HandyWorker principal;
 		EducationRecord res;
 		Collection<EducationRecord> educationRecords;
-		
+
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-	
-		if (educationRecord.getEndDate()!=null){
+
+		if (educationRecord.getEndDate() != null)
 			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
-		}
-		
+
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		String[] diplomaTitle = educationRecord.getDiplomaTitle().split(
-				"(에,.-_/!?) ");
-		for (String word : spamWords) {
-			for (String titleWord : diplomaTitle) {
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] diplomaTitle = educationRecord.getDiplomaTitle().split("(에,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : diplomaTitle)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
-			}
 			if (containsSpam) {
 				principal.setIsSuspicious(true);
 				break;
 			}
 		}
 		if (!containsSpam) {
-			String[] institutionName = educationRecord.getInstitutionName().split("(에,.-_/!?) ");
-			for (String word : spamWords) {
-				for (String titleWord : institutionName) {
+			final String[] institutionName = educationRecord.getInstitutionName().split("(에,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : institutionName)
 					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}
-				}
 				if (containsSpam) {
 					principal.setIsSuspicious(true);
 					break;
 				}
 			}
-			if(educationRecord.getComments()!=null){
+			if (educationRecord.getComments() != null)
 				if (!containsSpam) {
-					String[] comments = educationRecord.getComments().split(
-							"(에,.-_/!?) ");
-					for (String word : spamWords) {
-						for (String titleWord : comments) {
-							if (titleWord.toLowerCase()
-									.contains(word.toLowerCase())) {
+					final String[] comments = educationRecord.getComments().split("(에,.-_/!?) ");
+					for (final String word : spamWords) {
+						for (final String titleWord : comments)
+							if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 								containsSpam = true;
 								break;
 							}
-						}
 						if (containsSpam) {
 							principal.setIsSuspicious(true);
 							break;
 						}
 					}
 				}
-			}
 		}
-			
+
 		res = this.educationRecordRepository.save(educationRecord);
 		this.educationRecordRepository.flush();
-		
 
 		educationRecords = principal.getCurriculum().getEducationRecords();
-		
+
 		if (educationRecord.getId() == 0) {
 			educationRecords.add(res);
 			Curriculum curriculum;
@@ -144,7 +141,7 @@ public class EducationRecordService {
 		return res;
 	}
 
-	public void delete(EducationRecord educationRecord) {
+	public void delete(final EducationRecord educationRecord) {
 		HandyWorker principal;
 		Collection<EducationRecord> educationRecords;
 
@@ -153,7 +150,7 @@ public class EducationRecordService {
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		educationRecords = principal.getCurriculum().getEducationRecords();
 		Assert.isTrue(educationRecords.contains(educationRecord));
 
