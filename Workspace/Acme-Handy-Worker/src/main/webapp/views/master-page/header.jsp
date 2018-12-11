@@ -17,13 +17,15 @@
 
 
 <div style="float: right">
-		<a href="?language=es" id="es"><img src="images/sp.png" style="width: 50px; height:25px"/></a> 
-		<a href="?language=en" id="en"><img src="images/uk.png" style="width: 50px; height:25px"/></a>
+	<a href="?language=es" id="es"><img src="images/sp.png"
+		style="width: 50px; height: 25px" /></a> <a href="?language=en" id="en"><img
+		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
 
 <div>
-	<a href="#"><img style="height: 200px; width:500px; padding-bottom: 12px" src="images/Default logo.jpg"
-		alt="Acme Handy Worker Co., Inc." /></a>
+	<a href="#"><img
+		style="height: 200px; width: 500px; padding-bottom: 12px"
+		src="images/Default logo.jpg" alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
 <div>
@@ -173,8 +175,17 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="security/sign-up.do"><spring:message
+			<li><a class="fNiv"><spring:message
 						code="master.page.signup" /></a></li>
+			<ul>
+				<li class="arrow"></li>
+				<li><a href="customer/create.do"><spring:message
+							code="master.page.register.customer" /></a></li>
+				<li><a href="handyworker/create.do"><spring:message
+							code="master.page.register.handy.worker" /></a></li>
+				<li><a href="sponsor/create.do"><spring:message
+							code="master.page.register.sponsor" /></a></li>
+			</ul>
 			<li><a class="fNiv" href="security/tutorials.do"><spring:message
 						code="master.page.see.all.tutorials" /></a></li>
 		</security:authorize>
