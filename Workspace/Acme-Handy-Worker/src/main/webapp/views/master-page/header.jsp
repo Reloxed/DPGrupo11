@@ -17,13 +17,15 @@
 
 
 <div style="float: right">
-		<a href="?language=es" id="es"><img src="images/sp.png" style="width: 50px; height:25px"/></a> 
-		<a href="?language=en" id="en"><img src="images/uk.png" style="width: 50px; height:25px"/></a>
+	<a href="?language=es" id="es"><img src="images/sp.png"
+		style="width: 50px; height: 25px" /></a> <a href="?language=en" id="en"><img
+		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
 
 <div>
-	<a href="#"><img style="height: 200px; width:500px; padding-bottom: 12px" src="images/Default logo.jpg"
-		alt="Acme Handy Worker Co., Inc." /></a>
+	<a href="#"><img
+		style="height: 200px; width: 500px; padding-bottom: 12px"
+		src="images/Default logo.jpg" alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
 <div>
