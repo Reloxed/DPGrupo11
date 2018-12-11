@@ -15,8 +15,14 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
+
+<div style="float: right">
+		<a href="?language=es" id="es"><img src="images/sp.png" style="width: 50px; height:25px"/></a> 
+		<a href="?language=en" id="en"><img src="images/uk.png" style="width: 50px; height:25px"/></a>
+</div>
+
 <div>
-	<a href="#"><img src="images/Default logo.jpg"
+	<a href="#"><img style="height: 200px; width:500px; padding-bottom: 12px" src="images/Default logo.jpg"
 		alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
@@ -121,7 +127,7 @@
 					<li><a href="handyworker/fixuptasks.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
 					<li><a href="handyworker/applications.do"><spring:message
-								code="master.page.handyworker.applications.create" /></a></li>
+								code="master.page.handyworker.applications" /></a></li>
 					<li><a href="handyworker/finder.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
@@ -189,10 +195,5 @@
 				</ul></li>
 		</security:authorize>
 	</ul>
-</div>
-
-<%--TODO Cambiar el sitio del idioma --%>
-<div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
 
