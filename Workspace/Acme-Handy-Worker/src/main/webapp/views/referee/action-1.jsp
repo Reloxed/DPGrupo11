@@ -1,5 +1,5 @@
 <%--
- * action-2.jsp
+ * action-1.jsp
  *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -16,4 +16,4 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="fixUpTask.action.2" /></p>
+<p><spring:message code="referee.action.1" /></p>
