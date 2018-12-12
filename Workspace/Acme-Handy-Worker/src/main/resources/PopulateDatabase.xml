@@ -342,7 +342,7 @@
 		<property name="registeredMoment" value="08/11/2018 17:55" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="40." />
-		<property name="comment"
+		<property name="comments"
 			value="I am experienced in window reparation because..." />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
@@ -357,7 +357,7 @@
 		<property name="registeredMoment" value="08/11/2018 18:43" />
 		<property name="status" value="ACCEPTED" />
 		<property name="offeredPrice" value="43." />
-		<property name="comment"
+		<property name="comments"
 			value="I am better than other Handy Workers because..." />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
@@ -373,7 +373,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="80." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -389,7 +389,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_1" />
 		</property>
@@ -403,7 +403,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard3" />
 		</property>
@@ -421,7 +421,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
@@ -435,7 +435,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_2" />
 		</property>
@@ -449,7 +449,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comment" value="I can fix it" />
+		<property name="comments" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -1525,7 +1525,7 @@
 
 	<bean id="endorsementCustomer1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="11/11/18 12:26" />
-		<property name="comment" value="This customer is amazingly amazing" />
+		<property name="comments" value="This customer is amazingly amazing" />
 
 		<property name="recipient" ref="customer1" />
 		<property name="sender" ref="handyWorker2" />
@@ -1534,7 +1534,7 @@
 
 	<bean id="endorsementCustomer1_2" class="domain.Endorsement">
 		<property name="publishedMoment" value="05/11/18 15:56" />
-		<property name="comment" value="This customer is amazingly amazing 2" />
+		<property name="comments" value="This customer is amazingly amazing 2" />
 
 		<property name="recipient" ref="customer1" />
 		<property name="sender" ref="handyWorker2" />
@@ -1543,7 +1543,7 @@
 
 	<bean id="endorsementHandyWorker1_1" class="domain.Endorsement">
 		<property name="publishedMoment" value="07/10/18 20:43" />
-		<property name="comment"
+		<property name="comments"
 			value="This handy worker works so well that he can build a house in a minute" />
 
 		<property name="recipient" ref="handyWorker1" />

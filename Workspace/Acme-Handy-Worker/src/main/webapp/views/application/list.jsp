@@ -1,5 +1,4 @@
 <%--
- *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
@@ -18,20 +17,21 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <h2 style="font-family: sans-serif;">
-	<spring:message code="complaints.list" />
+	<spring:message code="applications.list" />
 </h2>
 
-<display:table name="complaints" id="complaints"
-	requestURI="complaints/referee/list.do" pagesize="10"
+<display:table name="applications" id="applications"
+	requestURI="application/handyworker/list.do" pagesize="10"
 	class="displaytag">
 
-	<display:column property="fixUpTask" titleKey="complaint.fixuptask" />
-	<display:column property="moment" titleKey="complaint.moment"
-		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
-	<display:column property="description" titleKey="complaint.description" />
-	<display:column property="attachements"
-		titleKey="complaint.attachements" />
-	<display:column property="ticker" titleKey="complaint.ticker" />
+	<display:column property="fixUpTask" titleKey="application.fixuptask" />
+	<display:column property="registeredMoment"
+		titleKey="application.registeredMoment" sortable="true"
+		format="{0,date,dd/MM/yyyy HH:mm}" />
+	<display:column property="offeredPrice"
+		titleKey="application.offeredPrice" />
+	<display:column property="comments" titleKey="application.comments" />
+	<display:column property="status" titleKey="application.status" />
 	<display:column title="Buttons">
 		<!-- Aqui se implementarán los botones de "Borrar" y "Ver" -->
 	</display:column>
