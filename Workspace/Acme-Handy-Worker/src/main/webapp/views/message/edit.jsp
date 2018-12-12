@@ -41,7 +41,6 @@
 		<form:label path="priority">
 			<spring:message code="message.priority" />
 		</form:label>
-		<spring:message code="message.priority.placeholder" var="placeholder" />
 		<form:radiobutton path="priority" value="LOW" />
 		<spring:message code="message.priority.low" />
 		<form:radiobutton path="priority" value="NEUTRAL" checked="checked" />
@@ -62,8 +61,8 @@
 		<form:hidden path="sender" />
 
 		<jstl:if test="${broadcast}">
-			<form:hidden path="recipients" value="" />
 			<!-- Aqui van los recipients si es broadcast -->
+			<form:hidden path="recipients" value="" />
 		</jstl:if>
 		<jstl:otherwise>
 			<form:label path="recipients">
@@ -80,10 +79,10 @@
 		<form:hidden path="messageBoxes" />
 
 		<input type="submit" name="save" id="save" onclick="checkPhone()"
-			value="<spring:message code="register.save" />" />
+			value="<spring:message code="message.save" />" />
 		<input type="button" name="cancel" id="cancel"
 			onclick="window.history.back()"
-			value="<spring:message code="register.cancel" />" />
+			value="<spring:message code="message.cancel" />" />
 
 	</form:form>
 
@@ -104,8 +103,6 @@
 		<form:label path="messageBoxes">
 			<spring:message code="message.boxes.move" />
 		</form:label>
-		<spring:message code="message.boxes.move.placeholder"
-			var="placeholder" />
 		<form:select path="messageBoxes">
 			<jstl:forEach var="x" items="${listMessageBoxes}">
 				<form:option value="${x.name}" />
@@ -118,10 +115,8 @@
 	
 	<jstl:if test="${copy}">
 		<form:label path="messageBoxes">
-			<spring:message code="message.boxes.move" />
+			<spring:message code="message.boxes.copy" />
 		</form:label>
-		<spring:message code="message.boxes.move.placeholder"
-			var="placeholder" />
 		<form:select path="messageBoxes">
 			<jstl:forEach var="x" items="${listMessageBoxes}">
 				<form:option value="${x.name}" />
@@ -131,5 +126,42 @@
 		<form:errors cssClass="error" path="messageBoxes" />
 		<br />
 	</jstl:if>
+	
+</jstl:if>
+
+<jstl:if test="${message.id !=0 && display}">
+	
+	<form:form action="message/edit.do" modelAttribute="message" id="form" readonly="true">
+		<form:hidden path="id" />
+		<form:hidden path="version" />
+
+		<spring:message code="message.display.sendMoment" /><form:input path="sendMoment" value=""/>
+		<br />
+		
+		<spring:message code="message.display.subject" /><form:input path="subject" value="" />
+		<br />
+
+		<spring:message code="message.display.body" /><form:textarea path="body" value="" />
+		<br />
+		
+		<spring:message code="message.display.priority" /><form:input path="priority" value="" />
+		<br />
+		
+		<spring:message code="message.display.tags" /><form:input path="tags" value="" />
+		<br />
+		
+		<form:hidden path="sender" />
+
+		<spring:message code="message.display.recipients" /><form:input path="recipients" value="" />
+		<br />
+		
+		<form:hidden path="isSpam" />
+		<form:hidden path="messageBoxes" />
+
+		<input type="button" name="cancel" id="cancel"
+			onclick="window.history.back()"
+			value="<spring:message code="message.display.back" />" />
+		<br />
+	</form:form>
 	
 </jstl:if>
