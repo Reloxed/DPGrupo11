@@ -96,15 +96,8 @@
 
 
 	<a href="fixUpTask/handyWorker/search.do?finderId=${row.id}"> <spring:message
-			code="finder.search.show" />
+			code="finder.showResults" />
 	</a>
-
-
-
-
-
-
-
 
 
 </security:authorize>

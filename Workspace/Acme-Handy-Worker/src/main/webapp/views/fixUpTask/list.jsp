@@ -32,16 +32,12 @@
 			</a>
 		</display:column>
 
+		<display:column>
 
-		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		<display:column property="description" title="${descriptionHeader}"
-			sortable="true" />
+			<spring:message code="fixUpTask.description" var="descriptionHeader" />
+			<a href="${descriptionHeader}"> </a>
+		</display:column>
 
-
-		<spring:message code="fixUpTask.publishedMoment"
-			var="publishedMomentHeader" />
-		<display:column property="publishedMoment"
-			title="${publishedMomentHeader}" sortable="true" />
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -61,19 +57,6 @@
 
 		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
 		<display:column property="endMoment" title="${endMomentHeader}"
-			sortable="true" />
-
-
-		<spring:message code="fixUpTask.category" var="categoryHeader" />
-		<display:column property="category" title="${categoryHeader}"
-			sortable="true" />
-
-		<spring:message code="fixUpTask.warranty" var="warrantyHeader" />
-		<display:column property="warranty" title="${warrantyHeader}"
-			sortable="true" />
-
-		<spring:message code="fixUpTask.ticker" var="tickerHeader" />
-		<display:column property="ticker" title="${tickerHeader}"
 			sortable="true" />
 
 		<display:column>
