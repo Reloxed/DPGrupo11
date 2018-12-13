@@ -17,13 +17,15 @@
 
 
 <div style="float: right">
-		<a href="?language=es" id="es"><img src="images/sp.png" style="width: 50px; height:25px"/></a> 
-		<a href="?language=en" id="en"><img src="images/uk.png" style="width: 50px; height:25px"/></a>
+	<a href="?language=es" id="es"><img src="images/sp.png"
+		style="width: 50px; height: 25px" /></a> <a href="?language=en" id="en"><img
+		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
 
 <div>
-	<a href="#"><img style="height: 200px; width:500px; padding-bottom: 12px" src="images/Default logo.jpg"
-		alt="Acme Handy Worker Co., Inc." /></a>
+	<a href="#"><img
+		style="height: 200px; width: 500px; padding-bottom: 12px"
+		src="images/Default logo.jpg" alt="Acme Handy Worker Co., Inc." /></a>
 </div>
 
 <div>
@@ -34,27 +36,27 @@
 						code="master.page.administrator.creations" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/create-admin.do"><spring:message
+					<li><a href="register/edit.do"><spring:message
 								code="master.page.administrator.create.admin" /></a></li>
-					<li><a href="administrator/create-referee.do"><spring:message
+					<li><a href="register/edit.do"><spring:message
 								code="master.page.administrator.create.referee" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.warranties" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/warranties.do"><spring:message
+					<li><a href="warranty/list.do"><spring:message
 								code="master.page.administrator.warranties.show" /></a></li>
-					<li><a href="administrator/warranty-create.do"><spring:message
+					<li><a href="warranty/edit.do"><spring:message
 								code="master.page.administrator.warranty.new" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.categories" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/categories.do"><spring:message
+					<li><a href="category/list.do"><spring:message
 								code="master.page.administrator.categories.show" /></a></li>
-					<li><a href="administrator/category-create.do"><spring:message
+					<li><a href="category/new.do"><spring:message
 								code="master.page.administrator.category.new" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -82,18 +84,18 @@
 						code="master.page.customer.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/fixuptasks-customer.do"><spring:message
+					<li><a href="fixuptask/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
-					<li><a href="customer/fixuptask-create.do"><spring:message
+					<li><a href="fixuptask/edit.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.customer.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/complaints.do"><spring:message
+					<li><a href="complaint/list.do"><spring:message
 								code="master.page.customer.complaints.show" /></a></li>
-					<li><a href="customer/complaint-create.do"><spring:message
+					<li><a href="complaint/edit.do"><spring:message
 								code="master.page.customer.complaints.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -112,9 +114,9 @@
 						code="master.page.referee.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="referee/complaints.do"><spring:message
+					<li><a href="complaint/list.do"><spring:message
 								code="master.page.referee.not.assigned.complaints" /></a></li>
-					<li><a href="referee/my-complaints.do"><spring:message
+					<li><a href="complaint/list.do"><spring:message
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
 		</security:authorize>
@@ -124,27 +126,27 @@
 						code="master.page.handyworker.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/fixuptasks.do"><spring:message
+					<li><a href="fixuptask/list.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
-					<li><a href="handyworker/applications.do"><spring:message
+					<li><a href="application/list.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
-					<li><a href="handyworker/finder.do"><spring:message
+					<li><a href="finder/list.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/complaints.do"><spring:message
+					<li><a href="complaint/list.do"><spring:message
 								code="master.page.handyworker.complaints.show" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.tutorials" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/tutorials.do"><spring:message
+					<li><a href="tutorial/list.do"><spring:message
 								code="master.page.handyworker.tutorials.show" /></a></li>
-					<li><a href="handyworker/tutorial-create.do"><spring:message
+					<li><a href="tutorial/edit.do"><spring:message
 								code="master.page.handyworker.tutorial.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -173,9 +175,19 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="security/sign-up.do"><spring:message
-						code="master.page.signup" /></a></li>
-			<li><a class="fNiv" href="security/tutorials.do"><spring:message
+			<li><a class="fNiv"><spring:message
+						code="master.page.signup" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="register/edit.do"><spring:message
+								code="master.page.register.customer" /></a></li>
+					<li><a href="register/edit.do"><spring:message
+								code="master.page.register.handy.worker" /></a></li>
+					<li><a href="register/edit.do"><spring:message
+								code="master.page.register.sponsor" /></a></li>
+				</ul></li>
+
+			<li><a class="fNiv" href="tutorial/list.do"><spring:message
 						code="master.page.see.all.tutorials" /></a></li>
 		</security:authorize>
 
@@ -186,9 +198,9 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/view-profile.do"><spring:message
+					<li><a href="actor/display.do"><spring:message
 								code="master.page.profile.view" /></a></li>
-					<li><a href="profile/message-boxes.do"><spring:message
+					<li><a href="message-box/list.do"><spring:message
 								code="master.page.profile.messages.boxes" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>

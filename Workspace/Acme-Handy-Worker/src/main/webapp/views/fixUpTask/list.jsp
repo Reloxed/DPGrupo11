@@ -20,28 +20,24 @@
 
 
 
-<display:table name="fixUpTasks" id="row" requestURI="${requestURI}"
+<display:table name="fixUpTasksHW" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
 
 	<security:authorize access="hasRole('HANDYWORKER')">
 
 
 		<display:column>
-			<a href="profile/view-profile.do?profileId=${row.id}"> <spring:message
+			<a href="actor/display.do?profileId=${row.id}"> <spring:message
 					code="profile.customer" />
 			</a>
 		</display:column>
 
+		<display:column>
 
-		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		<display:column property="description" title="${descriptionHeader}"
-			sortable="true" />
+			<spring:message code="fixUpTask.description" var="descriptionHeader" />
+			<a href="${descriptionHeader}"> </a>
+		</display:column>
 
-
-		<spring:message code="fixUpTask.publishedMoment"
-			var="publishedMomentHeader" />
-		<display:column property="publishedMoment"
-			title="${publishedMomentHeader}" sortable="true" />
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -63,19 +59,6 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
-
-		<spring:message code="fixUpTask.category" var="categoryHeader" />
-		<display:column property="category" title="${categoryHeader}"
-			sortable="true" />
-
-		<spring:message code="fixUpTask.warranty" var="warrantyHeader" />
-		<display:column property="warranty" title="${warrantyHeader}"
-			sortable="true" />
-
-		<spring:message code="fixUpTask.ticker" var="tickerHeader" />
-		<display:column property="ticker" title="${tickerHeader}"
-			sortable="true" />
-
 		<display:column>
 			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
 				src="webapp/images/confirm.png"
@@ -88,7 +71,32 @@
 	</security:authorize>
 
 
+	<security:authorize access="hasRole('CUSTOMER')">
 
+		<display:column>
+			<spring:message code="fixUpTask.description" var="descriptionHeader" />
+			<a href="${descriptionHeader}"> </a>
+		</display:column>
 
+		<display:column property="address" titleKey="fixUpTask.address"
+			sortable="true" />
 
+		<display:column property="maxPrice" titleKey="fixUpTask.maxPrice"
+			sortable="true" />
+
+		<display:column property="startMoment"
+			titleKey="fixUpTask.startMoment" sortable="true" />
+
+		<display:column property="endMoment" titleKey="fixUpTask.endMoment"
+			sortable="true" />
+
+		<display:column titleKey="fixuptask.buttons">
+			<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+				style="width: center; height: center"> <spring:message
+					code="fixuptask.edit" /></a>
+			<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+				style="width: center; height: center"> <spring:message
+					code="fixuptask.edit" /></a>
+		</display:column>
+	</security:authorize>
 </display:table>
