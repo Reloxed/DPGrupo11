@@ -20,7 +20,7 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-	<form:form action="fixUpTask/handyWorker/finder.do"
+	<form:form action="fixUpTask/finder.do"
 		modelAttribute="finder">
 
 		<form:hidden path="id" />
@@ -86,7 +86,7 @@
 		
 		<input type="button" name="cancel"
 			value="<spring:message code="finder.cancel" />"
-			onclick="javascript: relativeRedir('fixUpTask/handyWorker/list.do');" />
+			onclick="javascript: relativeRedir('fixUpTask/list.do');" />
 		<br />
 
 	</form:form>
@@ -95,7 +95,7 @@
 
 
 
-	<a href="fixUpTask/handyWorker/search.do?finderId=${row.id}"> <spring:message
+	<a href="finder/finder.do?finderId=${row.id}"> <spring:message
 			code="finder.showResults" />
 	</a>
 

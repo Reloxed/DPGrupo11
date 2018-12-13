@@ -19,4 +19,8 @@
 		<put-attribute name="title" value="Búsqueda" />
 		<put-attribute name="body" value="/views/finder/finder.jsp" />
 	</definition>
+			<definition name="finder/showResults" extends="master.page">
+		<put-attribute name="title" value="Resultados" />
+		<put-attribute name="body" value="/views/finder/showResults.jsp" />
+	</definition>
 </tiles-definitions>

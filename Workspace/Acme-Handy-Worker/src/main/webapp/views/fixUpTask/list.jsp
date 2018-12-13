@@ -27,7 +27,7 @@
 
 
 		<display:column>
-			<a href="profile/view-profile.do?profileId=${row.id}"> <spring:message
+			<a href="actor/display.do?profileId=${row.id}"> <spring:message
 					code="profile.customer" />
 			</a>
 		</display:column>
