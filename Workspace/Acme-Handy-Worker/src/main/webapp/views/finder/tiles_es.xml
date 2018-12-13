@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- 
- * tiles.xml
+ * tiles_es.xml
  *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -13,12 +13,10 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+      
 <tiles-definitions>
-
-<definition name="fixUpTask/list" extends="master.page">	
-		<put-attribute name="title" value="Fix-up tasks list" />
-		<put-attribute name="body" value="/views/fixUpTask/list.jsp" />
+<definition name="finder/finder" extends="master.page">
+		<put-attribute name="title" value="Búsqueda" />
+		<put-attribute name="body" value="/views/finder/finder.jsp" />
 	</definition>
-
 </tiles-definitions>
