@@ -32,8 +32,13 @@
 		titleKey="application.offeredPrice" />
 	<display:column property="comments" titleKey="application.comments" />
 	<display:column property="status" titleKey="application.status" />
-	<display:column title="Buttons">
-		<!-- Aqui se implementarán los botones de "Borrar" y "Ver" -->
+	<display:column titleKey="application.buttons">
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="application.edit" /></a>
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="application.edit" /></a>
 	</display:column>
 
 </display:table>
