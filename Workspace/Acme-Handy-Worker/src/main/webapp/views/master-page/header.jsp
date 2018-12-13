@@ -176,16 +176,17 @@
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
 			<li><a class="fNiv"><spring:message
-						code="master.page.signup" /></a></li>
-			<ul>
-				<li class="arrow"></li>
-				<li><a href="customer/create.do"><spring:message
-							code="master.page.register.customer" /></a></li>
-				<li><a href="handyworker/create.do"><spring:message
-							code="master.page.register.handy.worker" /></a></li>
-				<li><a href="sponsor/create.do"><spring:message
-							code="master.page.register.sponsor" /></a></li>
-			</ul>
+						code="master.page.signup" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="customer/create.do"><spring:message
+								code="master.page.register.customer" /></a></li>
+					<li><a href="handyworker/create.do"><spring:message
+								code="master.page.register.handy.worker" /></a></li>
+					<li><a href="sponsor/create.do"><spring:message
+								code="master.page.register.sponsor" /></a></li>
+				</ul></li>
+
 			<li><a class="fNiv" href="security/tutorials.do"><spring:message
 						code="master.page.see.all.tutorials" /></a></li>
 		</security:authorize>
