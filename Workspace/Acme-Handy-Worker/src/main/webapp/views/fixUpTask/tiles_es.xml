@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- * tiles_es.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
-	use of this project is hereby constrained to the conditions of the * TDG 
+<!-- * tiles_es.xml * * Copyright (C) 2018 Universidad de Sevilla * * The
+	use of this project is hereby constrained to the conditions of the * TDG
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
@@ -15,9 +15,18 @@
 		<put-attribute name="body" value="/views/fixUpTask/list.jsp" />
 	</definition>
 
+
 	<definition name="fixUpTask/display" extends="master.page">
 		<put-attribute name="title" value="Fix-up task" />
 		<put-attribute name="body" value="/views/fixUpTask/display.jsp" />
+	</definition>
+
+
+
+
+	<definition name="fixUpTask/edit" extends="master.page">
+		<put-attribute name="title" value="Editar fixUpTask" />
+		<put-attribute name="body" value="/views/fixUpTask/edit.jsp" />
 	</definition>
 
 

@@ -18,7 +18,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
-	<form:hidden path="userAccount.authorities[0]"/>
+	<form:hidden path="userAccount.authorities[0]" />
 
 	<form:label path="name">
 		<spring:message code="register.name" />
@@ -78,6 +78,34 @@
 	<form:hidden path="isSuspicious" />
 	<form:hidden path="socialProfiles" />
 	<form:hidden path="messageBoxes" />
+
+	<security:authorize access="hasRole('HANDYWORKER')">
+		<form:label path="make">
+			<spring:message code="register.make" />
+		</form:label>
+		<spring:message code="register.make.placeholder" var="placeholder" />
+		<form:input path="make" placeholder="${placeholder }" />
+		<form:errors cssClass="error" path="make" />
+		<br />
+		<form:hidden path="score" />
+		<form:hidden path="tutorial" />
+		<form:hidden path="applications" />
+		<form:hidden path="finder" />
+		<form:hidden path="curriculum" />
+	</security:authorize>
+	
+	<security:authorize access="hasRole('CUSTOMER')">
+		<form:hidden path="fixUpTasks" />
+		<form:hidden path="complaints" />
+	</security:authorize>
+	
+	<security:authorize access="hasRole('REFEREE')">
+		<form:hidden path="complaints" />
+	</security:authorize>
+	
+	<security:authorize access="hasRole('SPONSOR')">
+		<form:hidden path="sponsorships" />
+	</security:authorize>
 
 	<form:label path="userAccount.username">
 		<spring:message code="register.username" />

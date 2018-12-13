@@ -14,6 +14,11 @@
 		<put-attribute name="title" value="Fix-up tasks list" />
 		<put-attribute name="body" value="/views/fixUpTask/list.jsp" />
 	</definition>
+	
+	<definition name="fixUpTask/edit" extends="master.page">
+		<put-attribute name="title" value="Edit fixUpTask" />
+		<put-attribute name="body" value="/views/fixUpTask/edit.jsp" />
+	</definition>
 
 	<definition name="fixUpTask/display" extends="master.page">
 		<put-attribute name="title" value="Display fix-up task" />

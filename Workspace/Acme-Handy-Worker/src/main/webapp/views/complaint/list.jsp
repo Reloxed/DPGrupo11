@@ -32,8 +32,12 @@
 	<display:column property="attachements"
 		titleKey="complaint.attachements" />
 	<display:column property="ticker" titleKey="complaint.ticker" />
-	<display:column title="Buttons">
-		<!-- Aqui se implementarán los botones de "Borrar" y "Ver" -->
+	<display:column titleKey="complaint.buttons">
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="complaint.edit" /></a>
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="complaint.edit" /></a>
 	</display:column>
-
 </display:table>

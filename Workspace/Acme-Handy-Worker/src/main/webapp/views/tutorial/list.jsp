@@ -30,8 +30,13 @@
 	<display:column property="lastUpdate" titleKey="tutorial.lastUpdate"
 		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 	<display:column titleKey="tutorial.numbersections" />
-	<display:column title="Buttons">
-		<!-- Aqui se implementarán los botones de "Borrar" y "Ver" -->
+	<display:column titleKey="tutorial.buttons">
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="tutorial.edit" /></a>
+		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
+			style="width: center; height: center"> <spring:message
+				code="tutorial.edit" /></a>
 	</display:column>
 
 </display:table>
