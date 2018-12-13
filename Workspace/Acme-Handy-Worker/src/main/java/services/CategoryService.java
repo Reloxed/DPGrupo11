@@ -3,6 +3,9 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +16,7 @@ import org.springframework.util.Assert;
 import repositories.CategoryRepository;
 import domain.Administrator;
 import domain.Category;
+import domain.SystemConfiguration;
 
 @Service
 @Transactional
@@ -23,9 +27,12 @@ public class CategoryService {
 	private CategoryRepository		categoryRepository;
 
 	// Supporting services -----------------------
+	
 	@Autowired
 	private AdministratorService	administratorService;
 
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 	// Constructors ------------------------------------
 
@@ -44,61 +51,91 @@ public class CategoryService {
 
 		result = new Category();
 		result.setChildCategories(new ArrayList<Category>());
+		result.setName(new HashMap<String,String>());
 
 		return result;
 	}
 
-	public Category save(final Category c) {
+	public Category save(final Category category) {
 		final Administrator admin;
 		Category result;
 		final Category parent, root;
+		SystemConfiguration systemConf;
+		Set<String> idiomasSystemConf, idiomasCategory;
 
 		admin = this.administratorService.findByPrincipal();
 		root = this.findRoot();
 
-		Assert.isTrue(c.getId() != root.getId());
+		Assert.isTrue(category.getId() != root.getId());
 		Assert.notNull(admin);
-		Assert.notNull(c.getEnglishName());
-		Assert.notNull(c.getSpanishName());
-		Assert.notNull(c.getParentCategory());
-
-		result = this.categoryRepository.saveAndFlush(c);
+		
+		Assert.notNull(category.getName());
+		systemConf = systemConfigurationService.findMySystemConfiguration();
+		idiomasSystemConf = systemConf.getWelcomeMessage().keySet();	
+		idiomasCategory = category.getName().keySet();
+		Assert.isTrue(idiomasSystemConf.containsAll(idiomasCategory));
+		
+		Assert.notNull(category.getParentCategory());
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		Collection<String> categoryNames = category.getName().values();
+		List<String> names = new ArrayList<>();
+		for (String catName : categoryNames) { 
+			String[] n = catName.split("(¿¡,.-_/!?) ");
+			for(String name : n){
+				names.add(name);
+			}
+		}
+		for (final String word : spamWords) {
+			for (final String titleWord : names)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				admin.setIsSuspicious(true);
+				break;
+			}
+		}
+		
+		result = this.categoryRepository.saveAndFlush(category);
 
 		parent = result.getParentCategory();
 		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
-		if (c.getId() == 0)
+		if (category.getId() == 0)
 			this.newChild(parent, result);
-		else if (!c.getParentCategory().equals(parent)) {
-			this.deleteChild(c.getParentCategory(), c);
-			this.newChild(parent, c);
+		else if (!category.getParentCategory().equals(parent)) {
+			this.deleteChild(category.getParentCategory(), category);
+			this.newChild(parent, category);
 		}
 		return result;
 	}
 
-	public void delete(final Category c) {
+	public void delete(final Category category) {
 		Administrator admin;
 		Category parent, root, aux;
 		Collection<Category> childCategories;
 
-		Assert.notNull(c);
-		Assert.isTrue(c.getId() != 0);
+		Assert.notNull(category);
+		Assert.isTrue(category.getId() != 0);
 
 		admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 		root = this.findRoot();
-		Assert.isTrue(c.getId() != root.getId()); // Comprobamos que no vamos a borrar la categoría raiz
+		Assert.isTrue(category.getId() != root.getId()); // Comprobamos que no vamos a borrar la categoría raiz
 
-		childCategories = c.getChildCategories();
+		childCategories = category.getChildCategories();
 		aux = null;
 
 		if (!childCategories.isEmpty())
 			for (final Category cat : childCategories)
 				cat.setParentCategory(aux);
 
-		parent = c.getParentCategory();
-		this.deleteChild(parent, c);
+		parent = category.getParentCategory();
+		this.deleteChild(parent, category);
 
-		this.categoryRepository.delete(c);
+		this.categoryRepository.delete(category);
 	}
 
 	public Collection<Category> findAll() {
@@ -135,19 +172,19 @@ public class CategoryService {
 		return result;
 	}
 
-	private void newChild(final Category c, final Category child) {
+	private void newChild(final Category category, final Category child) {
 		Collection<Category> childCategories;
 
-		childCategories = c.getChildCategories();
+		childCategories = category.getChildCategories();
 		childCategories.add(child);
-		c.setChildCategories(childCategories);
+		category.setChildCategories(childCategories);
 	}
 
-	private void deleteChild(final Category c, final Category child) {
+	private void deleteChild(final Category category, final Category child) {
 		Collection<Category> childCategories;
 
-		childCategories = c.getChildCategories();
+		childCategories = category.getChildCategories();
 		childCategories.remove(child);
-		c.setChildCategories(childCategories);
+		category.setChildCategories(childCategories);
 	}
 }

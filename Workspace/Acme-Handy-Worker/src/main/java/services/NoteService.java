@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -26,16 +25,15 @@ public class NoteService {
 	// Managed repository ----------------------------
 
 	@Autowired
-	private NoteRepository				noteRepository;
+	private NoteRepository noteRepository;
 
 	// Supporting services -------------------
 
 	@Autowired
-	private ActorService				actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
-
+	private SystemConfigurationService systemConfigurationService;
 
 	// Constructors ------------------------------------
 
@@ -106,20 +104,30 @@ public class NoteService {
 
 		}
 
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] customerComments = note.getCustomerComment().split("(에,.-_/!?) ");
-		final String[] refereeComments = note.getRefereeComment().split("(에,.-_/!?) ");
-		final String[] handyComments = note.getHandyWorkerComment().split("(에,.-_/!?) ");
+		final String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] customerComments = note.getCustomerComment().split(
+				"(에,.-_/!?) ");
+		final String[] refereeComments = note.getRefereeComment().split(
+				"(에,.-_/!?) ");
+		final String[] handyComments = note.getHandyWorkerComment().split(
+				"(에,.-_/!?) ");
 		for (final String word : spamWords) {
 			for (final String customerWord : customerComments)
-				if (customerWord.toLowerCase().contains(word.toLowerCase()))
+				if (customerWord.toLowerCase().contains(word.toLowerCase())) {
 					principal.setIsSuspicious(true);
+					break;
+				}
 			for (final String refereeWord : refereeComments)
-				if (refereeWord.toLowerCase().contains(word.toLowerCase()))
+				if (refereeWord.toLowerCase().contains(word.toLowerCase())) {
 					principal.setIsSuspicious(true);
+					break;
+				}
 			for (final String handyWord : handyComments)
-				if (handyWord.toLowerCase().contains(word.toLowerCase()))
+				if (handyWord.toLowerCase().contains(word.toLowerCase())){
 					principal.setIsSuspicious(true);
+					break;
+				}
 		}
 
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
@@ -153,9 +161,11 @@ public class NoteService {
 		notes = this.noteRepository.findAll();
 		Assert.notNull(notes);
 
-		Assert.isTrue(principal instanceof Customer || principal instanceof Referee || principal instanceof HandyWorker);
+		Assert.isTrue(principal instanceof Customer
+				|| principal instanceof Referee
+				|| principal instanceof HandyWorker);
 
-		//Assert.isTrue(!report.getIsFinal());
+		// Assert.isTrue(!report.getIsFinal());
 		this.noteRepository.delete(note);
 		updated = new ArrayList<Note>(notes);
 		updated.remove(note);

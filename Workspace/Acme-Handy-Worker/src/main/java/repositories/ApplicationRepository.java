@@ -18,14 +18,8 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	@Query("select a from FixUpTask f join f.applications a where f.id=?1 order by a.status")
 	Collection<Application> findAllApplicationsByFixUpTask(int fixUptaskId);
 
-	@Query("select (sum(case when a.status='PENDING' then 1.0 else 0 end)/count(*)) from Application a")
-	Double ratioPendingApplications();
-
-	@Query("select (sum(case when a.status='ACCEPTED' then 1.0 else 0 end)/count(*)) from Application a")
-	Double ratioAcceptedApplications();
-
-	@Query("select (sum(case when a.status='REJECTED' then 1.0 else 0 end)/count(*)) from Application a")
-	Double ratioRejectedApplications();
+	@Query("select (sum(case when a.status='?1' then 1.0 else 0 end)/count(*)) from Application a")
+	Double ratioStatusApplications(String status);
 
 	@Query("select count(a)/(select count(a) from Application a where a.fixUpTask.endMoment < CURRENT_DATE and a.status='PENDING')*1.0 from Application a where a.status='PENDING'")
 	Double ratioPendingApplicationsElapsedPeriod();

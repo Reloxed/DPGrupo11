@@ -27,6 +27,9 @@ public class MiscellaneousRecordService {
 
 	@Autowired
 	private HandyWorkerService				handyWorkerService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	//Constructor
@@ -64,7 +67,37 @@ public class MiscellaneousRecordService {
 		curriculumHW = principal.getCurriculum();
 		Assert.notNull(curriculumHW);
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
-
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] title = miscellaneousRecord.getTitle().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : title)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		
+		if (!containsSpam) {
+			final String[] comments = miscellaneousRecord.getComments().split("(¿¡,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : comments)
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+		}
+		
 		result = this.miscellaneousRecordRepository.saveAndFlush(miscellaneousRecord);
 		Assert.notNull(result);
 

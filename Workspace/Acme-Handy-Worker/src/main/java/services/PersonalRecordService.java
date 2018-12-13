@@ -27,6 +27,9 @@ public class PersonalRecordService {
 	@Autowired
 	private HandyWorkerService			handyWorkerService;
 
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
+
 
 	// Constructors ------------------------------------
 
@@ -70,6 +73,21 @@ public class PersonalRecordService {
 		Assert.notNull(personalRecord);
 		Assert.isTrue(personalRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
 
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] name = personalRecord.getFullName().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : name)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		
 		res = personalRecord;
 
 		return this.personalRecordRepository.saveAndFlush(res);

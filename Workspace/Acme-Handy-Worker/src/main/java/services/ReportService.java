@@ -81,9 +81,9 @@ public class ReportService {
 
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] comments = report.getDescription().split("(¿¡,.-_/!?) ");
+		final String[] description = report.getDescription().split("(¿¡,.-_/!?) ");
 		for (final String word : spamWords) {
-			for (final String titleWord : comments)
+			for (final String titleWord : description)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;

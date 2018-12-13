@@ -2,43 +2,34 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Category extends DomainEntity {
 
-	private String					spanishName;
-	private String					englishName;
+	private Map<String,String>		name;
 	private Category				parentCategory;
 	private Collection<Category>	childCategories;
 
-
-	@NotBlank
-	public String getSpanishName() {
-		return this.spanishName;
+	
+	@NotNull
+	@ElementCollection
+	public Map<String, String> getName() {
+		return name;
 	}
 
-	public void setSpanishName(final String spanishName) {
-		this.spanishName = spanishName;
-	}
-
-	@NotBlank
-	public String getEnglishName() {
-		return this.englishName;
-	}
-
-	public void setEnglishName(final String englishName) {
-		this.englishName = englishName;
+	public void setName(Map<String, String> name) {
+		this.name = name;
 	}
 
 	@Valid
@@ -63,7 +54,7 @@ public class Category extends DomainEntity {
 
 	@Override
 	public String toString() {
-		return "spanishName: " + this.spanishName + ", englishName: " + this.englishName + ", parentCategory: " + this.parentCategory + ",[" + super.toString() + "]";
+		return "mapName: " + this.name + ", parentCategory: " + this.parentCategory + ",[" + super.toString() + "]";
 	}
 
 }

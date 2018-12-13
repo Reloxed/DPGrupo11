@@ -26,6 +26,9 @@ public class EndorsementService {
 
 	@Autowired
 	private EndorserService			endorserService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	// Constructors ------------------------------------
@@ -80,6 +83,22 @@ public class EndorsementService {
 		Assert.isTrue(endorsement.getSender().getId() == principal.getId());
 		Assert.notNull(principal);
 		Assert.isTrue(endorsement.getId() == 0);
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] comments = endorsement.getComments().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : comments)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		
 		result = this.endorsementRepository.save(endorsement);
 
 		return result;

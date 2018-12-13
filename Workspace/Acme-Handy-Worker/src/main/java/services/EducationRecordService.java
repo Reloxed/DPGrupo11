@@ -109,21 +109,21 @@ public class EducationRecordService {
 					break;
 				}
 			}
-			if (educationRecord.getComments() != null)
-				if (!containsSpam) {
-					final String[] comments = educationRecord.getComments().split("(¿¡,.-_/!?) ");
-					for (final String word : spamWords) {
-						for (final String titleWord : comments)
-							if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-								containsSpam = true;
-								break;
-							}
-						if (containsSpam) {
-							principal.setIsSuspicious(true);
+		if (educationRecord.getComments() != null)
+			if (!containsSpam) {
+				final String[] comments = educationRecord.getComments().split("(¿¡,.-_/!?) ");
+				for (final String word : spamWords) {
+					for (final String titleWord : comments)
+						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+							containsSpam = true;
 							break;
 						}
+					if (containsSpam) {
+						principal.setIsSuspicious(true);
+						break;
 					}
 				}
+			}
 		}
 
 		res = this.educationRecordRepository.save(educationRecord);

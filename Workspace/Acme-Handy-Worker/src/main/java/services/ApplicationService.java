@@ -65,33 +65,31 @@ public class ApplicationService {
 		return result;
 	}
 
-	public Application save(final Application a) {
+	public Application save(final Application application) {
 		HandyWorker applicant;
 		Application result;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
-		String[] spamWords, comments;
 		final String bodyHW, bodyCustomer;
-		boolean containsSpam;
 
-		Assert.notNull(a);
+		Assert.notNull(application);
 		applicant = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(applicant);
-		fixUpTask = a.getFixUpTask();
+		fixUpTask = application.getFixUpTask();
 
-		if (a.getId() == 0) { // Not saved in database yet
-			a.setStatus("PENDING");
+		if (application.getId() == 0) { // Not saved in database yet
+			application.setStatus("PENDING");
 			registeredMoment = new Date(System.currentTimeMillis() - 1);
 			Assert.isTrue(registeredMoment.after(fixUpTask.getPublishedMoment())); // The fixUpTask must be published.
-			a.setRegisteredMoment(registeredMoment);
-			a.setComments(new String());
+			application.setRegisteredMoment(registeredMoment);
+			application.setComments(new String());
 		}
 
-		a.setApplicant(applicant);
+		application.setApplicant(applicant);
 
-		result = this.applicationRepository.saveAndFlush(a);
-		Assert.notNull(a);
+		result = this.applicationRepository.saveAndFlush(application);
+		Assert.notNull(application);
 
 		// Add application to collection of applications of handyWorker
 		applications = applicant.getApplications();
@@ -107,13 +105,12 @@ public class ApplicationService {
 
 		// Check contain of strings searching spamWords
 
-		containsSpam = false;
-		spamWords = this.systemConfigurationService.findSpamWords().split(",");
-		comments = result.getComments().split(",");
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] comments = application.getComments().split("(¿¡,.-_/!?) ");
 		for (final String word : spamWords) {
-
-			for (final String comment : comments)
-				if (comment.toLowerCase().contains(word.toLowerCase())) {
+			for (final String titleWord : comments)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
 					containsSpam = true;
 					break;
 				}
@@ -121,7 +118,6 @@ public class ApplicationService {
 				applicant.setIsSuspicious(true);
 				break;
 			}
-
 		}
 
 		bodyHW = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
@@ -212,26 +208,10 @@ public class ApplicationService {
 		return result;
 	}
 
-	public Double ratioPendingApplications() {
-		final Double result;
-
-		result = this.applicationRepository.ratioPendingApplications();
-
-		return result;
-	}
-
-	public Double ratioAcceptedApplications() {
+	public Double ratioStatusApplications(String status) {
 		Double result;
 
-		result = this.applicationRepository.ratioAcceptedApplications();
-
-		return result;
-	}
-
-	public Double ratioRejectedApplications() {
-		Double result;
-
-		result = this.applicationRepository.ratioRejectedApplications();
+		result = this.applicationRepository.ratioStatusApplications(status);
 
 		return result;
 	}

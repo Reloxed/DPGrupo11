@@ -82,7 +82,6 @@ public class MessageService {
 		MessageBox inBox;
 		MessageBox outBoxPrincipal;
 		Collection<Actor> recipients;
-		boolean isSpam;
 		MessageBox spamBox, spamBoxPrincipal;
 		Collection<MessageBox> spamBoxes;
 		Collection<MessageBox> spamBoxesPrincipal;
@@ -108,7 +107,6 @@ public class MessageService {
 
 		recipients = message.getRecipients();
 		Assert.notNull(recipients);
-		isSpam = false;
 
 		result.setSubject(message.getSubject());
 		result.setBody(message.getBody());
@@ -116,33 +114,54 @@ public class MessageService {
 		result.setTags(message.getTags());
 		result.setRecipients(recipients);
 
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().trim().split(",");
-		Assert.notNull(spamWords);
-
-		final String[] subjectSplit = message.getSubject().trim().split(" ");
-		final String[] bodySplit = message.getBody().trim().split(" ");
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] subject = message.getSubject().split("(¿¡,.-_/!?) ");
 		for (final String word : spamWords) {
-
-			for (final String wordSubject : subjectSplit)
-				if (wordSubject.toLowerCase().indexOf(word.toLowerCase()) != -1) {
-
-					isSpam = true;
-					principal.setIsSuspicious(true);
+			for (final String titleWord : subject)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
 				}
-
-			for (final String wordBody : bodySplit)
-				if (wordBody.toLowerCase().indexOf(word.toLowerCase()) != -1) {
-
-					isSpam = true;
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			final String[] body = message.getBody().split("(¿¡,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : body)
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				if (containsSpam) {
 					principal.setIsSuspicious(true);
-
+					break;
 				}
+			}
+		if (message.getTags() != null)
+			if (!containsSpam) {
+				final String[] tags = message.getTags().split("(¿¡,.-_/!?) ");
+				for (final String word : spamWords) {
+					for (final String titleWord : tags)
+						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+							containsSpam = true;
+							break;
+						}
+					if (containsSpam) {
+						principal.setIsSuspicious(true);
+						break;
+					}
+				}
+			}
 		}
 
-		result.setIsSpam(isSpam);
+		result.setIsSpam(containsSpam);
 
 		for (final Actor a : recipients)
-			if (isSpam == true) {
+			if (containsSpam == true) {
 				spamBox = this.messageBoxService.findSpamBoxActor(a);
 				spamMessages = spamBox.getMessages();
 				updatedSpamMessages = new ArrayList<Message>(spamMessages);

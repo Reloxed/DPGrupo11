@@ -31,6 +31,8 @@ public class ComplaintService {
 	@Autowired
 	private UtilityService		utilityService;
 
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 	// Constructors ------------------------------------
 
@@ -55,18 +57,33 @@ public class ComplaintService {
 		return result;
 	}
 
-	public Complaint save(final Complaint c) {
+	public Complaint save(final Complaint complaint) {
 		Complaint result;
 		Customer customer;
 
 		customer = this.customerService.findByPrincipal();
 		// A complaint cannot be updated once they are saved to the database
-		Assert.isTrue(c.getId() == 0);
+		Assert.isTrue(complaint.getId() == 0);
 		Assert.notNull(customer);
-		Assert.notNull(c.getFixUpTask());
-		Assert.notNull(c.getDescription());
+		Assert.notNull(complaint.getFixUpTask());
+		Assert.notNull(complaint.getDescription());
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] description = complaint.getDescription().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : description)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				customer.setIsSuspicious(true);
+				break;
+			}
+		}
 
-		result = this.complaintRepository.saveAndFlush(c);
+		result = this.complaintRepository.saveAndFlush(complaint);
 
 		return result;
 	}

@@ -42,7 +42,7 @@ public class UtilityService {
 	public String generateTicker() {
 		String uniqueTicker = null;
 		Calendar date;
-		String year, month, day, alphaNum;
+		String year, month, day, alphaNum, todayDate;
 		boolean unique = false;
 
 		date = Calendar.getInstance();
@@ -54,7 +54,8 @@ public class UtilityService {
 
 		while (unique == false) {
 			alphaNum = this.randomString();
-			uniqueTicker = year + month + day + "-" + alphaNum;
+			todayDate = year + month + day;
+			uniqueTicker = todayDate + "-" + alphaNum;
 			for (final FixUpTask fixUpTask : this.fixUpTaskService.findAll())
 				if (fixUpTask.getTicker().equals(uniqueTicker))
 					continue;
@@ -68,7 +69,7 @@ public class UtilityService {
 
 	public String randomString() {
 
-		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final SecureRandom rnd = new SecureRandom();
 		final int length = 6;
 

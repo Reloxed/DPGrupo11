@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -44,11 +46,14 @@ public class SystemConfigurationService {
 
 	public SystemConfiguration create() {
 		Assert.notNull(this.administratorService.findByPrincipal());
+		
+		Map<String,String> wellMap = new HashMap<>();
+		wellMap.put("Español", "¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
+		wellMap.put("Inglés", "Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
 
 		final SystemConfiguration systemConfiguration = new SystemConfiguration();
 		systemConfiguration.setSystemName("Acme-Handy-Worker");
-		systemConfiguration.setWelcomeMessageEn("Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
-		systemConfiguration.setWelcomeMessageEs("¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
+		systemConfiguration.setWelcomeMessage(wellMap);
 		systemConfiguration.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
 		systemConfiguration.setVAT(0.21);
 		systemConfiguration.setListCreditCardMakes("VISA,MASTER,DINNERS,AMEX");

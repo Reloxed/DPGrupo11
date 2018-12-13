@@ -51,8 +51,6 @@ public class CreateJSON {
 		// Creacion de categoria, money, application y warranty
 
 		Category c = new Category();
-		c.setEnglishName("Category");
-		c.setSpanishName("Categoría");
 
 		Application ap1 = new Application();
 		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());

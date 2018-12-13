@@ -24,6 +24,9 @@ public class EndorserRecordService {
 	//Supporting services ----------
 	@Autowired
 	private HandyWorkerService			handyWorkerService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	//Constructor ----------------------------------------------------
@@ -80,6 +83,38 @@ public class EndorserRecordService {
 
 		Assert.notNull(endorserRecord.getPhoneNumber());
 		endorsersRecord = principal.getCurriculum().getEndorserRecords();
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] name = endorserRecord.getFullName().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : name)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (endorserRecord.getComments() != null) {
+			if (!containsSpam) {
+				final String[] comments = endorserRecord.getComments().split("(¿¡,.-_/!?) ");
+				for (final String word : spamWords) {
+					for (final String titleWord : comments)
+						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+							containsSpam = true;
+							break;
+						}
+					if (containsSpam) {
+						principal.setIsSuspicious(true);
+						break;
+					}
+				}
+			}
+		}
+		
 		result = this.endorserRecordRepository.saveAndFlush(endorserRecord);
 		Assert.notNull(result);
 

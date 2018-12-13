@@ -32,6 +32,8 @@ public class FixUpTaskService {
 	@Autowired
 	private CustomerService		customerService;
 
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 	//Constructor ----------------------------------------------------
 
@@ -95,6 +97,35 @@ public class FixUpTaskService {
 
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] description = fixUpTask.getDescription().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : description)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
+		}
+		if (!containsSpam) {
+			final String[] address = fixUpTask.getAddress().split("(¿¡,.-_/!?) ");
+			for (final String word : spamWords) {
+				for (final String titleWord : address)
+					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+						containsSpam = true;
+						break;
+					}
+				if (containsSpam) {
+					principal.setIsSuspicious(true);
+					break;
+				}
+			}
+		}
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 

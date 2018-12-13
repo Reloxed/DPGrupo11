@@ -27,6 +27,9 @@ public class SocialProfileService {
 
 	@Autowired
 	private ActorService			actorService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	// Constructors ------------------------------------
@@ -92,6 +95,21 @@ public class SocialProfileService {
 			socialProfilesUpdated.addAll(principal.getSocialProfiles());
 			socialProfilesUpdated.add(socialProfile);
 			principal.setSocialProfiles(socialProfilesUpdated);
+		}
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] nick = socialProfile.getNick().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : nick)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
 		}
 
 		result = this.socialProfileRepository.saveAndFlush(socialProfile);

@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,8 +51,7 @@ public class CategoryServiceTest extends AbstractTest {
 		category = this.categoryService.create();
 
 		Assert.notNull(category);
-		Assert.isNull(category.getSpanishName());
-		Assert.isNull(category.getEnglishName());
+		Assert.notNull(category.getName());
 		Assert.isNull(category.getParentCategory());
 		Assert.notNull(category.getChildCategories());
 
@@ -62,11 +63,13 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin1");
 		Category category, saved;
 		Collection<Category> categories, categoriesUpdated;
+		Map<String,String> idiomasName = new HashMap<>();
 
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
-		category.setSpanishName("hola");
-		category.setEnglishName("hello");
+		idiomasName.put("Español", "Hola");
+		idiomasName.put("Inglés", "Hello");
+		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));
 
@@ -82,11 +85,13 @@ public class CategoryServiceTest extends AbstractTest {
 		super.authenticate("admin1");
 		Category category, saved;
 		Collection<Category> categories, categoriesUpdated;
+		Map<String,String> idiomasName = new HashMap<>();
 
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
-		category.setSpanishName("hola");
-		category.setEnglishName("hello");
+		idiomasName.put("Español", "Hola");
+		idiomasName.put("Inglés", "Hello");
+		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));
 		saved = this.categoryService.save(category);
@@ -116,11 +121,13 @@ public class CategoryServiceTest extends AbstractTest {
 
 		Category category, saved, found;
 		Collection<Category> categories, categoriesUpdated;
-
+		Map<String,String> idiomasName = new HashMap<>();
+		
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
-		category.setSpanishName("hola");
-		category.setEnglishName("hello");
+		idiomasName.put("Español", "Hola Paco");
+		idiomasName.put("Inglés", "Hello Paco");
+		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));
 
@@ -130,7 +137,7 @@ public class CategoryServiceTest extends AbstractTest {
 		found = this.categoryService.findOne(saved.getId());
 
 		Assert.notNull(found);
-		Assert.isTrue(found.getEnglishName().equals("hello"));
+		Assert.isTrue(found.getName().containsValue("Hello Paco"));
 
 		super.unauthenticate();
 	}

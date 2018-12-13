@@ -28,6 +28,9 @@ public class MessageBoxService {
 
 	@Autowired
 	private ActorService			actorService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	// Constructors ------------------------------------
@@ -108,6 +111,21 @@ public class MessageBoxService {
 			final Collection<Message> messagesBox = messageBox.getMessages();
 			messageBox.setMessages(messagesBox);
 
+		}
+		
+		boolean containsSpam = false;
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] name = messageBox.getName().split("(¿¡,.-_/!?) ");
+		for (final String word : spamWords) {
+			for (final String titleWord : name)
+				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+					containsSpam = true;
+					break;
+				}
+			if (containsSpam) {
+				principal.setIsSuspicious(true);
+				break;
+			}
 		}
 
 		result = this.messageBoxRepository.saveAndFlush(messageBox);

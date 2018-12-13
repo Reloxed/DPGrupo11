@@ -2,10 +2,14 @@ package domain;
 
 
 
+import java.util.Map;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -17,8 +21,7 @@ import org.hibernate.validator.constraints.URL;
 public class SystemConfiguration extends DomainEntity {
 
 	private String systemName;
-	private String welcomeMessageEn;
-	private String welcomeMessageEs;
+	private Map<String,String> welcomeMessage;
 	private String banner;
 	private double VAT;
 	private String listCreditCardMakes;
@@ -38,23 +41,15 @@ public class SystemConfiguration extends DomainEntity {
 	public void setSystemName(final String systemName) {
 		this.systemName = systemName;
 	}
-
-	@NotBlank
-	public String getWelcomeMessageEn() {
-		return this.welcomeMessageEn;
+	
+	@NotNull
+	@ElementCollection
+	public Map<String, String> getWelcomeMessage() {
+		return welcomeMessage;
 	}
 
-	public void setWelcomeMessageEn(final String welcomeMessageEn) {
-		this.welcomeMessageEn = welcomeMessageEn;
-	}
-
-	@NotBlank
-	public String getWelcomeMessageEs() {
-		return this.welcomeMessageEs;
-	}
-
-	public void setWelcomeMessageEs(final String welcomeMessageEs) {
-		this.welcomeMessageEs = welcomeMessageEs;
+	public void setWelcomeMessage(Map<String, String> welcomeMessage) {
+		this.welcomeMessage = welcomeMessage;
 	}
 
 	@URL
@@ -101,7 +96,7 @@ public class SystemConfiguration extends DomainEntity {
 		return this.timeResultsCached;
 	}
 
-	public void setTimeResultsCached(final int timeResultsCached) {
+	public void setTimeResultsCached(final Integer timeResultsCached) {
 		this.timeResultsCached = timeResultsCached;
 	}
 
@@ -110,7 +105,7 @@ public class SystemConfiguration extends DomainEntity {
 		return this.maxResults;
 	}
 
-	public void setMaxResults(final int maxResults) {
+	public void setMaxResults(final Integer maxResults) {
 		this.maxResults = maxResults;
 	}
 
