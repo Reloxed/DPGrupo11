@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -5,7 +6,6 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -23,16 +23,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
 
-	private Date sendMoment;
-	private String subject;
-	private String body;
-	private String priority;
-	private String tags;
-	private Actor sender;
-	private Collection<Actor> recipients;
-	private boolean isSpam;
-	private Collection<MessageBox> messageBoxes;
-	
+	private Date					sendMoment;
+	private String					subject;
+	private String					body;
+	private String					priority;
+	private String					tags;
+	private Actor					sender;
+	private Collection<Actor>		recipients;
+	private boolean					isSpam;
+	private Collection<MessageBox>	messageBoxes;
+
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -104,21 +105,20 @@ public class Message extends DomainEntity {
 	@NotNull
 	@ManyToMany
 	public Collection<Actor> getRecipients() {
-		return recipients;
+		return this.recipients;
 	}
 
-	public void setRecipients(Collection<Actor> recipients) {
+	public void setRecipients(final Collection<Actor> recipients) {
 		this.recipients = recipients;
 	}
 	@NotNull
-	@ManyToMany(mappedBy="messages" , cascade={CascadeType.ALL})
+	@ManyToMany(mappedBy = "messages")
 	public Collection<MessageBox> getMessageBoxes() {
-		return messageBoxes;
+		return this.messageBoxes;
 	}
 
-	public void setMessageBoxes(Collection<MessageBox> messageBoxes) {
+	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
 		this.messageBoxes = messageBoxes;
 	}
-	
 
 }

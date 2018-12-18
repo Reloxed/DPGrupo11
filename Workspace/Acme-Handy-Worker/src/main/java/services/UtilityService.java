@@ -108,5 +108,4 @@ public class UtilityService {
 		final List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listSpamWords;
 	}
-
 }
