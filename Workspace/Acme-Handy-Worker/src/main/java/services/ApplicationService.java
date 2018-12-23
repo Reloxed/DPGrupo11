@@ -72,11 +72,15 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
+		double realPrice;
 
 		Assert.notNull(application);
 		applicant = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(applicant);
 		fixUpTask = application.getFixUpTask();
+
+		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * application.getOfferedPrice() + application.getOfferedPrice();
+		application.setOfferedPrice(realPrice);
 
 		if (application.getId() == 0) { // Not saved in database yet
 			application.setStatus("PENDING");
@@ -208,7 +212,7 @@ public class ApplicationService {
 		return result;
 	}
 
-	public Double ratioStatusApplications(String status) {
+	public Double ratioStatusApplications(final String status) {
 		Double result;
 
 		result = this.applicationRepository.ratioStatusApplications(status);

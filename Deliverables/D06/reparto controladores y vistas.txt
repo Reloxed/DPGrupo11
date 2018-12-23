@@ -1,0 +1,33 @@
+Controladores:requisitos funcionales
+
+Jesús:casos de usos de HandyWorker
+Carlos:casos de usos sponsor y referee
+Montaño:casos de usos Customer 
+Pablo:casos de usos Admin
+
+
+Vistas:(todas las vistas de esa entidad listing edit etc)
+
+Pablo:
+	-Admin:registro y perfil de actor , vista is suspicious,Systemconfig etc
+	-Phase
+	-application
+
+Jesús:
+	-FixUpTask
+	-Finder
+	-Curriculum
+	-endorsement
+
+Carlos:
+	-warranty
+	-report
+	-note
+	-Records
+
+Montaño:
+	-Complaint
+	-Messages(todas las vistas de mensajes)
+	-category
+	-tutorials
+

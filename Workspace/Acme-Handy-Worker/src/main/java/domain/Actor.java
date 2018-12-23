@@ -106,7 +106,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@Valid
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany
 	public Collection<SocialProfile> getSocialProfiles() {
 		return this.socialProfiles;
 	}

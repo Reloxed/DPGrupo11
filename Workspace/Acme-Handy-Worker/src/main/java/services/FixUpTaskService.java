@@ -23,17 +23,18 @@ public class FixUpTaskService {
 	// Managed repository-----------
 
 	@Autowired
-	private FixUpTaskRepository	fixUpTaskRepository;
+	private FixUpTaskRepository			fixUpTaskRepository;
 
 	//Supporting services ----------
 	@Autowired
-	private UtilityService		utilityService;
+	private UtilityService				utilityService;
 
 	@Autowired
-	private CustomerService		customerService;
+	private CustomerService				customerService;
 
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
+
 
 	//Constructor ----------------------------------------------------
 
@@ -83,6 +84,7 @@ public class FixUpTaskService {
 	public FixUpTask save(final FixUpTask fixUpTask) {
 		FixUpTask result;
 		Customer principal;
+		double realPrice;
 
 		Assert.isTrue(fixUpTask.getId() == 0);
 		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
@@ -97,7 +99,10 @@ public class FixUpTaskService {
 
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
+		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * fixUpTask.getMaxPrice() + fixUpTask.getMaxPrice();
+		fixUpTask.setMaxPrice(realPrice);
+
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
 		final String[] description = fixUpTask.getDescription().split("(¿¡,.-_/!?) ");

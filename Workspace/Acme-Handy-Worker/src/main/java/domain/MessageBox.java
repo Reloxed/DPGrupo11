@@ -1,10 +1,10 @@
+
 package domain;
 
 import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
@@ -14,9 +14,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class MessageBox extends DomainEntity {
 
-	private String name;
-	private boolean isPredefined;
-	private Collection<Message> messages;
+	private String				name;
+	private boolean				isPredefined;
+	private Collection<Message>	messages;
 
 
 	@NotBlank
@@ -36,7 +36,7 @@ public class MessageBox extends DomainEntity {
 		this.isPredefined = isPredefined;
 	}
 
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}
@@ -45,5 +45,4 @@ public class MessageBox extends DomainEntity {
 		this.messages = messages;
 	}
 
-	
 }
