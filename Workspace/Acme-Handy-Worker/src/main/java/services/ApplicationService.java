@@ -72,6 +72,7 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
+//		double realPrice;
 
 		Assert.notNull(application);
 		applicant = this.handyWorkerService.findByPrincipal();
@@ -233,8 +234,8 @@ public class ApplicationService {
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyHandyWorker = "The status of your application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyCustomer = "The status of application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 	}

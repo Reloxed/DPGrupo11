@@ -168,7 +168,6 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
-		result.setApplications(new ArrayList<Application>());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
 
@@ -184,9 +183,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		creditcard.setExpirationMonth(12);
 		creditcard.setExpirationYear(21);
 		creditcard.setCVV(187);
-		System.out.println(creditcard);
 		savedCC = this.creditCardService.save(creditcard);
-		System.out.println(savedCC);
 		Assert.notNull(savedCC);
 
 		super.authenticate("handyWorker1");
@@ -235,7 +232,6 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
-		result.setApplications(new ArrayList<Application>());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
 
