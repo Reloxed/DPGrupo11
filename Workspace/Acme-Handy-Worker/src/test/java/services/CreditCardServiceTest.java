@@ -126,5 +126,4 @@ public class CreditCardServiceTest extends AbstractTest{
 		
 		super.unauthenticate();	
 	}
-
 }
