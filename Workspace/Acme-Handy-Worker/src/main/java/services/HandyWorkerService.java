@@ -166,5 +166,13 @@ public class HandyWorkerService {
 		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findTopComplaintsHandyWorkers();
 		return colHandys;
 	}
+	
+	public HandyWorker findHandyWorkerByApplicationId(int applicationId) {
+		HandyWorker result;
+
+		result = this.handyWorkerRepository.findHandyWorkerByApplicationId(applicationId);
+
+		return result;
+	}
 
 }

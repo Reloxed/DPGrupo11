@@ -19,6 +19,7 @@ import domain.Application;
 import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -45,6 +46,9 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	@Autowired
 	private UtilityService		utilityService;
+	
+	@Autowired
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
 	private WarrantyService		warrantyService;
@@ -117,13 +121,20 @@ public class ApplicationServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
+	
 	@Test
 	public void testFindAll() {
 		super.authenticate("handyWorker1");
-		Collection<Application> applications;
+		Collection<Application> applications, mustBe;
+		HandyWorker principal;
+		
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		mustBe = this.applicationService.findAllApplicationsByHandyWorker(principal.getId());
 
 		applications = this.applicationService.findAll();
-		Assert.isTrue(applications.size() == 4);
+		Assert.isTrue(applications.size() == mustBe.size());
 
 		super.unauthenticate();
 	}

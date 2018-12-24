@@ -72,15 +72,17 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
-		double realPrice;
 
 		Assert.notNull(application);
 		applicant = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(applicant);
 		fixUpTask = application.getFixUpTask();
 
-		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * application.getOfferedPrice() + application.getOfferedPrice();
-		application.setOfferedPrice(realPrice);
+		//El precio con iva no se calcula aquí, sino en vistas
+//		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * 
+//				application.getOfferedPrice() + application.getOfferedPrice();
+//		
+//		application.setOfferedPrice(realPrice);
 
 		if (application.getId() == 0) { // Not saved in database yet
 			application.setStatus("PENDING");
@@ -132,17 +134,58 @@ public class ApplicationService {
 		return result;
 	}
 	public Collection<Application> findAll() {
-		Collection<Application> result;
+		Collection<Application> collApp = new ArrayList<>();
+		HandyWorker ownerHW = null;
+		Customer ownerCustomer = null;
 
-		result = this.applicationRepository.findAll();
+		try {
+			ownerHW = this.handyWorkerService.findByPrincipal();
 
-		return result;
+		} catch (final IllegalArgumentException e) {
+			ownerCustomer = this.customerService.findByPrincipal();
+		}
+		if (ownerCustomer == null && ownerHW == null)
+			Assert.notNull(ownerHW);
+
+		// Según sea un customer o un HW, cogemos la lista de sus App
+		if (ownerCustomer != null)
+			collApp = this.applicationRepository.findAllApplicationsByCustomer(ownerCustomer.getId());
+		else
+			collApp = this.applicationRepository.findAllApplicationsByHandyWorker(ownerHW.getId());
+
+		return collApp;
 	}
 
 	public Application findOne(final int applicationId) {
+		HandyWorker ownerHW = null;
+		Customer ownerCustomer = null;
 		Application result;
 
-		result = this.applicationRepository.findOne(applicationId);
+		try {
+			ownerHW = this.handyWorkerService.findByPrincipal();
+
+		} catch (final IllegalArgumentException e) {
+			ownerCustomer = this.customerService.findByPrincipal();
+		}
+		if (ownerCustomer == null && ownerHW == null)
+			Assert.notNull(ownerHW);
+
+		// Según sea un customer o un sponsor, vemos si la credit card que pide
+		// es suya
+		if (ownerCustomer != null) {
+			Customer customer;
+			customer = this.customerService.findCustomerByApplicationId(applicationId);
+			Assert.notNull(customer);
+			Assert.isTrue(customer.equals(ownerCustomer));
+			result = this.applicationRepository.findOne(applicationId);
+		} else {
+			HandyWorker handyWorker;
+			handyWorker = this.handyWorkerService.findHandyWorkerByApplicationId(applicationId);
+			Assert.notNull(ownerHW);
+			Assert.notNull(handyWorker);
+			Assert.isTrue(handyWorker.equals(ownerHW));
+			result = this.applicationRepository.findOne(applicationId);
+		}
 
 		return result;
 	}
@@ -203,7 +246,15 @@ public class ApplicationService {
 
 		return result;
 	}
+	
+	public Collection<Application> findAllApplicationsByCustomer(int customerId) {
+		Collection<Application> result;
 
+		result = this.applicationRepository.findAllApplicationsByCustomer(customerId);
+
+		return result;
+	}
+	
 	public Collection<Application> findAllApplicationsByFixUpTask(final int fixUptaskId) {
 		Collection<Application> result;
 
