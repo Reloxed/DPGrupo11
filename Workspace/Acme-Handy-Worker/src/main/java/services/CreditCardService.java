@@ -77,58 +77,15 @@ public class CreditCardService {
 
 	public Collection<CreditCard> findAll() {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		Sponsor ownerSponsor = null;
-		Customer ownerCustomer = null;
 
-		try {
-			ownerSponsor = this.sponsorService.findByPrincipal();
-
-		} catch (final IllegalArgumentException e) {
-			ownerCustomer = this.customerService.findByPrincipal();
-		}
-		if (ownerCustomer == null && ownerSponsor == null)
-			Assert.notNull(ownerSponsor);
-
-		// Según sea un customer o un sponsor, cogemos la lista de sus CC
-		if (ownerCustomer != null)
-			collCC = this.customerService.findCreditCardsByCustomerId(ownerCustomer.getId());
-		else
-			collCC = this.sponsorService.findCreditCardsBySponsorId(ownerSponsor.getId());
+		collCC = this.creditCardRepository.findAll();
 
 		return collCC;
 	}
 
 	public CreditCard findOne(final int creditCardId) {
-		Sponsor ownerSponsor = null;
-		Customer ownerCustomer = null;
 		CreditCard creditCard;
 
-		try {
-			ownerSponsor = this.sponsorService.findByPrincipal();
-
-		} catch (final IllegalArgumentException e) {
-			ownerCustomer = this.customerService.findByPrincipal();
-		}
-		if (ownerCustomer == null && ownerSponsor == null)
-			Assert.notNull(ownerSponsor);
-
-		// Según sea un customer o un sponsor, vemos si la credit card que pide
-		// es suya
-		if (ownerCustomer != null) {
-			Collection<Customer> collCus;
-			collCus = this.customerService.findByCreditCardId(creditCardId);
-			Assert.notNull(collCus);
-			Assert.isTrue(collCus.contains(ownerCustomer));
-			creditCard = this.creditCardRepository.findOne(creditCardId);
-		} else {
-			Collection<Sponsor> collSpo;
-			collSpo = this.sponsorService.findByCreditCardId(creditCardId);
-			Assert.notNull(ownerSponsor);
-			Assert.notNull(collSpo);
-			Assert.isTrue(collSpo.contains(ownerSponsor));
-			creditCard = this.creditCardRepository.findOne(creditCardId);
-			
-		}
 		creditCard = this.creditCardRepository.findOne(creditCardId);
 		return creditCard;
 	}

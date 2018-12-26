@@ -67,7 +67,6 @@ public class SystemConfigurationService {
 	}
 
 	public Collection<SystemConfiguration> findAll() {
-		Assert.notNull(this.administratorService.findByPrincipal());
 		Collection<SystemConfiguration> systemConfigurations;
 
 		systemConfigurations = this.systemConfigurationRepository.findAll();
@@ -76,7 +75,6 @@ public class SystemConfigurationService {
 	}
 
 	public SystemConfiguration findOne(final int systemConfigurationId) {
-		Assert.notNull(this.administratorService.findByPrincipal());
 		SystemConfiguration result;
 
 		result = this.systemConfigurationRepository.findOne(systemConfigurationId);

@@ -74,15 +74,15 @@ public class RefereeService {
 	public Collection<Referee> findAll() {
 		Collection<Referee> res;
 		res = this.refereeRepository.findAll();
-		Assert.notNull(res);
+
 		return res;
 	}
 
 	public Referee findOne(final int refereeId) {
 		Referee res;
-		Assert.isTrue(refereeId != 0);
+
 		res = this.refereeRepository.findOne(refereeId);
-		Assert.notNull(res);
+
 		return res;
 	}
 

@@ -59,7 +59,6 @@ public class EndorserRecordService {
 	public EndorserRecord findOne(final int endorserRecordId) {
 		EndorserRecord result;
 		result = this.endorserRecordRepository.findOne(endorserRecordId);
-		//Assert.isNull(result);
 		return result;
 
 	}

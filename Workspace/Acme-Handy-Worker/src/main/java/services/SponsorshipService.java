@@ -69,7 +69,6 @@ public class SponsorshipService {
 		Collection<Sponsorship> sponsorships;
 
 		sponsorships = this.sponsorshipRepository.findAll();
-		Assert.notNull(sponsorships);
 
 		return sponsorships;
 	}
@@ -78,7 +77,6 @@ public class SponsorshipService {
 		Sponsorship result;
 
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
-		Assert.notNull(result);
 
 		return result;
 	}

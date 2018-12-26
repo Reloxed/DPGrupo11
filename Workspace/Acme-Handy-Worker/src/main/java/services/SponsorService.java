@@ -80,7 +80,6 @@ public class SponsorService {
 		Collection<Sponsor> sponsors;
 
 		sponsors = this.sponsorRepository.findAll();
-		Assert.notNull(sponsors);
 
 		return sponsors;
 	}

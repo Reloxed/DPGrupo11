@@ -121,7 +121,7 @@ public class CreditCardServiceTest extends AbstractTest{
 		
 		super.authenticate(username);
 		
-		creditCard = this.creditCardService.findOne(8);
+		creditCard = this.creditCardService.findOne(-2);
 		Assert.notNull(creditCard);
 		
 		super.unauthenticate();	

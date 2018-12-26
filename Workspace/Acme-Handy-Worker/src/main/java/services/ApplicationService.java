@@ -136,57 +136,16 @@ public class ApplicationService {
 	}
 	public Collection<Application> findAll() {
 		Collection<Application> collApp = new ArrayList<>();
-		HandyWorker ownerHW = null;
-		Customer ownerCustomer = null;
 
-		try {
-			ownerHW = this.handyWorkerService.findByPrincipal();
-
-		} catch (final IllegalArgumentException e) {
-			ownerCustomer = this.customerService.findByPrincipal();
-		}
-		if (ownerCustomer == null && ownerHW == null)
-			Assert.notNull(ownerHW);
-
-		// Según sea un customer o un HW, cogemos la lista de sus App
-		if (ownerCustomer != null)
-			collApp = this.applicationRepository.findAllApplicationsByCustomer(ownerCustomer.getId());
-		else
-			collApp = this.applicationRepository.findAllApplicationsByHandyWorker(ownerHW.getId());
+		collApp = this.applicationRepository.findAll();
 
 		return collApp;
 	}
 
 	public Application findOne(final int applicationId) {
-		HandyWorker ownerHW = null;
-		Customer ownerCustomer = null;
 		Application result;
 
-		try {
-			ownerHW = this.handyWorkerService.findByPrincipal();
-
-		} catch (final IllegalArgumentException e) {
-			ownerCustomer = this.customerService.findByPrincipal();
-		}
-		if (ownerCustomer == null && ownerHW == null)
-			Assert.notNull(ownerHW);
-
-		// Según sea un customer o un sponsor, vemos si la credit card que pide
-		// es suya
-		if (ownerCustomer != null) {
-			Customer customer;
-			customer = this.customerService.findCustomerByApplicationId(applicationId);
-			Assert.notNull(customer);
-			Assert.isTrue(customer.equals(ownerCustomer));
-			result = this.applicationRepository.findOne(applicationId);
-		} else {
-			HandyWorker handyWorker;
-			handyWorker = this.handyWorkerService.findHandyWorkerByApplicationId(applicationId);
-			Assert.notNull(ownerHW);
-			Assert.notNull(handyWorker);
-			Assert.isTrue(handyWorker.equals(ownerHW));
-			result = this.applicationRepository.findOne(applicationId);
-		}
+		result = this.applicationRepository.findOne(applicationId);
 
 		return result;
 	}

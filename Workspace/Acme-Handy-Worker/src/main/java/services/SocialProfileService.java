@@ -64,7 +64,7 @@ public class SocialProfileService {
 		SocialProfile result;
 
 		result = this.socialProfileRepository.findOne(socialProfileId);
-		Assert.notNull(result);
+
 		return result;
 	}
 

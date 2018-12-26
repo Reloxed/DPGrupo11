@@ -75,7 +75,6 @@ public class FixUpTaskService {
 		FixUpTask result;
 
 		result = this.fixUpTaskRepository.findOne(fixUpTaskId);
-		Assert.notNull(result);
 
 		return result;
 
