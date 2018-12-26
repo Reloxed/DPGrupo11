@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PhaseRepository;
+import domain.Application;
+import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 
@@ -65,6 +67,9 @@ public class PhaseService {
 
 	public Phase save(final Phase phase) {
 		HandyWorker principal;
+		FixUpTask fixUpTask;
+		Collection<Application> applications;
+		boolean canBeSaved;
 
 		Assert.notNull(phase);
 
@@ -101,6 +106,17 @@ public class PhaseService {
 				}
 			}
 		}
+
+		fixUpTask = phase.getFixUpTask();
+		applications = fixUpTask.getApplications();
+		canBeSaved = false;
+
+		for (final Application a : applications)
+			if (a.getStatus().equals("ACCEPTED")) {
+				canBeSaved = true;
+				break;
+			}
+		Assert.isTrue(canBeSaved);
 
 		return this.phaseRepository.saveAndFlush(phase);
 	}

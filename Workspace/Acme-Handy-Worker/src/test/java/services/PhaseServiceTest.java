@@ -90,4 +90,5 @@ public class PhaseServiceTest extends AbstractTest {
 	 * Assert.isTrue(phases.size() == 2);
 	 * }
 	 */
+
 }
