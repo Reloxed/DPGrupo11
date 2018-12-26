@@ -117,7 +117,8 @@ public class PhaseService {
 				break;
 			}
 		Assert.isTrue(canBeSaved);
-
+		Assert.isTrue(phase.getStartMoment().after(fixUpTask.getStartMoment()));
+		Assert.isTrue(phase.getEndMoment().after(fixUpTask.getEndMoment()));
 		return this.phaseRepository.saveAndFlush(phase);
 	}
 
