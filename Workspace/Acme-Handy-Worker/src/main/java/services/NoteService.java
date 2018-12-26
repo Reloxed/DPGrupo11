@@ -177,6 +177,7 @@ public class NoteService {
 		Note result;
 
 		result = this.noteRepository.findOne(id);
+		Assert.notNull(result);
 
 		return result;
 
@@ -186,6 +187,7 @@ public class NoteService {
 		Collection<Note> result;
 
 		result = this.noteRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 

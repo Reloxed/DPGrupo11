@@ -64,17 +64,19 @@ public class TutorialService {
 	}
 
 	public Collection<Tutorial> findAll() {
-		Collection<Tutorial> tutorials;
+		Collection<Tutorial> result;
 
-		tutorials = this.tutorialRepository.findAll();
+		result = this.tutorialRepository.findAll();
+		Assert.notNull(result);
 
-		return tutorials;
+		return result;
 	}
 
 	public Tutorial findOne(final int tutorialId) {
 		Tutorial result;
 
 		result = this.tutorialRepository.findOne(tutorialId);
+		Assert.notNull(result);
 
 		return result;
 	}

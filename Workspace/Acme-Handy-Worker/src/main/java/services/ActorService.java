@@ -55,6 +55,7 @@ public class ActorService {
 		Collection<Actor> result;
 
 		result = this.actorRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 
@@ -78,6 +79,7 @@ public class ActorService {
 				}
 			}
 		}
+		Assert.notNull(result);
 		return result;
 	}
 

@@ -61,10 +61,10 @@ public class CurriculumServiceTest extends AbstractTest{
 	public void testFindOneCurriculum() {
 		Curriculum curriculum;
 		Collection<Curriculum> collC;
-		collC = this.curriculumService.findAll();
-		curriculum = this.curriculumService.findOne(collC.iterator().next().getId());
-		Assert.notNull(curriculum);
-		
+//		collC = this.curriculumService.findAll();
+//		curriculum = this.curriculumService.findOne(collC.iterator().next().getId());
+		curriculum = this.curriculumService.findOne(0);
+		Assert.notNull(curriculum);		
 	}
 	
 	@Test(expected=IllegalArgumentException.class)

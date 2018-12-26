@@ -77,15 +77,17 @@ public class CustomerService {
 	}
 
 	public Collection<Customer> findAll() {
-		Collection<Customer> collCus = new ArrayList<>();
-		collCus = this.customerRepository.findAll();
-		return collCus;
+		Collection<Customer> result = new ArrayList<>();
+		result = this.customerRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Customer findOne(final int customerId) {
 		final Integer id = customerId;
-		final Customer customer = this.customerRepository.findOne(id);
-		return customer;
+		final Customer result = this.customerRepository.findOne(id);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Customer save(final Customer customer) {

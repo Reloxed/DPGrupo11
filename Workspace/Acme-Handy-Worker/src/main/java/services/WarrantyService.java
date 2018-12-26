@@ -51,17 +51,19 @@ public class WarrantyService {
 	}
 
 	public Collection<Warranty> findAll() {
-		Collection<Warranty> warranties;
+		Collection<Warranty> result;
 
-		warranties = this.warrantyRepository.findAll();
+		result = this.warrantyRepository.findAll();
+		Assert.notNull(result);
 
-		return warranties;
+		return result;
 	}
 
 	public Warranty findOne(final int warrantyId) {
 		Warranty result;
 
 		result = this.warrantyRepository.findOne(warrantyId);
+		Assert.notNull(result);
 
 		return result;
 	}

@@ -143,6 +143,7 @@ public class CategoryService {
 		Collection<Category> result;
 
 		result = this.categoryRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -151,6 +152,7 @@ public class CategoryService {
 		Category result;
 
 		result = this.categoryRepository.findOne(categoryId);
+		Assert.notNull(result);
 
 		return result;
 	}

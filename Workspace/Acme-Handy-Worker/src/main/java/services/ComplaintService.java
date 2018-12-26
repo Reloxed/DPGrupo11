@@ -92,6 +92,7 @@ public class ComplaintService {
 		Collection<Complaint> result;
 
 		result = this.complaintRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -100,6 +101,7 @@ public class ComplaintService {
 		Complaint result;
 
 		result = this.complaintRepository.findOne(complaintId);
+		Assert.notNull(result);
 
 		return result;
 	}

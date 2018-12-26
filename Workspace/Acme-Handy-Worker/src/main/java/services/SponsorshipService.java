@@ -66,17 +66,19 @@ public class SponsorshipService {
 	}
 
 	public Collection<Sponsorship> findAll() {
-		Collection<Sponsorship> sponsorships;
+		Collection<Sponsorship> result;
 
-		sponsorships = this.sponsorshipRepository.findAll();
+		result = this.sponsorshipRepository.findAll();
+		Assert.notNull(result);
 
-		return sponsorships;
+		return result;
 	}
 
 	public Sponsorship findOne(final int sponsorshipId) {
 		Sponsorship result;
 
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
+		Assert.notNull(result);
 
 		return result;
 	}

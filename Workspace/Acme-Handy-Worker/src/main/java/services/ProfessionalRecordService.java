@@ -53,17 +53,19 @@ public class ProfessionalRecordService {
 	}
 
 	public ProfessionalRecord findOne(final int professionalRecordId) {
-		ProfessionalRecord res;
-		res = this.professionalRecordRepository.findOne(professionalRecordId);
+		ProfessionalRecord result;
+		result = this.professionalRecordRepository.findOne(professionalRecordId);
+		Assert.notNull(result);
 
-		return res;
+		return result;
 	}
 
 	public Collection<ProfessionalRecord> findAll() {
-		Collection<ProfessionalRecord> res;
-		res = this.professionalRecordRepository.findAll();
+		Collection<ProfessionalRecord> result;
+		result = this.professionalRecordRepository.findAll();
+		Assert.notNull(result);
 
-		return res;
+		return result;
 	}
 
 	public ProfessionalRecord save(final ProfessionalRecord professionalRecord) {

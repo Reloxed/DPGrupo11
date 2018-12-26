@@ -135,17 +135,19 @@ public class ApplicationService {
 		return result;
 	}
 	public Collection<Application> findAll() {
-		Collection<Application> collApp = new ArrayList<>();
+		Collection<Application> result = new ArrayList<>();
 
-		collApp = this.applicationRepository.findAll();
+		result = this.applicationRepository.findAll();
+		Assert.notNull(result);
 
-		return collApp;
+		return result;
 	}
 
 	public Application findOne(final int applicationId) {
 		Application result;
 
 		result = this.applicationRepository.findOne(applicationId);
+		Assert.notNull(result);
 
 		return result;
 	}

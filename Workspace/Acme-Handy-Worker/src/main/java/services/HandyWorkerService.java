@@ -50,6 +50,7 @@ public class HandyWorkerService {
 		HandyWorker result;
 
 		result = this.handyWorkerRepository.findOne(handyWorkerId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -58,6 +59,7 @@ public class HandyWorkerService {
 		Collection<HandyWorker> result;
 
 		result = this.handyWorkerRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 

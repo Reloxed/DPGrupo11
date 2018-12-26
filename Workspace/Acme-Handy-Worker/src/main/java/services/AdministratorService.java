@@ -93,6 +93,7 @@ public class AdministratorService {
 		Administrator result;
 
 		result = this.administratorRepository.findOne(administratorId);
+		Assert.notNull(result);
 
 		return result;
 
@@ -102,6 +103,7 @@ public class AdministratorService {
 		Collection<Administrator> result;
 
 		result = this.administratorRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
