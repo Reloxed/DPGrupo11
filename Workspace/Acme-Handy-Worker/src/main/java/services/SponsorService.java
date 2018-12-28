@@ -80,7 +80,6 @@ public class SponsorService {
 		Collection<Sponsor> sponsors;
 
 		sponsors = this.sponsorRepository.findAll();
-		Assert.notNull(sponsors);
 
 		return sponsors;
 	}
@@ -138,8 +137,8 @@ public class SponsorService {
 
 	// Other business methods
 
-	public Sponsor findByCreditCardId(int creditCardId) {
-		Sponsor res;
+	public Collection<Sponsor> findByCreditCardId(int creditCardId) {
+		Collection<Sponsor> res;
 
 		res = this.sponsorRepository.findByCreditCardId(creditCardId);
 		Assert.notNull(res);

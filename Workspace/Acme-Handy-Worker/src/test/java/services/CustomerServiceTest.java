@@ -149,8 +149,8 @@ public class CustomerServiceTest extends AbstractTest{
 	
 	@Test
 	public void testFindersById() {
-		Customer customer, customerByCC, customerByApp;
-		Collection<Customer> collC;
+		Customer customer, customerByApp;
+		Collection<Customer> collC, customerByCC;
 		Collection<CreditCard> collCC;
 		Collection<Application> collApp;
 		CreditCard creditCard;

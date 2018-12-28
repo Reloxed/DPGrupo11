@@ -49,7 +49,7 @@ public class SystemConfigurationService {
 		
 		Map<String,String> wellMap = new HashMap<>();
 		wellMap.put("Español", "¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
-		wellMap.put("Inglés", "Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
+		wellMap.put("English", "Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
 
 		final SystemConfiguration systemConfiguration = new SystemConfiguration();
 		systemConfiguration.setSystemName("Acme-Handy-Worker");
@@ -67,7 +67,6 @@ public class SystemConfigurationService {
 	}
 
 	public Collection<SystemConfiguration> findAll() {
-		Assert.notNull(this.administratorService.findByPrincipal());
 		Collection<SystemConfiguration> systemConfigurations;
 
 		systemConfigurations = this.systemConfigurationRepository.findAll();
@@ -76,7 +75,6 @@ public class SystemConfigurationService {
 	}
 
 	public SystemConfiguration findOne(final int systemConfigurationId) {
-		Assert.notNull(this.administratorService.findByPrincipal());
 		SystemConfiguration result;
 
 		result = this.systemConfigurationRepository.findOne(systemConfigurationId);

@@ -52,16 +52,11 @@ public class SectionService {
 		Assert.notNull(principal);
 
 		res = new Section();
-
 		return res;
 	}
 
 	public Collection<Section> findAll() {
 		Collection<Section> res;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
 
 		res = this.sectionRepository.findAll();
 		return res;
@@ -69,14 +64,9 @@ public class SectionService {
 
 	public Section findOne(final int sectionId) {
 		Section res;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
 
 		res = this.sectionRepository.findOne(sectionId);
 		return res;
-
 	}
 
 	public Section save(final Section section) {

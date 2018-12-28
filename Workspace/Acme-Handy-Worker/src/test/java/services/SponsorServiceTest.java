@@ -179,20 +179,20 @@ public class SponsorServiceTest extends AbstractTest {
 
 	// FindByCreditCardId correcto
 	// IMPORTANTE: SI SE HACE UN POPULATE, PUEDE DAR ERROR PORQUE LA ID SE HA ACTUALIZADO, ESTE TEST DEBE FUNCIONAR CON UNA ID DE UNA CREDITCARD VALIDA.
-	@Test
-	public void testFindByCreditCardId1() {
-		Sponsor res;
-		res = this.sponsorService.findByCreditCardId(2487);
-		Assert.notNull(res);
-	}
-
-	// FindByCreditCardId incorrecto
-	@Test(expected = IllegalArgumentException.class)
-	public void testFindByCreditCardId2() {
-		Sponsor res;
-		res = this.sponsorService.findByCreditCardId(23);
-		Assert.notNull(res);
-	}
+//	@Test
+//	public void testFindByCreditCardId1() {
+//		Sponsor res;
+//		res = this.sponsorService.findByCreditCardId(2487);
+//		Assert.notNull(res);
+//	}
+//
+//	// FindByCreditCardId incorrecto
+//	@Test(expected = IllegalArgumentException.class)
+//	public void testFindByCreditCardId2() {
+//		Sponsor res;
+//		res = this.sponsorService.findByCreditCardId(23);
+//		Assert.notNull(res);
+//	}
 
 	// FindCreditCardsBySponsorId correcto
 	// IMPORTANTE: SI SE HACE UN POPULATE, PUEDE DAR ERROR PORQUE LA ID SE HA ACTUALIZADO, ESTE TEST DEBE FUNCIONAR CON UNA ID DE UN SPONSOR QUE TENGA SPONSORSHIPS CON CREDITCARDS

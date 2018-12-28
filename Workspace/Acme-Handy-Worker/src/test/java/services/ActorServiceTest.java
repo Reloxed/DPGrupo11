@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -21,7 +20,6 @@ import domain.Administrator;
 import domain.Application;
 import domain.Customer;
 import domain.HandyWorker;
-import domain.MessageBox;
 import domain.Referee;
 import domain.Sponsor;
 import domain.Tutorial;
@@ -55,9 +53,6 @@ public class ActorServiceTest extends AbstractTest {
 
 	@Autowired
 	private FinderService			finderService;
-
-	@Autowired
-	private MessageBoxService		messageBoxService;
 
 	@Autowired
 	private CurriculumService		curriculumService;
@@ -111,19 +106,14 @@ public class ActorServiceTest extends AbstractTest {
 	public void testFindOneHW() {
 		HandyWorker result;
 		HandyWorker saved;
-		super.authenticate("handyWorker1");
-		result = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(result);
 
 		result = this.handyWorkerService.create();
+		Assert.notNull(result);
 
 		result.getUserAccount().setUsername("Carlos");
 		result.getUserAccount().setPassword("p912yp3");
 		result.setIsSuspicious(false);
 
-		final Collection<MessageBox> messages = new ArrayList<MessageBox>();
-		messages.add(this.messageBoxService.findAll().iterator().next());
-		result.setMessageBoxes(messages);
 		result.setApplications(new HashSet<Application>());
 		result.setTutorial(new HashSet<Tutorial>());
 		result.setName("Lucia");
@@ -136,7 +126,6 @@ public class ActorServiceTest extends AbstractTest {
 		
 		saved = this.handyWorkerService.save(result);
 		Assert.notNull(saved);
-		super.unauthenticate();
 
 		Actor a;
 

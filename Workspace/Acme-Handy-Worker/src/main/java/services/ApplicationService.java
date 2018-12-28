@@ -72,15 +72,18 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
-		double realPrice;
+//		double realPrice;
 
 		Assert.notNull(application);
 		applicant = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(applicant);
 		fixUpTask = application.getFixUpTask();
 
-		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * application.getOfferedPrice() + application.getOfferedPrice();
-		application.setOfferedPrice(realPrice);
+		//El precio con iva no se calcula aquí, sino en vistas
+//		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * 
+//				application.getOfferedPrice() + application.getOfferedPrice();
+//		
+//		application.setOfferedPrice(realPrice);
 
 		if (application.getId() == 0) { // Not saved in database yet
 			application.setStatus("PENDING");
@@ -132,11 +135,11 @@ public class ApplicationService {
 		return result;
 	}
 	public Collection<Application> findAll() {
-		Collection<Application> result;
+		Collection<Application> collApp = new ArrayList<>();
 
-		result = this.applicationRepository.findAll();
+		collApp = this.applicationRepository.findAll();
 
-		return result;
+		return collApp;
 	}
 
 	public Application findOne(final int applicationId) {
@@ -190,8 +193,8 @@ public class ApplicationService {
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyHandyWorker = "The status of your application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyCustomer = "The status of application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
 		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
 		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 	}
@@ -203,7 +206,15 @@ public class ApplicationService {
 
 		return result;
 	}
+	
+	public Collection<Application> findAllApplicationsByCustomer(int customerId) {
+		Collection<Application> result;
 
+		result = this.applicationRepository.findAllApplicationsByCustomer(customerId);
+
+		return result;
+	}
+	
 	public Collection<Application> findAllApplicationsByFixUpTask(final int fixUptaskId) {
 		Collection<Application> result;
 

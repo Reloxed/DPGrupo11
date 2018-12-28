@@ -14,6 +14,9 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select a from HandyWorker h join h.applications a where h.id=?1")
 	Collection<Application> findAllApplicationsByHandyWorker(int handyWorkerId);
+	
+	@Query("select a from Customer c join c.fixUpTasks f join f.applications a where c.id=?1")
+	Collection<Application> findAllApplicationsByCustomer(int customerId);
 
 	@Query("select a from FixUpTask f join f.applications a where f.id=?1 order by a.status")
 	Collection<Application> findAllApplicationsByFixUpTask(int fixUptaskId);

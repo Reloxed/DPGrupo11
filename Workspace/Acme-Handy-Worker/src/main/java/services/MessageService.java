@@ -281,7 +281,6 @@ public class MessageService {
 		Message result;
 
 		result = this.messageRepository.findOne(messageId);
-		Assert.notNull(result);
 
 		return result;
 	}
@@ -290,7 +289,6 @@ public class MessageService {
 		Collection<Message> result;
 
 		result = this.messageRepository.findAll();
-		Assert.notNull(result);
 
 		return result;
 	}
@@ -457,6 +455,7 @@ public class MessageService {
 		result.setMessageBoxes(boxes);
 		result.setBody(body);
 		result.setSubject("Status updated");
+		result.setPriority("HIGH");
 
 		this.messageRepository.save(result);
 

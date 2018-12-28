@@ -141,8 +141,8 @@ public class CustomerService {
 		return result;
 	}
 
-	public Customer findByCreditCardId(final int creditCardId) {
-		Customer res;
+	public Collection<Customer> findByCreditCardId(final int creditCardId) {
+		Collection<Customer> res;
 
 		res = this.customerRepository.findByCreditCardId(creditCardId);
 

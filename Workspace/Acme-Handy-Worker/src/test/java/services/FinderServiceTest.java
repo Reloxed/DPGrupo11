@@ -46,8 +46,6 @@ public class FinderServiceTest extends AbstractTest {
 		Collection<Finder> result;
 		result=this.finderService.findAll();
 		Assert.isTrue(!result.isEmpty());
-		Assert.isTrue(result.size()==2);
-
 	}
 
 	@Test

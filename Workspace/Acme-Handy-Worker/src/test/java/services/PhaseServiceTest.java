@@ -67,6 +67,7 @@ public class PhaseServiceTest extends AbstractTest {
 	}
 
 	@Test
+
 	public void testFindCreator() {
 		HandyWorker res;
 		Phase phase;
@@ -76,21 +77,16 @@ public class PhaseServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 
-	/*
-	 * @Test public void testDelete() { Phase toDelete; Phase aux;
-	 * Collection<Phase> phases;
-	 * 
-	 * aux = this.phaseService.findAll().iterator().next();
-	 * super.authenticate("handyWorker2");
-	 * 
-	 * phases = this.phaseService.findPhasesFixUpTask(aux);
-	 * Assert.notEmpty(phases);
-	 * 
-	 * toDelete = phases.iterator().next();
-	 * 
-	 * this.phaseService.delete(toDelete);
-	 * 
-	 * phases = this.phaseService.findPhasesFixUpTask(aux);
-	 * Assert.isTrue(phases.size() == 2); }
-	 */
+	public void testDelete() {
+		Phase toDelete;
+		Collection<Phase> phases;
+
+		super.authenticate("handyWorker2");
+
+		phases = this.phaseService.findAll();
+		toDelete = this.phaseService.findAll().iterator().next();
+		this.phaseService.delete(toDelete);
+		phases = this.phaseService.findAll();
+		Assert.isTrue(phases.size() == 2);
+	}
 }

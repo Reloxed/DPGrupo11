@@ -57,7 +57,6 @@ public class FinderService {
 	public Collection<Finder> findAll() {
 		Collection<Finder> result;
 		result = this.finderRepository.findAll();
-		Assert.notNull(result);
 
 		return result;
 
@@ -65,13 +64,8 @@ public class FinderService {
 
 	public Finder findOne(final int finderId) {
 		Finder result;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
 
 		result = this.finderRepository.findOne(finderId);
-		Assert.notNull(result);
 
 		return result;
 

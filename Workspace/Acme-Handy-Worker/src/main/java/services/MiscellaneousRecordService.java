@@ -110,13 +110,11 @@ public class MiscellaneousRecordService {
 	public MiscellaneousRecord findOne(final int miscellaneousRecordId) {
 		MiscellaneousRecord result;
 		result = this.miscellaneousRecordRepository.findOne(miscellaneousRecordId);
-		Assert.notNull(result);
 		return result;
 	}
 	public Collection<MiscellaneousRecord> findAll() {
 		Collection<MiscellaneousRecord> result;
 		result = this.miscellaneousRecordRepository.findAll();
-		Assert.notNull(result);
 		return result;
 	}
 
