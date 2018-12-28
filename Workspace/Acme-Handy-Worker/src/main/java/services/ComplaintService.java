@@ -84,6 +84,11 @@ public class ComplaintService {
 		}
 
 		result = this.complaintRepository.saveAndFlush(complaint);
+		Collection<Complaint> collCom = customer.getComplaints();
+		collCom.add(result);
+		customer.setComplaints(collCom);
+		this.customerService.save(customer);
+		
 
 		return result;
 	}

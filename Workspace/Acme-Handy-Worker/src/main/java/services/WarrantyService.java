@@ -77,9 +77,6 @@ public class WarrantyService {
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (w.getId() == 0)
-			Assert.isTrue(w.getIsFinal() == false);
-
 		containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
 		final String[] title = w.getTitle().split("(¿¡,.-_/!?) ");
@@ -120,10 +117,17 @@ public class WarrantyService {
 				break;
 			}
 		}
+		
+		if (w.getId() == 0){
+			Assert.isTrue(w.getIsFinal() == false);
+			result = this.warrantyRepository.save(w);
+			this.warrantyRepository.flush();
+		} else {
+			Assert.isTrue(this.warrantyRepository.findOne(w.getId()).getIsFinal()== false);
+			result = this.warrantyRepository.save(w);
+			this.warrantyRepository.flush();
+		}		
 
-		Assert.isTrue(w.getIsFinal() == false);
-		result = this.warrantyRepository.saveAndFlush(w);
-		principal = this.administratorService.save(principal);
 		return result;
 	}
 

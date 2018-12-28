@@ -66,17 +66,6 @@ public class CreditCardServiceTest extends AbstractTest{
 		super.unauthenticate();	
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testNotFindAllCreditCards(){
-		Collection<CreditCard> creditCards;
-		String username = "admin1";
-		super.authenticate(username);
-		creditCards = creditCardService.findAll();
-		Assert.notNull(creditCards);
-		Assert.notEmpty(creditCards);
-		super.unauthenticate();	
-	}
-	
 	@Test
 	public void testSaveAndFindOneCreditCard() {
 		

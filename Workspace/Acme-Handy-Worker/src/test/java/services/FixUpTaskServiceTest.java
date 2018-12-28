@@ -52,9 +52,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	//id Incorrecta
 	@Test(expected = IllegalArgumentException.class)
-	public void TestFindOne() {
+	public void TestNotFindOne() {
 		FixUpTask result;
-		result = this.fixUpTaskService.findOne(225);
+		result = this.fixUpTaskService.findOne(-2);
 		Assert.notNull(result);
 		
 
@@ -66,9 +66,8 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		Collection<FixUpTask> result;
 		result = this.fixUpTaskService.findAll();
 		Assert.isTrue(!result.isEmpty());
-		Assert.isTrue(result.size() == 3);
-
 	}
+	
 	@Test
 	public void testCreateAndSave() {
 		FixUpTask result;

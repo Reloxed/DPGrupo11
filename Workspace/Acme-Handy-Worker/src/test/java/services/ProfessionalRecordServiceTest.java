@@ -36,7 +36,6 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		Collection<ProfessionalRecord> res;
 		res = this.professionalRecordService.findAll();
 		Assert.notNull(res);
-		Assert.isTrue(res.size() == 2);
 	}
 
 	// Correct startDate

@@ -62,7 +62,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	}
 
 	// FindAll correcto
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testFindAll2() {
 		Collection<SystemConfiguration> res;
 		super.authenticate("sponsor1");

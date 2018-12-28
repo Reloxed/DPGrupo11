@@ -134,9 +134,7 @@ public class TutorialService {
 		}
 		result = this.tutorialRepository.save(t);
 		Assert.notNull(result);
-		System.out.println(result.getVersion());
-		//		this.tutorialRepository.flush();
-		//		principal = this.handyWorkerService.save(principal);
+		this.tutorialRepository.flush();
 		return result;
 	}
 

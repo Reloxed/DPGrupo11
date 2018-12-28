@@ -33,6 +33,15 @@ public class NoteService {
 	private ActorService actorService;
 
 	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private HandyWorkerService handyWorkerService;
+	
+	@Autowired
+	private RefereeService refereeService;
+	
+	@Autowired
 	private SystemConfigurationService systemConfigurationService;
 
 	// Constructors ------------------------------------
@@ -77,32 +86,43 @@ public class NoteService {
 	public Note save(final Note note) {
 		Note result;
 		Report report;
-		Actor principal;
-		Collection<Note> notes, updated;
+		Collection<Note> notes;
+		Customer customer = null;
+		Referee referee = null;
+		HandyWorker handyWorker = null;
+		
 
 		Assert.notNull(note);
 		Assert.isTrue(note.getId() == 0);
-
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
+		
+		try {
+			
+			customer = this.customerService.findByPrincipal();
+			Assert.notNull(note.getCustomerComment());
+			
+		} catch (final IllegalArgumentException e) {	} 
+		
+		try {
+			
+			referee = this.refereeService.findByPrincipal();
+			Assert.notNull(note.getRefereeComment());
+			
+		} catch (final IllegalArgumentException e) {	}
+		
+		try {
+			
+			handyWorker = this.handyWorkerService.findByPrincipal();
+			Assert.notNull(note.getHandyWorkerComment());
+			
+		} catch (final IllegalArgumentException e) {	}
+		
+		if (customer == null && handyWorker == null && referee == null) {
+			Assert.notNull(customer);
+		}
 
 		report = note.getReport();
-		Assert.notNull(report);
-
-		if (principal instanceof Referee) {
-
-			Assert.isTrue(principal instanceof Referee);
-			note.setRefereeComment(note.getRefereeComment());
-
-		} else if (principal instanceof Customer) {
-			Assert.isTrue(principal instanceof Customer);
-			note.setCustomerComment(note.getCustomerComment());
-
-		} else {
-			Assert.isTrue(principal instanceof HandyWorker);
-			note.setHandyWorkerComment(note.getHandyWorkerComment());
-
-		}
+		Assert.isTrue(report.getIsFinal());		
+		
 
 		final String[] spamWords = this.systemConfigurationService
 				.findMySystemConfiguration().getSpamWords().split(",");
@@ -115,32 +135,30 @@ public class NoteService {
 		for (final String word : spamWords) {
 			for (final String customerWord : customerComments)
 				if (customerWord.toLowerCase().contains(word.toLowerCase())) {
-					principal.setIsSuspicious(true);
+					customer.setIsSuspicious(true);
 					break;
 				}
 			for (final String refereeWord : refereeComments)
 				if (refereeWord.toLowerCase().contains(word.toLowerCase())) {
-					principal.setIsSuspicious(true);
+					referee.setIsSuspicious(true);
 					break;
 				}
 			for (final String handyWord : handyComments)
 				if (handyWord.toLowerCase().contains(word.toLowerCase())){
-					principal.setIsSuspicious(true);
+					handyWorker.setIsSuspicious(true);
 					break;
 				}
 		}
 
 		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		note.setReport(report);
-		Assert.isTrue(report.getIsFinal());
+		
 		result = this.noteRepository.saveAndFlush(note);
 		Assert.notNull(result);
 
 		notes = new ArrayList<Note>();
 		notes = report.getNotes();
-		updated = new ArrayList<Note>(notes);
-		updated.add(result);
-		report.setNotes(updated);
+		notes.add(result);
+		report.setNotes(notes);
 
 		return result;
 

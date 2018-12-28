@@ -82,18 +82,19 @@ public class MiscellaneousRecordService {
 				break;
 			}
 		}
-		
-		if (!containsSpam) {
-			final String[] comments = miscellaneousRecord.getComments().split("(¿¡,.-_/!?) ");
-			for (final String word : spamWords) {
-				for (final String titleWord : comments)
-					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
+		if (miscellaneousRecord.getComments() != null) {
+			if (!containsSpam) {
+				final String[] comments = miscellaneousRecord.getComments().split("(¿¡,.-_/!?)");
+				for (final String word : spamWords) {
+					for (final String titleWord : comments)
+						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
+							containsSpam = true;
+							break;
+						}
+					if (containsSpam) {
+						principal.setIsSuspicious(true);
 						break;
 					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
 				}
 			}
 		}
