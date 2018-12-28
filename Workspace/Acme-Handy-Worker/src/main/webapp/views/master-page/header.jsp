@@ -31,7 +31,7 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<security:authorize access="hasRole('ADMIN')">
+		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.creations" /></a>
 				<ul>
@@ -72,9 +72,9 @@
 						code="master.page.administrator.manage" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/suspicious-show.do"><spring:message
-								code="master.page.administrator.suspicious.show" /></a></li>
-					<li><a href="administrator/system-configuration.do"><spring:message
+					<li><a href="actor/administrator/list-suspicious-actors.do"><spring:message
+								code="master.page.list.suspicious.actors" /></a></li>
+					<li><a href="system-configuration/administrator/display.do"><spring:message
 								code="master.page.administrator.system.configuration" /></a></li>
 				</ul></li>
 		</security:authorize>
@@ -128,7 +128,7 @@
 					<li class="arrow"></li>
 					<li><a href="fixuptask/list.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
-					<li><a href="application/list.do"><spring:message
+					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
 					<li><a href="finder/list.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
@@ -201,7 +201,7 @@
 					<li><a href="actor/display.do"><spring:message
 								code="master.page.profile.view" /></a></li>
 					<li><a href="message-box/list.do"><spring:message
-								code="master.page.profile.messages.boxes" /></a></li>
+								code="master.page.profile.message.boxes" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>
 				</ul></li>
