@@ -39,7 +39,7 @@ public class ApplicationController extends AbstractController {
 
 	// List
 
-	@RequestMapping(value = "/customer/list", params = "fixuptaskID")
+	@RequestMapping(value = "/customer/list-customer", params = "fixuptaskID")
 	public ModelAndView list(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		Collection<Application> applications;

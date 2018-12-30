@@ -49,18 +49,16 @@
 
 					<jstl:if test="${user == creator.userAccount.username}">
 						<display:column>
-							<input type="button" name="edit"
-								value="<spring:message code="phase.edit" />"
-								onclick="redirect: location.href = 'phase/handy-worker,customer/edit.do?phaseID=${phases.id}';" />
-						</display:column>
-
-						<display:column>
 							<input type="button" name="delete"
 								value="<spring:message code="phase.delete" />"
-								onclick="redirect: location.href = 'phase/handy-worker,customer/delete.do?phaseID=${phases.id}';" />
+								onclick="redirect: location.href = 'phase/handy-worker/delete.do?phaseID=${phases.id}';" />
 						</display:column>
 					</jstl:if>
 				</display:table></td>
 		</tr>
 	</table>
+	<jstl:if test="${user == creator.userAccount.username}">
+		<a href="phase/handy-worker/create.do?fixuptaskID=${fixuptaskID}"><spring:message
+				code="phase.create" /></a>
+	</jstl:if>
 </security:authorize>
