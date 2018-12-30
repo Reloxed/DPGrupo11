@@ -84,6 +84,11 @@ public class ComplaintService {
 		}
 
 		result = this.complaintRepository.saveAndFlush(complaint);
+		Collection<Complaint> collCom = customer.getComplaints();
+		collCom.add(result);
+		customer.setComplaints(collCom);
+		this.customerService.save(customer);
+		
 
 		return result;
 	}
@@ -92,6 +97,7 @@ public class ComplaintService {
 		Collection<Complaint> result;
 
 		result = this.complaintRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -100,6 +106,7 @@ public class ComplaintService {
 		Complaint result;
 
 		result = this.complaintRepository.findOne(complaintId);
+		Assert.notNull(result);
 
 		return result;
 	}

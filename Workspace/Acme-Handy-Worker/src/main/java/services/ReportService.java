@@ -59,15 +59,17 @@ public class ReportService {
 	}
 
 	public Collection<Report> findAll() {
-		Collection<Report> res;
-		res = this.reportRepository.findAll();
-		return res;
+		Collection<Report> result;
+		result = this.reportRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Report findOne(final int reportId) {
-		Report res;
-		res = this.reportRepository.findOne(reportId);
-		return res;
+		Report result;
+		result = this.reportRepository.findOne(reportId);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Report save(final Report report) {

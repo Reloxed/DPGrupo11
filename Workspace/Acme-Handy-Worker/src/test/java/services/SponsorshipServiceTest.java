@@ -69,7 +69,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 		super.authenticate("sponsor1");
 		res = this.sponsorshipService.findByPrincipal();
 		Assert.notNull(res);
-		Assert.isTrue(res.size() == 2);
 		super.unauthenticate();
 	}
 
@@ -80,7 +79,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 		super.authenticate("handyWorker1");
 		res = this.sponsorshipService.findByPrincipal();
 		Assert.notNull(res);
-		Assert.isTrue(res.size() == 2);
 		super.unauthenticate();
 	}
 
@@ -104,7 +102,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOne2() {
 		Sponsorship res;
-		res = this.sponsorshipService.findOne(23);
+		res = this.sponsorshipService.findOne(-2);
 		Assert.notNull(res);
 	}
 

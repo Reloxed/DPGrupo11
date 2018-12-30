@@ -76,7 +76,7 @@ public class WarrantyServiceTest extends AbstractTest {
 
 	// Save con actor incorrecto
 	@Test(expected = IllegalArgumentException.class)
-	public void testSave2() {
+	public void testNotSave_1() {
 		super.authenticate("customer1");
 		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo guapo");
@@ -91,7 +91,7 @@ public class WarrantyServiceTest extends AbstractTest {
 
 	// Save con un campo erroneo
 	@Test(expected = NullPointerException.class)
-	public void testSave3() {
+	public void testNotSave_2() {
 		super.authenticate("admin1");
 		final Warranty w = this.warrantyService.create();
 		// w.setTitle("Titulo guapo");
@@ -106,7 +106,7 @@ public class WarrantyServiceTest extends AbstractTest {
 
 	// Save con spam
 	@Test
-	public void testSave4() {
+	public void testSave() {
 		super.authenticate("admin1");
 		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo sexo-nigeria");
@@ -160,9 +160,11 @@ public class WarrantyServiceTest extends AbstractTest {
 		w.setTitle("Titulo guapo");
 		w.setTerms("Terminos de uso bonitos");
 		w.setLaws("Ley 1");
+		w.setIsFinal(false);
 		final Warranty res = this.warrantyService.save(w);
-		res.setIsFinal(true);
-		this.warrantyService.save(res);
+		Warranty clone = (Warranty) res.clone();
+		clone.setIsFinal(true);
+		this.warrantyService.save(clone);
 		super.unauthenticate();
 		final Collection<Warranty> finalWarranties = this.warrantyService.findFinalWarranties();
 		Assert.notEmpty(finalWarranties);

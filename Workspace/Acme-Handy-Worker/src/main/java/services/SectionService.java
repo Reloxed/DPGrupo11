@@ -56,17 +56,21 @@ public class SectionService {
 	}
 
 	public Collection<Section> findAll() {
-		Collection<Section> res;
+		Collection<Section> result;
 
-		res = this.sectionRepository.findAll();
-		return res;
+		result = this.sectionRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
 	}
 
 	public Section findOne(final int sectionId) {
-		Section res;
+		Section result;
 
-		res = this.sectionRepository.findOne(sectionId);
-		return res;
+		result = this.sectionRepository.findOne(sectionId);
+		Assert.notNull(result);
+		
+		return result;
 	}
 
 	public Section save(final Section section) {

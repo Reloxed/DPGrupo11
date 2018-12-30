@@ -63,8 +63,7 @@ public class CurriculumServiceTest extends AbstractTest{
 		Collection<Curriculum> collC;
 		collC = this.curriculumService.findAll();
 		curriculum = this.curriculumService.findOne(collC.iterator().next().getId());
-		Assert.notNull(curriculum);
-		
+		Assert.notNull(curriculum);		
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -136,7 +135,7 @@ public class CurriculumServiceTest extends AbstractTest{
 		
 	}
 	
-	@Test
+	@Test (expected = IllegalArgumentException.class)
 	public void testDeleteCurriculum() {
 		HandyWorker user;
 		Curriculum curriculum, deletedC;
@@ -153,7 +152,7 @@ public class CurriculumServiceTest extends AbstractTest{
 		super.unauthenticate();
 	}
 	
-	@Test
+	@Test (expected = IllegalArgumentException.class)
 	public void testDeleteCurriculum2() {
 		HandyWorker user;
 		Curriculum curriculum;

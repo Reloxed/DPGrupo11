@@ -63,6 +63,7 @@ public class MessageBoxService {
 		MessageBox result;
 
 		result = this.messageBoxRepository.findOne(messageBoxId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -71,7 +72,8 @@ public class MessageBoxService {
 		Collection<MessageBox> result;
 
 		result = this.messageBoxRepository.findAll();
-
+		Assert.notNull(result);
+		
 		return result;
 	}
 

@@ -66,6 +66,7 @@ public class FixUpTaskService {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 
@@ -75,6 +76,7 @@ public class FixUpTaskService {
 		FixUpTask result;
 
 		result = this.fixUpTaskRepository.findOne(fixUpTaskId);
+		Assert.notNull(result);
 
 		return result;
 

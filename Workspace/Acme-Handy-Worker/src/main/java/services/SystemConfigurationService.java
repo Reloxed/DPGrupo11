@@ -67,17 +67,19 @@ public class SystemConfigurationService {
 	}
 
 	public Collection<SystemConfiguration> findAll() {
-		Collection<SystemConfiguration> systemConfigurations;
+		Collection<SystemConfiguration> result;
 
-		systemConfigurations = this.systemConfigurationRepository.findAll();
+		result = this.systemConfigurationRepository.findAll();
+		Assert.notNull(result);
 
-		return systemConfigurations;
+		return result;
 	}
 
 	public SystemConfiguration findOne(final int systemConfigurationId) {
 		SystemConfiguration result;
 
 		result = this.systemConfigurationRepository.findOne(systemConfigurationId);
+		Assert.notNull(result);
 
 		return result;
 	}

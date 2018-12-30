@@ -76,18 +76,20 @@ public class CreditCardService {
 	}
 
 	public Collection<CreditCard> findAll() {
-		Collection<CreditCard> collCC = new ArrayList<>();
+		Collection<CreditCard> result = new ArrayList<>();
 
-		collCC = this.creditCardRepository.findAll();
+		result = this.creditCardRepository.findAll();
+		Assert.notNull(result);
 
-		return collCC;
+		return result;
 	}
 
 	public CreditCard findOne(final int creditCardId) {
-		CreditCard creditCard;
+		CreditCard result;
 
-		creditCard = this.creditCardRepository.findOne(creditCardId);
-		return creditCard;
+		result = this.creditCardRepository.findOne(creditCardId);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public CreditCard save(final CreditCard creditCard) {

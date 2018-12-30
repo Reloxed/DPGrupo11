@@ -52,15 +52,17 @@ public class PhaseService {
 	}
 
 	public Phase findOne(final int phaseId) {
-		Phase res;
-		res = this.phaseRepository.findOne(phaseId);
-		return res;
+		Phase result;
+		result = this.phaseRepository.findOne(phaseId);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Collection<Phase> findAll() {
-		Collection<Phase> res;
-		res = this.phaseRepository.findAll();
-		return res;
+		Collection<Phase> result;
+		result = this.phaseRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Phase save(final Phase phase) {

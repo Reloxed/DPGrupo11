@@ -56,17 +56,19 @@ public class EducationRecordService {
 	}
 
 	public EducationRecord findOne(final int educationRecordId) {
-		EducationRecord res;
-		res = this.educationRecordRepository.findOne(educationRecordId);
-		return res;
+		EducationRecord result;
+		result = this.educationRecordRepository.findOne(educationRecordId);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Collection<EducationRecord> findAll() {
-		Collection<EducationRecord> educationRecords;
+		Collection<EducationRecord> result;
 
-		educationRecords = this.educationRecordRepository.findAll();
+		result = this.educationRecordRepository.findAll();
+		Assert.notNull(result);
 
-		return educationRecords;
+		return result;
 	}
 
 	public EducationRecord save(final EducationRecord educationRecord) {

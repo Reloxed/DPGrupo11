@@ -64,17 +64,19 @@ public class TutorialService {
 	}
 
 	public Collection<Tutorial> findAll() {
-		Collection<Tutorial> tutorials;
+		Collection<Tutorial> result;
 
-		tutorials = this.tutorialRepository.findAll();
+		result = this.tutorialRepository.findAll();
+		Assert.notNull(result);
 
-		return tutorials;
+		return result;
 	}
 
 	public Tutorial findOne(final int tutorialId) {
 		Tutorial result;
 
 		result = this.tutorialRepository.findOne(tutorialId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -132,9 +134,7 @@ public class TutorialService {
 		}
 		result = this.tutorialRepository.save(t);
 		Assert.notNull(result);
-		System.out.println(result.getVersion());
-		//		this.tutorialRepository.flush();
-		//		principal = this.handyWorkerService.save(principal);
+		this.tutorialRepository.flush();
 		return result;
 	}
 

@@ -199,16 +199,19 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test
 	public void testFindCreditCardsBySponsorId1() {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(2463));
+		Sponsor principal;
+		super.authenticate("sponsor1");
+		principal = this.sponsorService.findByPrincipal();
+		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(principal.getId()));
 		Assert.notEmpty(collCC);
+		super.unauthenticate();
 	}
 
 	// FindCreditCardsBySponsorId incorrecto
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindCreditCardsBySponsorId2() {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(23));
+		collCC.addAll(this.sponsorService.findCreditCardsBySponsorId(-2));
 		Assert.notEmpty(collCC);
-		Assert.isTrue(collCC.size() == 2);
 	}
 }

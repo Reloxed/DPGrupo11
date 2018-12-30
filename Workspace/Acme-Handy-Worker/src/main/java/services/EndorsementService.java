@@ -56,6 +56,7 @@ public class EndorsementService {
 	public Collection<Endorsement> findAll() {
 		Collection<Endorsement> result;
 		result = this.endorsementRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 
@@ -65,6 +66,7 @@ public class EndorsementService {
 		Endorsement result;
 
 		result = this.endorsementRepository.findOne(endorsementId);
+		Assert.notNull(result);
 
 		return result;
 

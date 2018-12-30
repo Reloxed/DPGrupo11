@@ -71,6 +71,8 @@ public class NoteServiceTest extends AbstractTest{
 		Assert.notNull(result);
 		
 		collR = this.reportService.findAll();
+		Report repToFinal = collR.iterator().next();
+		repToFinal.setIsFinal(true);
 		report = this.reportService.findOne(collR.iterator().next().getId());
 		Assert.notNull(report);
 		
@@ -81,15 +83,12 @@ public class NoteServiceTest extends AbstractTest{
 		result.setCustomerComment(" ");
 		result.setRefereeComment(" ");
 		result.setReport(report);
-		System.out.println(result.getReport().getNotes());
 		saved = this.noteService.save(result);
 		
 		this.noteService.findOne(saved.getId());
 		Assert.notNull(saved);
 		Assert.isTrue(principal.getIsSuspicious());
 		Assert.isTrue(saved.getReport().getNotes().contains(saved));
-		System.out.println(saved.getReport().getNotes());
-
 		super.unauthenticate();
 	}
 	
@@ -112,6 +111,10 @@ public class NoteServiceTest extends AbstractTest{
 		note.setHandyWorkerComment(" ");
 		note.setRefereeComment(" ");
 		collR = this.reportService.findAll();
+		
+		Report repToFinal = collR.iterator().next();
+		repToFinal.setIsFinal(true);
+		
 		report = this.reportService.findOne(collR.iterator().next().getId());
 		Assert.notNull(report);
 		
@@ -131,8 +134,7 @@ public class NoteServiceTest extends AbstractTest{
 		Assert.notNull(removed);
 		Assert.isTrue(notes.contains(toDelete));
 		Assert.isTrue(!removed.contains(toDelete));
-//		Assert.isTrue(removed.size()==1);
-//		Assert.isTrue(notes.size()==2);
+
 	}
 	
 	@Test

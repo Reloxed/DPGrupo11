@@ -117,7 +117,7 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 	
 	// Delete funcionando
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testDelete1(){
 		super.authenticate("handyWorker2");
 		Tutorial res = this.tutorialService.findOne(this.tutorialService.findAll().iterator().next().getId());
