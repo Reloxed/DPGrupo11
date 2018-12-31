@@ -16,6 +16,7 @@ import security.Authority;
 import security.UserAccount;
 import utilities.AbstractTest;
 import domain.Administrator;
+import domain.Endorser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -33,6 +34,9 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private EndorserService			endorserService;
 
 
 	@Test
@@ -167,4 +171,16 @@ public class AdministratorServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
+	@Test
+	public void testCalculateScore() {
+		super.authenticate("admin1");
+		Endorser endorser;
+		Double score;
+
+		endorser = this.endorserService.findAll().iterator().next();
+		score = this.administratorService.calculateScore(endorser);
+		System.out.println(score);
+		Assert.isTrue(score == 1.0);
+		super.unauthenticate();
+	}
 }

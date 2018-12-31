@@ -40,6 +40,9 @@ public class AdministratorService {
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
+	@Autowired
+	private EndorserService				endorserService;
+
 
 	// Constructors ------------------------------------
 
@@ -139,31 +142,37 @@ public class AdministratorService {
 	}
 
 	public Double calculateScore(final Endorser endorser) {
-		final Double res, positiveValue, negativeValue;
+		Double res, positiveValue, negativeValue;
 		String[] positiveWords, negativeWords;
-		final Endorsement endorsements;
+		final Collection<Endorsement> endorsements;
 
+		res = 0.;
 		positiveWords = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords().split(",");
 		negativeWords = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords().split(",");
-
+		System.out.println(positiveWords);
+		System.out.println(negativeWords);
 		positiveValue = 0.;
 		negativeValue = 0.;
 
-		//endorsements = endorser.getEndorsements(?);
-		// TODO: Sería algo así pero hay que ver como sacar los endorsements
-		/*
-		 * for (final Endorsement e : endorsements) {
-		 * final String comments = e.getComments();
-		 * for (final String word : comments.split("(¿¡,.-_/!?) ")) {
-		 * if (positiveWords.contains(word))
-		 * positiveValue++;
-		 * if (negativeWords.contains(word))
-		 * negativeValue++;
-		 * }
-		 * }
-		 */
+		endorsements = this.endorserService.findEndorsementsReceivedByEndorser(endorser.getId());
+		System.out.println(endorsements);
+		for (final Endorsement e : endorsements) {
+			final String[] comments = e.getComments().split(" ");
+			int i, j = 0;
+			for (final String word : comments) {
+				for (i = 0; i < positiveWords.length; i++)
+					if (positiveWords[i].equals(word))
+						positiveValue += 1.;
+				for (j = 0; j < negativeWords.length; j++)
+					if (negativeWords[j].equals(word))
+						negativeValue += 1.;
+			}
+		}
 
-		res = (positiveValue - negativeValue) / (positiveValue + negativeValue);
+		if (positiveValue + negativeValue == 0)
+			res = 0.;
+		else
+			res = (positiveValue - negativeValue) / (positiveValue + negativeValue);
 		return res;
 	}
 }
