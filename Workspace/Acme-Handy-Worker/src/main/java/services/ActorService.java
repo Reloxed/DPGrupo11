@@ -93,6 +93,7 @@ public class ActorService {
 		Assert.notNull(userAccount);
 
 		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
 
 		return result;
 

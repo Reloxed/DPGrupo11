@@ -50,7 +50,13 @@ public class UtilityService {
 		year = String.valueOf(date.get(Calendar.YEAR));
 		year = year.substring(year.length() - 2, year.length());
 		month = String.valueOf(date.get(Calendar.MONTH) + 1);
+		if (month.length()== 1){
+			month = "0" + month;
+		}
 		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+		if (day.length()== 1){
+			day = "0" + day;
+		}
 
 		while (unique == false) {
 			alphaNum = this.randomString();

@@ -31,11 +31,20 @@ public class RefereeServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
+	public void testFindOne(){
+		Collection<Referee> collR;
+		Referee ref;
+		
+		collR = this.refereeService.findAll();
+		ref = this.refereeService.findOne(collR.iterator().next().getId());
+		Assert.notNull(ref);
+	}
+	
+	@Test
 	public void testFindAll() {
 		Collection<Referee> res;
 		res = this.refereeService.findAll();
 		Assert.notEmpty(res);
-		Assert.isTrue(res.size() == 2);
 	}
 
 	@Test

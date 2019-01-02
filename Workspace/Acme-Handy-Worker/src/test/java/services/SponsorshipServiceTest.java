@@ -230,7 +230,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 	//IMPORTANTE: FUNCIONA, SIMPLEMENTE SI FALLA HAY QUE CAMBIAR LA ID DEBIDO A QUE SE HA REALIZADO UN NUEVO POPULATE.
 	@Test
 	public void testFindByCreditCardId1(){
-		Collection<Sponsorship> res = this.sponsorshipService.findByCreditCardId(2487);
-		Assert.notNull(res);
+		Collection<CreditCard> collCC;
+		collCC = this.creditCardService.findAll();
+		Collection<Sponsorship> res = this.sponsorshipService.findByCreditCardId(collCC.iterator().next().getId());
+		Assert.notEmpty(res);
 	}
 }

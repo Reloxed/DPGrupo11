@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.HandyWorker;
 import domain.Section;
 import domain.Tutorial;
 
@@ -31,6 +32,9 @@ public class TutorialServiceTest extends AbstractTest {
 
 	@Autowired
 	private SectionService sectionService;
+	
+	@Autowired
+	private HandyWorkerService handyWorkerService;
 
 	// Tests ----------------------------------------------------------
 
@@ -117,11 +121,15 @@ public class TutorialServiceTest extends AbstractTest {
 	}
 	
 	// Delete funcionando
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testDelete1(){
+		HandyWorker principal;
+		Tutorial res;
 		super.authenticate("handyWorker2");
-		Tutorial res = this.tutorialService.findOne(this.tutorialService.findAll().iterator().next().getId());
+		principal = this.handyWorkerService.findByPrincipal();
+		res = principal.getTutorial().iterator().next();
 		this.tutorialService.delete(res);
+		
 		Assert.isTrue(!this.tutorialService.findAll().contains(res));
 		super.unauthenticate();
 	}

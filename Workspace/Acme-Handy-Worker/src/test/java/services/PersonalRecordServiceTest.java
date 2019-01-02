@@ -31,6 +31,15 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
+	public void testFindOne() {
+		Collection<PersonalRecord> collPR;
+		PersonalRecord personalR;
+		collPR = this.personalRecordService.findAll();
+		personalR = this.personalRecordService.findOne(collPR.iterator().next().getId());
+		Assert.notNull(personalR);
+	}
+	
+	@Test
 	public void testFindAll() {
 		Collection<PersonalRecord> res;
 		res = this.personalRecordService.findAll();

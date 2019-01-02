@@ -114,7 +114,7 @@ public class FinderServiceTest extends AbstractTest {
 		super.authenticate("handyWorker2");
 
 
-		result=this.finderService.findOne(218);
+		result=this.finderService.findOne(-2);
 		Assert.notNull(result);
 
 		super.unauthenticate();

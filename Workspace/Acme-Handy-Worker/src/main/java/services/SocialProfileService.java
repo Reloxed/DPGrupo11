@@ -92,15 +92,10 @@ public class SocialProfileService {
 
 		if (socialProfile.getId() != 0)
 			Assert.isTrue(principal.getSocialProfiles().contains(socialProfile));
-		else {
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(principal.getSocialProfiles());
-			socialProfilesUpdated.add(socialProfile);
-			principal.setSocialProfiles(socialProfilesUpdated);
-		}
 		
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+
 		final String[] nick = socialProfile.getNick().split("(¿¡,.-_/!?) ");
 		for (final String word : spamWords) {
 			for (final String titleWord : nick)
@@ -114,9 +109,15 @@ public class SocialProfileService {
 			}
 		}
 
-		result = this.socialProfileRepository.saveAndFlush(socialProfile);
+		result = this.socialProfileRepository.save(socialProfile);
+		this.socialProfileRepository.flush();
 		Assert.notNull(result);
 
+		socialProfilesUpdated = new ArrayList<SocialProfile>();
+		socialProfilesUpdated.addAll(principal.getSocialProfiles());
+		socialProfilesUpdated.add(socialProfile);
+		principal.setSocialProfiles(socialProfilesUpdated);
+		
 		return result;
 	}
 

@@ -91,17 +91,14 @@ public class TutorialService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (t.getId() == 0) {
-			tutorials = new ArrayList<>();
-			tutorials.addAll(principal.getTutorial());
-			tutorials.add(t);
-			principal.setTutorial(tutorials);
-
+		if (t.getId() != 0) {
+			Assert.isTrue(principal.getTutorial().contains(t));	
+		} else {
 			sponsorships = new ArrayList<>();
 			sponsorships.addAll(this.sponsorshipService.findAll());
 			t.setSponsorships(sponsorships);
-		} else
-			Assert.isTrue(principal.getTutorial().contains(t));
+		}
+			
 
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findSpamWords().split(",");
@@ -135,6 +132,13 @@ public class TutorialService {
 		result = this.tutorialRepository.save(t);
 		Assert.notNull(result);
 		this.tutorialRepository.flush();
+		
+		tutorials = new ArrayList<>();
+		tutorials.addAll(principal.getTutorial());
+		tutorials.add(t);
+		principal.setTutorial(tutorials);
+
+		
 		return result;
 	}
 
