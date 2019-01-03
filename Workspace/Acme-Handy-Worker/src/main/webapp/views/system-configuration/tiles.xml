@@ -10,15 +10,16 @@
 
 <tiles-definitions>
 
-	<definition name="actor/display" extends="master.page">
-		<put-attribute name="title" value="Actor profile" />
-		<put-attribute name="body" value="/views/actor/display.jsp" />
+	<definition name="systemConfiguration/display" extends="master.page">
+		<put-attribute name="title" value="System Configuration" />
+		<put-attribute name="body"
+			value="/views/system-configuration/display.jsp" />
 	</definition>
 
-	<definition name="actor/listSuspiciousActors" extends="master.page">
-		<put-attribute name="title" value="List suspicious users" />
+	<definition name="systemConfiguration/edit" extends="master.page">
+		<put-attribute name="title" value="Edit System Configuration" />
 		<put-attribute name="body"
-			value="/views/actor/list-suspicious-actors.jsp" />
+			value="/views/system-configuration/edit.jsp" />
 	</definition>
 
 </tiles-definitions>

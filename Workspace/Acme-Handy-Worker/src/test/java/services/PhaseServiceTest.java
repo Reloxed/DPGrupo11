@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -17,23 +16,21 @@ import domain.HandyWorker;
 import domain.Phase;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
-})
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
+		"classpath:spring/config/packages.xml" })
 @Transactional
 public class PhaseServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
 	@Autowired
-	private PhaseService		phaseService;
+	private PhaseService phaseService;
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private FixUpTaskService	fixUpTaskService;
-
+	private FixUpTaskService fixUpTaskService;
 
 	// Tests ------------------------------------------------------------------
 
@@ -70,6 +67,16 @@ public class PhaseServiceTest extends AbstractTest {
 	}
 
 	@Test
+
+	public void testFindCreator() {
+		HandyWorker res;
+		Phase phase;
+
+		phase = this.phaseService.findOne(6487);
+		res = this.phaseService.creator(phase.getId());
+		Assert.notNull(res);
+	}
+
 	public void testDelete() {
 		Phase toDelete;
 		Collection<Phase> phases;
@@ -82,5 +89,4 @@ public class PhaseServiceTest extends AbstractTest {
 		phases = this.phaseService.findAll();
 		Assert.isTrue(phases.size() == 2);
 	}
-
 }
