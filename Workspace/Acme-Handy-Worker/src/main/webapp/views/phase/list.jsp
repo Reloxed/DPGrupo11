@@ -33,7 +33,7 @@
 
 		<tr>
 			<td><display:table pagesize="5" class="displaytag" name="phases"
-					requestURI="phase/handy-worker,customer/list.do" id="phases">
+					requestURI="phase/handy-worker/list.do" id="phases">
 
 					<display:column property="title" titleKey="phases.title"
 						sortable="true" />
@@ -61,4 +61,37 @@
 		<a href="phase/handy-worker/create.do?fixuptaskID=${fixuptaskID}"><spring:message
 				code="phase.create" /></a>
 	</jstl:if>
+</security:authorize>
+
+<security:authorize access="hasRole('CUSTOMER')">
+
+	<p>
+		<spring:message code="phases.title" />
+	</p>
+	<!-- Tabla de fases -->
+
+	<table class="displayStyle">
+		<tr>
+			<th><spring:message code="phases.title" /></th>
+		</tr>
+
+		<tr>
+			<td><display:table pagesize="5" class="displaytag" name="phases"
+					requestURI="phase/handy-worker/list.do" id="phases">
+
+					<display:column property="title" titleKey="phases.title"
+						sortable="true" />
+
+					<display:column property="description" titleKey="phase.description"
+						sortable="true" />
+
+					<display:column property="startMoment" titleKey="phase.startmoment"
+						sortable="true" />
+
+					<display:column property="endMoment" titleKey="phase.endmoment"
+						sortable="true" />
+
+				</display:table></td>
+		</tr>
+	</table>
 </security:authorize>

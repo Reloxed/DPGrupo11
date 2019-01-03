@@ -23,7 +23,7 @@ import domain.HandyWorker;
 import domain.Phase;
 
 @Controller
-@RequestMapping("/phase")
+@RequestMapping("/phase/handy-worker")
 public class PhaseController extends AbstractController {
 
 	// Services
@@ -47,7 +47,7 @@ public class PhaseController extends AbstractController {
 
 	// Lists
 
-	@RequestMapping(value = "/handy-worker,customer/list", method = RequestMethod.GET, params = "fixuptaskID")
+	@RequestMapping(value = "/list", method = RequestMethod.GET, params = "fixuptaskID")
 	public ModelAndView list(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		Collection<Phase> phases;
@@ -57,7 +57,7 @@ public class PhaseController extends AbstractController {
 		creator = this.phaseService.creator(phases.iterator().next().getId());
 
 		res = new ModelAndView("phase/list");
-		res.addObject("requestURI", "phase/handy-worker,customer/list.do");
+		res.addObject("requestURI", "phase/handy-worker/list.do");
 		res.addObject("phases", phases);
 		res.addObject("creator", creator);
 		res.addObject("fixuptaskID", fixuptaskID);
@@ -67,7 +67,7 @@ public class PhaseController extends AbstractController {
 
 	// Creating a phase
 
-	@RequestMapping(value = "/handy-worker/create", method = RequestMethod.GET, params = "fixuptaskID")
+	@RequestMapping(value = "/create", method = RequestMethod.GET, params = "fixuptaskID")
 	public ModelAndView create(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		Phase phase;
@@ -120,7 +120,7 @@ public class PhaseController extends AbstractController {
 
 	// Save
 
-	@RequestMapping(value = "/handy-worker/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Phase phase, BindingResult binding) {
 		ModelAndView res;
 
@@ -129,11 +129,32 @@ public class PhaseController extends AbstractController {
 		} else {
 			try {
 				this.phaseService.save(phase);
-				res = new ModelAndView("redirect:list.do");
+				res = new ModelAndView("redirect:list.do?fixuptaskID="
+						+ phase.getFixUpTask().getId());
 			} catch (Throwable oops) {
 				res = createEditModelAndView(phase, "phase.commit.error");
 			}
 		}
 		return res;
+	}
+
+	// Delete
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int phaseID) {
+		ModelAndView result;
+		Phase phase;
+
+		phase = this.phaseService.findOne(phaseID);
+
+		try {
+			this.phaseService.delete(phase);
+			result = new ModelAndView("redirect:list.do?fixuptaskID="
+					+ phase.getFixUpTask().getId());
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(phase, "phase.commit.error");
+		}
+
+		return result;
 	}
 }

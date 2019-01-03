@@ -105,7 +105,7 @@
 					<li><a href="customer/endorsements.do"><spring:message
 								code="master.page.customer.endorsements.show" /></a></li>
 					<li><a href="customer/endorsement-create.do"><spring:message
-								code="master.page.customer.endorsement.create" /></a></li>
+								code="master.page.customer.endorsements.create" /></a></li>
 				</ul></li>
 		</security:authorize>
 
