@@ -16,6 +16,8 @@ import security.Authority;
 import security.UserAccount;
 import utilities.AbstractTest;
 import domain.Administrator;
+import domain.Customer;
+import domain.Endorsement;
 import domain.Endorser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,6 +39,12 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
 	private EndorserService			endorserService;
+
+	@Autowired
+	private EndorsementService		endorsementService;
+
+	@Autowired
+	private CustomerService			customerService;
 
 
 	@Test
@@ -173,14 +181,56 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testCalculateScore() {
+		// Creating customer
+		Customer customer = this.customerService.create();
+		Customer saved;
+		final String username = "customer1";
+
+		super.authenticate(username);
+
+		customer.setName("Pedro");
+		customer.setSurname("Picapiedra");
+		customer.setEmail("pedropicapiedra@yahoo.es");
+		customer.setMiddleName("Vientos");
+		customer.setAddress("Calle mi casa 28");
+		customer.getUserAccount().setUsername("Pedro28");
+		customer.getUserAccount().setPassword("adsadd252f");
+		saved = this.customerService.save(customer);
+		super.unauthenticate();
+		customer = this.customerService.findOne(saved.getId());
+		Assert.notNull(customer);
+
+		// Creating endorsement to customer
+		Endorser principal;
+		Endorsement result;
+
+		Endorsement saved1;
+
+		super.authenticate("handyWorker2");
+
+		principal = this.endorserService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.endorsementService.create();
+		result.setSender(principal);
+		result.setRecipient(customer);
+		result.setComments("amazing amazing bad");
+		saved1 = this.endorsementService.save(result);
+		Assert.notNull(saved1);
+		super.unauthenticate();
+
 		super.authenticate("admin1");
 		Endorser endorser;
 		Double score;
 
-		endorser = this.endorserService.findAll().iterator().next();
+		endorser = customer;
 		score = this.administratorService.calculateScore(endorser);
-		System.out.println(score);
-		Assert.isTrue(score == 1.0);
+		/**
+		 * Positive words: 2
+		 * Negative words: 1
+		 * Score hoped = (2 - 1) / (2 + 1) = 0.3333333333333
+		 */
+		Assert.isTrue(score == 0.3333333333333333);
 		super.unauthenticate();
 	}
 }

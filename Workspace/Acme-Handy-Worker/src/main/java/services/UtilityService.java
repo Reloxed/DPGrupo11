@@ -91,15 +91,35 @@ public class UtilityService {
 	public List<String> getNegativeWords() {
 
 		final String makes = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords();
-		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
+		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
 		return listNegWords;
+	}
+
+	public int getNumberNegativeWords(final String s) {
+		int res = 0;
+		final List<String> negativeWords = this.getNegativeWords();
+		final String[] words = s.split("(¿¡,.-_/!?) ");
+		for (final String a : words)
+			if (negativeWords.contains(a))
+				res += 1;
+		return res;
 	}
 
 	public List<String> getPositiveWords() {
 
 		final String makes = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords();
-		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
+		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
 		return listPosWords;
+	}
+
+	public int getNumberPositiveWords(final String s) {
+		int res = 0;
+		final List<String> positiveWords = this.getPositiveWords();
+		final String[] words = s.split("(¿¡,.-_/!?) ");
+		for (final String a : words)
+			if (positiveWords.contains(a))
+				res += 1;
+		return res;
 	}
 
 	public List<String> getSpamWords() {

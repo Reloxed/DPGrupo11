@@ -18,8 +18,10 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Customer;
 import domain.Endorsement;
 import domain.Endorser;
+import domain.HandyWorker;
 import domain.MessageBox;
 import domain.SocialProfile;
 
@@ -30,18 +32,24 @@ public class AdministratorService {
 	// Managed repository -------------------------
 
 	@Autowired
-	private AdministratorRepository		administratorRepository;
+	private AdministratorRepository	administratorRepository;
 
 	// Supporting services -------------------------
 
 	@Autowired
-	private MessageBoxService			messageBoxService;
+	private MessageBoxService		messageBoxService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
-	private EndorserService				endorserService;
+	private CustomerService			customerService;
+
+	@Autowired
+	private EndorserService			endorserService;
+
+	@Autowired
+	private UtilityService			utilityService;
 
 
 	// Constructors ------------------------------------
@@ -143,36 +151,51 @@ public class AdministratorService {
 
 	public Double calculateScore(final Endorser endorser) {
 		Double res, positiveValue, negativeValue;
-		String[] positiveWords, negativeWords;
 		final Collection<Endorsement> endorsements;
 
 		res = 0.;
-		positiveWords = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords().split(",");
-		negativeWords = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords().split(",");
-		System.out.println(positiveWords);
-		System.out.println(negativeWords);
 		positiveValue = 0.;
 		negativeValue = 0.;
-
 		endorsements = this.endorserService.findEndorsementsReceivedByEndorser(endorser.getId());
-		System.out.println(endorsements);
 		for (final Endorsement e : endorsements) {
 			final String[] comments = e.getComments().split(" ");
-			int i, j = 0;
 			for (final String word : comments) {
-				for (i = 0; i < positiveWords.length; i++)
-					if (positiveWords[i].equals(word))
-						positiveValue += 1.;
-				for (j = 0; j < negativeWords.length; j++)
-					if (negativeWords[j].equals(word))
-						negativeValue += 1.;
+				positiveValue += this.utilityService.getNumberPositiveWords(word);
+				negativeValue += this.utilityService.getNumberNegativeWords(word);
 			}
 		}
 
-		if (positiveValue + negativeValue == 0)
-			res = 0.;
+		if (positiveValue == 0 && negativeValue == 0)
+			res = 1.;
+		else if (negativeValue == 0)
+			res = 1.;
+		else if (positiveValue == 0)
+			res = -1.;
 		else
 			res = (positiveValue - negativeValue) / (positiveValue + negativeValue);
 		return res;
+	}
+
+	// Req. 50.1 : Launch a process that computes a score for every customer and handy worker.
+	public void calculateAllScores() {
+		final Collection<HandyWorker> hws;
+		Collection<Customer> customers;
+		Administrator principal;
+
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+
+		hws = this.handyWorkerService.findAll();
+		customers = this.customerService.findAll();
+
+		for (final HandyWorker hw : hws) {
+			hw.setScore(this.calculateScore(hw));
+			this.handyWorkerService.save(hw);
+		}
+
+		for (final Customer c : customers) {
+			c.setScore(this.calculateScore(c));
+			this.customerService.save(c);
+		}
 	}
 }
