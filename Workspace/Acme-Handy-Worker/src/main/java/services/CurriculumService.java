@@ -72,17 +72,19 @@ public class CurriculumService {
 	}
 
 	public Collection<Curriculum> findAll() {
-		Collection<Curriculum> curriculums;
+		Collection<Curriculum> result;
 
-		curriculums = this.curriculumRepository.findAll();
+		result = this.curriculumRepository.findAll();
+		Assert.notNull(result);
 
-		return curriculums;
+		return result;
 	}
 
 	public Curriculum findOne(final int curriculumId) {
 		Curriculum result;
 
 		result = this.curriculumRepository.findOne(curriculumId);
+		Assert.notNull(result);
 
 		return result;
 	}

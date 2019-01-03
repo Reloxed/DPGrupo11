@@ -49,9 +49,8 @@ public class HandyWorkerService {
 	public HandyWorker findOne(final int handyWorkerId) {
 		HandyWorker result;
 
-		Assert.isTrue(handyWorkerId != 0);
-
 		result = this.handyWorkerRepository.findOne(handyWorkerId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -60,7 +59,6 @@ public class HandyWorkerService {
 		Collection<HandyWorker> result;
 
 		result = this.handyWorkerRepository.findAll();
-
 		Assert.notNull(result);
 
 		return result;
@@ -165,6 +163,14 @@ public class HandyWorkerService {
 	public Collection<HandyWorker> findTopComplaintsHandyWorkers() {
 		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findTopComplaintsHandyWorkers();
 		return colHandys;
+	}
+	
+	public HandyWorker findHandyWorkerByApplicationId(int applicationId) {
+		HandyWorker result;
+
+		result = this.handyWorkerRepository.findHandyWorkerByApplicationId(applicationId);
+
+		return result;
 	}
 
 }

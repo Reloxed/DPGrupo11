@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.Test;
@@ -68,7 +69,7 @@ public class CategoryServiceTest extends AbstractTest {
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
 		idiomasName.put("Español", "Hola");
-		idiomasName.put("Inglés", "Hello");
+		idiomasName.put("English", "Hello");
 		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));
@@ -90,7 +91,7 @@ public class CategoryServiceTest extends AbstractTest {
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
 		idiomasName.put("Español", "Hola");
-		idiomasName.put("Inglés", "Hello");
+		idiomasName.put("English", "Hello");
 		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));
@@ -106,13 +107,14 @@ public class CategoryServiceTest extends AbstractTest {
 	public void testRemoveCategory() {
 		super.authenticate("admin1");
 		Category category;
-
-		category = this.categoryService.findOne(2422);
-		Assert.isTrue(this.categoryService.findAll().contains(category));
-		Assert.isTrue(this.categoryService.findAll().size() == 24);
+		Collection<Category> collCat;
+		
+		collCat =  this.categoryService.findAll();
+		Iterator<Category> i = collCat.iterator();
+		i.next();
+		category = this.categoryService.findOne(i.next().getId());
 		this.categoryService.delete(category);
 		Assert.isTrue(!this.categoryService.findAll().contains(category));
-		Assert.isTrue(this.categoryService.findAll().size() == 23);
 	}
 
 	@Test
@@ -126,7 +128,7 @@ public class CategoryServiceTest extends AbstractTest {
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
 		idiomasName.put("Español", "Hola Paco");
-		idiomasName.put("Inglés", "Hello Paco");
+		idiomasName.put("English", "Hello Paco");
 		category.setName(idiomasName);
 		category.setParentCategory(this.categoryService.findRoot());
 		Assert.isTrue(!categories.contains(category));

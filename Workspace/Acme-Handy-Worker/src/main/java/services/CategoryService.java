@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -61,7 +62,7 @@ public class CategoryService {
 		Category result;
 		final Category parent, root;
 		SystemConfiguration systemConf;
-		Set<String> idiomasSystemConf, idiomasCategory;
+		Set<String> idiomasCategory;
 
 		admin = this.administratorService.findByPrincipal();
 		root = this.findRoot();
@@ -71,7 +72,7 @@ public class CategoryService {
 		
 		Assert.notNull(category.getName());
 		systemConf = systemConfigurationService.findMySystemConfiguration();
-		idiomasSystemConf = systemConf.getWelcomeMessage().keySet();	
+		Set<String> idiomasSystemConf = new HashSet<String>(systemConf.getWelcomeMessage().keySet());	
 		idiomasCategory = category.getName().keySet();
 		Assert.isTrue(idiomasSystemConf.containsAll(idiomasCategory));
 		
@@ -142,6 +143,7 @@ public class CategoryService {
 		Collection<Category> result;
 
 		result = this.categoryRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -150,6 +152,7 @@ public class CategoryService {
 		Category result;
 
 		result = this.categoryRepository.findOne(categoryId);
+		Assert.notNull(result);
 
 		return result;
 	}

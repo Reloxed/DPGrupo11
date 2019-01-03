@@ -70,4 +70,6 @@ public class Note extends DomainEntity {
 	public void setReport(Report report) {
 		this.report = report;
 	}
+
+	
 }

@@ -112,9 +112,11 @@ public class ComplaintServiceTest extends AbstractTest {
 		super.authenticate("customer1");
 		Complaint c, savedComplaint;
 		Collection<Complaint> complaints;
+		int size;
 
 		complaints = this.complaintService.findAll();
-		Assert.isTrue(complaints.size() == 3);
+		size = complaints.size();
+
 		c = this.complaintService.create();
 		Assert.notNull(c);
 
@@ -123,7 +125,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		savedComplaint = this.complaintService.save(c);
 
 		Assert.isTrue(this.complaintService.findAll().contains(savedComplaint));
-		Assert.isTrue(this.complaintService.findAll().size() == 4);
+		Assert.isTrue(this.complaintService.findAll().size() == size+1);
 
 		super.unauthenticate();
 	}
@@ -198,10 +200,11 @@ public class ComplaintServiceTest extends AbstractTest {
 	public void testFindOne() {
 		super.authenticate(null);
 		Complaint c;
-
-		c = this.complaintService.findOne(2464);
+		Collection<Complaint> collCom;
+		
+		collCom = this.complaintService.findAll();
+		c = this.complaintService.findOne(collCom.iterator().next().getId());
 		Assert.notNull(c);
-		Assert.isTrue(c.getTicker().equals("345678-ASDFGH"));
 
 		super.unauthenticate();
 	}

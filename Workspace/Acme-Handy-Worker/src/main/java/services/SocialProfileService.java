@@ -53,11 +53,12 @@ public class SocialProfileService {
 	}
 
 	public Collection<SocialProfile> findAll() {
-		Collection<SocialProfile> socialProfiles;
+		Collection<SocialProfile> result;
 
-		socialProfiles = this.socialProfileRepository.findAll();
+		result = this.socialProfileRepository.findAll();
+		Assert.notNull(result);
 
-		return socialProfiles;
+		return result;
 	}
 
 	public SocialProfile findOne(final int socialProfileId) {
@@ -65,6 +66,7 @@ public class SocialProfileService {
 
 		result = this.socialProfileRepository.findOne(socialProfileId);
 		Assert.notNull(result);
+		
 		return result;
 	}
 

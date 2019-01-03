@@ -66,6 +66,7 @@ public class FixUpTaskService {
 		Collection<FixUpTask> result;
 
 		result = this.fixUpTaskRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 
@@ -84,7 +85,7 @@ public class FixUpTaskService {
 	public FixUpTask save(final FixUpTask fixUpTask) {
 		FixUpTask result;
 		Customer principal;
-		double realPrice;
+//		double realPrice;
 
 		Assert.isTrue(fixUpTask.getId() == 0);
 		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
@@ -100,8 +101,8 @@ public class FixUpTaskService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * fixUpTask.getMaxPrice() + fixUpTask.getMaxPrice();
-		fixUpTask.setMaxPrice(realPrice);
+//		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * fixUpTask.getMaxPrice() + fixUpTask.getMaxPrice();
+//		fixUpTask.setMaxPrice(realPrice);
 
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");

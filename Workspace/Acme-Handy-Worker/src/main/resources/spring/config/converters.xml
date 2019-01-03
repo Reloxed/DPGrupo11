@@ -23,7 +23,7 @@
 
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.StringToCategoryConverter" />
-		
+
 		<bean class="converters.ComplaintToStringConverter" />
 		<bean class="converters.StringToComplaintConverter" />
 
@@ -44,7 +44,7 @@
 
 		<bean class="converters.EndorserRecordToStringConverter" />
 		<bean class="converters.StringToEndorserRecordConverter" />
-		
+
 		<bean class="converters.EndorserToStringConverter" />
 		<bean class="converters.StringToEndorserConverter" />
 
@@ -80,13 +80,13 @@
 
 		<bean class="converters.RefereeToStringConverter" />
 		<bean class="converters.StringToRefereeConverter" />
-		
+
 		<bean class="converters.ReportToStringConverter" />
 		<bean class="converters.StringToReportConverter" />
 
 		<bean class="converters.SectionToStringConverter" />
 		<bean class="converters.StringToSectionConverter" />
-		
+
 		<bean class="converters.SocialProfileToStringConverter" />
 		<bean class="converters.StringToSocialProfileConverter" />
 
@@ -104,6 +104,9 @@
 
 		<bean class="converters.WarrantyToStringConverter" />
 		<bean class="converters.StringToWarrantyConverter" />
-</util:list>
+
+		<bean class="converters.MapToStringConverter" />
+		<bean class="converters.StringToMapConverter" />
+	</util:list>
 
 </beans>

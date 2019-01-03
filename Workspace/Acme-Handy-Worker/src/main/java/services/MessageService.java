@@ -457,6 +457,7 @@ public class MessageService {
 		result.setMessageBoxes(boxes);
 		result.setBody(body);
 		result.setSubject("Status updated");
+		result.setPriority("HIGH");
 
 		this.messageRepository.save(result);
 

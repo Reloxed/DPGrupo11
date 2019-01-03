@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,16 +24,15 @@ public class SystemConfigurationService {
 	// Managed repository
 
 	@Autowired
-	private SystemConfigurationRepository	systemConfigurationRepository;
+	private SystemConfigurationRepository systemConfigurationRepository;
 
 	// Supporting services
 
 	@Autowired
-	private AdministratorService			administratorService;
+	private AdministratorService administratorService;
 
 	@Autowired
-	private ActorService					actorService;
-
+	private ActorService actorService;
 
 	// Constructors ------------------------------------
 
@@ -46,55 +44,66 @@ public class SystemConfigurationService {
 
 	public SystemConfiguration create() {
 		Assert.notNull(this.administratorService.findByPrincipal());
-		
-		Map<String,String> wellMap = new HashMap<>();
-		wellMap.put("Español", "¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
-		wellMap.put("Inglés", "Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
+
+		Map<String, String> wellMap = new HashMap<>();
+		wellMap.put(
+				"Español",
+				"¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
+		wellMap.put("English",
+				"Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
 
 		final SystemConfiguration systemConfiguration = new SystemConfiguration();
 		systemConfiguration.setSystemName("Acme-Handy-Worker");
 		systemConfiguration.setWelcomeMessage(wellMap);
-		systemConfiguration.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
+		systemConfiguration
+				.setBanner("https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg");
 		systemConfiguration.setVAT(0.21);
 		systemConfiguration.setListCreditCardMakes("VISA,MASTER,DINNERS,AMEX");
 		systemConfiguration.setCountryCode("+034");
 		systemConfiguration.setTimeResultsCached(1);
 		systemConfiguration.setMaxResults(10);
-		systemConfiguration.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
-		systemConfiguration.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
-		systemConfiguration.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
+		systemConfiguration
+				.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
+		systemConfiguration
+				.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
+		systemConfiguration
+				.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
 		return systemConfiguration;
 	}
 
 	public Collection<SystemConfiguration> findAll() {
-		Assert.notNull(this.administratorService.findByPrincipal());
-		Collection<SystemConfiguration> systemConfigurations;
+		Collection<SystemConfiguration> result;
 
-		systemConfigurations = this.systemConfigurationRepository.findAll();
-
-		return systemConfigurations;
-	}
-
-	public SystemConfiguration findOne(final int systemConfigurationId) {
-		Assert.notNull(this.administratorService.findByPrincipal());
-		SystemConfiguration result;
-
-		result = this.systemConfigurationRepository.findOne(systemConfigurationId);
+		result = this.systemConfigurationRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
 
-	public SystemConfiguration save(final SystemConfiguration systemConfiguration) {
+	public SystemConfiguration findOne(final int systemConfigurationId) {
+		SystemConfiguration result;
+
+		result = this.systemConfigurationRepository
+				.findOne(systemConfigurationId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public SystemConfiguration save(
+			final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
 		Administrator principal;
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		systemConfiguration.setId(this.systemConfigurationRepository.findAll().get(0).getId());
+		systemConfiguration.setId(this.systemConfigurationRepository.findAll()
+				.get(0).getId());
 
 		SystemConfiguration result;
-		result = this.systemConfigurationRepository.saveAndFlush(systemConfiguration);
+		result = this.systemConfigurationRepository
+				.saveAndFlush(systemConfiguration);
 		return result;
 
 	}
@@ -113,7 +122,8 @@ public class SystemConfigurationService {
 	public String findSpamWords() {
 		final String result;
 
-		result = this.systemConfigurationRepository.findAll().get(0).getSpamWords();
+		result = this.systemConfigurationRepository.findAll().get(0)
+				.getSpamWords();
 
 		return result;
 	}
@@ -126,8 +136,9 @@ public class SystemConfigurationService {
 		endorsements = new ArrayList<Endorsement>();
 		positives = this.findMySystemConfiguration().getPositiveWords();
 		negatives = this.findMySystemConfiguration().getNegativeWords();
-		//endorsements.addAll(e.getEndorsements);
-		// TODO: A la espera de ver si la relación endorser-endorsement es bidireccional
+		// endorsements.addAll(e.getEndorsements);
+		// TODO: A la espera de ver si la relación endorser-endorsement es
+		// bidireccional
 		i = 0.0;
 		res = 0.0;
 		for (final Endorsement en : endorsements) {

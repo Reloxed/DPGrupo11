@@ -36,15 +36,17 @@ public class EndorserService {
 	// Simple CRUD Methods
 
 	public Collection<Endorser> findAll() {
-		Collection<Endorser> collEnd = new ArrayList<>();
-		collEnd = this.endorserRepository.findAll();
-		return collEnd;
+		Collection<Endorser> result = new ArrayList<>();
+		result = this.endorserRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Endorser findOne(final int endorserId) {
 		final Integer id = endorserId;
-		final Endorser endorser = this.endorserRepository.findOne(id);
-		return endorser;
+		final Endorser result = this.endorserRepository.findOne(id);
+		Assert.notNull(result);
+		return result;
 	}
 
 	// Other business methods

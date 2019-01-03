@@ -61,30 +61,19 @@ public class MessageBoxService {
 
 	public MessageBox findOne(final int messageBoxId) {
 		MessageBox result;
-		Actor principal;
-
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
-
-		Assert.isTrue(messageBoxId != 0);
 
 		result = this.messageBoxRepository.findOne(messageBoxId);
 		Assert.notNull(result);
 
 		return result;
-
 	}
 
 	public Collection<MessageBox> findAll() {
 		Collection<MessageBox> result;
-		Actor principal;
-
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
 
 		result = this.messageBoxRepository.findAll();
 		Assert.notNull(result);
-
+		
 		return result;
 	}
 

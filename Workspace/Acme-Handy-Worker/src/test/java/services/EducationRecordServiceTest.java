@@ -207,7 +207,7 @@ public class EducationRecordServiceTest extends AbstractTest{
 		super.unauthenticate();		
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteEducationRecord() {
 		HandyWorker user;
 		Collection<EducationRecord> educationRecords;

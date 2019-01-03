@@ -52,31 +52,25 @@ public class SectionService {
 		Assert.notNull(principal);
 
 		res = new Section();
-
 		return res;
 	}
 
 	public Collection<Section> findAll() {
-		Collection<Section> res;
-		HandyWorker principal;
+		Collection<Section> result;
 
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = this.sectionRepository.findAll();
-		return res;
+		result = this.sectionRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
 	}
 
 	public Section findOne(final int sectionId) {
-		Section res;
-		HandyWorker principal;
+		Section result;
 
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = this.sectionRepository.findOne(sectionId);
-		return res;
-
+		result = this.sectionRepository.findOne(sectionId);
+		Assert.notNull(result);
+		
+		return result;
 	}
 
 	public Section save(final Section section) {

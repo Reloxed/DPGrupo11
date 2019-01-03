@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -31,13 +30,12 @@ public class CustomerService {
 	// Managed Repository
 
 	@Autowired
-	private CustomerRepository	customerRepository;
+	private CustomerRepository customerRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private MessageBoxService	messageBoxService;
-
+	private MessageBoxService messageBoxService;
 
 	// Constructors ------------------------------------
 
@@ -77,15 +75,17 @@ public class CustomerService {
 	}
 
 	public Collection<Customer> findAll() {
-		Collection<Customer> collCus = new ArrayList<>();
-		collCus = this.customerRepository.findAll();
-		return collCus;
+		Collection<Customer> result = new ArrayList<>();
+		result = this.customerRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Customer findOne(final int customerId) {
 		final Integer id = customerId;
-		final Customer customer = this.customerRepository.findOne(id);
-		return customer;
+		final Customer result = this.customerRepository.findOne(id);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Customer save(final Customer customer) {
@@ -100,14 +100,18 @@ public class CustomerService {
 
 			} catch (final IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
+				customer.getUserAccount().setPassword(
+						passwordEncoder.encodePassword(customer
+								.getUserAccount().getPassword(), null));
 			}
 		else {
 			Customer principalC;
 			principalC = this.findByPrincipal();
 			Assert.notNull(principalC);
-			Assert.isTrue(principalC.getUserAccount().equals(customer.getUserAccount()));
-			Assert.isTrue(customer.getIsSuspicious() == principalC.getIsSuspicious());
+			Assert.isTrue(principalC.getUserAccount().equals(
+					customer.getUserAccount()));
+			Assert.isTrue(customer.getIsSuspicious() == principalC
+					.getIsSuspicious());
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();
@@ -134,24 +138,27 @@ public class CustomerService {
 
 		Customer result;
 
-		result = this.customerRepository.findCustomerByUserAccount(userAccountId);
+		result = this.customerRepository
+				.findCustomerByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public Customer findByCreditCardId(final int creditCardId) {
-		Customer res;
+	public Collection<Customer> findByCreditCardId(final int creditCardId) {
+		Collection<Customer> res;
 
 		res = this.customerRepository.findByCreditCardId(creditCardId);
 
 		return res;
 	}
 
-	public Collection<CreditCard> findCreditCardsByCustomerId(final int customerId) {
+	public Collection<CreditCard> findCreditCardsByCustomerId(
+			final int customerId) {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = this.customerRepository.findCreditCardsByCustomerId(customerId);
+		collCC = this.customerRepository
+				.findCreditCardsByCustomerId(customerId);
 		return collCC;
 	}
 
@@ -164,14 +171,16 @@ public class CustomerService {
 	}
 
 	public List<Customer> customerTenPercentMoraThanAverage() {
-		final List<Customer> collC = this.customerRepository.customerTenPercentMoreFixUpTasksThanAverage();
+		final List<Customer> collC = this.customerRepository
+				.customerTenPercentMoreFixUpTasksThanAverage();
 		return collC;
 	}
 
 	public Customer findCustomerByApplicationId(final int applicationId) {
 		Customer result;
 
-		result = this.customerRepository.findCustomerByApplicationId(applicationId);
+		result = this.customerRepository
+				.findCustomerByApplicationId(applicationId);
 
 		return result;
 	}

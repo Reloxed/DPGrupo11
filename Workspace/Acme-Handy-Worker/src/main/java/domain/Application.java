@@ -23,7 +23,7 @@ public class Application extends DomainEntity {
 
 	private Date registeredMoment;
 	private String status;
-	private Double offeredPrice;
+	private double offeredPrice;
 	private String comments;
 	private CreditCard creditCard;
 	private FixUpTask fixUpTask;
@@ -40,11 +40,11 @@ public class Application extends DomainEntity {
 	}
 
 	@Digits(fraction = 2, integer = 10)
-	public Double getOfferedPrice() {
+	public double getOfferedPrice() {
 		return this.offeredPrice;
 	}
 
-	public void setOfferedPrice(final Double offeredPrice) {
+	public void setOfferedPrice(final double offeredPrice) {
 		this.offeredPrice = offeredPrice;
 	}
 

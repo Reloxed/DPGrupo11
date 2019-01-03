@@ -18,6 +18,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Endorsement;
+import domain.Endorser;
 import domain.MessageBox;
 import domain.SocialProfile;
 
@@ -28,12 +30,15 @@ public class AdministratorService {
 	// Managed repository -------------------------
 
 	@Autowired
-	private AdministratorRepository	administratorRepository;
+	private AdministratorRepository		administratorRepository;
 
 	// Supporting services -------------------------
 
 	@Autowired
-	private MessageBoxService		messageBoxService;
+	private MessageBoxService			messageBoxService;
+
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 
 	// Constructors ------------------------------------
@@ -93,6 +98,7 @@ public class AdministratorService {
 		Administrator result;
 
 		result = this.administratorRepository.findOne(administratorId);
+		Assert.notNull(result);
 
 		return result;
 
@@ -102,6 +108,7 @@ public class AdministratorService {
 		Collection<Administrator> result;
 
 		result = this.administratorRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -129,5 +136,34 @@ public class AdministratorService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public Double calculateScore(final Endorser endorser) {
+		final Double res, positiveValue, negativeValue;
+		String[] positiveWords, negativeWords;
+		final Endorsement endorsements;
+
+		positiveWords = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords().split(",");
+		negativeWords = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords().split(",");
+
+		positiveValue = 0.;
+		negativeValue = 0.;
+
+		//endorsements = endorser.getEndorsements(?);
+		// TODO: Sería algo así pero hay que ver como sacar los endorsements
+		/*
+		 * for (final Endorsement e : endorsements) {
+		 * final String comments = e.getComments();
+		 * for (final String word : comments.split("(¿¡,.-_/!?) ")) {
+		 * if (positiveWords.contains(word))
+		 * positiveValue++;
+		 * if (negativeWords.contains(word))
+		 * negativeValue++;
+		 * }
+		 * }
+		 */
+
+		res = (positiveValue - negativeValue) / (positiveValue + negativeValue);
+		return res;
 	}
 }

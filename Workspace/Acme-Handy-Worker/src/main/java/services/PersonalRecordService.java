@@ -40,15 +40,17 @@ public class PersonalRecordService {
 	// Simple CRUD methods -----------------------------------
 
 	public PersonalRecord findOne(final int personalRecordId) {
-		PersonalRecord res;
-		res = this.personalRecordRepository.findOne(personalRecordId);
-		return res;
+		PersonalRecord result;
+		result = this.personalRecordRepository.findOne(personalRecordId);
+		Assert.notNull(result);
+		return result;
 	}
 
 	public Collection<PersonalRecord> findAll() {
-		Collection<PersonalRecord> res;
-		res = this.personalRecordRepository.findAll();
-		return res;
+		Collection<PersonalRecord> result;
+		result = this.personalRecordRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public PersonalRecord create() {

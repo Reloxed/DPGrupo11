@@ -49,16 +49,9 @@ public class EndorserRecordServiceTest extends AbstractTest {
 	
 	@Test
 	public void  testFindAll(){
-		
-		
 		Collection<EndorserRecord>  educationRecords;
 		educationRecords=this.endorserRecordService.findAll();
-		Assert.isTrue(!educationRecords.isEmpty());
-		Assert.isTrue(educationRecords.size()==2);
-		
-		
-		
-		
+		Assert.isTrue(!educationRecords.isEmpty());		
 	}
 	
 
