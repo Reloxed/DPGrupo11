@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -16,21 +17,23 @@ import domain.HandyWorker;
 import domain.Phase;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class PhaseServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
 	@Autowired
-	private PhaseService phaseService;
+	private PhaseService		phaseService;
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService	handyWorkerService;
 
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService	fixUpTaskService;
+
 
 	// Tests ------------------------------------------------------------------
 
@@ -67,7 +70,6 @@ public class PhaseServiceTest extends AbstractTest {
 	}
 
 	@Test
-
 	public void testFindCreator() {
 		HandyWorker res;
 		Phase phase;
@@ -78,15 +80,36 @@ public class PhaseServiceTest extends AbstractTest {
 	}
 
 	public void testDelete() {
-		Phase toDelete;
+		Phase res, saved, toDelete;
+		HandyWorker principal;
 		Collection<Phase> phases;
 
+		// Create phase
+
 		super.authenticate("handyWorker2");
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.phaseService.create();
+		res.setStartMoment(new Date(System.currentTimeMillis() - 1));
+		res.setEndMoment(new Date(1564865498468L));
+		res.setTitle("Title Nigeria");
+		res.setDescription("Description");
+		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
+
+		saved = this.phaseService.save(res);
+		Assert.notNull(saved);
+
+		res = this.phaseService.findOne(saved.getId());
+		Assert.notNull(res);
+
+		// Delete phase
 
 		phases = this.phaseService.findAll();
-		toDelete = this.phaseService.findAll().iterator().next();
+		toDelete = res;
 		this.phaseService.delete(toDelete);
 		phases = this.phaseService.findAll();
+		System.out.println(phases.size());
 		Assert.isTrue(phases.size() == 2);
 	}
 }

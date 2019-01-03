@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -21,15 +22,16 @@ public class PhaseService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private PhaseRepository phaseRepository;
+	private PhaseRepository				phaseRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	private SystemConfigurationService	systemConfigurationService;
+
 
 	// Constructors ------------------------------------
 
@@ -79,10 +81,8 @@ public class PhaseService {
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
 		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService
-				.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] description = phase.getDescription().split(
-				"(¿¡,.-_/!?) ");
+		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
 		for (final String word : spamWords) {
 			for (final String titleWord : description)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
@@ -138,7 +138,7 @@ public class PhaseService {
 	}
 
 	// Other business methods
-	public Collection<Phase> findPhasesFixUpTask(int fixUpTaskID) {
+	public Collection<Phase> findPhasesFixUpTask(final int fixUpTaskID) {
 		Collection<Phase> res;
 
 		res = this.phaseRepository.findAllPhasesByFixUpTaskId(fixUpTaskID);
@@ -147,19 +147,18 @@ public class PhaseService {
 		return res;
 	}
 
-	public HandyWorker creator(int phaseID) {
+	public HandyWorker creator(final int phaseID) {
 		HandyWorker res = null;
 		Phase phase;
 
 		phase = this.findOne(phaseID);
 		Assert.notNull(phase);
 
-		for (Application a : phase.getFixUpTask().getApplications()) {
+		for (final Application a : phase.getFixUpTask().getApplications())
 			if (a.getStatus().contentEquals("ACCEPTED")) {
 				res = a.getApplicant();
 				break;
 			}
-		}
 		return res;
 	}
 
