@@ -18,7 +18,18 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-<p><spring:message code="endorsement.edit" /></p>
+<div>
+
+		<form:select path="endorsement">
+		<spring:message code="endorsement.recipient" />
+			<jstl:forEach var="x" items="${Actor}">
+				<form:option value="${x.name}" />
+				<jstl:out value="${x.name }" />
+			</jstl:forEach>
+		</form:select>
+
+
+</div>
 
 
 </security:authorize>
