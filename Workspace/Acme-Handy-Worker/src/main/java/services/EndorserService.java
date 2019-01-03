@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.EndorserRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Endorsement;
 import domain.Endorser;
 
 @Service
@@ -70,6 +71,16 @@ public class EndorserService {
 
 		Assert.notNull(result);
 
+		return result;
+	}
+	
+	public Collection<Endorsement> findEndorsementsByEndorser(int endorserId){
+		Assert.isTrue(endorserId != 0);
+		
+		Collection<Endorsement> result;
+		
+		result = this.endorserRepository.findEndorsementsByEndorser(endorserId);
+		
 		return result;
 	}
 }

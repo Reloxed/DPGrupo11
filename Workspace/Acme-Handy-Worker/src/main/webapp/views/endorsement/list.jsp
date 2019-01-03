@@ -16,4 +16,12 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="endorsement.action.1" /></p>
+<security:authorize access="hasRole('HANDYWORKER')">
+
+<p><spring:message code="endorsement.list" /></p>
+
+
+
+
+
+</security:authorize>
