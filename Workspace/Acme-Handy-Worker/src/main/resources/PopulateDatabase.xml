@@ -5,8 +5,7 @@
 	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
@@ -469,11 +468,14 @@
 	<bean id="sysConf" class="domain.SystemConfiguration">
 		<property name="systemName" value="Acme Handy Worker" />
 		<property name="welcomeMessage">
-      		<util:map id="utilmap0" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Biennvenidos a Acme-HandyWorker precio,calidad y confianza en el mismo sitio" />
-		        <entry key="English" value="Welcome to Acme-HandyWorker! price,quality, and trust in a single place" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap0" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español"
+					value="¡Bienvenidos a Acme-HandyWorker! precio,calidad y confianza en el mismo sitio" />
+				<entry key="English"
+					value="Welcome to Acme-HandyWorker! price,quality,and trust in a single place" />
+			</util:map>
+		</property>
 		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
@@ -1792,11 +1794,12 @@
 	<!-- CATEGORY -->
 	<bean id="CATEGORY" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="raíz" />
-		        <entry key="English" value="CATEGORY" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="raíz" />
+				<entry key="English" value="CATEGORY" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<null />
 		</property>
@@ -1812,11 +1815,12 @@
 	<!-- REPAIRS -->
 	<bean id="repairs" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap1" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparaciones" />
-		        <entry key="English" value="Repairs" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap1" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparaciones" />
+				<entry key="English" value="Repairs" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
 		</property>
@@ -1835,11 +1839,12 @@
 	<!-- HOUSING -->
 	<bean id="housing" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap2" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Hogar" />
-		        <entry key="English" value="Housing" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap2" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Hogar" />
+				<entry key="English" value="Housing" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
 		</property>
@@ -1866,11 +1871,12 @@
 	<!-- Carpentry -->
 	<bean id="carpentry" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap3" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Carpintería" />
-		        <entry key="English" value="Carpentry" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap3" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Carpintería" />
+				<entry key="English" value="Carpentry" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="CATEGORY" />
 		</property>
@@ -1883,11 +1889,12 @@
 	<!-- Ceiling Repair -->
 	<bean id="ceilingRepair" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap4" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparación de techo" />
-		        <entry key="English" value="Ceiling repair" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap4" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de techo" />
+				<entry key="English" value="Ceiling repair" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
@@ -1900,11 +1907,12 @@
 	<!-- Cleaning -->
 	<bean id="cleaning" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap5" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Limpieza" />
-		        <entry key="English" value="Cleaning" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap5" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Limpieza" />
+				<entry key="English" value="Cleaning" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -1917,11 +1925,12 @@
 	<!-- Concrete work -->
 	<bean id="concreteWork" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap6" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Trabajos especiales" />
-		        <entry key="English" value="Repairs" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap6" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Trabajos especiales" />
+				<entry key="English" value="Repairs" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -1934,11 +1943,12 @@
 	<!-- Doors -->
 	<bean id="doors" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap7" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Puertas" />
-		        <entry key="English" value="Doors" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap7" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Puertas" />
+				<entry key="English" value="Doors" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -1951,11 +1961,12 @@
 	<!-- Electrical Wiring -->
 	<bean id="electricalWiring" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap8" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Cableado eléctrico" />
-		        <entry key="English" value="Electrical wiring" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap8" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Cableado eléctrico" />
+				<entry key="English" value="Electrical wiring" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -1968,11 +1979,12 @@
 	<!-- Fan installation -->
 	<bean id="fanInstallation" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap9" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Instalación de aire acondicionado" />
-		        <entry key="English" value="Fan installation" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap9" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Instalación de aire acondicionado" />
+				<entry key="English" value="Fan installation" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -1985,11 +1997,12 @@
 	<!-- Fence fixing -->
 	<bean id="fenceFixing" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap10" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparación de vallas" />
-		        <entry key="English" value="Fence fixing" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap10" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de vallas" />
+				<entry key="English" value="Fence fixing" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
@@ -2002,11 +2015,12 @@
 	<!-- Home Security Systems -->
 	<bean id="homeSecuritySystem" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap11" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Equipo de seguridad en casas" />
-		        <entry key="English" value="Home security systems" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap11" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Equipo de seguridad en casas" />
+				<entry key="English" value="Home security systems" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2019,11 +2033,12 @@
 	<!-- Insulation Installation -->
 	<bean id="insulationInstallation" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap12" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Aislamiento térmico" />
-		        <entry key="English" value="Insulation installation" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap12" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Aislamiento térmico" />
+				<entry key="English" value="Insulation installation" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2036,11 +2051,12 @@
 	<!-- Lamp Repairs -->
 	<bean id="lampRepairs" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap13" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparación de lámparas" />
-		        <entry key="English" value="Lamp repairs" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap13" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de lámparas" />
+				<entry key="English" value="Lamp repairs" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
@@ -2053,11 +2069,12 @@
 	<!-- Moving -->
 	<bean id="moving" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap14" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Mudanzas" />
-		        <entry key="English" value="Moving" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap14" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Mudanzas" />
+				<entry key="English" value="Moving" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2070,11 +2087,12 @@
 	<!-- Painting -->
 	<bean id="painting" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap15" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Pintura" />
-		        <entry key="English" value="Painting" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap15" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Pintura" />
+				<entry key="English" value="Painting" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2087,11 +2105,12 @@
 	<!-- Pest Control -->
 	<bean id="pestControl" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap16" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Control de plagas" />
-		        <entry key="English" value="Pest control" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap16" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Control de plagas" />
+				<entry key="English" value="Pest control" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2104,11 +2123,12 @@
 	<!-- Plumbing Repairs -->
 	<bean id="plumbingRepairs" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap17" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Fontanería" />
-		        <entry key="English" value="Plumbing repairs" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap17" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Fontanería" />
+				<entry key="English" value="Plumbing repairs" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
@@ -2121,11 +2141,12 @@
 	<!-- Roofing -->
 	<bean id="roofing" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap18" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Tejados" />
-		        <entry key="English" value="Roofing" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap18" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Tejados" />
+				<entry key="English" value="Roofing" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2138,11 +2159,12 @@
 	<!-- Shelf Installation -->
 	<bean id="shelfInstallation" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap19" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Instalación de estanterías" />
-		        <entry key="English" value="Shelf installation" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap19" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Instalación de estanterías" />
+				<entry key="English" value="Shelf installation" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2155,11 +2177,12 @@
 	<!-- Solar Panels -->
 	<bean id="solarPanels" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap20" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Paneles solares" />
-		        <entry key="English" value="Solar panels" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap20" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Paneles solares" />
+				<entry key="English" value="Solar panels" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2172,11 +2195,12 @@
 	<!-- Soundproofing -->
 	<bean id="soundProofing" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap21" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Insonorización" />
-		        <entry key="English" value="Soundproofing" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap21" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Insonorización" />
+				<entry key="English" value="Soundproofing" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="housing" />
 		</property>
@@ -2189,11 +2213,12 @@
 	<!-- Sprinkler Repair -->
 	<bean id="sprinklerRepair" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap22" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparación de riego" />
-		        <entry key="English" value="Sprinkler repair" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap22" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de riego" />
+				<entry key="English" value="Sprinkler repair" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>
@@ -2206,11 +2231,12 @@
 	<!-- Window Repair -->
 	<bean id="windowRepair" class="domain.Category">
 		<property name="name">
-      		<util:map id="utilmap23" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-		        <entry key="Español" value="Reparación de ventanas" />
-		        <entry key="English" value="Window repair" />
-		    </util:map>
-    	</property>
+			<util:map id="utilmap23" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de ventanas" />
+				<entry key="English" value="Window repair" />
+			</util:map>
+		</property>
 		<property name="parentCategory">
 			<ref bean="repairs" />
 		</property>

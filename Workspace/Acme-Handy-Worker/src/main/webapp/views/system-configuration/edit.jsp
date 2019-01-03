@@ -25,7 +25,6 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="welcomeMessage" />
 		<form:hidden path="countryCode"
 			value="${systemConfiguration.countryCode }" />
 
@@ -66,6 +65,14 @@
 		<form:input path="maxResults"
 			value="${systemConfiguration.maxResults}" size="5%" />
 		<form:errors cssClass="error" path="maxResults" />
+		<br>
+
+		<form:label path="welcomeMessage">
+			<spring:message code="system.welcomemessage" />:
+		</form:label>
+		<form:input path="welcomeMessage"
+			value="${systemConfiguration.welcomeMessage}" size="100%" />
+		<form:errors cssClass="error" path="welcomeMessage" />
 		<br>
 
 		<form:label path="spamWords">
