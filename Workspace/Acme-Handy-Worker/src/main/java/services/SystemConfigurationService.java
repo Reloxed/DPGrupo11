@@ -60,8 +60,9 @@ public class SystemConfigurationService {
 		systemConfiguration.setCountryCode("+034");
 		systemConfiguration.setTimeResultsCached(1);
 		systemConfiguration.setMaxResults(10);
-		systemConfiguration.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,ha sido seleccionado");
-		systemConfiguration.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,excelente,genial,increible,asombroso,bonito");
+		systemConfiguration.setSpamWords("sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millon,un millón,ha sido seleccionado");
+		systemConfiguration.setPositiveWords("good,fantastic,excellent,great,amazing,terrific,beautiful,bueno,fantastico,fantástico,excelente,genial," +
+				"increíble,increible,asombroso,bonito");
 		systemConfiguration.setNegativeWords("not,bad,horrible,average,disaster,no,malo,mediocre,desastre,desastroso");
 		return systemConfiguration;
 	}
@@ -141,7 +142,6 @@ public class SystemConfigurationService {
 			}
 
 		}
-
 		return res / i;
 
 	}

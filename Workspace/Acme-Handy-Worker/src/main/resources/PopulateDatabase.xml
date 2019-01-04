@@ -481,9 +481,9 @@
 		<property name="timeResultsCached" value="1" />
 		<property name="maxResults" value="10" />
 		<property name="spamWords"
-			value="sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millón,has sido seleccionado" />
+			value="sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millón,un millon,has sido seleccionado" />
 		<property name="positiveWords"
-			value="fantastic,awesome,good,amusing,amazing,fantástico,genial,bueno,increíble,divertido" />
+			value="fantastic,awesome,good,amusing,amazing,fantastico,fantástico,genial,bueno,increible,increíble,divertido" />
 		<property name="negativeWords"
 			value="bad,horrendous,horrible,disgusting,malo,horrendo,horroroso" />
 

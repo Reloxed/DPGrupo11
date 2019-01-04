@@ -112,4 +112,10 @@ public class ComplaintService {
 	}
 
 	// Other business methods --------------------------------
+	
+	public Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId) {
+		final Collection<Complaint> collCom = this.complaintRepository.findComplaintsByHandyWorkerId(handyWorkerId);
+		return collCom;
+	}
+	
 }

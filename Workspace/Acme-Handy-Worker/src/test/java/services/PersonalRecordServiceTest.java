@@ -69,7 +69,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		res = this.personalRecordService.findOne(saved.getId());
 		Assert.notNull(res);
 	}
-
+	
 	@Test
 	public void testDelete() {
 		PersonalRecord toDelete = new PersonalRecord();

@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -28,8 +27,6 @@ public class NoteServiceTest extends AbstractTest{
 	@Autowired
 	private NoteService noteService;
 
-	
-
 	@Autowired
 	private ActorService actorService;
 
@@ -43,14 +40,24 @@ public class NoteServiceTest extends AbstractTest{
 		super.authenticate("HandyWorker1");
 		Actor principal;
 
-
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-
 		this.noteService.create();
 
 		super.unauthenticate();
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotCreate(){
+		// Wrong user
+		super.authenticate("admin1");
+		Actor principal;
 
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		this.noteService.create();
+
+		super.unauthenticate();
 	}
 	
 	@Test
@@ -58,11 +65,92 @@ public class NoteServiceTest extends AbstractTest{
 		super.authenticate("handyWorker1");
 		Actor principal;
 		Note result,saved;
-		Collection<Note>notes;
 		Collection<Report> collR;
 		Report report;
 
-		notes = new ArrayList<Note>();
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		collR = this.reportService.findAll();
+		report = this.reportService.findOne(collR.iterator().next().getId());
+		Assert.notNull(report);
+		report.setIsFinal(true);
+		
+		result = this.noteService.create();		
+		result.setHandyWorkerComment("hola");
+		result.setReport(report);
+		saved = this.noteService.save(result);
+		
+		this.noteService.findOne(saved.getId());
+		Assert.notNull(saved);
+		Assert.isTrue(saved.getReport().getNotes().contains(saved));
+		super.unauthenticate();
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotSave(){
+		// The complaint to which the report is attached is not related to the present HandyWorker 
+		super.authenticate("handyWorker2");
+		Actor principal;
+		Note result,saved;
+		Collection<Report> collR;
+		Report report;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		collR = this.reportService.findAll();
+		report = this.reportService.findOne(collR.iterator().next().getId());
+		Assert.notNull(report);
+		report.setIsFinal(true);
+		
+		result = this.noteService.create();		
+		result.setHandyWorkerComment("hola");
+		result.setReport(report);
+		saved = this.noteService.save(result);
+		
+		this.noteService.findOne(saved.getId());
+		Assert.notNull(saved);
+		Assert.isTrue(saved.getReport().getNotes().contains(saved));
+		super.unauthenticate();
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotSave2(){
+		// A handyworker is changing a comment of a customer
+		super.authenticate("handyWorker2");
+		Actor principal;
+		Note result,saved;
+		Collection<Report> collR;
+		Report report;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		collR = this.reportService.findAll();
+		report = this.reportService.findOne(collR.iterator().next().getId());
+		Assert.notNull(report);
+		report.setIsFinal(true);
+		
+		result = this.noteService.create();		
+		result.setHandyWorkerComment("hola");
+		result.setCustomerComment("Error 404");
+		result.setReport(report);
+		saved = this.noteService.save(result);
+		
+		this.noteService.findOne(saved.getId());
+		Assert.notNull(saved);
+		Assert.isTrue(saved.getReport().getNotes().contains(saved));
+		super.unauthenticate();
+	}
+	
+	@Test
+	public void testSaveSpam(){
+		super.authenticate("handyWorker1");
+		Actor principal;
+		Note result,saved;
+		Collection<Report> collR;
+		Report report;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
@@ -71,17 +159,11 @@ public class NoteServiceTest extends AbstractTest{
 		Assert.notNull(result);
 		
 		collR = this.reportService.findAll();
-		Report repToFinal = collR.iterator().next();
-		repToFinal.setIsFinal(true);
 		report = this.reportService.findOne(collR.iterator().next().getId());
 		Assert.notNull(report);
-		
-		notes = report.getNotes();
-		Assert.notNull(notes);
+		report.setIsFinal(true);
 		
 		result.setHandyWorkerComment("sex");
-		result.setCustomerComment(" ");
-		result.setRefereeComment(" ");
 		result.setReport(report);
 		saved = this.noteService.save(result);
 		
@@ -90,51 +172,6 @@ public class NoteServiceTest extends AbstractTest{
 		Assert.isTrue(principal.getIsSuspicious());
 		Assert.isTrue(saved.getReport().getNotes().contains(saved));
 		super.unauthenticate();
-	}
-	
-	@Test
-	public void tetsDelete(){
-		super.authenticate("Customer1");
-		Actor principal;
-		Note toDelete,note;
-		Report report;
-		Collection<Note>notes,removed;
-		Collection<Report> collR;
-		
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
-		
-		note = this.noteService.create();
-		Assert.notNull(note);
-		
-		note.setCustomerComment(" ");
-		note.setHandyWorkerComment(" ");
-		note.setRefereeComment(" ");
-		collR = this.reportService.findAll();
-		
-		Report repToFinal = collR.iterator().next();
-		repToFinal.setIsFinal(true);
-		
-		report = this.reportService.findOne(collR.iterator().next().getId());
-		Assert.notNull(report);
-		
-		note.setReport(report);
-		
-		toDelete = this.noteService.save(note);
-		this.noteService.findOne(toDelete.getId());
-		Assert.notNull(toDelete);
-		
-		notes = new ArrayList<Note>();
-		notes = report.getNotes();
-		Assert.notNull(notes);
-		
-		this.noteService.delete(toDelete);
-		
-		removed = report.getNotes();
-		Assert.notNull(removed);
-		Assert.isTrue(notes.contains(toDelete));
-		Assert.isTrue(!removed.contains(toDelete));
-
 	}
 	
 	@Test
@@ -148,12 +185,11 @@ public class NoteServiceTest extends AbstractTest{
 		
 		Assert.isTrue(result.getId() == noteId);
 	}
+	
 	@Test
 	public void testFindAll(){
 		Collection<Note>result;
 		result = this.noteService.findAll();
 		Assert.notNull(result);
-		
-		
 	}
 }

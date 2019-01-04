@@ -91,6 +91,8 @@ public class SponsorshipService {
 
 		principal = this.sponsorService.findByPrincipal();
 		Assert.notNull(principal);
+		
+		Assert.isTrue(s.getSponsor().equals(principal));
 
 		result = this.sponsorshipRepository.save(s);
 		Assert.notNull(result);
@@ -123,6 +125,7 @@ public class SponsorshipService {
 
 		sponsorships = new ArrayList<>();
 		sponsorships.addAll(principal.getSponsorships());
+		Assert.isTrue(sponsorships.contains(s));
 		sponsorships.remove(s);
 		principal.setSponsorships(sponsorships);
 

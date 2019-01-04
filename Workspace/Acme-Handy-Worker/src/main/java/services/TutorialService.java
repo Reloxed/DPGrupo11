@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -34,7 +35,7 @@ public class TutorialService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -99,36 +100,15 @@ public class TutorialService {
 			t.setSponsorships(sponsorships);
 		}
 			
-
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findSpamWords().split(",");
-		final String[] title = t.getTitle().split(" ");
-		for (final String word : spamWords) {
-			for (final String titleWord : title)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(t.getTitle());
+		atributosAComprobar.add(t.getSummary());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
-		if (principal.getIsSuspicious() == false) {
-			containsSpam = false;
-			final String[] summary = t.getSummary().split(" ");
-			for (final String word : spamWords) {
-				for (final String summaryWord : summary)
-					if (summaryWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
-						break;
-					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
-				}
-			}
-		}
+		
 		result = this.tutorialRepository.save(t);
 		Assert.notNull(result);
 		this.tutorialRepository.flush();
@@ -137,7 +117,6 @@ public class TutorialService {
 		tutorials.addAll(principal.getTutorial());
 		tutorials.add(t);
 		principal.setTutorial(tutorials);
-
 		
 		return result;
 	}

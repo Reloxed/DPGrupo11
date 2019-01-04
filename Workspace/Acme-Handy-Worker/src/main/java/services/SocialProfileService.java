@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -29,7 +30,7 @@ public class SocialProfileService {
 	private ActorService			actorService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -93,20 +94,12 @@ public class SocialProfileService {
 		if (socialProfile.getId() != 0)
 			Assert.isTrue(principal.getSocialProfiles().contains(socialProfile));
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-
-		final String[] nick = socialProfile.getNick().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : nick)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(socialProfile.getNick());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		result = this.socialProfileRepository.save(socialProfile);

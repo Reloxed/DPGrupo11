@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +14,6 @@ import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
 import domain.Complaint;
-import domain.Note;
 import domain.Referee;
 import domain.Report;
 
@@ -32,10 +32,7 @@ public class ReportService {
 	private RefereeService				refereeService;
 
 	@Autowired
-	private NoteService					noteService;
-
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -79,21 +76,17 @@ public class ReportService {
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
+		if (report.getId() != 0) {
+			Assert.isTrue(report.getComplaint().equals(this.findOne(report.getId()).getComplaint()));
+		}
 		Assert.isTrue(report.getPublishedMoment().before(new Date(System.currentTimeMillis())));
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] description = report.getDescription().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : description)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(report.getDescription());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		res = this.reportRepository.save(report);
@@ -114,13 +107,8 @@ public class ReportService {
 		Assert.notNull(principal);
 
 		reports = this.findReportByPrincipal();
-		Assert.notEmpty(reports);
 		Assert.isTrue(reports.contains(report));
-
-		if (report.getNotes().size() != 0)
-			for (final Note note : report.getNotes())
-				this.noteService.delete(note);
-
+		
 		this.reportRepository.delete(report.getId());
 
 	}

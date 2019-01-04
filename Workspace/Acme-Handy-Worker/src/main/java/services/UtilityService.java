@@ -114,4 +114,22 @@ public class UtilityService {
 		final List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listSpamWords;
 	}
+	
+	public boolean isSpam (List<String> atributosAComprobar) {
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		for(int i=0; i<atributosAComprobar.size(); i++) {
+			if(containsSpam == false) {
+				for(String spamWord : spamWords) {
+					if(atributosAComprobar.get(i).toLowerCase().contains(spamWord.toLowerCase())){
+						containsSpam = true;
+						break;
+					}
+				}
+			} else {
+				break;
+			}
+		}
+		return containsSpam;
+	}
 }

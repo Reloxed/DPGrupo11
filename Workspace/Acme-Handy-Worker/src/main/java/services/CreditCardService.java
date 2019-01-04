@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 import repositories.CreditCardRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.CreditCard;
 import domain.Customer;
 import domain.Sponsor;
@@ -45,6 +46,9 @@ public class CreditCardService {
 
 	@Autowired
 	private UtilityService			utilityService;
+	
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Constructors ------------------------------------
@@ -56,22 +60,19 @@ public class CreditCardService {
 	// Simple CRUD Methods
 
 	public CreditCard create() {
+		Actor principal;
+		CreditCard result;
+		boolean validActor = false;
 
-		final CreditCard result = new CreditCard();
-		Sponsor ownerSponsor = null;
-		Customer ownerCustomer = null;
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);	
 
-		// Seguimos adelante si el user es un sponsor o customer
-		try {
-			ownerCustomer = this.customerService.findByPrincipal();
-
-		} catch (final IllegalArgumentException e) {
-
-			ownerSponsor = this.sponsorService.findByPrincipal();
+		if (principal instanceof Customer || principal instanceof Sponsor) {
+			validActor = true;
 		}
-
-		if (ownerCustomer == null && ownerSponsor == null)
-			Assert.notNull(ownerSponsor);
+		
+		Assert.isTrue(validActor);		
+		result = new CreditCard();
 		return result;
 	}
 
