@@ -50,7 +50,7 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOne2() {
 		Sponsor res;
-		res = this.sponsorService.findOne(233);
+		res = this.sponsorService.findOne(-2);
 		Assert.notNull(res);
 	}
 

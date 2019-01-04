@@ -85,6 +85,24 @@ public class MiscellaneousRecordServiceTest extends AbstractTest{
 		Assert.notNull(principal);
 		collMR = this.miscellaneousRecordService.findAll();
 		toDelete = this.miscellaneousRecordService.findOne(collMR.iterator().next().getId());
+		this.miscellaneousRecordService.delete(principal.getCurriculum().getMiscellaneousRecords().iterator().next());
+		listMiscellaneousRecord = principal.getCurriculum().getMiscellaneousRecords();
+		Assert.isTrue(!listMiscellaneousRecord.contains(toDelete));
+		super.unauthenticate();
+		
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotDelete(){
+		// HW2 is trying to delete a miscrecord of HW1
+		super.authenticate("handyWorker2");
+		MiscellaneousRecord toDelete;
+		Collection<MiscellaneousRecord> listMiscellaneousRecord,collMR;
+		HandyWorker principal;
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		collMR = this.miscellaneousRecordService.findAll();
+		toDelete = this.miscellaneousRecordService.findOne(collMR.iterator().next().getId());
 		this.miscellaneousRecordService.delete(toDelete);
 		listMiscellaneousRecord = principal.getCurriculum().getMiscellaneousRecords();
 		Assert.isTrue(!listMiscellaneousRecord.contains(toDelete));

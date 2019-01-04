@@ -206,6 +206,32 @@ public class EducationRecordServiceTest extends AbstractTest{
 		
 		super.unauthenticate();		
 	}
+	
+	@Test
+	public void testNotSaveEducationRecord_4() {
+		EducationRecord educationRecord, saved;
+		Collection<EducationRecord> educationRecords;
+		Calendar startDate;
+		String username = "handyWorker1";
+		super.authenticate(username);
+		
+		educationRecord = educationRecordService.create();
+		educationRecord.setDiplomaTitle("Grado en Ingeniería Informática - Ingeniería del Software");
+		startDate = Calendar.getInstance();
+		startDate.set(2015, 8, 22);
+		educationRecord.setStartDate(startDate.getTime());
+		educationRecord.setInstitutionName("Mi casa,un millón");
+		educationRecord.setLinkAttachment("http://www.urlvalida.com");
+		educationRecord.setComments("Que bien funciona todo.//Los tests siempre salen en verde.//");
+		saved = educationRecordService.save(educationRecord);
+		educationRecords = educationRecordService.findAll();
+		Assert.isTrue(educationRecords.contains(saved));
+		
+		HandyWorker HW = this.handyWorkerService.findByPrincipal();
+		System.out.println(HW.getIsSuspicious());
+		
+		super.unauthenticate();		
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteEducationRecord() {

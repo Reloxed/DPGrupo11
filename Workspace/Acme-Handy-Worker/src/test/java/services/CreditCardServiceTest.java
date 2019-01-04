@@ -67,7 +67,7 @@ public class CreditCardServiceTest extends AbstractTest{
 	}
 	
 	@Test
-	public void testSaveAndFindOneCreditCard() {
+	public void testSaveCreditCard() {
 		
 		String username = "customer1";		
 		CreditCard saved;

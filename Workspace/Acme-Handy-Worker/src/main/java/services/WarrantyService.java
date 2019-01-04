@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -29,7 +30,7 @@ public class WarrantyService {
 	private AdministratorService		administratorService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -71,52 +72,21 @@ public class WarrantyService {
 	public Warranty save(final Warranty w) {
 		Administrator principal;
 		Warranty result;
-		boolean containsSpam;
 		Assert.notNull(w);
 
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] title = w.getTitle().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : title)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-
-		final String[] terms = w.getTerms().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String termsWord : terms)
-				if (termsWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-
-		final String[] laws = w.getLaws().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String lawsWord : laws)
-				if (lawsWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(w.getTitle());
+		atributosAComprobar.add(w.getTerms());
+		if (w.getLaws() != null)
+			atributosAComprobar.add(w.getLaws());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
+		}		
 		
 		if (w.getId() == 0){
 			Assert.isTrue(w.getIsFinal() == false);
@@ -132,14 +102,14 @@ public class WarrantyService {
 	}
 
 	public void delete(final Warranty w) {
-		Administrator principal;
 		Assert.notNull(w);
-
-		principal = this.administratorService.findByPrincipal();
-		Assert.notNull(principal);
-
 		Assert.isTrue(w.getId() != 0);
 		Assert.isTrue(w.getIsFinal() == false);
+
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 
 		this.warrantyRepository.delete(w);
 	}

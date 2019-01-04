@@ -49,7 +49,7 @@
 		<jstl:out value="${systemConfiguration.maxResults}"></jstl:out>
 	</h5>
 
-	<div style="width: 25%; float: left">
+	<div style="width: 20%; float: left">
 		<table class="displayStyle">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -65,7 +65,7 @@
 		</table>
 	</div>
 
-	<div style="width: 25%; float: left; position: static">
+	<div style="width: 20%; float: left; position: static">
 		<table class="displayStyle">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -81,7 +81,7 @@
 		</table>
 	</div>
 
-	<div style="width: 25%; float: left; position: static">
+	<div style="width: 20%; float: left; position: static">
 		<table class="displayStyle">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -96,7 +96,7 @@
 		</table>
 	</div>
 
-	<div style="width: 25%; float: left; position: static">
+	<div style="width: 20%; float: left; position: static">
 		<table class="displayStyle">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -111,6 +111,20 @@
 		</table>
 	</div>
 
+	<div style="width: 20%; float: left; position: static">
+		<table class="displayStyle">
+			<tr>
+				<td><display:table pagesize="5" class="displaytag"
+						name="welcomeMessage"
+						requestURI="system-configuration/administrator/display.do"
+						id="welcomeMessage">
+
+						<display:column titleKey="system.welcomemessage"
+							value="${welcomeMessage}" sortable="true" />
+
+					</display:table></td>
+		</table>
+	</div>
 	<input type="button" name="edit"
 		value='<spring:message code="system.edit"/>'
 		onclick="redirect: location.href = 'system-configuration/administrator/edit.do?systemconfigurationID=${systemConfiguration.id}';" />

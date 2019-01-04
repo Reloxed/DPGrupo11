@@ -1,4 +1,3 @@
-
 package converters;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,11 @@ import domain.SystemConfiguration;
 
 @Component
 @Transactional
-public class StringToSystemConfigurationConverter implements Converter<String, SystemConfiguration> {
+public class StringToSystemConfigurationConverter implements
+		Converter<String, SystemConfiguration> {
 
 	@Autowired
-	SystemConfigurationRepository	systemConfigurationRepository;
-
+	SystemConfigurationRepository systemConfigurationRepository;
 
 	@Override
 	public SystemConfiguration convert(final String text) {

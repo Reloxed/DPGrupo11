@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -28,7 +30,7 @@ public class PersonalRecordService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -75,26 +77,19 @@ public class PersonalRecordService {
 		Assert.notNull(personalRecord);
 		Assert.isTrue(personalRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] name = personalRecord.getFullName().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : name)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(personalRecord.getFullName());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 		
 		res = personalRecord;
 
 		return this.personalRecordRepository.saveAndFlush(res);
 	}
-
+	
 	public void delete(final PersonalRecord personalRecord) {
 		HandyWorker principal;
 
@@ -110,7 +105,5 @@ public class PersonalRecordService {
 
 		principal.getCurriculum().setPersonalRecord(null);
 	}
-
-	// Other business methods -------------------------------
 
 }

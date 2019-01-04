@@ -68,8 +68,6 @@ public class MessageBoxServiceTest extends AbstractTest{
 		Assert.notNull(saved);
 		this.messageBoxService.findOne(saved.getId());
 		
-		Assert.isTrue(boxes.size()==5);
-		
 		super.unauthenticate();
 		
 	}

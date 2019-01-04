@@ -21,7 +21,7 @@ import domain.SocialProfile;
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
 		"classpath:spring/config/packages.xml" })
 @Transactional
-public class SocialProfileServiceTest extends AbstractTest{
+public class SocialProfileServiceTest extends AbstractTest {
 	
 	// System under test ------------------------------------------------------
 	
@@ -58,7 +58,7 @@ public class SocialProfileServiceTest extends AbstractTest{
 	@Test(expected=IllegalArgumentException.class)
 	public void testFindOne2(){
 		SocialProfile res;
-		res = this.socialProfileService.findOne(283);
+		res = this.socialProfileService.findOne(-2);
 		Assert.notNull(res);
 	}
 	
@@ -90,18 +90,36 @@ public class SocialProfileServiceTest extends AbstractTest{
 		SocialProfile res;
 		Actor principal;
 		super.authenticate("handyWorker1");
-		SocialProfile s = this.socialProfileService.create();
+		
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
+		
+		SocialProfile s = this.socialProfileService.create();
 		s.setNick("WalabonsoNPG");
 		s.setSocialNetwork("Snapchat");
 		s.setLink("http://www.snapchat.com/");
+		
 		res = this.socialProfileService.save(s);
 		Assert.notNull(res);
 		Assert.isTrue(principal.getSocialProfiles().contains(s));
 		Assert.notNull(this.socialProfileService.findOne(res.getId()));
+		
 		super.unauthenticate();
 	}
+	
+	Collection<SocialProfile> collSoc;
+	Actor actor;
+	
+//	super.authenticate("handyWorker1");
+//	actor = this.actorService.findByPrincipal();
+//	collSoc = this.socialProfileService.findAll();
+//	for(SocialProfile soc : collSoc) {
+//		if (!actor.getSocialProfiles().contains(soc)) {
+//			this.socialProfileService.delete(soc);
+//			break;
+//		}
+//	}
+//	super.unauthenticate();	
 
 	//Save con uno de los campos en Blank
 	@Test(expected = ConstraintViolationException.class)
@@ -133,21 +151,20 @@ public class SocialProfileServiceTest extends AbstractTest{
 	//Editar el socialProfile de otro
 	@Test(expected = IllegalArgumentException.class)
 	public void testSave4(){
-		SocialProfile res;
-		SocialProfile s;
-		SocialProfile forId;
-		super.authenticate("sponsor2");
-		forId = this.socialProfileService.create();
-		forId.setNick("Holaquetal");
-		forId.setLink("http://www.holaktal.com");
-		forId.setSocialNetwork("Tuentixd");
-		forId = this.socialProfileService.save(forId);
-		super.unauthenticate();
+		Collection<SocialProfile> collSoc;
+		Actor actor;
+		
 		super.authenticate("handyWorker1");
-		s = this.socialProfileService.findOne(forId.getId());
-		res = this.socialProfileService.save(s);
-		Assert.notNull(res);
-		super.unauthenticate();
+		actor = this.actorService.findByPrincipal();
+		collSoc = this.socialProfileService.findAll();
+		for(SocialProfile soc : collSoc) {
+			if (!actor.getSocialProfiles().contains(soc)) {
+				this.socialProfileService.save(soc);
+				break;
+			}
+		}
+		super.unauthenticate();	
+
 	}
 	
 	//Borrar un socialProfile existente en la lista del principal
@@ -164,6 +181,7 @@ public class SocialProfileServiceTest extends AbstractTest{
 		this.socialProfileService.delete(profile);
 		s = this.socialProfileService.findByPrincipal();
 		Assert.isTrue(!s.contains(profile));
+		super.unauthenticate();	
 	}
 	
 	//Borrar un socialProfile en una lista vacia
@@ -179,17 +197,26 @@ public class SocialProfileServiceTest extends AbstractTest{
 		profile = s.iterator().next();
 		this.socialProfileService.delete(profile);
 		s = this.socialProfileService.findByPrincipal();
+		super.unauthenticate();	
 	}
 	
 	//Borrar el socialProfile de otro
 	@Test(expected = IllegalArgumentException.class)
 	public void testDelete3(){
-		SocialProfile profile;
+		Collection<SocialProfile> collSoc;
+		Actor actor;
+		
 		super.authenticate("handyWorker1");
-		profile = this.socialProfileService.findOne(2388);
-		this.socialProfileService.delete(profile);
+		actor = this.actorService.findByPrincipal();
+		collSoc = this.socialProfileService.findAll();
+		for(SocialProfile soc : collSoc) {
+			if (!actor.getSocialProfiles().contains(soc)) {
+				this.socialProfileService.delete(soc);
+				break;
+			}
+		}
+		super.unauthenticate();	
 	}
 	
 	//TODO DELETE AND REVIEW FOR MORE TESTS
-
 }

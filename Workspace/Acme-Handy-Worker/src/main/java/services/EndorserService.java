@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.EndorserRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Endorsement;
 import domain.Endorser;
 
 @Service
@@ -71,6 +72,39 @@ public class EndorserService {
 		result = this.endorserRepository.findEndorserByUserAccount(userAccountId);
 
 		Assert.notNull(result);
+
+		return result;
+	}
+
+
+	public Collection<Endorsement> findEndorsementsByEndorser(final int endorserId) {
+		Collection<Endorsement> result;
+		Assert.isTrue(endorserId != 0);
+
+		result = this.endorserRepository.findEndorsementsByEndorser(endorserId);
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Collection<Endorsement> findEndorsementsReceivedByEndorser(final int endorserId) {
+		Collection<Endorsement> result;
+		Assert.isTrue(endorserId != 0);
+
+		result = this.endorserRepository.findEndorsementsReceivedByEndorser(endorserId);
+
+		Assert.notNull(result);
+
+
+
+	public Collection<Endorsement> findEndorsementsByEndorser(int endorserId){
+		Assert.isTrue(endorserId != 0);
+
+		Collection<Endorsement> result;
+
+		result = this.endorserRepository.findEndorsementsByEndorser(endorserId);
+
 
 		return result;
 	}

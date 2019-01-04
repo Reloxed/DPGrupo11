@@ -1,5 +1,7 @@
 package controllers.administator;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ public class SystemConfigurationController extends AbstractController {
 		String[] negativeWords;
 		String[] positiveWords;
 		String[] creditCardMakes;
+		Map<String, String> welcomeMessage;
 
 		systemConfiguration = this.systemConfigurationService
 				.findMySystemConfiguration();
@@ -49,6 +52,7 @@ public class SystemConfigurationController extends AbstractController {
 		positiveWords = systemConfiguration.getPositiveWords().split(",");
 		creditCardMakes = systemConfiguration.getListCreditCardMakes().split(
 				",");
+		welcomeMessage = systemConfiguration.getWelcomeMessage();
 
 		res = new ModelAndView("systemConfiguration/display");
 		res.addObject("requestURI",
@@ -58,6 +62,7 @@ public class SystemConfigurationController extends AbstractController {
 		res.addObject("negativeWords", negativeWords);
 		res.addObject("positiveWords", positiveWords);
 		res.addObject("creditCardMakes", creditCardMakes);
+		res.addObject("welcomeMessage", welcomeMessage);
 
 		return res;
 	}

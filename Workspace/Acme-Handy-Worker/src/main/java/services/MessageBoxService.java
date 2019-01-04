@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +31,7 @@ public class MessageBoxService {
 	private ActorService			actorService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -79,46 +80,45 @@ public class MessageBoxService {
 
 	public MessageBox save(final MessageBox messageBox) {
 		MessageBox result;
+		Collection<MessageBox> boxes;
 		Actor principal;
-		Collection<Message> messages;
 
 		Assert.notNull(messageBox);
-
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-
+		
 		if (messageBox.getIsPredefined() == true) {
-			messageBox.setIsPredefined(true);
-			messages = new ArrayList<Message>();
-			messageBox.setMessages(messages);
-
+			if(!(messageBox.getId()== 0 && (messageBox.getName().equals("In Box") || messageBox.getName().equals("Out box") || 
+					messageBox.getName().equals("Spam box") || messageBox.getName().equals("Trash box")))) {
+			} else {
+				Assert.isTrue(this.findOne(messageBox.getId()).getIsPredefined() == true);
+				Assert.isTrue(this.findOne(messageBox.getId()).getName() == messageBox.getName());
+			}			
 		} else {
-
-			Assert.isTrue(messageBox.getIsPredefined() == false);
-			Assert.isTrue(!principal.getMessageBoxes().contains(messageBox));
-			messageBox.setIsPredefined(false);
-			final Collection<Message> messagesBox = messageBox.getMessages();
-			messageBox.setMessages(messagesBox);
-
+			if(messageBox.getId()== 0) {
+				for (MessageBox messageB : principal.getMessageBoxes()){
+					Assert.isTrue(!messageB.getName().equals(messageBox.getName()));
+				}
+			}
+			if (messageBox.getId()!= 0){
+				boxes = principal.getMessageBoxes();
+				boxes.remove(messageBox);
+				for (MessageBox messageB : principal.getMessageBoxes()){
+					Assert.isTrue(!messageB.getName().equals(messageBox.getName()));
+				}
+				Assert.isTrue(this.findOne(messageBox.getId()).getIsPredefined() == false);
+			}
 		}
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] name = messageBox.getName().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : name)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(messageBox.getName());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		result = this.messageBoxRepository.saveAndFlush(messageBox);
-		result.setName(messageBox.getName());
 		Assert.notNull(result);
 
 		if (!principal.getMessageBoxes().contains(result))
@@ -143,6 +143,10 @@ public class MessageBoxService {
 		principal.getMessageBoxes().remove(messageBox);
 	}
 
+	
+
+	//Other business methods -----------------------------
+	
 	public Collection<MessageBox> createSystemMessageBoxes() {
 		Collection<MessageBox> result;
 		Collection<String> names;
@@ -170,8 +174,6 @@ public class MessageBoxService {
 
 		return result;
 	}
-
-	//Other business methods -----------------------------
 
 	public MessageBox findOutBoxActor(final Actor a) {
 		Actor principal;

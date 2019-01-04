@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class EndorserRecordService {
 	private HandyWorkerService			handyWorkerService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	//Constructor ----------------------------------------------------
@@ -66,11 +68,11 @@ public class EndorserRecordService {
 	}
 
 	public EndorserRecord save(final EndorserRecord endorserRecord) {
-
 		Assert.notNull(endorserRecord);
+		
 		EndorserRecord result;
 		HandyWorker principal;
-		Collection<EndorserRecord> endorsersRecord;
+		Collection<EndorserRecord> endorserRecords;
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
@@ -83,44 +85,23 @@ public class EndorserRecordService {
 		Assert.isTrue(endorserRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
 
 		Assert.notNull(endorserRecord.getPhoneNumber());
-		endorsersRecord = principal.getCurriculum().getEndorserRecords();
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] name = endorserRecord.getFullName().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : name)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (endorserRecord.getComments() != null) {
-			if (!containsSpam) {
-				final String[] comments = endorserRecord.getComments().split("(¿¡,.-_/!?) ");
-				for (final String word : spamWords) {
-					for (final String titleWord : comments)
-						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-							containsSpam = true;
-							break;
-						}
-					if (containsSpam) {
-						principal.setIsSuspicious(true);
-						break;
-					}
-				}
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(endorserRecord.getFullName());
+		if (endorserRecord.getComments() != null)
+			atributosAComprobar.add(endorserRecord.getComments());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 		
 		result = this.endorserRecordRepository.saveAndFlush(endorserRecord);
 		Assert.notNull(result);
 
-		endorsersRecord.add(result);
-		principal.getCurriculum().setEndorserRecords(endorsersRecord);
+		endorserRecords = principal.getCurriculum().getEndorserRecords();
+		endorserRecords.add(result);
+		principal.getCurriculum().setEndorserRecords(endorserRecords);
 
 		return result;
 
@@ -136,13 +117,12 @@ public class EndorserRecordService {
 		Assert.notNull(principal);
 
 		collectionEndorserRecords = principal.getCurriculum().getEndorserRecords();
-
-		collectionEndorserRecords.remove(endorserRecord);
+		Assert.isTrue(collectionEndorserRecords.contains(endorserRecord));
 
 		this.endorserRecordRepository.delete(endorserRecord);
-
+		
+		collectionEndorserRecords.remove(endorserRecord);
 		principal.getCurriculum().setEndorserRecords(collectionEndorserRecords);
-
 	}
 
 	//Other business methods--------

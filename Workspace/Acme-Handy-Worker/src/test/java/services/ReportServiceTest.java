@@ -44,6 +44,27 @@ public class ReportServiceTest extends AbstractTest {
 		Assert.notEmpty(res);
 
 	}
+	
+	@Test
+	public void testFindAll(){
+		Collection<Report> collRep;
+
+		collRep = this.reportService.findAll();
+		Assert.notNull(collRep);
+		Assert.notEmpty(collRep);
+
+	}
+	
+	@Test
+	public void testFindOne(){
+		Collection<Report> collRep;
+		Report report;
+
+		collRep = this.reportService.findAll();
+		report = this.reportService.findOne(collRep.iterator().next().getId());
+		Assert.notNull(report);
+
+	}
 
 	@Test
 	public void testCreateAndSave() {
@@ -56,7 +77,7 @@ public class ReportServiceTest extends AbstractTest {
 		Assert.notNull(principal);
 
 		res = this.reportService.create();
-		res.setComplaint(this.complaintService.findOne(2433));
+		res.setComplaint(this.complaintService.findAll().iterator().next());
 		res.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		res.setDescription("Description nigeria-sexo");
 		res.setIsFinal(false);

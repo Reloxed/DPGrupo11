@@ -21,7 +21,16 @@
 		<value>/views/system-configuration/tiles.xml</value>
 		<value>/views/phase/tiles.xml</value>
 		<value>/views/application/tiles.xml</value>
+<<<<<<< HEAD
 		<value>/views/complaint/tiles.xml</value>
+=======
+		<value>/views/fixUpTask/tiles.xml</value>
+		<value>/views/finder/tiles.xml</value>
+		<value>/views/complaint/tiles.xml</value>
+		<value>/views/tutorial/tiles.xml</value>
+		<value>/views/endorsement/tiles.xml</value>
+		<value>/views/curriculum/tiles.xml</value>
+>>>>>>> master
 	</util:list>
 
 </beans>
