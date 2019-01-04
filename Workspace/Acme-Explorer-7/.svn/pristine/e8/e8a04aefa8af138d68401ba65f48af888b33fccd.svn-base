@@ -1,0 +1,32 @@
+# messages.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+survivalClass.title				= Title
+survivalClass.description		= Description
+survivalClass.moment			= Moment
+survivalClass.trip				= Trip
+survivalClass.place				= Location	
+survivalClass.place.name		= Location (name)
+survivalClass.place.latitude	= Latitude
+survivalClass.place.longitude	= Longitude
+survivalClass.trip.title		= Trip (title)
+
+survivalClass.edit 				= Edit
+survivalClass.save 				= Save
+survivalClass.delete			= Delete
+survivalClass.cancel			= Cancel
+
+survivalClass.confirm.delete 	= Delete this survival class?
+
+survivalClass.create 			= Create survival class
+survivalClass.register			= Register
+survivalClass.unregister		= Unregister
+survivalClass.confirm.unregister = Confirm unregistration?
+
+survivalClass.commit.error 		= Cannot commit this operation
+survivalClass.commit.ok			= Operation performed successfully

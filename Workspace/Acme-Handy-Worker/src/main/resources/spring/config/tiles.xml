@@ -21,6 +21,7 @@
 		<value>/views/system-configuration/tiles.xml</value>
 		<value>/views/phase/tiles.xml</value>
 		<value>/views/application/tiles.xml</value>
+		<value>/views/complaint/tiles.xml</value>
 	</util:list>
 
 </beans>

@@ -1,0 +1,222 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
+
+<form:form action="curriculum/ranger/edit.do" modelAttribute="curriculum"  >
+
+	<form:hidden path="id" />
+	
+	<form:hidden path="version" />
+	
+	<form:hidden path="ranger"/>
+	
+	<form:hidden path ="ticker" />
+	
+	<%-- Parte del formulario para el personalRecord --%>
+	<fieldset>
+	<legend><form:label path="personalRecord"> <spring:message code="curriculum.personalRecord" />: </form:label></legend>
+	
+	<form:label path="personalRecord.name">
+		<spring:message code="curriculum.personalRecord.name" />:
+	</form:label>
+	<form:input path="personalRecord.name"  />
+	<form:errors cssClass="error" path="personalRecord.name" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.surname">
+		<spring:message code="curriculum.personalRecord.surname" />:
+	</form:label>
+	<form:input path="personalRecord.surname"  />
+	<form:errors cssClass="error" path="personalRecord.surname" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.linkPhoto">
+		<spring:message code="curriculum.personalRecord.linkPhoto" />:
+	</form:label>
+	<form:input path="personalRecord.linkPhoto"  />
+	<form:errors cssClass="error" path="personalRecord.linkPhoto" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.email">
+		<spring:message code="curriculum.personalRecord.email" />:
+	</form:label>
+	<form:input path="personalRecord.email"  />
+	<form:errors cssClass="error" path="personalRecord.email" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.phone">
+		<spring:message code="curriculum.personalRecord.phone" />:
+	</form:label>
+	<form:input path="personalRecord.phone"  />
+	<form:errors cssClass="error" path="personalRecord.phone" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.linkedInProfile">
+		<spring:message code="curriculum.personalRecord.linkedInProfile" />:
+	</form:label>
+	<form:input path="personalRecord.linkedInProfile"  />
+	<form:errors cssClass="error" path="personalRecord.linkedInProfile" />
+	<br />
+	<br />
+	</fieldset>
+	<br>
+	<br>
+	
+	
+	<%-- Parte del formulario para los professionalRecords --%>
+	<fieldset>
+
+	
+	<legend> <form:label path="professionalRecords"> <spring:message code="curriculum.professionalRecords" />: </form:label> </legend>
+
+
+
+		<div id="list1">
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="curriculum.professionalRecord.companyName" /> :  </th>
+			<th>  <spring:message code="curriculum.professionalRecord.startDate" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.endDate" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.role" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.linkAttachment" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.comments" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty curriculum.professionalRecords}">
+			<tr class="list-item">
+			
+			
+			
+			<td>	<form:input path="professionalRecords[0].companyName" /> </td>
+			<td>	<form:input path="professionalRecords[0].startDate" /> </td>
+			<td>	<form:input path="professionalRecords[0].endDate" /> </td>
+			<td>	<form:input path="professionalRecords[0].role" /> </td>
+			<td>	<form:input path="professionalRecords[0].linkAttachment" /> </td>
+			<%-- Tenemos que anidar el formulario dinámico para los comments del ProfessionaRecord --%>
+			<td>
+				<div id="list2">
+				<table class="displayStyle">
+				<tr>
+					<th></th>
+					<th><spring:message code="curriculum.professionalRecord.comments" /> : </th>
+					<th></th>
+				</tr>
+				<tr class="list-item">
+					<td><spring:message code="curriculum.professionalRecord.comments" />0</td>
+					<td><form:textarea path="professionalRecords[0].comments[0]" /> </td>
+					<td><a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.professionalRecord.comment.remove" /> </a></td>
+				</tr>
+				</table>
+				<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.comment.add" /></a>
+				</div>
+				<br />
+				
+			</td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.professionalRecord.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${curriculum.professionalRecords}" var="PR" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td> 	<form:input path="professionalRecords[${i.index}].companyName" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].startDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].endDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].role" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].linkAttachment" /> </td>
+			<%-- Hacemos el mismo procedimiento para la los comentarios de un professional record --%>
+			<td>
+				<div id="list3">
+				<table class="displayStyle">
+				<tr>
+					<th></th>
+					<th><spring:message code="curriculum.professionalRecord.comments" /> : </th>
+					<th></th>
+				</tr>
+				<jstl:forEach items="${PR.comments}" var="comm" varStatus="j" begin="0">
+				<tr>
+				<td><spring:message code="curriculum.professionalRecord.comment" /><jstl:out value="${j.index}"/></td>
+				<td><form:input path = "professionalRecords[${i.index }].comments[${j.index }]" /></td>
+				<td>
+				<a href="#" onclick="event.preventDefault();" class="list-remove"> 
+				<spring:message code="curriculum.comment.remove" /> 
+				</a>
+				</td>
+				</tr>
+				</jstl:forEach>
+				</table>
+				<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.comment.add" /></a>
+				</div>
+				<br />	
+			</td>
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.professionalRecord.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.professionalRecord.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="professionalRecords" />
+
+</fieldset>
+	
+	<br />
+	<br />
+
+
+</form:form>
+
+
+<script>
+    $(document).ready(function() {
+        $("#list1").dynamiclist();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list2").dynamiclist();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list3").dynamiclist();
+    });
+</script>
+
+
+
+
+

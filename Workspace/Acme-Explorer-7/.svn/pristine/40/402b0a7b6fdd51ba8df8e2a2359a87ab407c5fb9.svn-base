@@ -1,0 +1,19 @@
+
+socialIdentity.nick			= Nick
+socialIdentity.socialNetwork	= Social network
+socialIdentity.linkProfile	= Profile (link) 
+socialIdentity.linkPhoto		= Photo (link)
+
+
+
+socialIdentity.save			= Save
+socialIdentity.delete		= Delete
+socialIdentity.cancel			= Cancel
+socialIdentity.confirm.delete		= Delete this social identity?
+
+
+
+
+socialIdentity.commit.error 		= Cannot commit this operation
+socialIdentity.commit.ok			= Operation performed successfully
+socialIdentity.nopermission  		= You have no permission to edit this Socia identity!	

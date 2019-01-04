@@ -1,0 +1,27 @@
+# messages.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+folder.listFolders					= List of Folders
+folder.writeMessage					= Write a message
+folder.createFolder					= Create a new custom folder
+folder.folder.name					= Name
+folder.folder.subFolders			= Subfolders
+folder.editFolder					= Edit
+folder.show							= Show
+folder.current.folder				= Currently showing
+folder.childFolders.empty			= This folder doesn't have any subfolder
+folder.createFolder.nested			= Create a new custom subfolder here
+folder.listMessages					= List of Messages of 
+folder.messages.empty				= There is no messages in this folder
+folder.message.sender				= Sender
+folder.message.recipient			= Recipient
+folder.message.moment				= Moment
+folder.message.subject				= Subject
+folder.message.body					= Body
+folder.message.priority				= Priority
+folder.message.edit					= Edit

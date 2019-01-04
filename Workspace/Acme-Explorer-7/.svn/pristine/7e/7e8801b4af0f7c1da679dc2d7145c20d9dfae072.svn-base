@@ -1,0 +1,27 @@
+manager.name							= Nombre
+manager.surname							= Apellidos
+manager.email							= Corre electrónico
+manager.phone							= Teléfono(al menos 4 dígitos)
+manager.address							= Dirección
+manager.username						= Usuario
+manager.password						= Contraseña
+manager.register						= Registrarse
+manager.cancel							= Cancelar
+manager.save							= Salvar
+manager.phonePlaceholder				= +CC(AC)PN (Ej: +34(551)666666666) or +CC PN (Ej: +34 666666666) o sólo PN (al menos 4 dígitos)
+
+
+manager.username.placeholder			= usuario entre 5 y 32 caracteres
+manager.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+manager.confirmationPhone				= El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN ¿Está seguro de que es correcto?
+
+
+manager.socialIdentities.add			= Añadir
+manager.socialIdentities.remove			= Eliminar 
+
+manager.placeholder.nick				= apodo1; apodo2; apodo3; ...
+manager.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+manager.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+manager.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

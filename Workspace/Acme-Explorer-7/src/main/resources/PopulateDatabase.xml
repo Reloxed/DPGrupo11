@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+
+	<!-- User accounts -->
+	<!-- Administrator account -->
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="isBanned" value="false" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- MANAGER account -->
+
+	
+
+	<!-- EXPLORER account -->
+
+	
+
+	<!-- RANGER account -->
+
+	
+	<!-- AUDITOR account -->
+
+
+
+	<!-- SPONSOR account -->
+
+	
+
+   
+
+
+
+
+
+<!-- Social Identities -->
+
+
+
+
+
+	<!-- Administrators -->
+	<bean class="domain.Administrator" id="administrator1">
+	<property name="name" value="Adrián" />
+	<property name="surname" value="Martínez" />
+	<property name="email" value="adrian@gmail.es" />
+	<property name="phone" value = "34679543150"/> 
+	<property name="address"><null/> </property> 
+	<property name="isSuspicious" value="false"/>
+	<property name="isBanned" value="false"/>
+	<property name="socialIdentities">
+	<list>
+	</list>
+	</property>
+	<property name="userAccount" ref="userAccount1"/>
+	<property name="folders">
+	<list>
+	<ref bean="folder1"/>
+	<ref bean="folder2"/>
+	<ref bean="folder3"/>
+	<ref bean="folder4"/>
+	<ref bean="folder5"/>
+	</list>
+	</property>
+	<property name="sentMessages">
+	<list>
+	</list>
+	</property>
+	<property name="receivedMessages">
+	<list>
+	</list>
+	</property>
+	</bean>
+	
+	
+	
+	
+	<!-- Managers -->
+	
+    
+    
+    <!-- Auditors -->
+   
+	
+	<!--  Legal texts -->
+	
+	
+	<bean class="domain.LegalText" id="legalText1">
+<property name="title" value="Legal Text 1" />
+<property name="body" value="This is the body of Legal Text 1" />
+<property name="registerDate" value="2017/02/01 23:59" />
+<property name="laws">
+<list>
+<value>Law 1</value>
+<value>Law 2</value>
+<value>Law 3</value>
+</list>
+</property>
+<property name="isDraft" value="true" />
+</bean>
+
+<bean class="domain.LegalText" id="legalText2">
+<property name="title" value="Legal Text 2" />
+<property name="body" value="This is the body of Legal Text 2" />
+<property name="registerDate" value="2017/05/05 22:00" />
+<property name="laws">
+<list>
+<value>Law 4</value>
+<value>Law 5</value>
+<value>Law 6</value>
+</list>
+</property>
+<property name="isDraft" value="true" />
+</bean>
+	
+
+
+
+<!--  Categories -->
+<bean class="domain.Category" id="category1">
+<property name="name" value="CATEGORY" />
+<property name="parentCategories">
+<list>
+</list>
+</property>
+<property name="childCategories">
+<list>
+<ref bean="category2" />
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+
+
+<bean class="domain.Category" id="category2">
+<property name="name" value="Safari" />
+<property name="parentCategories" >
+<list>
+<ref bean="category1"/>
+</list>
+</property>
+<property name="childCategories">
+<list>
+<ref bean="category3"/>
+<ref bean="category4"/>
+<ref bean="category5"/>
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+<bean class="domain.Category" id="category3">
+<property name="name" value="Ground" />
+<property name="parentCategories" >
+<list>
+<ref bean="category2"/>
+</list>
+</property>
+<property name="childCategories">
+<list>
+<ref bean="category6"/>
+<ref bean="category7"/>
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+<bean class="domain.Category" id="category4">
+<property name="name" value="Water" />
+<property name="parentCategories" >
+<list>
+<ref bean="category2"/>
+</list>
+</property>
+<property name="childCategories">
+<list>
+<ref bean="category8"/>
+<ref bean="category9"/>
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+
+<bean class="domain.Category" id="category5">
+<property name="name" value="Climbing" />
+<property name="parentCategories" >
+<list>
+<ref bean="category1"/>
+</list>
+</property>
+<property name="childCategories">
+<list>
+<ref bean="category7"/>
+<ref bean="category9"/>
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+
+<bean class="domain.Category" id="category6">
+<property name="name" value="Savana" />
+<property name="parentCategories" >
+<list>
+<ref bean="category3"/>
+</list>
+</property>
+<property name="childCategories" >
+<list>
+</list>
+</property>
+<property name="trips">
+<list>
+</list>
+</property>
+</bean>
+
+<bean class="domain.Category" id="category7">
+<property name="name" value="Mountain" />
+<property name="parentCategories" >
+<list>
+<ref bean="category3"/>
+<ref bean="category5"/>
+</list>
+</property>
+<property name="childCategories" >
+<list>
+</list>
+</property>
+<property name="trips" >
+<list>
+</list>
+</property>
+</bean>
+
+<bean class="domain.Category" id="category8">
+<property name="name" value="Lake" />
+<property name="parentCategories" >
+<list>
+<ref bean="category4"/>
+</list>
+</property>
+<property name="childCategories" >
+<list>
+</list>
+</property>
+<property name="trips" >
+<list>
+</list>
+</property>
+</bean>
+
+<bean class="domain.Category" id="category9">
+<property name="name" value="River" />
+<property name="parentCategories" >
+<list>
+<ref bean="category4"/>
+<ref bean="category5"/>
+</list>
+</property>
+<property name="childCategories" >
+<list>
+</list>
+</property>
+<property name="trips" >
+<list>
+</list>
+</property>
+</bean>
+	
+
+
+<!-- Emergency contacts  -->
+
+
+    
+   <!-- PersonalRecords -->
+	
+
+
+	<!-- EducationRecords -->
+
+
+	<!-- EndorserRecords -->
+	
+	<!-- MiscellaneousRecords -->
+	
+
+	
+	    <!-- Curriculum -->
+	
+    
+    	 <!-- Rangers -->
+    
+   
+    
+<!--  Stages -->
+
+ <!-- Trips -->
+
+
+   
+ <!-- Tags -->
+<bean class="domain.Tag" id="tag1">
+<property name="name" value="country" />
+</bean>
+
+<bean class="domain.Tag" id="tag2">
+<property name="name" value="expertise" />
+</bean>
+
+<bean class="domain.Tag" id="tag3">
+<property name="name" value="dangerousness" />
+</bean>
+ 
+
+    
+         <!-- Notes -->
+
+
+
+
+<!-- Survival Classes (+ the corresponding Locations) -->
+
+
+<!-- Audits -->
+
+
+
+<!-- CreditCard -->
+<bean class="domain.CreditCard" id="creditCardFicticia">
+<property name="holderName" value="FICTICIA" />
+<property name="brandName" value="FICTICIA" />
+<property name="number" value="0000000000000000"  />
+<property name="expirationMonth" value="1" />
+<property name="expirationYear" value="10" />
+<property name="CVV" value="100" />
+</bean>
+
+
+
+
+<!-- Sponsors -->
+	
+
+ <!-- Sponsorship -->
+
+
+
+
+<!-- Explorer -->
+	
+	
+	<!-- Application -->
+
+
+
+<!-- Story -->
+
+
+
+<!-- Folders -->
+
+<bean class="domain.Folder" id="folder1">
+<property name="name" value="in box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder2">
+<property name="name" value="out box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder3">
+<property name="name" value="notification box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+
+</bean>
+
+<bean class="domain.Folder" id="folder4">
+<property name="name" value="trash box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+<bean class="domain.Folder" id="folder5">
+<property name="name" value="spam box" />
+<property name="isSystem" value="true" />
+<property name="messages">
+	<list>
+	</list>
+</property>
+<property name="parentFolder"> <null/> </property>
+<property name="childFolders">
+	<list>
+	</list>
+</property>
+</bean>
+
+
+
+<!-- Messages -->
+
+
+<!-- Customisation -->
+<bean id="customisation" class="domain.Customisation">
+		<property name="welcomeBanner" value="http://creek-tours.com/wp-content/uploads/Kenya-Tanzania-Family-Safari-banner.jpg" />
+		<property name="welcomeMessageEn" value="Tanzanika is an adventure company that makes your explorer's dreams true" />
+		<property name="welcomeMessageEs" value="Tanzanika es la empresa de aventuras que hará tus sueños de explorador realidad" />
+		<property name="countryCode" value="+34" />
+		<property name="spamWords">
+		<list>
+		<value>sex</value>
+		<value>viagra</value>
+		<value>cialis</value>
+		<value>jes extender</value>
+		</list>
+		</property>
+		<property name="vatTax" value="21.00" />
+		<property name="finderCacheTime" value="1" />
+		<property name="finderMaxResults" value="10" />
+	</bean>
+
+
+
+	<!-- Other domain beans come here -->
+
+
+
+</beans>

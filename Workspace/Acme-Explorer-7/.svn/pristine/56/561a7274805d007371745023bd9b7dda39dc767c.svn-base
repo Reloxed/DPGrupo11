@@ -1,0 +1,199 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.CategoryRepository;
+import domain.Administrator;
+import domain.Category;
+import domain.Trip;
+
+@Service
+@Transactional
+public class CategoryService {
+
+	// Managed Repository
+	@Autowired
+	private CategoryRepository		categoryRepository;
+
+	// Supporting services
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+
+	// Constructors
+
+	public CategoryService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	public Category create() {
+		Category result;
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = new Category();
+		Assert.notNull(result);
+
+		return result;
+
+	}
+
+	// An actor who is authenticated as an administrator must be able to list the categories
+	public Collection<Category> findAll() {
+		Collection<Category> result;
+		//	Administrator principal;
+
+		//	principal = this.administratorService.findByPrincipal();
+		//	Assert.notNull(principal); // Checks if the principal is an administrator
+
+		result = this.categoryRepository.findAll();
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Category findOne(final int categoryId) {
+		Category result;
+
+		result = this.categoryRepository.findOne(categoryId);
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Category findRootCategory() {
+		Category result;
+
+		result = this.categoryRepository.findRootCategory();
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	// An actor who is authenticated as an administrator must be able to create a new category
+	public Category save(final Category category) {
+		Category result;
+		Administrator principal;
+		//  Collection<Trip> trips;
+		Collection<Category> parentCategories;
+		Collection<Category> childCategories;
+
+		Assert.notNull(category);
+
+		principal = this.administratorService.findByPrincipal();
+
+		Assert.notNull(principal); // Checks if the principal is an administrator
+
+		//	if (category.getId() == 0) {
+		//		trips = new ArrayList<Trip>();
+		//		category.setTrips(trips);
+		//
+		//	}
+
+		if (category.getId() != 0) {
+			Collection<Trip> trips;
+			trips = category.getTrips();
+			for (final Trip trip : trips)
+				trip.setCategory(category);
+		}
+
+		result = this.categoryRepository.save(category);
+		Assert.notNull(result);
+
+		parentCategories = category.getParentCategories();
+		for (final Category c : parentCategories) {
+			childCategories = new ArrayList<Category>(c.getChildCategories());
+			if (category.getId() != 0)
+				childCategories.remove(category);
+			childCategories.add(result);
+			c.setChildCategories(childCategories);
+		}
+
+		childCategories = category.getChildCategories();
+		for (final Category c : childCategories) {
+			parentCategories = new ArrayList<Category>(c.getParentCategories());
+			if (category.getId() != 0)
+				parentCategories.remove(category);
+			parentCategories.add(result);
+			c.setParentCategories(parentCategories);
+		}
+
+		return result;
+
+	}
+
+	// An actor who is authenticated as an administrator must be able to delete a category
+	public void delete(final Category category) {
+		Administrator principal;
+
+		Assert.notNull(category);
+		Assert.isTrue(category.getId() != 0);
+
+		principal = this.administratorService.findByPrincipal();
+
+		Assert.notNull(principal); // Checks if the principal is an administrator
+
+		this.categoryRepository.delete(category);
+
+	}
+
+	// Other business methods
+	public Collection<Category> findChildByParent(final int categoryId) {
+		Collection<Category> result;
+		result = this.categoryRepository.findChildCategoriesByParent(categoryId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Category> findAllDescendants(final Category ancestor) {
+		final Collection<Category> result = new ArrayList<Category>();
+		Collection<Category> children;
+		children = ancestor.getChildCategories();
+		for (final Category child : children)
+			if (child.getChildCategories().isEmpty())
+				result.add(child);
+			else {
+				result.add(child);
+				Collection<Category> grandChildren = new ArrayList<Category>();
+				grandChildren = this.findAllDescendants(child);
+				result.addAll(grandChildren);
+			}
+		Assert.notNull(result);
+		return result;
+
+	}
+
+	public Collection<Category> findAllAncestors(final Category descendant) {
+		final Collection<Category> result = new ArrayList<Category>();
+		Collection<Category> ancestors;
+		ancestors = descendant.getParentCategories();
+		for (final Category parent : ancestors)
+			if (parent.getParentCategories().isEmpty())
+				result.add(parent);
+			else {
+				result.add(parent);
+				Collection<Category> grandParents = new ArrayList<Category>();
+				grandParents = this.findAllAncestors(parent);
+				result.addAll(grandParents);
+			}
+		Assert.notNull(result);
+		return result;
+
+	}
+
+}

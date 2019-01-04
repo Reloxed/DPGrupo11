@@ -1,0 +1,116 @@
+
+package services;
+
+
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+
+import repositories.CountryCodeRepository;
+
+
+import domain.Administrator;
+import domain.CountryCode;
+
+
+
+
+@Service
+@Transactional
+public class CountryCodeService {
+
+	// Managed Repository
+	@Autowired
+	private CountryCodeRepository	countryCodeRepository;
+
+	// Supporting services
+
+	@Autowired
+	private AdministratorService administratorService;
+	
+
+	
+	// Constructors
+
+	public CountryCodeService() {
+		super();
+	}
+
+	
+	// Simple CRUD methods
+
+	
+	public Collection<CountryCode> findAll() {
+		Collection<CountryCode> result;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.countryCodeRepository.findAll();
+	
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	
+	public CountryCode create() {
+		CountryCode result;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = new CountryCode();
+		Assert.notNull(result);
+
+		return result;
+	}
+	
+	
+	public CountryCode save(CountryCode countryCode) {
+		CountryCode result;
+		Administrator principal;
+		
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		
+		result = this.countryCodeRepository.save(countryCode);
+		Assert.notNull(result);
+		
+		return result;
+	
+	}
+	
+	
+	public void delete(CountryCode countryCode) {
+		Administrator principal;
+		
+		Assert.notNull(countryCode);
+		Assert.isTrue(countryCode.getId() != 0);
+	
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+
+	
+		this.countryCodeRepository.delete(countryCode);
+	
+	}
+	
+	
+	
+
+	// Other business methods
+	
+ 
+	
+}

@@ -1,0 +1,124 @@
+
+package services;
+
+import java.util.Collection;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.FinderRepository;
+import domain.Explorer;
+import domain.Finder;
+import domain.Trip;
+
+@Service
+@Transactional
+public class FinderService {
+
+	// Managed Repository
+	@Autowired
+	private FinderRepository	finderRepository;
+
+	// Supporting services
+	@Autowired
+	private ExplorerService		explorerService;
+
+
+	// Constructors
+	public FinderService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	public Finder findByPrincipal() {
+		Finder result;
+		Explorer principal;
+
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = principal.getFinder();
+
+		return result;
+
+	}
+
+	public Finder save(final Finder finder) {
+		Finder result;
+		Explorer principal;
+
+		Assert.notNull(finder);
+
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		Date dateMin;
+		Date dateMax;
+		dateMin = new Date(1262304000000L);
+		dateMax = new Date(1924948800000L);
+
+		if (finder.getId() == 0) {
+
+			finder.setKeyword("");
+			finder.setPriceMin(0.00);
+			finder.setPriceMax(9999.99);
+			finder.setDateMin(dateMin);
+			finder.setDateMax(dateMax);
+			finder.setExplorer(principal);
+		} else {
+			if (finder.getPriceMin() != null && finder.getPriceMax() != null)
+				Assert.isTrue(finder.getPriceMax() > finder.getPriceMin());
+			if (finder.getDateMin() == null)
+				finder.setDateMin(dateMin);
+			if (finder.getDateMax() == null)
+				finder.setDateMax(dateMax);
+
+			if (finder.getDateMin() != null && finder.getDateMax() != null)
+				Assert.isTrue(finder.getDateMax().after(finder.getDateMin()));
+			if (finder.getPriceMin() == null)
+				finder.setPriceMin(0.00);
+			if (finder.getPriceMax() == null)
+				finder.setPriceMax(9999.99);
+			Assert.isTrue(finder.getExplorer().equals(principal));
+
+		}
+
+		result = this.finderRepository.save(finder);
+		return result;
+
+	}
+
+	// Other business methods
+
+	public Collection<Trip> search() {
+		Collection<Trip> result;
+		Explorer principal;
+		Finder finder;
+		Date dateMin;
+		Date dateMax;
+		Double priceMin;
+		Double priceMax;
+		String keyword;
+
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		finder = principal.getFinder();
+
+		dateMin = finder.getDateMin();
+		dateMax = finder.getDateMax();
+		priceMin = finder.getPriceMin();
+		priceMax = finder.getPriceMax();
+		keyword = "%" + finder.getKeyword() + "%";
+
+		result = this.finderRepository.searchTrips(dateMin, dateMax, priceMin, priceMax, keyword);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+}

@@ -22,6 +22,7 @@
 		<value>/views/system-configuration/messages</value>
 		<value>/views/phase/messages</value>
 		<value>/views/application/messages</value>
+		<value>/views/complaint/messages</value>
 	</util:list>
 
 </beans>

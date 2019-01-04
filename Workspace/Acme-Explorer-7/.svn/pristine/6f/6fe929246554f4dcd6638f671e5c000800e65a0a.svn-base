@@ -1,0 +1,33 @@
+# messages_es.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+story.title			= Título
+story.text			= Texto
+story.trip			= Viaje
+story.explorer		= Autor
+
+story.linkAttachment = Archivos adjuntos
+
+story.trip.show		= Mostrar viaje
+
+story.edit 			= Editar
+story.save 			= Salvar
+story.delete			= Borrar
+story.cancel			= Cancelar
+
+story.display		= Mostrar
+
+story.linkAttachment.add	= Añadir archivo adjunto
+story.linkAttachment.remove	= Eliminar archivo adjunto
+
+story.confirm.delete 	= ¿Borrar esta historia?
+
+story.create 			= Crear historia
+
+story.commit.error 		= No se puede realizar la operación
+story.commit.ok			= Operación realizada con éxito

@@ -1,0 +1,22 @@
+administrator.name							= Nombre
+administrator.surname						= Apellidos
+administrator.email							= Corre electrónico
+administrator.phone							= Teléfono
+administrator.address						= Dirección
+administrator.username						= Usuario
+administrator.password						= Contraseña
+administrator.register						= Registrarse
+administrator.cancel						= Cancelar
+administrator.placeholderusername			= usuario entre 5 y 32 caracteres
+administrator.placeholderpassword			= contraseña entre 5 y 32 caracteres
+administrator.socialidentities				= Redes sociales
+administrator.socialIdentities.nick			= Apodo
+administrator.socialIdentities.socialNetwork	= Red social
+administrator.socialIdentities.linkProfile	= Enlace a perfil
+administrator.socialIdentities.linkPhoto		= Enlace a foto
+administrator.placeholder.nick				= apodo1; apodo2; apodo3; ...
+administrator.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+administrator.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+administrator.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+
+

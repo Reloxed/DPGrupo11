@@ -1,0 +1,43 @@
+
+ 
+ 
+table.displayStyle {
+	border: 1px solid #666;
+	width: 80%;
+	margin: 20px 0 20px 0 !important;
+}
+
+table.displayStyle th, table.displayStyle td {
+	padding: 2px 4px 2px 4px !important;
+	text-align: left;
+	vertical-align: top;
+}
+
+table.displayStyle th {
+	text-align: center;
+	background-color: rgb(107, 137, 197);
+}
+
+
+table.displayStyle tr:nth-child(odd) {
+	background-color: #ffffba;
+}
+
+table.displayStyle tr:nth-child(even) {
+	background-color: #cedee5
+}
+
+table.displayStyle .redCell {
+	text-align: center;
+	background-color: #ff4d4d;
+	
+}
+
+table.displayStyle div.legalText {
+	text-align: center;
+	background-color: white;
+	display: inline-block;
+    border: double;
+	
+}
+

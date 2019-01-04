@@ -1,0 +1,23 @@
+explorer.name							= Name
+explorer.surname							= Surname
+explorer.email							= Email
+explorer.phone							= Phone Number(atleast 4 digits)
+explorer.address							= Address
+explorer.username						= Username
+explorer.password						= Password
+explorer.register						= Register
+explorer.cancel							= Cancel
+explorer.save							= Save
+explorer.phonePlaceholder				= +CC(AC)PN (Ex: +34(551)666666666) or +CC PN (Ex: +34 666666666) or just PN (at least 4 digits)
+
+explorer.username.placeholder			= username between 5 and 32 characters
+explorer.password.placeholder			= password between 5 and 32 characters
+
+
+
+explorer.confirmationPhone				= The phone number entered doesn't follow the following patterns: +CC(AC)PN, +CC PN  Are you sure is correct?
+
+explorer.commit.error 		= Cannot commit this operation
+explorer.commit.ok			= Operation performed successfully
+
+explorer.nopermission		= You have no permission to edit this Explorer!

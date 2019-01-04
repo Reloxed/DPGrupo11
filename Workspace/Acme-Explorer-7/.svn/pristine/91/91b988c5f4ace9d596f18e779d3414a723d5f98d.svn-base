@@ -1,0 +1,95 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
+
+
+
+<a href="message/actor/create.do"><spring:message code="mail.writeMessage" /></a>
+<a href="folder/actor/create.do"><spring:message code="mail.createFolder" /></a>
+
+<h3> <spring:message code="mail.listFolders" /></h3>
+
+<jstl:if test="${empty currentFolder.name}">
+<display:table pagesize="5" class="displaytag" 
+	name="folders" requestURI="folder/actor/list.do" id="folder">
+	
+	<display:column>
+	<a href="folder/actor/list.do?folderId=${folder.id}"><spring:message code="mail.show" /></a>
+	</display:column>
+	
+	<spring:message code="mail.folder.name" var="name" />
+	<display:column property="name" title="${name}" sortable="true" />
+	
+	<spring:message code="mail.folder.subFolders" var="subFolders" />
+	<display:column  title="${subFolders}" sortable="false" >
+		<ul>
+		<jstl:forEach items="${folder.childFolders}" var="childFolder">
+			<li><jstl:out value="${childFolder}"> </jstl:out></li>
+		</jstl:forEach>
+		</ul>
+	</display:column>
+	
+	<jstl:if test="${!folder.isSystem}">
+	<display:column>
+	<a href="folder/actor/edit.do?folderId=${folder.id}"><spring:message code="mail.editFolder" /></a>
+	</display:column>
+	</jstl:if>
+	
+</display:table>
+</jstl:if>
+
+
+<jstl:if test="${not empty currentFolder.name}">
+
+<h3> <spring:message code="mail.current.folder" /> : <jstl:out value="${currentFolder.name}" /> </h3>
+
+<display:table pagesize="5" class="displaytag" 
+	name="folders" requestURI="folder/actor/list.do" id="folder">
+	
+	<display:column>
+	<a href="folder/actor/list.do?folderId=${folder.id}"><spring:message code="mail.show" /></a>
+	</display:column>
+	
+	<spring:message code="mail.folder.name" var="name" />
+	<display:column property="name" title="${name}" sortable="true" />
+	
+	<spring:message code="mail.folder.subFolders" var="subFolders" />
+	<display:column  title="${subFolders}" sortable="false" >
+		<ul>
+		<jstl:forEach items="${folder.childFolders}" var="childFolder">
+			<li><jstl:out value="${childFolder}"> </jstl:out></li>
+		</jstl:forEach>
+		</ul>
+	</display:column>
+	
+	<jstl:if test="${!folder.isSystem}">
+	<display:column>
+	<a href="folder/actor/edit.do?folderId=${folder.id}"><spring:message code="mail.editFolder" /></a>
+	</display:column>
+	</jstl:if>
+	
+</display:table>
+
+</jstl:if>
+
+
+
+

@@ -1,0 +1,31 @@
+# messages.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+
+emergencyContact.name					= Name
+emergencyContact.phone					= Phone (at least 4 digits)
+emergencyContact.email					= Email
+
+
+emergencyContact.save					= Save
+emergencyContact.edit 					= Edit
+emergencyContact.delete					= Delete
+emergencyContact.cancel					= Cancel
+
+emergencyContact.confirm.delete 			= Delete this contact?
+
+emergencyContact.create 					= Create emergency contact
+
+emergencyContact.confirmationPhone				= The phone number entered doesn't follow the following patterns: +CC(AC)PN, +CC PN  Are you sure is correct?
+
+emergencyContact.phonePlaceholder				= +CC(AC)PN (Ex: +34(551)666666666) or +CC PN (Ex: +34 666666666) or just PN (at least 4 digits)
+
+emergencyContact.commit.error 		= Cannot commit this operation
+emergencyContact.commit.ok			= Operation performed successfully
+
+emergencyContact.unauthorizedAccess.message		= You don't have permissions to access this page

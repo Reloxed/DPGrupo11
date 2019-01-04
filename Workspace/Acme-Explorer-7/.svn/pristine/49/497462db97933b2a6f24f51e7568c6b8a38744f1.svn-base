@@ -1,0 +1,70 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
+
+
+<h2> <spring:message code="category.header" /> </h2>
+
+
+<h3> <spring:message code="category.name" /> : <jstl:out value="${currentCategory.name}" /> </h3>
+
+
+<div> <spring:message code="category.subcategories" /> : 
+
+
+<jstl:set var="subcategories" value="${currentCategory.childCategories}" /> 
+
+<jstl:if test="${not empty subcategories}"> 
+
+<uL>
+<jstl:forEach items="${subcategories}" var="subcategory">
+
+<li> <a href="category/list.do?categoryId=${subcategory.id}"> <jstl:out value="${subcategory.name}" /> </a> </li>
+
+</jstl:forEach>
+
+</uL>
+
+</jstl:if>
+
+</div> 
+
+<div> <spring:message code="category.trips" /> : 
+
+<jstl:set var="trips" value="${currentCategory.trips}" /> 
+
+<jstl:if test="${not empty trips}"> 
+
+<uL>
+<jstl:forEach items="${trips}" var="trip">
+
+<li> <a href="trip/display.do?tripId=${trip.id}"> <jstl:out value="${trip.title}" /> </a> </li>
+
+</jstl:forEach>
+
+</uL>
+
+</jstl:if>
+
+</div> 
+
+
+

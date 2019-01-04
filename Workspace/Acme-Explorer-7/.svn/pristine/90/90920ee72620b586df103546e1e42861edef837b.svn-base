@@ -1,0 +1,48 @@
+
+package controllers.explorer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.SurvivalClassService;
+import controllers.AbstractController;
+import domain.SurvivalClass;
+
+@Controller
+@RequestMapping("/survivalClass/explorer")
+public class SurvivalClassExplorerController extends AbstractController {
+
+	// Services
+
+	@Autowired
+	private SurvivalClassService	survivalClassService;
+
+
+	// Constructors
+
+	public SurvivalClassExplorerController() {
+		super();
+	}
+
+	//Displaying
+	@RequestMapping(value = "/enrol", method = RequestMethod.GET)
+	public ModelAndView enrol(@RequestParam final int survivalClassId) {
+		final ModelAndView result;
+
+		final SurvivalClass survivalClass;
+
+		survivalClass = this.survivalClassService.findOne(survivalClassId);
+
+		this.survivalClassService.enrol(survivalClass);
+
+		result = new ModelAndView("survivalClass/display?survivalClassId=" + survivalClassId);
+		result.addObject("survivalClass", survivalClass);
+
+		return result;
+
+	}
+}

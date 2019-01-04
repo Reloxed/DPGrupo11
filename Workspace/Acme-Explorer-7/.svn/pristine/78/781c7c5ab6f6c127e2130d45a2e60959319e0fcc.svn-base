@@ -1,0 +1,178 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.SponsorRepository;
+import security.LoginService;
+import security.UserAccount;
+import domain.Administrator;
+import domain.Folder;
+import domain.Message;
+import domain.SocialIdentity;
+import domain.Sponsor;
+import domain.Sponsorship;
+
+@Service
+@Transactional
+public class SponsorService {
+
+	// Managed Repository
+	@Autowired
+	private SponsorRepository		sponsorRepository;
+
+	// Supporting services
+	@Autowired
+	private FolderService			folderService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+
+	// Constructors
+
+	public SponsorService() {
+		super();
+	}
+
+	// Simple CRUD methods
+	public Sponsor create() {
+		Administrator principal;
+		Sponsor result;
+		final Collection<Folder> folders;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = new Sponsor();
+
+		result.setIsSuspicious(false);
+		result.setIsBanned(false);
+
+		//	folders = this.folderService.createSystemFolders(result);
+		folders = new ArrayList<>();
+		//	Assert.isTrue(folders.size() == 5);
+		result.setFolders(folders);
+		result.setSentMessages(new ArrayList<Message>());
+		result.setReceivedMessages(new ArrayList<Message>());
+		result.setSocialIdentities(new ArrayList<SocialIdentity>());
+		result.setSponsorships(new ArrayList<Sponsorship>());
+		return result;
+	}
+
+	public Sponsor save(final Sponsor sponsor) {
+		Sponsor saved;
+
+		Assert.notNull(sponsor);
+
+		saved = this.sponsorRepository.save(sponsor);
+
+		if (sponsor.getId() == 0) {
+			Collection<Folder> folders;
+			List<String> names;
+			Collection<Folder> childFolders;
+			Collection<Message> messages;
+
+			names = new ArrayList<String>();
+			names.add("in box");
+			names.add("out box");
+			names.add("notification box");
+			names.add("spam box");
+			names.add("trash box");
+
+			folders = new ArrayList<Folder>();
+			for (final String name : names) {
+				final Folder folder = new Folder();
+				Folder saved2;
+				folder.setName(name);
+				folder.setIsSystem(true);
+				folder.setOwner(saved);
+				folder.setParentFolder(null);
+				childFolders = new ArrayList<Folder>();
+				folder.setChildFolders(childFolders);
+				messages = new ArrayList<Message>();
+				folder.setMessages(messages);
+
+				saved2 = this.folderService.saveSystemFolder(folder);
+				Assert.notNull(saved2);
+
+				folders.add(saved2);
+
+			}
+
+			saved.setFolders(folders);
+		}
+
+		/*
+		 * if (sponsor.getId() == 0) {
+		 * Collection<Folder> systemFolders;
+		 * systemFolders = this.folderService.createSystemFolders(saved);
+		 * saved.setFolders(systemFolders);
+		 * }
+		 */
+		//		saved = this.sponsorRepository.save(sponsor);
+		//		Assert.notNull(saved);
+		saved.getUserAccount().setIsBanned(saved.getIsBanned());
+
+		return saved;
+	}
+
+	public void delete(final Sponsor sponsor) {
+		Administrator principal;
+		Assert.isTrue(sponsor.getId() != 0);
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		this.sponsorRepository.delete(sponsor);
+
+	}
+	public Sponsor findOne(final int sponsorId) {
+		Sponsor result;
+		result = this.sponsorRepository.findOne(sponsorId);
+		return result;
+	}
+	public Collection<Sponsor> findAll() {
+		Collection<Sponsor> result;
+		result = this.sponsorRepository.findAll();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Sponsor findByPrincipal() {
+		Sponsor result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
+
+		return result;
+
+	}
+
+	public Sponsor findByUserAccount(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		Sponsor result;
+		result = this.sponsorRepository.findByUserAccountId(userAccount.getId());
+		return result;
+	}
+
+	public Collection<Sponsor> findSponsorsBySuspicious() {
+		Collection<Sponsor> result;
+		Administrator principal;
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		result = this.sponsorRepository.findSponsorsBySuspicious();
+		Assert.notNull(result);
+		return result;
+
+	}
+
+}

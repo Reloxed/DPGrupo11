@@ -1,0 +1,14 @@
+$.fn.validatePhone = function(message, countryCode) {
+	var pattern = /^\+[1-9]\d{0,2}\([1-9]\d{0,2}\)\d{4,}|\+[1-9]\d{0,2} \([1-9]\d{0,2}\) \d{4,}|\+[1-9]\d{0,2}\d{4,}|\+[1-9]\d{0,2} \d{4,}$/;
+
+	if (this.value.match(pattern)) {
+
+		return true;
+	} else {
+		if (confirm(message)) {
+			$(this).value = countryCode.concat(" " + $(this).value);
+			document.getElementById("form").submit();
+
+		}
+	}
+};

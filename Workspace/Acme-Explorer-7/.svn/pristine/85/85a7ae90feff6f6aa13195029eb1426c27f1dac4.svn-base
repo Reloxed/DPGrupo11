@@ -1,0 +1,21 @@
+manager.name							= Name
+manager.surname							= Surname
+manager.email							= Email
+manager.phone							= Phone Number(atleast 4 digits)
+manager.address							= Address
+manager.username						= Username
+manager.password						= Password
+manager.register						= Register
+manager.cancel							= Cancel
+manager.save							= Save
+manager.phonePlaceholder				= +CC(AC)PN (Ex: +34(551)666666666) or +CC PN (Ex: +34 666666666) or just PN (at least 4 digits)
+
+manager.username.placeholder			= username between 5 and 32 characters
+manager.password.placeholder			= password between 5 and 32 characters
+
+manager.nopermission					= You have no permission to edit this Manager!
+
+manager.confirmationPhone				= The phone number entered doesn't follow the following patterns: +CC(AC)PN, +CC PN  Are you sure is correct?
+
+manager.commit.error 		= Cannot commit this operation
+manager.commit.ok			= Operation performed successfully

@@ -1,0 +1,22 @@
+administrator.name							= Name
+administrator.surname						= Surname
+administrator.email							= Email
+administrator.phone							= Phone Number
+administrator.address						= Address
+administrator.username						= Username
+administrator.password						= Password
+administrator.register						= Register
+administrator.cancel						= Cancel
+administrator.placeholderemail				= email@domain.
+administrator.placeholderusername			= username between 5 and 32 characters
+administrator.placeholderpassword			= password between 5 and 32 characters
+administrator.socialidentities				= Social identities
+administrator.socialIdentities.nick			= Nick
+
+administrator.socialIdentities.socialNetwork	= Social network
+administrator.socialIdentities.linkProfile		= Link profile
+administrator.socialIdentities.linkPhoto		= Link photo
+administrator.placeholder.nick					= nick1; nick2; nick3; ...
+administrator.placeholder.socialNetwork			= socialNetwork1; socialNetwork2; socialNetwork3; ...
+administrator.placeholder.linkProfile			= linkProfile1; linkProfile2; linkProfile3; ...
+administrator.placeholder.linkPhoto				= linkPhoto1; linkPhoto2; linkPhoto3; ...

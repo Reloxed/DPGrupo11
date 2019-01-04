@@ -1,0 +1,83 @@
+
+package domain;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
+@Access(AccessType.PROPERTY)
+public class ProfessionalRecord extends DomainEntity {
+
+	private String			companyName;
+	private Date			startDate;
+	private Date			endDate;
+	private String			role;
+	private String			linkAttachment;
+	private List<String>	comments;
+
+
+	@NotBlank
+	public String getCompanyName() {
+		return this.companyName;
+	}
+	public void setCompanyName(final String companyName) {
+		this.companyName = companyName;
+	}
+
+	@NotNull
+	@Past
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getStartDate() {
+		return this.startDate;
+	}
+	public void setStartDate(final Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getEndDate() {
+		return this.endDate;
+	}
+	public void setEndDate(final Date endDate) {
+		this.endDate = endDate;
+	}
+	@NotBlank
+	public String getRole() {
+		return this.role;
+	}
+	public void setRole(final String role) {
+		this.role = role;
+	}
+	@URL
+	public String getLinkAttachment() {
+		return this.linkAttachment;
+	}
+	public void setLinkAttachment(final String linkAttachment) {
+		this.linkAttachment = linkAttachment;
+	}
+
+	@NotNull
+	@ElementCollection
+	public List<String> getComments() {
+		return this.comments;
+	}
+	public void setComments(final List<String> comments) {
+		this.comments = comments;
+	}
+}

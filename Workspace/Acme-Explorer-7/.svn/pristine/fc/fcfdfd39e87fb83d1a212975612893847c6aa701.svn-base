@@ -1,0 +1,21 @@
+explorer.name							= Nombre
+explorer.surname						= Apellidos
+explorer.email							= Corre electrónico
+explorer.phone							= Teléfono
+explorer.address						= Dirección
+explorer.username						= Usuario
+explorer.password						= Contraseña
+explorer.register						= Registrarse
+explorer.cancel							= Cancelar
+explorer.placeholderusername			= usuario entre 5 y 32 caracteres
+explorer.placeholderpassword			= contraseña entre 5 y 32 caracteres
+explorer.socialidentities				= Redes sociales
+explorer.socialIdentities.nick			= Apodo
+explorer.socialIdentities.socialNetwork	= Red social
+explorer.socialIdentities.linkProfile	= Enlace a perfil
+explorer.socialIdentities.linkPhoto		= Enlace a foto
+explorer.placeholder.nick				= apodo1; apodo2; apodo3; ...
+explorer.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+explorer.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+explorer.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

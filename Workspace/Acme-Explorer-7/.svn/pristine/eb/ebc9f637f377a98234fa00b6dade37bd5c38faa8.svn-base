@@ -1,0 +1,74 @@
+administrator.name							= Nombre
+administrator.surname						= Apellidos
+administrator.email							= Corre electrónico
+administrator.phone							= Teléfono
+administrator.address						= Dirección
+administrator.username						= Usuario
+administrator.password						= Contraseña
+administrator.register						= Registrarse
+administrator.cancel						= Cancelar
+administrator.placeholderusername			= usuario entre 5 y 32 caracteres
+administrator.placeholderpassword			= contraseña entre 5 y 32 caracteres
+administrator.socialidentities				= Redes sociales
+administrator.socialIdentities.nick			= Apodo
+administrator.socialIdentities.socialNetwork	= Red social
+administrator.socialIdentities.linkProfile	= Enlace a perfil
+administrator.socialIdentities.linkPhoto		= Enlace a foto
+administrator.placeholder.nick				= apodo1; apodo2; apodo3; ...
+administrator.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+administrator.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+administrator.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+
+administrator.username.placeholder			= usuario entre 5 y 32 caracteres
+administrator.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+administrator.save							= Salvar
+administrator.phonePlaceholder             = El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN ¿Está seguro de que es correcto?
+
+
+administrator.confirmationPhone				= El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN ¿Está seguro de que es correcto?
+
+
+
+administrator.statistics					= Estadísticas
+administrator.metrics						= Métricas
+administrator.average						= Media
+administrator.minimum						= Mínimo
+administrator.maximum						= Máximo
+administrator.std							= Desviación típica
+administrator.applicationsPerTrip			= Número de Solicitudos por Viaje
+administrator.TripsPerManager				= Número de Viajes por Organizador
+administrator.PricePerTrips					= Precio por Viaje
+administrator.TripsPerRanger				= Número de Viajes por Guía
+administrator.NotesPerTrip					= Número de Notas por Viaje
+administrator.AuditsPerTrip					= Número de Registros de auditoría por Viaje
+administrator.ratios						= Ratios
+administrator.value							= Valor
+administrator.ratioStatusPENDING			= Ratio de Solicitudes con estado  PENDING
+administrator.ratioStatusDUE				= Ratio de Solicitud con estado DUE
+administrator.ratioStatusACCEPTED			= Ratio de Solicitud con estado ACCEPTED
+administrator.ratioStatusCANCELLED			= Ratio de Solicitud con estado CANCELLED
+administrator.ratioCancelledTrips			= Ratio de Viajes cancelados sobre Viajes organizados
+administrator.ratioTripsWithAudit			= Ratio de Viajes con Registro de auditoría
+administrator.ratioRangersWithCV			= Ratio de Guías que hayan registrado su curriculum
+administrator.ratioRangersWithCVEndorsed	= Ratio de Guías cuyo curriculum haya sido avalado
+administrator.ratioSuspiciousManagers		= Ratio de Organizadores sospechosos
+administrator.ratioSuspiciousRangers		= Ratio de Guías sospechosos
+administrator.ticker						= Ticker
+administrator.title							= Título
+administrator.description					= Descripción
+administrator.price							= Precio
+administrator.publicationDate				= Fecha de publicación
+administrator.manager						= Organizador
+administrator.ranger						= Guía
+administrator.displayTrip					= Mostrar Viaje
+administrator.tripMostApplications			= Lista de viajes que tengan al menos un 10% más de solicitudes que la media, ordenados por número de solicitudes
+administrator.legaltextGroupedByNumberOfTrips	= Número de veces que un Texto Legal ha sido referenciado
+administrator.legalText.title				= Título
+administrator.legalText.body				= Cuerpo
+administrator.legalText.registerDate		= Fecha de Registro
+administrator.legalText.numberReferences	= Número de referencias
+administrator.legalText.display				= Mostrar Texto Legal				
+
+administrator.commit.error 		= No se puede realizar la operación
+administrator.commit.ok			= Operación realizada con éxito

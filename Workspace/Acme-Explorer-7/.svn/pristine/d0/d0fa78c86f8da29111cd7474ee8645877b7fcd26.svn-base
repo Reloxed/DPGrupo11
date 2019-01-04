@@ -1,0 +1,59 @@
+
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.SpamWordRepository;
+
+import domain.Actor;
+
+import domain.SpamWord;
+
+
+@Service
+@Transactional
+public class SpamWordService {
+
+	// Managed Repository
+	@Autowired
+	private SpamWordRepository	spamWordRepository;
+
+	// Supporting services
+
+	@Autowired
+	private ActorService	ActorService;
+
+
+	// Constructors
+
+	public SpamWordService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	public Collection<SpamWord> findAll() {
+		Collection<SpamWord> result;
+		Actor principal;
+		
+		principal = this.ActorService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		
+		result = this.spamWordRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
+		
+	}
+	
+	
+
+	// Other business methods
+
+}

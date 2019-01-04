@@ -1,0 +1,179 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<security:authentication property="principal.username" var="user" /> 
+
+
+<jstl:choose>
+		<jstl:when test="${not empty sponsor}">
+		<jstl:set var="actorType" value="sponsor" />
+		
+		<jstl:if test="${sponsor.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		</jstl:if>
+		</jstl:when>
+		
+		
+		<jstl:when test="${not empty auditor}">
+		<jstl:set var="actorType" value="auditor" />
+		
+		<jstl:if test="${auditor.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		</jstl:if>
+		</jstl:when>
+		
+		
+		<jstl:when test="${not empty ranger}">
+		<jstl:set var="actorType" value="ranger" />
+		
+		<jstl:if test="${ranger.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		
+		</jstl:if>
+		</jstl:when>
+		
+		
+		<jstl:when test="${not empty explorer}">
+		<jstl:set var="actorType" value="explorer" />
+		
+		<jstl:if test="${explorer.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		</jstl:if>
+		</jstl:when>
+		
+		
+		
+		<jstl:when test="${not empty manager}">
+		<jstl:set var="actorType" value="manager" />
+		
+		<jstl:if test="${manager.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		</jstl:if>
+		</jstl:when>
+		
+		
+		
+		<jstl:when test="${not empty administrator}">
+		<jstl:set var="actorType" value="administrator" />
+		
+		<jstl:if test="${administrator.userAccount.username == user}">
+		<jstl:set var="permission" value="true" />
+		</jstl:if>
+		</jstl:when>
+		</jstl:choose>
+
+	
+		
+
+<security:authorize access="isAuthenticated()" var="authenticated" />
+
+<jstl:choose>
+<jstl:when test="${authenticated || actorType == 'ranger'}">
+
+
+
+
+<h2> <spring:message code="actor.profile"/> </h2>
+
+
+<h3> <jstl:out value="${actor.userAccount.username}"> </jstl:out> </h3>
+
+
+<table class="displayStyle">
+
+
+<tr>
+<th> <spring:message code="actor.rol.${actorType}" /> </th>
+<th>   </th>
+</tr>
+
+
+<tr>
+<td> <strong> <spring:message code="actor.name" /> : </strong> </td>
+<td> <jstl:out value="${actor.name}"> </jstl:out>  <jstl:out value="${actor.surname}"> </jstl:out>  </td>
+</tr>
+
+
+<tr>
+<td> <strong> <spring:message code="actor.email" /> : </strong> </td>
+<td> <jstl:out value="${actor.email}"> </jstl:out> </td>
+</tr>
+
+<tr>
+<td> <strong> <spring:message code="actor.phone" /> : </strong> </td>
+<td> <jstl:choose> <jstl:when test="${not empty ranger.phone}">  <jstl:out value="${actor.phone}"> </jstl:out>
+</jstl:when> <jstl:otherwise> <spring:message code="actor.phone.empty" /> </jstl:otherwise> </jstl:choose></td>
+</tr>
+
+<tr>
+<td> <strong> <spring:message code="actor.socialIdentities" /> : </strong> </td>
+
+<td>
+
+<jstl:choose>
+<jstl:when test="${not empty actor.socialIdentities}">
+
+<ul>
+<jstl:forEach items="${actor.socialIdentities}" var="socialId">
+<jstl:set var="linkProfile" value="${socialId.linkProfile}" />  
+<li> <jstl:out value="${socialId.socialNetwork}"> </jstl:out>  : <a href="${linkProfile}"> ${linkProfile} </a> </li>
+
+
+</jstl:forEach>
+</ul> 
+
+</jstl:when>
+<jstl:otherwise>
+
+<spring:message code="actor.socialIdentities.empty" />   
+
+</jstl:otherwise>
+
+</jstl:choose>
+
+
+ </td>
+</tr>
+
+</table>
+
+
+
+<jstl:if test="${permission == true}">
+<a href="${actorType}/${actorType}/edit.do?${actorType}Id=${actor.id}"> <spring:message code= "actor.edit"/> </a>
+
+</jstl:if>
+
+
+
+</jstl:when>
+<jstl:otherwise>
+
+
+<div> <spring:message code="actor.unauthorizedAccess.message" /> </div>
+</jstl:otherwise>
+</jstl:choose>
+
+
+
+

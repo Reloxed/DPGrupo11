@@ -1,0 +1,427 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
+
+<form:form action="curriculum/ranger/edit.do" modelAttribute="curriculum" >
+
+	<form:hidden path="id" />
+	
+	<form:hidden path="version" />
+	
+	<form:hidden path="ranger"/>
+	
+	<form:hidden path ="ticker" />
+	
+	<%-- Parte del formulario para el personalRecord --%>
+	<fieldset>
+	<legend><form:label path="personalRecord"> <spring:message code="curriculum.personalRecord" />: </form:label></legend>
+	
+	<form:label path="personalRecord.name">
+		<spring:message code="curriculum.personalRecord.name" />:
+	</form:label>
+	<form:input path="personalRecord.name"  />
+	<form:errors cssClass="error" path="personalRecord.name" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.surname">
+		<spring:message code="curriculum.personalRecord.surname" />:
+	</form:label>
+	<form:input path="personalRecord.surname"  />
+	<form:errors cssClass="error" path="personalRecord.surname" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.linkPhoto">
+		<spring:message code="curriculum.personalRecord.linkPhoto" />:
+	</form:label>
+	<form:input path="personalRecord.linkPhoto"  />
+	<form:errors cssClass="error" path="personalRecord.linkPhoto" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.email">
+		<spring:message code="curriculum.personalRecord.email" />:
+	</form:label>
+	<form:input path="personalRecord.email"  />
+	<form:errors cssClass="error" path="personalRecord.email" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.phone">
+		<spring:message code="curriculum.personalRecord.phone" />:
+	</form:label>
+	<form:input path="personalRecord.phone"  />
+	<form:errors cssClass="error" path="personalRecord.phone" />
+	<br />
+	<br />
+	
+	<form:label path="personalRecord.linkedInProfile">
+		<spring:message code="curriculum.personalRecord.linkedInProfile" />:
+	</form:label>
+	<form:input path="personalRecord.linkedInProfile"  />
+	<form:errors cssClass="error" path="personalRecord.linkedInProfile" />
+	<br />
+	<br />
+	</fieldset>
+	<br>
+	<br>
+	
+	
+	<%-- Parte del formulario para los professionalRecords --%>
+	<fieldset>
+
+	
+	<legend> <form:label path="professionalRecords"> <spring:message code="curriculum.professionalRecords" />: </form:label> </legend>
+
+
+
+		<div id="list1">
+		
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="curriculum.professionalRecord.companyName" /> :  </th>
+			<th>  <spring:message code="curriculum.professionalRecord.startDate" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.endDate" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.role" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.linkAttachment" /> : </th>
+			<th>  <spring:message code="curriculum.professionalRecord.comments" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty curriculum.professionalRecords}">
+			<tr class="list-item">
+			
+			
+			
+			<td>	<form:input path="professionalRecords[0].companyName" /> </td>
+			<td>	<form:input path="professionalRecords[0].startDate" /> </td>
+			<td>	<form:input path="professionalRecords[0].endDate" /> </td>
+			<td>	<form:input path="professionalRecords[0].role" /> </td>
+			<td>	<form:input path="professionalRecords[0].linkAttachment" /> </td>
+			<td>
+				<textarea rows="10" cols="30" name="PRcomments[0]" id="PRcomments[0]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ></textarea>
+				
+			</td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.professionalRecord.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${curriculum.professionalRecords}" var="PR" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td> 	<form:input path="professionalRecords[${i.index}].companyName" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].startDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].endDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].role" /> </td>
+			<td>	<form:input path="professionalRecords[${i.index}].linkAttachment" /> </td>
+			<td>
+			
+			
+			<textarea rows="10" cols="30"  name="PRcomments[${i.index}]}" id="PRcomments[${i.index}]}" placeholder="<spring:message code="curriculum.comments.placeholder" />" ><jstl:out value="${commentsInPRs[i.index]}"/></textarea>
+					
+			</td>
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.professionalRecord.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.professionalRecord.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="professionalRecords" />
+
+</fieldset>
+	
+	<br />
+	<br />
+
+	<%-- Parte del formulario para los educationRecords --%>
+	<fieldset>
+
+	
+	<legend> <form:label path="educationRecord"> <spring:message code="curriculum.educationRecords" />: </form:label> </legend>
+
+
+
+		<div id="list2">
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="curriculum.educationRecord.diplomaTitle" /> :  </th>
+			<th>  <spring:message code="curriculum.educationRecord.startDate" /> : </th>
+			<th>  <spring:message code="curriculum.educationRecord.endDate" /> : </th>
+			<th>  <spring:message code="curriculum.educationRecord.institutionName" /> : </th>
+			<th>  <spring:message code="curriculum.educationRecord.linkAttachment" /> : </th>
+			<th>  <spring:message code="curriculum.educationRecord.comments" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty curriculum.educationRecord}">
+			<tr class="list-item">
+			
+			
+			
+			<td>	<form:input path="educationRecord[0].diplomaTitle" /> </td>
+			<td>	<form:input path="educationRecord[0].startDate" /> </td>
+			<td>	<form:input path="educationRecord[0].endDate" /> </td>
+			<td>	<form:input path="educationRecord[0].institutionName" /> </td>
+			<td>	<form:input path="educationRecord[0].linkAttachment" /> </td>
+			<td>
+				<textarea rows="10" cols="30" name="ERcomments[0]" id="ERcomments[0]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ></textarea>
+				
+			</td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.educationRecord.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${curriculum.educationRecord}" var="ER" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td> 	<form:input path="educationRecord[${i.index}].diplomaTitle" /> </td>
+			<td>	<form:input path="educationRecord[${i.index}].startDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="educationRecord[${i.index}].endDate" placeholder="dd/mm/yyy" /> </td>
+			<td>	<form:input path="educationRecord[${i.index}].institutionName" /> </td>
+			<td>	<form:input path="educationRecord[${i.index}].linkAttachment" /> </td>
+			<td>
+			
+			
+			<textarea rows="10" cols="30"  name="ERcomments[${i.index}]" id="ERcomments[${i.index}]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ><jstl:out value="${commentsInERs[i.index]}"/></textarea>
+					
+			</td>
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.educationRecord.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.educationRecord.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="educationRecord" />
+
+</fieldset>
+	
+	<br />
+	<br />
+	
+	
+	<%-- Parte del formulario para los endorserRecords --%>
+	<fieldset>
+
+	
+	<legend> <form:label path="endorserRecord"> <spring:message code="curriculum.endorserRecords" />: </form:label> </legend>
+
+
+
+		<div id="list3">
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="curriculum.endorserRecord.name" /> :  </th>
+			<th>  <spring:message code="curriculum.endorserRecord.surname" /> : </th>
+			<th>  <spring:message code="curriculum.endorserRecord.email" /> : </th>
+			<th>  <spring:message code="curriculum.endorserRecord.phone" /> : </th>
+			<th>  <spring:message code="curriculum.endorserRecord.linkedInProfile" /> : </th>
+			<th>  <spring:message code="curriculum.endorserRecord.comments" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty curriculum.endorserRecord}">
+			<tr class="list-item">
+			
+			
+			
+			<td>	<form:input path="endorserRecord[0].name" /> </td>
+			<td>	<form:input path="endorserRecord[0].surname" /> </td>
+			<td>	<form:input path="endorserRecord[0].email" /> </td>
+			<td>	<form:input path="endorserRecord[0].phone" /> </td>
+			<td>	<form:input path="endorserRecord[0].linkedInProfile" /> </td>
+			<td>
+				<textarea rows="10" cols="30" name="ENRcomments[0]" id="ENRcomments[0]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ></textarea>
+				
+			</td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.endorserRecord.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${curriculum.endorserRecord}" var="ENR" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td> 	<form:input path="endorserRecord[${i.index}].name" /> </td>
+			<td>	<form:input path="endorserRecord[${i.index}].surname"  /> </td>
+			<td>	<form:input path="endorserRecord[${i.index}].email"  /> </td>
+			<td>	<form:input path="endorserRecord[${i.index}].phone" /> </td>
+			<td>	<form:input path="endorserRecord[${i.index}].linkedInProfile" /> </td>
+			<td>
+			
+			
+			<textarea rows="10" cols="30"  name="ENRcomments[${i.index}]" id="ENRcomments[${i.index}]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ><jstl:out value="${commentsInENRs[i.index]}"/></textarea>
+					
+			</td>
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.endorserRecord.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.endorserRecord.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="endorserRecord" />
+
+</fieldset>
+	
+	<br />
+	<br />
+	
+	
+		<%-- Parte del formulario para los miscellaneousRecords --%>
+	<fieldset>
+
+	
+	<legend> <form:label path="miscellaneousRecord"> <spring:message code="curriculum.miscellaneousRecords" />: </form:label> </legend>
+
+
+
+		<div id="list4">
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="curriculum.miscellaneousRecord.title" /> :  </th>
+			<th>  <spring:message code="curriculum.miscellaneousRecord.linkAttachment" /> : </th>
+			<th>  <spring:message code="curriculum.miscellaneousRecord.comments" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty curriculum.miscellaneousRecord}">
+			<tr class="list-item">
+			
+			
+			
+			<td>	<form:input path="miscellaneousRecord[0].title" /> </td>
+			<td>	<form:input path="miscellaneousRecord[0].linkAttachment" /> </td>
+			<td>
+				<textarea rows="10" cols="30" name="MRcomments[0]" id="MRcomments[0]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ></textarea>
+				
+			</td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.miscellaneousRecord.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${curriculum.miscellaneousRecord}" var="MR" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td> 	<form:input path="miscellaneousRecord[${i.index}].title" /> </td>
+			<td>	<form:input path="miscellaneousRecord[${i.index}].linkAttachment"  /> </td>
+			<td>
+			
+			
+			<textarea rows="10" cols="30"  name="MRcomments[${i.index}]" id="MRcomments[${i.index}]" placeholder="<spring:message code="curriculum.comments.placeholder" />" ><jstl:out value="${commentsInMRs[i.index]}"/></textarea>
+					
+			</td>
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="curriculum.miscellaneousRecord.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="curriculum.miscellaneousRecord.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="miscellaneousRecord" />
+
+</fieldset>
+	
+	<br />
+	<br />
+
+
+
+<input type="submit" name="save" value="<spring:message code="curriculum.save" />" />&nbsp; 
+	<jstl:if test="${curriculum.id != 0}">
+		<input type="submit" name="delete" value="<spring:message code="curriculum.delete" />"
+			onclick="return confirm('<spring:message code="curriculum.confirm.delete" />')" />&nbsp;
+	</jstl:if>
+	<jstl:if test="${curriculum.id!=0}">
+	<input type="button" name="cancel" value="<spring:message code="curriculum.cancel" />"
+		onclick="javascript: relativeRedir('/curriculum/ranger/display.do');" />
+	<br />
+	</jstl:if>
+	<jstl:if test="${curriculum.id==0}">
+	<input type="button" name="cancel" value="<spring:message code="curriculum.cancel" />"
+		onclick="javascript: relativeRedir('/welcome/index.do');" />
+	<br />
+	</jstl:if>
+
+</form:form>
+
+
+<script>
+    $(document).ready(function() {
+        $("#list1").dynamiclist();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list2").dynamiclist();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list3").dynamiclist();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list4").dynamiclist();
+    });
+</script>
+
+
+
+
+
+
+

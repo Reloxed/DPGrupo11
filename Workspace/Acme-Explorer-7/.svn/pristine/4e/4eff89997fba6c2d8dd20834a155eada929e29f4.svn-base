@@ -1,0 +1,46 @@
+actor.name							= Name
+actor.surname						= Surname
+actor.userAccount.username			= Username
+
+actor.delete						= Delete
+actor.confirm.delete				= Delete this user?
+actor.username						= Username
+actor.isSuspicious					= The user is suspicious!
+actor.isBanned						= The user is banned!
+actor.name							= Name
+actor.email							= Email
+actor.rol							= Type
+actor.rol.manager					= Manager
+actor.rol.ranger					= Ranger
+actor.rol.sponsor					= Sponsor
+actor.rol.explorer					= Explorer
+actor.rol.auditor					= Auditor
+
+
+
+actor.listRangers					= List of suspicious Rangers
+actor.displayRanger					= Display Ranger
+actor.banRanger						= Ban Ranger
+actor.unbanRanger					= Unban Ranger
+
+
+actor.listManagers					= List of suspicious Managers
+actor.displayManager				= Display Manager
+actor.banManager					= Ban Manager
+actor.unbanManager					= Unban Manager
+
+actor.listExplorers					= List of suspicious Explorers
+actor.displayExplorer				= Display Explorer
+actor.banExplorer					= Ban Explorer
+actor.unbanExplorer					= Unban Explorer
+
+actor.listAuditors					= List of suspicious Auditors
+actor.displayAuditor				= Display Auditor
+actor.banAuditor					= Ban Auditor
+actor.unbanAuditor					= Unban Auditor
+
+actor.listSponsors					= List of suspicious Sponsors
+actor.displaySponsor				= Display Sponsor
+actor.banSponsor					= Ban Sponsor
+actor.unbanSponsor					= Unban Sponsor
+

@@ -1,0 +1,28 @@
+sponsor.name							= Name
+sponsor.surname							= Surname
+sponsor.email							= Email
+sponsor.phone							= Phone Number(atleast 4 digits)
+sponsor.address							= Address
+sponsor.username						= Username
+sponsor.password						= Password
+sponsor.register						= Register
+sponsor.cancel							= Cancel
+sponsor.save							= Save
+sponsor.phonePlaceholder				= +CC(AC)PN (Ex: +34(551)666666666) or +CC PN (Ex: +34 666666666) or just PN (at least 4 digits)
+
+sponsor.username.placeholder			= username between 5 and 32 characters
+sponsor.password.placeholder			= password between 5 and 32 characters
+
+sponsor.socialIdentities				= Social identities
+sponsor.socialIdentities.nick			= Nick
+sponsor.socialIdentities.socialNetwork	= Social network
+sponsor.socialIdentities.linkProfile	= Profile (link) 
+sponsor.socialIdentities.linkPhoto		= Photo (link)
+
+sponsor.socialIdentities.add			= Add 
+sponsor.socialIdentities.remove			= Remove 
+
+sponsor.confirmationPhone				= The phone number entered doesn't follow the following patterns: +CC(AC)PN, +CC PN  Are you sure is correct?
+
+sponsor.commit.error 		= Cannot commit this operation
+sponsor.commit.ok			= Operation performed successfully

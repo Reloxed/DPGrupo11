@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import repositories.ComplaintRepository;
 import domain.Complaint;
 import domain.Customer;
+import domain.Referee;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class ComplaintService {
 
 	// Supporting services -----------------------------------
 
+	@Autowired
+	private RefereeService refereeService;
+	
 	@Autowired
 	private CustomerService		customerService;
 
@@ -112,4 +116,18 @@ public class ComplaintService {
 	}
 
 	// Other business methods --------------------------------
+	
+	public Collection<Complaint> findComplaintsByReferee(){
+		Collection<Complaint>result;
+		Referee principal;
+		
+		principal = this.refereeService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.complaintRepository.findComplaintsByReferee(principal.getId());
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 }

@@ -1,0 +1,68 @@
+# messages.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+trip.ticker				= Ticker
+trip.title				= Title
+trip.description		= Description
+trip.price				= Price (&euro;)
+trip.requirements		= Requirements
+trip.requirements.add	= Add requirement
+trip.requirements.remove = Remove requirement
+trip.publicationDate	= Publication date
+trip.startDate			= Start date
+trip.endDate			= End date
+trip.stages				= Stages
+trip.stages.title		= Stages (title)
+trip.category			= Category
+trip.tags				= Tags
+trip.legaltext			= Legal text
+trip.vatTax				= Vat tax
+trip.ranger				= Ranger
+trip.cancelled          = Cancel the trip
+trip.isCancelled        = CANCELLED
+
+
+trip.stage.number		= Number
+trip.stage.title		= Title
+trip.stage.description  = Description
+trip.stage.price		= Price
+
+trip.stage.remove		= Remove stage
+trip.stage.add			= Add stage
+
+
+trip.cancellationReason.placeholder = Explain why the trip should be cancelled
+
+trip.requirements.empty = There are no requirements
+trip.tags.empty = There are no tags
+
+trip.apply				= Apply for
+trip.confirm.apply		= Apply for this trip?
+trip.display			= View
+trip.edit 				= Edit
+trip.save 				= Save
+trip.delete				= Delete
+trip.cancel				= Cancel
+trip.search     		= Search trips
+trip.results			= Results
+
+trip.confirm.delete 	= Delete this trip?
+trip.confirm.cancel 	= Cancel this trip?
+trip.create 			= Create trip
+
+trip.finder.keyword		= Keyword
+trip.finder.price		= Price
+trip.finder.priceMin	= From
+trip.finder.priceMax	= To
+trip.finder.date		= Date
+trip.finder.dateMin		= From
+trip.finder.dateMax		= To
+
+
+trip.commit.error 		= Cannot commit this operation
+trip.commit.ok			= Operation performed successfully

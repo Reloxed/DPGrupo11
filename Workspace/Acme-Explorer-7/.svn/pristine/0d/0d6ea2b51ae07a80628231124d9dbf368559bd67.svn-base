@@ -1,0 +1,114 @@
+
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.CategoryRepository;
+import domain.Administrator;
+import domain.Category;
+
+@Service
+@Transactional
+public class CategoryService {
+
+	// Managed Repository
+	@Autowired
+	private CategoryRepository		categoryRepository;
+
+	// Supporting services
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+
+	// Constructors
+
+	public CategoryService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	// An actor who is authenticated as an administrator must be able to list the categories
+	public Collection<Category> findAll() {
+		Collection<Category> result;
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal); // Checks if the principal is an administrator
+
+		result = this.categoryRepository.findAll();
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Category findOne(final int categoryId) {
+		Category result;
+
+		result = this.categoryRepository.findOne(categoryId);
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Category findRootCategory() {
+		Category result;
+
+		result = this.categoryRepository.findRootCategory();
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	// An actor who is authenticated as an administrator must be able to create a new category
+	public Category save(final Category category) {
+		Category result;
+		Administrator principal;
+
+		Assert.notNull(category);
+
+		principal = this.administratorService.findByPrincipal();
+
+		Assert.notNull(principal); // Checks if the principal is an administrator
+
+		result = this.categoryRepository.save(category);
+
+		Assert.notNull(result);
+
+		return result;
+
+	}
+
+	// An actor who is authenticated as an administrator must be able to delete a category
+	public void delete(final Category category) {
+		Administrator principal;
+
+		Assert.notNull(category);
+		Assert.isTrue(category.getId() != 0);
+
+		principal = this.administratorService.findByPrincipal();
+
+		Assert.notNull(principal); // Checks if the principal is an administrator
+
+		this.categoryRepository.delete(category);
+
+	}
+
+	// Other business methods
+	public Collection<Category> findChildByParent(final int categoryId) {
+		Collection<Category> result;
+		result = this.categoryRepository.findChildCategoriesByParent(categoryId);
+		Assert.notNull(result);
+		return result;
+	}
+
+}

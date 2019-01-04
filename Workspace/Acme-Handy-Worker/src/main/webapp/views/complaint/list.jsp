@@ -18,14 +18,13 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <h2 style="font-family: sans-serif;">
-	<spring:message code="complaints.list" />
+	<spring:message code="complaint.list" />
 </h2>
 
-<display:table name="complaints" id="complaints"
-	requestURI="complaints/referee/list.do" pagesize="10"
+<display:table name="complaints" id="row"
+	requestURI="complaint/referee/list.do" pagesize="10"
 	class="displaytag">
-
-	<display:column property="fixUpTask" titleKey="complaint.fixuptask" />
+	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
 	<display:column property="moment" titleKey="complaint.moment"
 		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 	<display:column property="description" titleKey="complaint.description" />

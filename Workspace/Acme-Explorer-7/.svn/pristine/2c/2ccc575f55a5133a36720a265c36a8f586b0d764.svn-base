@@ -1,0 +1,27 @@
+explorer.name							= Nombre
+explorer.surname							= Apellidos
+explorer.email							= Corre electrónico
+explorer.phone							= Teléfono(al menos 4 dígitos)
+explorer.address							= Dirección
+explorer.username						= Usuario
+explorer.password						= Contraseña
+explorer.register						= Registrarse
+explorer.cancel							= Cancelar
+explorer.save							= Salvar
+explorer.phonePlaceholder				= +CC(AC)PN (Ej: +34(551)666666666) or +CC PN (Ej: +34 666666666) o sólo PN (al menos 4 dígitos)
+
+
+explorer.username.placeholder			= usuario entre 5 y 32 caracteres
+explorer.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+explorer.confirmationPhone				= El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN\n ¿Está seguro de que es correcto?
+
+
+explorer.socialIdentities.add			= Añadir
+explorer.socialIdentities.remove			= Eliminar 
+
+explorer.placeholder.nick				= apodo1; apodo2; apodo3; ...
+explorer.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+explorer.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+explorer.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

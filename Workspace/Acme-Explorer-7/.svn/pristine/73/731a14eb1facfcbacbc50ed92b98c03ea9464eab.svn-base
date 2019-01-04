@@ -1,0 +1,102 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<h2> <spring:message code="ranger.profile"/> </h2>
+
+
+<h3> <jstl:out value="${ranger.userAccount.username}"> </jstl:out> </h3>
+
+
+<table class="displayStyle">
+
+
+<tr>
+<th> <jstl:out value="${ranger.userAccount.username}"> </jstl:out>  </th>
+<th>   </th>
+</tr>
+
+
+<tr>
+<td> <strong> <spring:message code="ranger.name" /> : </strong> </td>
+<td> <jstl:out value="${ranger.name}"> </jstl:out>  <jstl:out value="${ranger.surname}"> </jstl:out>  </td>
+</tr>
+
+
+<tr>
+<td> <strong> <spring:message code="ranger.email" /> : </strong> </td>
+<td> <jstl:out value="${ranger.email}"> </jstl:out> </td>
+</tr>
+
+<tr>
+<td> <strong> <spring:message code="ranger.phone" /> : </strong> </td>
+<td> <jstl:choose> <jstl:when test="${not empty ranger.phone}">  <jstl:out value="${trip.price}"> </jstl:out>
+</jstl:when> <jstl:otherwise> <spring:message code="ranger.phone.empty" /> </jstl:otherwise> </jstl:choose></td>
+</tr>
+
+<tr>
+<td> <strong> <spring:message code="ranger.socialidentities" /> : </strong> </td>
+
+<td>
+
+<jstl:choose>
+<jstl:when test="${not empty ranger.socialIdentities}">
+
+<ul>
+<jstl:forEach items="${ranger.socialIdentities}" var="socialId">
+<jstl:set var="linkProfile" value="${socialId.linkProfile}" />  
+<li> <jstl:out value="${socialId.socialNetwork}"> </jstl:out>  : <a href="${linkProfile}"> ${linkProfile} </a> </li>
+
+
+</jstl:forEach>
+</ul> 
+
+</jstl:when>
+<jstl:otherwise>
+
+<spring:message code="ranger.socialIdentities.empty" />   
+
+</jstl:otherwise>
+
+</jstl:choose>
+
+
+ </td>
+</tr>
+
+
+<tr>
+<td> <strong> <spring:message code="ranger.CV" /> : </strong> </td>
+<td> <jstl:choose> <jstl:when test="${not empty ranger.CV}"> 
+<spring:message code="ranger.CV.display" var="display"/>
+<a href="curriculum/display.do?curriculumId=${ranger.CV.id}"> ${display} </a>
+</jstl:when> <jstl:otherwise> <spring:message code="ranger.CV.empty" /> </jstl:otherwise> </jstl:choose></td>
+</tr>
+
+
+</table>
+
+
+
+
+
+

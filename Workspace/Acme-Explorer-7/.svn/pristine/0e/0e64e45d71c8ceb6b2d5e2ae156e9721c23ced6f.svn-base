@@ -1,0 +1,21 @@
+manager.name							= Nombre
+manager.surname							= Apellidos
+manager.email							= Corre electrónico
+manager.phone							= Teléfono
+manager.address							= Dirección
+manager.username						= Usuario
+manager.password						= Contraseña
+manager.register						= Registrarse
+manager.cancel							= Cancelar
+manager.placeholderusername		= usuario entre 5 y 32 caracteres
+manager.placeholderpassword		= contraseña entre 5 y 32 caracteres
+manager.socialidentities				= Redes sociales
+manager.socialIdentities.nick			= Apodo
+manager.socialIdentities.socialNetwork	= Red social
+manager.socialIdentities.linkProfile	= Enlace a perfil
+manager.socialIdentities.linkPhoto		= Enlace a foto
+manager.placeholder.nick				= apodo1; apodo2; apodo3; ...
+manager.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+manager.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+manager.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

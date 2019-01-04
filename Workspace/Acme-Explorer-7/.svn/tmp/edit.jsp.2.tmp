@@ -1,0 +1,213 @@
+
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+<<<<<<< .mine
+
+
+
+<form:form action="${actionURI}" modelAttribute="sponsor" id="form" >
+=======
+
+
+<form:form action="${actionURI}" modelAttribute="sponsor">
+>>>>>>> .r42
+
+
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
+	
+	<form:hidden path="isSuspicious"/>
+	<form:hidden path="isBanned"/>
+		
+		
+	
+	<form:hidden path="folders" />
+	
+	
+	<form:hidden path="sentMessages"/>
+	<form:hidden path="receivedMessages"/>
+	<form:hidden path="sponsorships"/>
+	
+
+
+	<form:label path="name">
+		<spring:message code="sponsor.name" />:
+	</form:label>
+	<form:input path="name" />
+	<form:errors cssClass="error" path="name" />
+	<br />
+	<br />
+	
+	
+	<form:label path="surname">
+		<spring:message code="sponsor.surname" />:
+	</form:label>
+	<form:input path="surname" />
+	<form:errors cssClass="error" path="surname" />
+	<br />
+	<br />
+	
+	
+	<form:label path="email">
+		<spring:message code="sponsor.email" />:
+	</form:label>
+	<form:input path="email" />
+	<form:errors cssClass="error" path="email" />
+	<br />
+	<br />
+	
+	<form:label path="phone">
+		<spring:message code="sponsor.phone" />:
+	</form:label>
+	<form:input path="phone" id="phone" placeholder="<spring:message code="sponsor.phonePlaceholder" />"/>
+	<form:errors cssClass="error" path="phone" />
+	<br />
+	<br />
+	
+	<form:label path="address">
+		<spring:message code="sponsor.address" />:
+	</form:label>
+	<form:input path="address" />
+	<form:errors cssClass="error" path="address" />
+	<br />
+	<br />
+	
+	<jstl:choose>
+	<jstl:when test="${sponsor.id == 0}">
+	
+	<form:hidden path="userAccount.authorities[0].authority" value="SPONSOR" />
+	
+	
+	<form:label path="userAccount.username">
+		<spring:message code="sponsor.username" />:
+	</form:label>
+	<spring:message code="sponsor.username.placeholder" var="usernamePlaceholder"/> 
+	<form:input path="userAccount.username" placeholder="${usernamePlaceholder}"/>
+	<form:errors cssClass="error" path="userAccount.username" />
+	<br />
+	<br />
+	
+	
+	
+	<form:label path="userAccount.password">
+	<spring:message code="sponsor.password" />:
+	</form:label>
+	<spring:message code="sponsor.password.placeholder" var="passwordPlaceholder"/> 
+	<form:password path="userAccount.password" placeholder="${passwordPlaceholder}"/>
+	<form:errors cssClass="error" path="userAccount.password" />
+	<br />
+	<br />
+	
+
+	
+	
+	<form:hidden path="userAccount.isBanned" value="false" />
+	<form:hidden path="socialIdentities"/>
+	
+	</jstl:when>
+	<jstl:otherwise>
+	
+	
+	<form:hidden path="userAccount.username"/>
+	<form:hidden path="userAccount.password"/>
+	
+	<form:hidden path="userAccount.authorities[0].authority"  />
+	
+	<form:hidden path="userAccount.isBanned" />
+	
+		 <fieldset>
+		
+	 
+	 
+	 <legend> <form:label path="socialIdentities"> <spring:message code="sponsor.socialIdentities" />: </form:label> </legend>
+
+
+		<div id="list">
+		<table class="displayStyle">
+			<tr>
+			<th>  <spring:message code="sponsor.socialIdentities.nick" /> :  </th>
+			<th>  <spring:message code="sponsor.socialIdentities.socialNetwork" /> : </th>
+			<th>  <spring:message code="sponsor.socialIdentities.linkProfile" /> : </th>
+			<th>  <spring:message code="sponsor.socialIdentities.linkPhoto" /> : </th>
+			<th> </th>
+			 </tr>
+			
+			<jstl:choose> 
+			<jstl:when test="${empty sponsor.socialIdentities}">
+			<tr class="list-item">
+			
+	
+			<td>	<form:input path="socialIdentities[0].nick" /> </td>
+			<td>	<form:input path="socialIdentities[0].socialNetwork" /> </td>
+			<td>	<form:input path="socialIdentities[0].linkProfile" /> </td>
+			<td>	<form:input path="socialIdentities[0].linkPhoto" /> </td>
+			
+			<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="sponsor.socialIdentities.remove" /> </a> </td>
+			</tr>
+			
+			</jstl:when>
+			<jstl:otherwise>
+			<jstl:forEach items="${sponsor.socialIdentities}" var="socialIdentity" varStatus="i" begin="0">
+   			 <tr class="list-item">
+			<td>	<form:input path="socialIdentities[${i.index}].nick" /> </td>
+			<td>	<form:input path="socialIdentities[${i.index}].socialNetwork" /> </td>
+			<td>	<form:input path="socialIdentities[${i.index}].linkProfile" /> </td>
+			<td>	<form:input path="socialIdentities[${i.index}].linkPhoto" /> </td>
+			
+     		<td>	<a href="#" onclick="event.preventDefault();"
+					class="list-remove"> <spring:message code="sponsor.socialIdentities.remove" /> </a> </td>
+	    </tr>
+            <br />
+        </jstl:forEach>
+			</jstl:otherwise>
+			</jstl:choose>
+			
+		</table>
+		<a href="#" onclick="event.preventDefault();" class="list-add"><spring:message code="sponsor.socialIdentities.add" /></a>
+		</div>
+		<br />
+		<form:errors cssClass="error" path="socialIdentities" />
+
+</fieldset>
+
+
+	</jstl:otherwise>
+	</jstl:choose>
+	
+
+	<input type="button" name="save" id="save"
+		value="<spring:message code="sponsor.save" />" />&nbsp; 
+	<input type="button" name="cancel"
+		value="<spring:message code="sponsor.cancel" />"
+		onclick="javascript: relativeRedir(${redirectURI});" />
+	<br />
+
+</form:form>
+<script type="text/javascript">
+$("#save").on("click",function(){validatePhone("<spring:message code='sponsor.confirmationPhone'/>","${countryCode}");});
+
+
+	 
+</script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $("#list").dynamiclist();
+    }); 
+</script>
+
+

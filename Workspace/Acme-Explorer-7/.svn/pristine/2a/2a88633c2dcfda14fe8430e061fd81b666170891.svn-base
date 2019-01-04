@@ -1,0 +1,118 @@
+actor.name							= Name
+actor.surname						= Surname
+actor.userAccount.username			= Username
+
+actor.delete						= Delete
+actor.confirm.delete				= Delete this user?
+actor.username						= Username
+actor.isSuspicious					= The user is suspicious!
+actor.isBanned						= The user is banned!
+actor.name							= Name
+actor.email							= Email
+actor.rol							= Type
+actor.rol.manager					= Manager
+actor.rol.ranger					= Ranger
+actor.rol.sponsor					= Sponsor
+actor.rol.explorer					= Explorer
+actor.rol.auditor					= Auditor
+actor.rol.administrator				= Administrator
+
+actor.show							= Display
+
+
+actor.listRangers					= List of suspicious Rangers
+actor.displayRanger					= Display Ranger
+actor.banRanger						= Ban Ranger
+actor.unbanRanger					= Unban Ranger
+
+
+actor.listManagers					= List of suspicious Managers
+actor.displayManager				= Display Manager
+actor.banManager					= Ban Manager
+actor.unbanManager					= Unban Manager
+
+actor.listExplorers					= List of suspicious Explorers
+actor.displayExplorer				= Display Explorer
+actor.banExplorer					= Ban Explorer
+actor.unbanExplorer					= Unban Explorer
+
+actor.listAuditors					= List of suspicious Auditors
+actor.displayAuditor				= Display Auditor
+actor.banAuditor					= Ban Auditor
+actor.unbanAuditor					= Unban Auditor
+
+actor.listSponsors					= List of suspicious Sponsors
+actor.displaySponsor				= Display Sponsor
+actor.banSponsor					= Ban Sponsor
+actor.unbanSponsor					= Unban Sponsor
+
+
+
+actor.profile							= User profile
+
+actor.name								= Name
+actor.surname							= Surname
+actor.email								= Email
+actor.phone								= Phone Number
+actor.phone.empty						= There is no phone number
+
+actor.address							= Address
+actor.address.empty						= There is no address
+
+actor.socialIdentities.empty			= There are no social identities
+
+actor.socialIdentities.add				= Add social identity
+
+
+actor.socialIdentities				= Social identities
+
+
+sponsor.sponsorships				= Sponsorships
+sponsor.sponsorships.linkInfoPage	= Info page
+sponsor.sponsorships.trip.title		= Trip (Title)
+sponsor.sponsorships.empty			= There are no sponsorships
+
+auditor.audits						= Audits
+auditor.audits.moment				= Moment
+auditor.audits.title				= Title
+auditor.audits.trip.title			= Trip (Title)
+auditor.audits.empty				= There are no audits
+
+manager.trips						= Trips
+manager.trips.ticker				= Ticker
+manager.trips.title					= Title
+manager.trips.startDate				= Start date
+manager.trips.endDate				= End date
+manager.trips.category				= Category
+manager.trips.empty				= There are no trips
+
+ranger.trips						= Trips
+ranger.trips.ticker				= Ticker
+ranger.trips.title					= Title
+ranger.trips.startDate				= Start date
+ranger.trips.endDate				= End date
+ranger.trips.category				= Category
+ranger.trips.empty				= There are no trips
+
+ranger.CV			= Curriculum
+ranger.CV.display	= Display 
+ranger.CV.empty		= There is no curriculum
+
+
+
+
+
+actor.socialIdentities.nick			= Nick
+actor.socialIdentities.socialNetwork	= Social network
+actor.socialIdentities.linkProfile	= Profile (link) 
+actor.socialIdentities.linkPhoto		= Photo 
+actor.socialIdentities.delete			= Edit
+
+actor.edit							= Edit
+
+actor.commit.error 		= Cannot commit this operation
+actor.commit.ok			= Operation performed successfully
+
+
+actor.unauthorizedAccess.message	= You don't have permissions to access this page
+

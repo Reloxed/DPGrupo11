@@ -1,0 +1,26 @@
+
+package converters;
+
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import domain.VatTax;
+
+@Component
+@Transactional
+public class VatTaxToStringConverter implements Converter<VatTax, String> {
+
+	@Override
+	public String convert(final VatTax vatTax) {
+		String result;
+
+		if (vatTax == null)
+			result = null;
+		else
+			result = String.valueOf(vatTax.getId());
+
+		return result;
+	}
+
+}

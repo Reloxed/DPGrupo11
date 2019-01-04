@@ -1,0 +1,118 @@
+
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+
+import repositories.EmergencyContactRepository;
+
+import domain.Explorer;
+import domain.EmergencyContact;
+
+
+
+@Service
+@Transactional
+public class EmergencyContactService {
+
+	// Managed Repository
+	@Autowired
+	private EmergencyContactRepository			emergencyContactRepository;
+
+	// Supporting services
+	@Autowired
+	private ExplorerService explorerService;
+	
+
+	
+	// Constructors
+
+	public EmergencyContactService() {
+		super();
+	}
+
+	
+	// Simple CRUD methods
+
+	
+	public Collection<EmergencyContact> findByPrincipal() {
+		Collection<EmergencyContact> result;
+		Explorer principal;
+		
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = principal.getEmergencyContacts();
+	
+		
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	
+	public EmergencyContact create() {
+		EmergencyContact result;
+		Explorer principal;
+		
+		
+		
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = new EmergencyContact();
+		Assert.notNull(result);
+
+		return result;
+	}
+	
+	
+	public EmergencyContact save(EmergencyContact emergencyContact) {
+		EmergencyContact result;
+		Explorer principal;
+		
+		
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Assert.isTrue(emergencyContact.getPhone() != null || emergencyContact.getEmail() != null);
+
+		
+		result = this.emergencyContactRepository.save(emergencyContact);
+		Assert.notNull(result);
+		
+	
+		
+		return result;
+	
+	}
+	
+	
+	public void delete(EmergencyContact emergencyContact) {
+		Explorer principal;
+		
+		Assert.notNull(emergencyContact);
+		Assert.isTrue(emergencyContact.getId() != 0);
+		
+		principal = this.explorerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+
+	
+		this.emergencyContactRepository.delete(emergencyContact);
+	
+	}
+	
+	
+	
+
+	// Other business methods
+	
+ 
+	
+}

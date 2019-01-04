@@ -1,0 +1,166 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.ActorRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
+import domain.Actor;
+import domain.Administrator;
+import domain.Auditor;
+import domain.Explorer;
+import domain.Manager;
+import domain.Ranger;
+import domain.Sponsor;
+
+@Service
+@Transactional
+public class ActorService {
+
+	// Managed Repository
+	@Autowired
+	private ActorRepository			actorRepository;
+
+	// Supporting services
+	@Autowired
+	private AuditorService			auditorService;
+
+	@Autowired
+	private ExplorerService			explorerService;
+
+	@Autowired
+	private RangerService			rangerService;
+
+	@Autowired
+	private ManagerService			managerService;
+
+	@Autowired
+	private SponsorService			sponsorService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+
+	// Constructors
+
+	public ActorService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	//findOne realizado de esta manera debido a que en ActorServiceTest daba null el findOne 
+	//para las clases extendidas de Actor 
+	public Actor findOne(final int actorId) {
+		Actor result;
+		result = this.actorRepository.findOne(actorId);
+		if (result == null) {
+			result = this.auditorService.findOne(actorId);
+			if (result == null) {
+				result = this.managerService.findOne(actorId);
+				if (result == null) {
+					result = this.explorerService.findOne(actorId);
+					if (result == null) {
+						result = this.rangerService.findOne(actorId);
+						if (result == null) {
+							result = this.sponsorService.findOne(actorId);
+							if (result == null)
+								result = this.administratorService.findOne(actorId);
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+	public Collection<Actor> findAll() {
+		Collection<Actor> result;
+		Assert.notNull(this.administratorService.findByPrincipal());
+		result = this.actorRepository.findAll();
+		Assert.notNull(result);
+		return result;
+
+	}
+
+	// Other business methods
+
+	public void banSuspiciousActor(final int actorId) {
+		Administrator principal;
+		Actor toBan;
+		List<Authority> authorities;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		toBan = this.actorRepository.findOne(actorId);
+		Assert.notNull(toBan);
+		Assert.isTrue(toBan.getIsSuspicious());
+		Assert.isTrue(!toBan.getIsBanned());
+		Assert.isTrue(toBan.getUserAccount().isAccountNonLocked());
+		authorities = new ArrayList<Authority>(toBan.getUserAccount().getAuthorities());
+		for (final Authority authority : authorities)
+			toBan.getUserAccount().removeAuthority(authority);
+		toBan.setIsBanned(true);
+		toBan = this.actorRepository.save(toBan);
+
+	}
+	public void unBanBannedActor(final int actorId) {
+		Administrator principal;
+		Actor toUnBan;
+		final Authority auth;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		toUnBan = this.actorRepository.findOne(actorId);
+		Assert.notNull(toUnBan);
+		Assert.isTrue(toUnBan.getIsBanned());
+
+		auth = new Authority();
+		if (toUnBan.getClass() == Auditor.class)
+			auth.setAuthority(Authority.AUDITOR);
+		else if (toUnBan.getClass() == Manager.class)
+			auth.setAuthority(Authority.MANAGER);
+		else if (toUnBan.getClass() == Explorer.class)
+			auth.setAuthority(Authority.EXPLORER);
+		else if (toUnBan.getClass() == Ranger.class)
+			auth.setAuthority(Authority.RANGER);
+		else if (toUnBan.getClass() == Sponsor.class)
+			auth.setAuthority(Authority.SPONSOR);
+		else if (toUnBan.getClass() == Administrator.class)
+			auth.setAuthority(Authority.ADMIN);
+
+		toUnBan.getUserAccount().addAuthority(auth);
+		toUnBan.setIsBanned(false);
+		toUnBan = this.actorRepository.save(toUnBan);
+
+	}
+
+	public Actor findByPrincipal() {
+		Actor result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
+
+		return result;
+
+	}
+
+	public Actor findByUserAccount(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		Actor result;
+		result = this.actorRepository.findByUserAccountId(userAccount.getId());
+		return result;
+	}
+
+}

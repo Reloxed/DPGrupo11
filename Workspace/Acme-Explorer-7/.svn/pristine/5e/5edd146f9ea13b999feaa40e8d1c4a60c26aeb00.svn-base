@@ -1,0 +1,31 @@
+sponsor.name							= Nombre
+sponsor.surname							= Apellidos
+sponsor.email							= Corre electrónico
+sponsor.phone							= Teléfono(al menos 4 dígitos)
+sponsor.address							= Dirección
+sponsor.username						= Usuario
+sponsor.password						= Contraseña
+sponsor.register						= Registrarse
+sponsor.cancel							= Cancelar
+sponsor.save							= Salvar
+sponsor.phonePlaceholder				= +CC(AC)PN (Ej: +34(551)666666666) or +CC PN (Ej: +34 666666666) o sólo PN (al menos 4 dígitos)
+
+
+sponsor.username.placeholder			= usuario entre 5 y 32 caracteres
+sponsor.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+sponsor.confirmationPhone				= El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN  ¿Está seguro de que es correcto?
+sponsor.socialidentities				= Redes sociales
+sponsor.socialIdentities.nick			= Apodo
+sponsor.socialIdentities.socialNetwork	= Red social
+sponsor.socialIdentities.linkProfile	= Enlace a perfil
+sponsor.socialIdentities.linkPhoto		= Enlace a foto
+
+sponsor.socialIdentities.add			= Añadir
+sponsor.socialIdentities.remove			= Eliminar 
+
+sponsor.placeholder.nick				= apodo1; apodo2; apodo3; ...
+sponsor.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+sponsor.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+sponsor.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

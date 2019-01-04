@@ -1,0 +1,27 @@
+ranger.name							= Nombre
+ranger.surname							= Apellidos
+ranger.email							= Corre electrónico
+ranger.phone							= Teléfono(al menos 4 dígitos)
+ranger.address							= Dirección
+ranger.username						= Usuario
+ranger.password						= Contraseña
+ranger.register						= Registrarse
+ranger.cancel							= Cancelar
+ranger.save							= Salvar
+ranger.phonePlaceholder				= +CC(AC)PN (Ej: +34(551)666666666) or +CC PN (Ej: +34 666666666) o sólo PN (al menos 4 dígitos)
+
+
+ranger.username.placeholder			= usuario entre 5 y 32 caracteres
+ranger.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+ranger.confirmationPhone				= El número de teléfono introducido no sigue los siguientes patrones: +CC(AC)PN, +CC PN\n ¿Está seguro de que es correcto?
+
+
+ranger.socialIdentities.add			= Añadir
+ranger.socialIdentities.remove			= Eliminar 
+
+ranger.placeholder.nick				= apodo1; apodo2; apodo3; ...
+ranger.placeholder.socialNetwork		= redsocial1; redsocial2; redsocial3; ...
+ranger.placeholder.linkProfile			= enlacePerfil1; enlacePerfil2; enlacePerfil3; ...
+ranger.placeholder.linkPhoto			= enlaceFoto1; enlaceFoto2; enlaceFoto3; ...
+

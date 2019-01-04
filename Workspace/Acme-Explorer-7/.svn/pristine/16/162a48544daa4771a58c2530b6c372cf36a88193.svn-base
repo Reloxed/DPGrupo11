@@ -1,0 +1,249 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import domain.Actor;
+import domain.Folder;
+import domain.Message;
+
+import repositories.FolderRepository;
+
+@Service
+@Transactional
+public class FolderService {
+
+	// Managed Repository
+	@Autowired
+	private FolderRepository		folderRepository;
+
+	// Supporting services
+	@Autowired
+	private AdministratorService	administratorService;
+	
+	@Autowired
+	private ActorService			actorService;
+
+
+
+	// Constructors
+
+	public FolderService() {
+		super();
+	}
+
+	// Simple CRUD methods
+
+	
+	public Folder create() {
+			Folder result;
+			Actor principal;
+			
+			principal = this.actorService.findByPrincipal();
+			Assert.notNull(principal);
+
+			result = new Folder();
+			Assert.notNull(result);
+
+			return result;
+		}
+		
+	
+	public Folder save(Folder folder) {
+		Folder result;
+		Actor principal;
+		Collection<Message> messages;
+		Collection<Folder> childFolders;
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		if (folder.getId() == 0) {
+			
+			folder.setIsSystem(false);
+			folder.setOwner(principal);
+			messages = new ArrayList<Message>();
+			folder.setMessages(messages);
+			childFolders = new ArrayList<Folder>();
+			folder.setChildFolders(childFolders);
+		} else {
+			
+			Assert.isTrue(!folder.getIsSystem());
+			Assert.isTrue(principal.getFolders().contains(folder));
+			Assert.isTrue(!folder.getParentFolder().getIsSystem());
+			childFolders = folder.getChildFolders();
+			
+			boolean containsSystemfolders = false;
+			for (Folder f : childFolders) {
+				if (f.getIsSystem()) {
+					containsSystemfolders = true;
+					break;
+				}
+			}
+			
+			Assert.isTrue(!containsSystemfolders);
+			
+			
+		}
+		result = this.folderRepository.save(folder);
+		Assert.notNull(result);
+		
+		return result;
+	
+		
+	}
+	
+	
+	public void delete(Folder folder) {
+		Actor principal;
+		Collection<Folder> childFolders;
+		
+		Assert.isTrue(folder.getId() != 0);
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Assert.isTrue(!folder.getIsSystem());
+		Assert.isTrue(principal.getFolders().contains(folder));
+		
+		
+		childFolders = folder.getChildFolders();
+
+		this.folderRepository.delete(folder);
+		
+		for (Folder f : childFolders) {
+			this.folderRepository.delete(f);
+		}
+		
+		
+		
+		
+	}
+	
+	
+	public Collection<Folder> createSystemFolders(Actor a) {
+	
+		Collection<Folder> result;
+		List<String> names;
+		Collection<Folder> childFolders;
+		Collection<Message> messages;
+		Folder saved;
+
+		
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() == 0);
+	
+		
+		names = new ArrayList<String>();
+		names.add("in box");
+		names.add("out box");
+		names.add("notification box");
+		names.add("spam box");
+		names.add("trash box");
+		
+		result = new ArrayList<Folder>();
+		for (String name : names) {
+			Folder folder = this.create();
+			folder.setName(name);
+			folder.setIsSystem(true);
+			folder.setOwner(a);
+			folder.setParentFolder(null);
+			childFolders = new ArrayList<Folder>();
+			folder.setChildFolders(childFolders);
+			messages = new ArrayList<Message>();
+			folder.setMessages(messages);
+			saved = this.folderRepository.save(folder);
+			Assert.notNull(saved);
+			
+			result.add(saved);
+			
+		}
+
+		return result;
+
+		
+		
+		
+		
+	}
+	
+	
+	// Other business methods
+
+	public Folder findNotificationFolderActor (Actor a) {
+		Assert.notNull(this.administratorService.findByPrincipal());
+		Folder result;
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+		result = this.folderRepository.findNotificationFolderActorId(a.getId());
+		Assert.notNull(result);
+		return result;
+	}
+	
+	public Folder findInBoxFolderActor (Actor a) {
+		Actor principal;
+		Folder result;
+		
+		principal = this.actorService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+		
+		result = this.folderRepository.findInBoxFolderActorId(a.getId());
+		Assert.notNull(result);
+		return result;
+	}
+	
+	public Folder findOutBoxFolderActor (Actor a) {
+		Actor principal;
+		Folder result;
+		
+		principal = this.actorService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+		
+		result = this.folderRepository.findOutBoxFolderActorId(a.getId());
+		Assert.notNull(result);
+		return result;
+	}
+	
+	public Folder findSpamBoxFolderActor (Actor a) {
+		Actor principal;
+		Folder result;
+		principal = this.actorService.findByPrincipal();
+		
+		Assert.notNull(principal);
+		Assert.notNull(a);
+		Assert.isTrue(a.getId() != 0);
+		
+		result = this.folderRepository.findSpamFolderActorId(a.getId());
+		Assert.notNull(result);
+		return result;
+	}
+		
+	
+		public Folder findTrashBoxFolderActor (Actor a) {
+			Actor principal;
+			Folder result;
+			principal = this.actorService.findByPrincipal();
+			
+			Assert.notNull(principal);
+			Assert.notNull(a);
+			Assert.isTrue(a.getId() != 0);
+			
+			result = this.folderRepository.findTrashFolderActorId(a.getId());
+			Assert.notNull(result);
+			return result;
+	}
+	
+		
+}

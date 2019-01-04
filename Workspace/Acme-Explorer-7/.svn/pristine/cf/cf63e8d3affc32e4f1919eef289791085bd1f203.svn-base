@@ -1,0 +1,33 @@
+actor.name							= Name
+actor.surname						= Surname
+actor.userAccount.username			= Username
+
+
+actor.listRangers					= List of suspicious Rangers
+actor.displayRanger					= Display Ranger
+actor.banRanger						= Ban Ranger
+actor.unbanRanger					= Unban Ranger
+
+
+actor.listManagers					= Lista de Organizadores sospechosos
+actor.displayManager				= Mostrar Organizador
+actor.banManager					= Inhabilitar Organizador
+actor.unbanManager					= Habilitar Organizador
+
+actor.listExplorers					= Lista de Exploradores sospechosos
+actor.displayExplorer				= Mostrar Explorador
+actor.banExplorer					= Inhabilitar Explorador
+actor.unbanExplorer					= Habilitar Explorador
+
+actor.listAuditors					= Lista de Auditores sospechosos
+actor.displayAuditor				= Mostrar Auditor
+actor.banAuditor					= Inhabilitar Auditor
+actor.unbanAuditor					= Habilitar Auditor
+
+actor.listSponsors					= Lista de Patrocinadores sospechosos
+actor.displaySponsor				= Mostrar Patrocinador
+actor.banSponsor					= Inhabilitar Patrocinador
+actor.unbanSponsor					= Habilitar Patrocinador
+
+
+

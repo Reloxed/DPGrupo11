@@ -1,0 +1,66 @@
+# messages_es.properties
+#
+# Copyright (C) 2017 Universidad de Sevilla
+# 
+# The use of this project is hereby constrained to the conditions of the 
+# TDG Licence, a copy of which you may download from 
+# http://www.tdg-seville.info/License.html
+
+master.page.administrator			= Administrador
+master.page.administrator.legalTexts	= Textos legales
+master.page.administrator.tags			= Etiquetas
+master.page.administrator.categories	= Categorías
+
+master.page.administrator.customisation	= Customización
+master.page.administrator.dashboard		= Tablero de mandos
+
+
+master.page.userAccounts.actors	= Usuarios
+master.page.userAccounts			= Cuentas de usuario
+master.page.userAccounts.ranger			= Crear nuevo guía
+master.page.userAccounts.manager			= Crear nuevo organizador
+master.page.userAccounts.sponsor			= Crear nuevo patrocinador
+master.page.userAccounts.auditor			= Crear nuevo auditor
+master.page.userAccounts.listSuspicious = Listar Usuarios sospechosos
+
+
+master.page.trips					= Viajes
+master.page.trips.list				= Lista de viajes
+master.page.trips.search			= Buscar viaje
+master.page.categories				= Árbol de categorías
+master.page.sponsorships			= Patrocinios
+master.page.stories					= Historias
+
+
+master.page.emergencyContacts		= Contactos de emergencia
+master.page.finders					= Búsquedas
+master.page.explorer				= Explorador
+
+master.page.applications   			= Solicitudes
+
+master.page.audits   				= Auditorías
+master.page.notes					= Notas
+
+master.page.auditor					= Auditor
+
+
+
+master.page.survivalClasses			= Clases de supervivencia
+master.page.sponsor					= Patrocinador
+master.page.manager					= Organizador
+master.page.ranger					= Guía
+master.page.ranger.curriculum		= Curriculum
+
+master.page.actions					= Acciones
+master.page.register.explorer		= Registrarse como explorador
+master.page.register.ranger			= Registrarse como guía
+
+master.page.profile 				= Perfil
+
+
+master.page.login 					= Entrar
+master.page.logout 					= Salir
+
+master.page.mail					= Correo
+master.page.personalData			= Datos personales
+master.page.managedTrips			= Mis viajes gestionados

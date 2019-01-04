@@ -1,0 +1,159 @@
+<%--
+ * 
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
+
+<form:form action="legalText/administrator/edit.do" modelAttribute="legalText"  id="legalTextForm">
+
+	<form:hidden path="id" />
+	
+	<form:hidden path="version" />
+	
+	
+
+
+	<form:label path="title">
+		<spring:message code="legalText.title" />:
+	</form:label>
+	<form:input path="title" />
+	<form:errors cssClass="error" path="title" />
+	<br />
+	<br />
+
+	<form:label path="body">
+		<spring:message code="legalText.body" />:
+	</form:label>
+	<form:textarea path="body" />
+	<form:errors cssClass="error" path="body" />
+	<br />
+	<br />
+	
+	
+	<table>
+	<thead>
+	  <tr>
+           <th> <spring:message code="legalText.laws"/> </th>
+             <th></th>
+    </tr>
+	</thead>
+	<tbody id="legalTextLaws">
+	<jstl:forEach items="${legalText.laws}" var="Law" varStatus="i" begin="0" >
+	<tr class="law"> 
+	<td><form:input path="laws[${i.index}]" id="Law${i.index}" /> 
+	</td>
+	<td><a href="#" class="removeLaw" onclick="event.preventDefault();"> <spring:message code="legalText.laws.remove"/> </a> </td>
+	</tr>
+	</jstl:forEach>
+	
+	 <jstl:if test="${empty legalText.laws}">
+                        <tr class="law defaultRow">    
+                            <td><form:input path="laws[0]" /></td>
+                            <td><a href="#" class="removeLaw" onclick="event.preventDefault();"> <spring:message code="legalText.laws.remove"/></a></td>
+                        </tr>
+                    </jstl:if>
+	
+	
+	
+	</tbody>
+	</table>
+	
+	<div>
+	<form:errors cssClass="error" path="laws" />
+	</div>
+	
+	<br/>
+	<a href="#" id="addLaw" onclick="event.preventDefault();" > <spring:message code="legalText.laws.add"/> </a>&nbsp;&nbsp;
+    
+	
+	<br />
+	<br />
+
+	
+
+	<spring:message code="legalText.save.draft" var="saveLegalTextDraft"  />
+	<spring:message code="legalText.save.final" var="saveLegalTextFinal"  />
+	<spring:message code="legalText.delete" var="deleteLegalText"  />
+	<spring:message code="legalText.confirm.delete" var="confirmDeleteLegalText"  />
+	<spring:message code="legalText.cancel" var="cancelLegalText"  />
+	
+	<input type="submit" id="submit" name="saveDraft"
+		value="${saveLegalTextDraft}" />&nbsp; 
+		
+	<input type="submit" name="saveFinal"
+		value="${saveLegalTextFinal}" />&nbsp; 
+		
+	<jstl:if test="${legalText.id != 0}">
+		<input type="submit" name="delete"
+			value="${deleteLegalText}"
+			onclick="return confirm('${confirmDeleteLegalText}')" />&nbsp;
+	</jstl:if>
+	<input type="button" name="cancel"
+		value="${cancelLegalText}"
+		onclick="javascript: relativeRedir('legalText/administrator/list.do');" />
+	<br />
+
+
+</form:form>
+
+
+
+<script type="text/javascript">
+            function rowAdded(rowElement) {
+                //clear the imput fields for the row
+                $(rowElement).find("input").val('');
+                //may want to reset <select> options etc
+ 
+                //in fact you may want to submit the form
+                saveNeeded();
+            }
+            function rowRemoved(rowElement) {
+                saveNeeded();
+                alert( "Removed Row HTML:\n" + $(rowElement).html() );
+            }
+ 
+            function saveNeeded() {
+                $('#submit').css('color','red');
+                $('#submit').css('font-weight','bold');
+                if( $('#submit').val().indexOf('!') != 0 ) {
+                    $('#submit').val( '!' + $('#submit').val() );
+                }
+            }
+ 
+            function beforeSubmit() {
+                alert('submitting....');
+                return true;
+            }
+ 
+            $(document).ready( function() {
+                var config = {
+                    rowClass : 'law',
+                    addRowId : 'addLaw',
+                    removeRowClass : 'removeLaw',
+                    formId : 'legalTextForm',
+                    rowContainerId : 'legalTextLaws',
+                    indexedPropertyName : 'laws',
+                    rowAddedListener : rowAdded,
+                    rowRemovedListener : rowRemoved,
+                    beforeSubmit : beforeSubmit
+                };
+                new DynamicListHelper(config);
+            });
+        </script>
+
+
+

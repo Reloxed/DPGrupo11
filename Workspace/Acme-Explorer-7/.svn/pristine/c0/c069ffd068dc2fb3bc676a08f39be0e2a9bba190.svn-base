@@ -1,0 +1,25 @@
+audit.edit							= Edit
+
+audit.title							= Title
+audit.description					= Description
+audit.linkAttachment				= Attachments
+audit.trip							= Trip
+audit.moment						= Moment
+
+audit.trip.show						= Display trip
+
+audit.save.draft					= Save in draft mode
+audit.save.final					= Save in final mode
+audit.delete						= Delete
+audit.cancel						= Cancel
+
+audit.display						= View
+
+audit.confirm.delete				= Delete this audit?
+
+audit.linkAttachment.add			= Add attachment
+audit.linkAttachment.remove			= Remove attachment
+
+audit.commit.error 		= Cannot commit this operation
+audit.commit.ok			= Operation performed successfully
+

@@ -1,0 +1,402 @@
+Requested Queries.txt
+---------------------
+
+Query C/1
+---------
+Description: "The average, the minimum, the maximum, and the standard deviation of the
+number of applications per trip"
+
+select avg(t.applications.size), min(t.applications.size), max(t.applications.size),
+sqrt(sum(t.applications.size * t.applications.size) / count(t.applications.size) - (avg(t.applications.size) * avg(t.applications.size)))
+ from Trip t;
+
+Explanation:
+
+avg, min y max se utilizan para calcular respectivamente la media, el mínimo y el máximo del número de solicitudes por viaje. Se utiliza la propiedad .size 
+para conocer el número de elementos en el objeto. La desviación típica se ha calculado haciendo uso de operadores básicos, pero necesarios para su cálculo, como
+sum para el sumatorio, sqrt para la raiz cuadrada,...
+
+Results:
+
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+	{2.8, 2, 5, 1.1661903789690602}
+} 
+
+Query C/2
+---------
+Description: "The average, the minimum, the maximum, and the standard deviation of the
+number of trips managed per manager"
+
+select avg(m.trips.size), min(m.trips.size), max(m.trips.size),
+sqrt(sum(m.trips.size * m.trips.size) / count(m.trips.size) - (avg(m.trips.size) * avg(m.trips.size)))
+from Manager m;
+
+Explanation:
+
+avg, min y max se utilizan para calcular respectivamente la media, el mínimo y el máximo del número de viajes organizados por managers. Se utiliza la propiedad .size 
+para conocer el número de elementos en el objeto. La desviación típica se ha calculado haciendo uso de operadores básicos pero necesarios para su calculo como
+sum para el sumatorio, sqrt para la raiz cuadrada,...
+
+Results:
+
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+	{1.6667, 1, 3, 0.9428090424070212}
+} 
+
+Query C/3
+---------
+Description: "The average, the minimum, the maximum, and the standard deviation of the
+price of the trips"
+
+select avg(t.price), max(t.price), min(t.price), sqrt(sum(t.price * t.price)/count(t.price)-(avg(t.price)*avg(t.price)))
+ from Trip t;
+
+Explanation:
+
+avg, min y max se utilizan para calcular respectivamente la media, el mínimo y el máximo del precio de los viajes. En este caso no hacemos uso 
+de la propiedad .size porque el precio ya está implicito dentro de viaje. La desviación típica se ha calculado haciendo uso de operadores básicos pero necesarios 
+para su calculo como sum para el sumatorio, sqrt para la raiz cuadrada,...
+
+
+Results:
+
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+	{540.0, 775.0, 300.0, 192.74335267396384}
+} 
+
+
+Query C/4
+---------
+Description: "The average, the minimum, the maximum, and the standard deviation of the
+number trips guided per ranger"
+
+select avg(r.trips.size), min(r.trips.size), max(r.trips.size),
+sqrt(sum(r.trips.size * r.trips.size) / count(r.trips.size) - (avg(r.trips.size) * avg(r.trips.size)))
+from Ranger r;
+
+Explanation:
+
+avg, min y max se utilizan para calcular respectivamente la media, el mínimo y el máximo del número de viajes guiados por ranger. Se utiliza la propiedad .size 
+para conocer el número de elementos en el objeto. La desviación típica se ha calculado haciendo uso de operadores básicos pero necesarios para su calculo como
+sum para el sumatorio, sqrt para la raiz cuadrada,...
+
+Results:
+  
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+{1.6667, 1, 3, 0.9428090424070212}
+} 
+
+Query C/5
+---------
+Description: "The ratio of applications with status 'PENDING'"
+
+select 1.0*count(a)/(select count(n) from Application n) 
+from Application a 
+where a.status='PENDING';
+
+Explanation:
+
+El ratio es la relación cuantitativa entre dos cantidades, mostrando con este ratio el número de veces que un valor (numerador) está contenido en el otro (denominador).
+En este caso será el ratio del número de solicitudes con estatus "PENDING" del total de solicitudes.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.35714}
+
+
+Query C/6
+---------
+Description: "The ratio of applications with status 'DUE'"
+
+select 1.0*count(a)/(select count(b) from Application b) 
+from Application a 
+where a.status = 'DUE';
+
+Explanation:
+
+El ratio es la relación cuantitativa entre dos cantidades, mostrando con este ratio el número de veces que un valor (numerador) está contenido en el otro (denominador).
+En este caso será el ratio del número de solicitudes con estatus "DUE" del total de solicitudes.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.07143} 
+
+Query C/7
+---------
+Description: "The ratio of applications with status 'ACCEPTED'"
+
+select 1.0*count(a)/(select count(n) from Application n) 
+from Application a 
+where a.status='ACCEPTED';
+
+
+Explanation:
+
+El ratio es la relación cuantitativa entre dos cantidades, mostrando con este ratio el número de veces que un valor (numerador) está contenido en el otro (denominador).
+En este caso será el ratio del número de solicitudes con estatus "ACCEPTED" del total de solicitudes.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.28571} 
+
+Query C/8
+---------
+Description: "The ratio of applications with status 'CANCELLED'"
+
+select 1.0*count(a)/(select count(b) from Application b) 
+from Application a 
+where a.status = 'CANCELLED';
+
+Explanation:
+
+El ratio es la relación cuantitativa entre dos cantidades, mostrando con este ratio el número de veces que un valor (numerador) está contenido en el otro (denominador).
+En este caso será el ratio del número de solicitudes con estatus "CANCELLED" del total de solicitudes.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.14286} 
+
+
+Query C/9
+---------
+Description: "The ratio of trips that have been cancelled versus the total number of trips
+that have been organised"
+
+select 1.0*count(t)/(select count(n) 
+from Trip n) from Trip t 
+where t.cancellationReason is not null;
+
+
+Explanation:
+
+El ratio es la relación cuantitativa entre dos cantidades, mostrando con este ratio el número de veces que un valor (numerador) está contenido en el otro (denominador).
+En este caso será el ratio del número de viajes cancelados, para encontrarlos hacemos uso de "where t.cancellationReason is not null;" lo que nos hará, será filtrar aquellos
+cuya cancelación no sea NULL y por lo tanto sean viajes cancelados, con respecto al total de viajes que han sido organizados.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.4} 
+
+
+Query C/10
+----------
+Description: "The listing of trips that have got at least 10% more applications than the average,
+ordered by number of applications"
+
+select t
+from Trip t 
+where t.applications.size >= 1.1*(select avg(b.applications.size) from Trip b)
+order by t.applications.size;
+
+
+Explanation:
+
+Esta consulta selecciona aquellos viajes del total de viajes "select t from Trip t", donde su número de solicitudes sea un 10% mayor que la media del número de 
+solicitudes de los viajes "where t.applications.size >= 1.1*(select avg(b.applications.size) from Trip b)" y por último que sean ordenadas por su número de aplicaciones 
+"order by t.applications.size;"
+
+Results:
+
+1 objects found
+Object #0 = domain.Trip{
+	id=94
+	version=0
+	ticker="171022-LMCD"
+	title="Trip 4"
+	description="This is trip 4"
+	price=775.0
+	requirements=[ Requirement 1,  Requirement 2,  Requirement 3]
+	publicationDate=<<2018-12-09>>
+	cancellationReason="This is the reason why the trip has been cancelled."
+	startDate=<<2019-10-09>>
+	endDate=<<2020-05-09>>
+	stage=[domain.Stage@56, domain.Stage@57, domain.Stage@58]
+	audits=[]
+	vatTax=domain.VatTax@2b
+	category=domain.Category@34
+	legaltext=domain.LegalText@29
+	tags=[domain.Tag@60]
+	sponsorships=[]
+	ranger=domain.Ranger@4e
+	stories=[]
+	applications=[domain.Application@8e, domain.Application@8d, domain.Application@8f, domain.Application@93, domain.Applic
+ation@94]
+	manager=domain.Manager@24
+	survivalClasses=[domain.SurvivalClass@6e, domain.SurvivalClass@6f]
+	notes=[domain.Note@65, domain.Note@66, domain.Note@67, domain.Note@68]
+}
+
+
+Query C/11
+----------
+Description: "A table with the number of times that each legal text been referenced"
+
+select t.legaltext.title, count(t) 
+from Trip t 
+group by t.legaltext;
+
+Explanation:
+
+Esta consulta comienza seleccionando por un lado el titulo (title) del legaltext de un viaje y por otro lado que cuente el número de viajes "select t.legaltext.title, count(t) 
+from Trip t", en los casos como ahora donde necesitemos mostrar el resultado de dos select juntos, usamos group by que nos agrupa las respuestas de la consulta por los distintos legaltext
+que existan.
+
+Results:
+
+2 objects found
+Object #0 = [Ljava.lang.Object;{
+	{"Legal Text 1", 4}
+} 
+Object #1 = [Ljava.lang.Object;{
+	{"Legal Text 2", 1}
+} 
+
+Query B/1
+---------
+Description: "The minimum, the maximum, the average, and the standard deviation of the
+number of notes per trip"
+
+select min(t.notes.size), max(t.notes.size), avg(t.notes.size),
+sqrt(sum(t.notes.size * t.notes.size) / count(t.notes.size) - (avg(t.notes.size) * avg(t.notes.size)))
+from Trip t;
+
+Explanation:
+
+min, max y avg se utilizan para calcular respectivamente el mínimo máximo y la media del número de notes por viajes. Se utiliza la operación .size
+para conocer el número de elementos en el objeto. La desviación típica se ha calculado haciendo uso de operadores básicos pero necesarios para su cálculo
+como sqrt para la raiz cuadrada, sum para el sumatorio, etc.
+
+Results:
+
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+	{0, 4, 1.6, 1.3564659966250536}
+} 
+
+Query B/2
+---------
+Description: "The minimum, the maximum, the average, and the standard deviation of the
+number of audit records per trip"
+
+select min(t.audits.size), max(t.audits.size), avg(t.audits.size), sqrt(sum(t.audits.size * t.audits.size)/
+count(t.audits.size)-(avg(t.audits.size)*avg(t.audits.size))) from Trip t;
+
+Explanation:
+
+De manera similar a la anterior consulta calculará el mínimo, máximo la media y la desviación típica del número de "audit records" por viaje. Utiliza la operación .size 
+para conocer el número de elementos en el objeto. 
+
+
+Results:
+
+1 objects found
+Object #0 = [Ljava.lang.Object;{
+	{0, 4, 2.2, 1.3266499161421599}
+} 
+
+Query B/3
+---------
+Description: "The ratio of trips with an audit record"
+
+select 1.0*count(t)/(select count(b) 
+from Trip b) 
+from Trip t 
+where t.audits.size > 0;
+
+Explanation:
+
+Esta consulta devuelve el ratio de los trips con al menos un "audit record". Para ello divide el número de viajes cuyas "audits" sean mayor que 0 
+entre el número total de viajes. Este número es multiplicado por 1.0 para convertirlo a double.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.8} 
+
+Query B/4
+---------
+Description: "The ratio of rangers who have registered their curricula"
+
+select 1.0*count(r)/(select count(n) 
+from Ranger n) 
+from Ranger r 
+where r.CV is not null;
+
+
+Explanation:
+
+De manera similar a la anterior consulta, para calcular el ratio de los rangers que han registrado su curriculum dividimos el número de rangers 
+cuyo curriculum no sea nulo entre el número total de los rangers. Este número es multiplicado por 1.0 para convertirlo a double.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.66667} 
+
+
+Query B/5
+---------
+Description: "The ratio of rangers whose curriculum’s been endorsed"
+
+select 1.0*count(r)/(select count(b) 
+from Ranger b 
+where b.CV is not null)
+from Ranger r 
+where r.CV.endorserRecord.size > 0;
+
+Explanation:
+
+Para realizar este ratio dividimos el número de rangers cuyo "endorserRecord" sea mayor que 0 entre el número de rangers que no tengan el
+curriculum nulo.Este número es multiplicado por 1.0 para convertirlo a double.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.5}
+
+
+Query B/6
+---------
+Description: "The ratio of suspicious managers"
+
+select 1.0*count(m)/(select count(n) 
+from Manager n) from Manager m 
+where m.isSuspicious = true;
+
+Explanation:
+
+En esta consulta dividimos el número de managers sospechosos (es decir que tienen la propiedad isSuspicious = true) entre el número de 
+managers total. Este número es multiplicado por 1.0 para convertirlo a double.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.33333} 
+
+
+Query B/7
+---------
+Description: "The ratio of suspicious rangers"
+
+select 1.0*count(r)/(select count(b) from Ranger b) 
+from Ranger r 
+where r.isSuspicious = true;
+
+Explanation:
+
+Para realizar esta consulta hacemos de la misma manera que la anterios un filtro para quedarnos con el número de rangers sospechosos y posteriormente dividirlo entre el
+número total de rangers.
+
+Results:
+
+1 objects found
+Object #0 = java.lang.Double{0.33333}

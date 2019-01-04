@@ -1,0 +1,27 @@
+sponsor.name							= Nombre
+sponsor.surname							= Apellidos
+sponsor.email							= Corre electrónico
+sponsor.phone							= Teléfono
+sponsor.address							= Dirección
+sponsor.username						= Usuario
+sponsor.password						= Contraseña
+sponsor.register						= Registrarse
+sponsor.cancel							= Cancelar
+sponsor.save							= Salvar
+
+
+sponsor.username.placeholder			= usuario entre 5 y 32 caracteres
+sponsor.password.placeholder			= contraseña entre 5 y 32 caracteres
+
+sponsor.socialIdentities				= Redes sociales
+sponsor.socialIdentities.nick			= Apodo
+sponsor.socialIdentities.socialNetwork	= Red social
+sponsor.socialIdentities.linkProfile	= Perfil (enlace)
+sponsor.socialIdentities.linkPhoto		= Foto (enlace)
+
+sponsor.socialIdentities.add			= Añadir
+sponsor.socialIdentities.remove			= Eliminar 
+
+sponsor.commit.error 		= No se puede realizar la operación
+sponsor.commit.ok			= Operación realizada con éxito
+
