@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,8 @@ import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
 import domain.Administrator;
+import domain.Endorsement;
+import domain.Endorser;
 import domain.SystemConfiguration;
 
 @Service
