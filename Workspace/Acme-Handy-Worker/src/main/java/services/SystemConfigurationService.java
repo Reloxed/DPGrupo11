@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +13,6 @@ import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
 import domain.Administrator;
-import domain.Endorsement;
-import domain.Endorser;
 import domain.SystemConfiguration;
 
 @Service
@@ -46,8 +43,8 @@ public class SystemConfigurationService {
 
 	public SystemConfiguration create() {
 		Assert.notNull(this.administratorService.findByPrincipal());
-		
-		Map<String,String> wellMap = new HashMap<>();
+
+		final Map<String, String> wellMap = new HashMap<>();
 		wellMap.put("Español", "¡Bienvenidos a Acme Handy Worker!  Precio, calidad y confianza en el mismo sitio");
 		wellMap.put("English", "Welcome to Acme Handy Worker!  Price, quality, and trust in a single place");
 
@@ -119,6 +116,7 @@ public class SystemConfigurationService {
 		return result;
 	}
 
+
 	public Double generateScore(final Endorser e) {
 		Double res, i;
 		Collection<Endorsement> endorsements;
@@ -145,4 +143,5 @@ public class SystemConfigurationService {
 		return res / i;
 
 	}
+
 }

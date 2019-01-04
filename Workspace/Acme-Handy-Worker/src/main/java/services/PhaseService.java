@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -24,15 +23,16 @@ public class PhaseService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private PhaseRepository				phaseRepository;
+	private PhaseRepository phaseRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService			handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
 	private UtilityService	utilityService;
+
 
 
 	// Constructors ------------------------------------
@@ -118,6 +118,32 @@ public class PhaseService {
 		Assert.notNull(principal);
 
 		this.phaseRepository.delete(phase);
+	}
+
+	// Other business methods
+	public Collection<Phase> findPhasesFixUpTask(int fixUpTaskID) {
+		Collection<Phase> res;
+
+		res = this.phaseRepository.findAllPhasesByFixUpTaskId(fixUpTaskID);
+		Assert.notEmpty(res);
+
+		return res;
+	}
+
+	public HandyWorker creator(int phaseID) {
+		HandyWorker res = null;
+		Phase phase;
+
+		phase = this.findOne(phaseID);
+		Assert.notNull(phase);
+
+		for (Application a : phase.getFixUpTask().getApplications()) {
+			if (a.getStatus().contentEquals("ACCEPTED")) {
+				res = a.getApplicant();
+				break;
+			}
+		}
+		return res;
 	}
 
 }

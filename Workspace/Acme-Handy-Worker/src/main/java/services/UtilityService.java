@@ -11,7 +11,9 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import domain.Administrator;
 import domain.Curriculum;
 import domain.FixUpTask;
 
@@ -29,6 +31,9 @@ public class UtilityService {
 
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
+
+	@Autowired
+	private AdministratorService		administratorService;
 
 
 	// Constructors ------------------------------------
@@ -95,17 +100,45 @@ public class UtilityService {
 	}
 
 	public List<String> getNegativeWords() {
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 
 		final String makes = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords();
-		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
+		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
 		return listNegWords;
 	}
 
+	public int getNumberNegativeWords(final String s) {
+		int res = 0;
+		final List<String> negativeWords = this.getNegativeWords();
+		final String[] words = s.split("(¿¡,.-_/!?) ");
+		for (final String a : words)
+			if (negativeWords.contains(a))
+				res++;
+		return res;
+	}
+
 	public List<String> getPositiveWords() {
+		Administrator principal;
+
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 
 		final String makes = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords();
-		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
+		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
 		return listPosWords;
+	}
+
+	public int getNumberPositiveWords(final String s) {
+		int res = 0;
+		final List<String> positiveWords = this.getPositiveWords();
+		final String[] words = s.split("(¿¡,.-_/!?) ");
+		for (final String a : words)
+			if (positiveWords.contains(a))
+				res++;
+		return res;
 	}
 
 	public List<String> getSpamWords() {

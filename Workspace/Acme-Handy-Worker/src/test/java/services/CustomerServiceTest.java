@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -16,22 +17,25 @@ import domain.CreditCard;
 import domain.Customer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"})
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
-public class CustomerServiceTest extends AbstractTest{
-	
+public class CustomerServiceTest extends AbstractTest {
+
 	// System under test ------------------------------------------------------
 
-		@Autowired
-		private CustomerService customerService;	
-		
+	@Autowired
+	private CustomerService		customerService;
+
 	// Supporting Services ----------------------------------------------------
-	
-		@Autowired
-		private ApplicationService applicationService;	
-		
+
+	@Autowired
+	private ApplicationService	applicationService;
+
+
 	// Tests ------------------------------------------------------------------
-		
+
 	@Test
 	public void testCreateCustomer() {
 		Customer customer;
@@ -39,7 +43,7 @@ public class CustomerServiceTest extends AbstractTest{
 		customer = this.customerService.create();
 		Assert.notNull(customer);
 	}
-	
+
 	@Test
 	public void testFindAllCustomers() {
 		Collection<Customer> customers;
@@ -47,22 +51,22 @@ public class CustomerServiceTest extends AbstractTest{
 		Assert.notNull(customers);
 		Assert.notEmpty(customers);
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testNotFindOneCustomer() {
 		Customer customer;
 		customer = this.customerService.findOne(-2);
-		Assert.notNull(customer);	
+		Assert.notNull(customer);
 	}
-	
+
 	@Test
 	public void testSaveAndFindOneCustomer() {
-		Customer customer = this.customerService.create(); 
+		Customer customer = this.customerService.create();
 		Customer saved;
-		String username = "customer1";
-		
+		final String username = "customer1";
+
 		super.authenticate(username);
-		
+
 		customer.setName("Pedro");
 		customer.setSurname("Picapiedra");
 		customer.setEmail("pedropicapiedra@yahoo.es");
@@ -71,22 +75,21 @@ public class CustomerServiceTest extends AbstractTest{
 		customer.getUserAccount().setUsername("Pedro28");
 		customer.getUserAccount().setPassword("adsadd252f");
 		saved = this.customerService.save(customer);
-		super.unauthenticate();	
+		super.unauthenticate();
 		customer = this.customerService.findOne(saved.getId());
 		Assert.notNull(customer);
 	}
-	
-	
-	@Test(expected=IllegalArgumentException.class) 
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testNotSaveCustomer_1() {
 		Customer customer1 = this.customerService.create();
-		Customer customer2 = this.customerService.create(); 
+		Customer customer2 = this.customerService.create();
 		Customer saved1, saved2;
-		String username1 = "customer1";
-		String username2 = "customer2";
-		
+		final String username1 = "customer1";
+		final String username2 = "customer2";
+
 		super.authenticate(username1);
-		
+
 		customer1.setName("Pedro");
 		customer1.setSurname("Picapiedra");
 		customer1.setEmail("pedropicapiedra@yahoo.es");
@@ -95,33 +98,33 @@ public class CustomerServiceTest extends AbstractTest{
 		customer1.getUserAccount().setUsername("Pedro28");
 		customer1.getUserAccount().setPassword("adsadd252f");
 		saved1 = this.customerService.save(customer1);
-		int customerId = saved1.getId();
+		final int customerId = saved1.getId();
 		customer1 = this.customerService.findOne(saved1.getId());
-		
-		super.unauthenticate();	
-		
+
+		super.unauthenticate();
+
 		// Wrong customer			
 		super.authenticate(username2);
-		
+
 		customer2 = this.customerService.findOne(customerId);
 		Assert.notNull(customer2);
 		customer2.setMiddleName("Vientos");
 		customer2.setAddress("Calle mi casa 28");
 		saved2 = this.customerService.save(customer2);
 		Assert.notNull(saved2);
-		super.unauthenticate();	
+		super.unauthenticate();
 	}
 
-	@Test(expected=IllegalArgumentException.class) 
+	@Test(expected = IllegalArgumentException.class)
 	public void testNotSaveCustomer_2() {
 		Customer customer1 = this.customerService.create();
-		Customer customer2 = this.customerService.create(); 
+		Customer customer2 = this.customerService.create();
 		Customer saved1, saved2;
-		String username1 = "customer1";
-		String username2 = "sponsor1";
-		
+		final String username1 = "customer1";
+		final String username2 = "sponsor1";
+
 		super.authenticate(username1);
-		
+
 		customer1.setName("Pedro");
 		customer1.setSurname("Picapiedra");
 		customer1.setEmail("pedropicapiedra@yahoo.es");
@@ -130,23 +133,23 @@ public class CustomerServiceTest extends AbstractTest{
 		customer1.getUserAccount().setUsername("Pedro28");
 		customer1.getUserAccount().setPassword("adsadd252f");
 		saved1 = this.customerService.save(customer1);
-		int customerId = saved1.getId();
+		final int customerId = saved1.getId();
 		customer1 = this.customerService.findOne(saved1.getId());
-		
-		super.unauthenticate();	
-		
+
+		super.unauthenticate();
+
 		// Wrong type of actor			
 		super.authenticate(username2);
-		
+
 		customer2 = this.customerService.findOne(customerId);
 		Assert.notNull(customer2);
 		customer2.setMiddleName("Vientos");
 		customer2.setAddress("Calle mi casa 28");
 		saved2 = this.customerService.save(customer2);
 		Assert.notNull(saved2);
-		super.unauthenticate();	
+		super.unauthenticate();
 	}
-	
+
 	@Test
 	public void testFindersById() {
 		Customer customer, customerByApp;
@@ -155,12 +158,12 @@ public class CustomerServiceTest extends AbstractTest{
 		Collection<Application> collApp;
 		CreditCard creditCard;
 		Application app;
-		String username = "customer1";
-		
+		final String username = "customer1";
+
 		super.authenticate(username);
-		
+
 		// Testing findCreditCardsByCustomerId and findByCreditCardId
-		
+
 		collC = this.customerService.findAll();
 		customer = this.customerService.findOne(collC.iterator().next().getId());
 		Assert.notNull(customer);
@@ -170,7 +173,7 @@ public class CustomerServiceTest extends AbstractTest{
 		Assert.notNull(creditCard);
 		customerByCC = this.customerService.findByCreditCardId(creditCard.getId());
 		Assert.notNull(customerByCC);
-		
+
 		// Testing findCreditCardsByCustomerId and findByCreditCardId
 		collApp = this.applicationService.findAll();
 		Assert.notEmpty(collApp);
@@ -178,11 +181,11 @@ public class CustomerServiceTest extends AbstractTest{
 		Assert.notNull(app);
 		customerByApp = this.customerService.findCustomerByApplicationId(app.getId());
 		Assert.notNull(customerByApp);
-		super.unauthenticate();	
+		super.unauthenticate();
 	}
-	
+
 	@Test
-	public void testTopThreeCustomersTenPercentMoraThanAverage(){
+	public void testTopThreeCustomersTenPercentMoraThanAverage() {
 		Collection<Customer> collCC;
 		collCC = this.customerService.topThreeCustomersTenPercentMoraThanAverage();
 		Assert.notEmpty(collCC);
