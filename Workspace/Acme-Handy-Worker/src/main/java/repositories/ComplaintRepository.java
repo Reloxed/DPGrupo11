@@ -12,12 +12,11 @@ import domain.Complaint;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 	
-<<<<<<< HEAD
+
 	@Query("select r.complaints from Referee r where r.id=?1")
 	Collection<Complaint> findComplaintsByReferee(int refereeId);
-=======
+
 	@Query("select c from HandyWorker h join h.applications a join a.fixUpTask f join f.complaints c where h.id=?1 group by c.id")
 	Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId);
-	
->>>>>>> master
+
 }

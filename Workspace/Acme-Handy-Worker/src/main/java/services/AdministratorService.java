@@ -156,7 +156,7 @@ public class AdministratorService {
 		res = 0.;
 		positiveValue = 0.;
 		negativeValue = 0.;
-		endorsements = this.endorserService.findEndorsementsReceivedByEndorser(endorser.getId());
+		endorsements = this.endorserService.findEndorsementsByEndorser(endorser.getId());
 		for (final Endorsement e : endorsements) {
 			final String[] comments = e.getComments().split(" ");
 			for (final String word : comments) {

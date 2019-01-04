@@ -15,11 +15,11 @@ import repositories.ComplaintRepository;
 import domain.Application;
 import domain.Complaint;
 import domain.Customer;
-<<<<<<< HEAD
+
 import domain.Referee;
-=======
+
 import domain.HandyWorker;
->>>>>>> master
+
 
 @Service
 @Transactional
@@ -122,7 +122,7 @@ public class ComplaintService {
 	}
 
 	// Other business methods --------------------------------
-<<<<<<< HEAD
+
 	
 	public Collection<Complaint> findComplaintsByReferee(){
 		Collection<Complaint>result;
@@ -137,12 +137,12 @@ public class ComplaintService {
 		return result;
 	}
 	
-=======
+
 
 	public Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId) {
 		final Collection<Complaint> collCom = this.complaintRepository.findComplaintsByHandyWorkerId(handyWorkerId);
 		return collCom;
 	}
 
->>>>>>> master
+
 }
