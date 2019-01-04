@@ -16,14 +16,14 @@
       
 <tiles-definitions>
 
-	<definition name="curriculum/action-1" extends="master.page">	
-		<put-attribute name="title" value="curriculum Acción 1" />
-		<put-attribute name="body" value="/views/curriculum/action-1.jsp" />
+	<definition name="curriculum/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar curriculum" />
+		<put-attribute name="body" value="/views/curriculum/display.jsp" />
 	</definition>
 	
-	<definition name="curriculum/action-2" extends="master.page">	
-		<put-attribute name="title" value="curriculum Acción 2" />
-		<put-attribute name="body" value="/views/curriculum/action-2.jsp" />
+	<definition name="curriculum/edit" extends="master.page">	
+		<put-attribute name="title" value="Edicion curriculum" />
+		<put-attribute name="body" value="/views/curriculum/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

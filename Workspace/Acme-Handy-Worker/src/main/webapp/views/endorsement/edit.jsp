@@ -1,5 +1,5 @@
 <%--
- * action-1.jsp
+ * action-2.jsp
  *
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -16,4 +16,20 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="curriculum.action.1" /></p>
+<security:authorize access="hasRole('HANDYWORKER')">
+
+<div>
+
+		<form:select path="endorsement">
+		<spring:message code="endorsement.recipient" />
+			<jstl:forEach var="x" items="${Actor}">
+				<form:option value="${x.name}" />
+				<jstl:out value="${x.name }" />
+			</jstl:forEach>
+		</form:select>
+
+
+</div>
+
+
+</security:authorize>

@@ -126,18 +126,18 @@
 						code="master.page.handyworker.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/list.do"><spring:message
+					<li><a href="fixUpTask/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
 					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
-					<li><a href="finder/list.do"><spring:message
+					<li><a href="finder/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/list.do"><spring:message
+					<li><a href="complaint/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.complaints.show" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -153,9 +153,9 @@
 						code="master.page.handyworker.endorsements" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyworker/endorsements.do"><spring:message
+					<li><a href="endorsement/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.endorsements.show" /></a></li>
-					<li><a href="handyworker/endorsement-create.do"><spring:message
+					<li><a href="endorsement/handyWorker/create.do"><spring:message
 								code="master.page.handyworker.endorsement.create" /></a></li>
 				</ul></li>
 		</security:authorize>

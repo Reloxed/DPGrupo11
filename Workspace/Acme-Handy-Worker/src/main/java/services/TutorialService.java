@@ -151,4 +151,16 @@ public class TutorialService {
 
 		return res;
 	}
+	public Collection<Tutorial> findAllTutorialsByHandyWorker(){
+		
+		HandyWorker principal;
+		Collection<Tutorial> result;
+		
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result=principal.getTutorial();
+		
+		return result;
+	}
 }

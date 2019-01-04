@@ -94,7 +94,7 @@
 
 	<input type="button" name="cv"
 		value="<spring:message code="handyWorker.cv" />"
-		onclick="redirect: location.href = 'curriculum/display.do?curriculumID=${handyWorker.curriculum.id}';" />
+		onclick="redirect: location.href = 'curriculum/handyWorker/display.do?curriculumID=${handyWorker.curriculum.id}';" />
 
 </jstl:if>
 
