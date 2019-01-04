@@ -15,15 +15,15 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<!--  
+<security:authorize access="hasRole('HANDYWORKER')"> 
 
-<security:authorize access="hasRole('HANDYWORKER')">
-
-
-<display:table name="endorsement" id="row"
-	requestURI="endorsement/handyWorker/list.do" pagesize="5"
+-->
+<display:table name="endorsements" id="row"
+	requestURI="endorsement/handyWorker/list.do" pagesize="10"
 	class="displaytag">
 	
-	<!-- Atributos -->
+	
 	
 		<spring:message code="endorsement.sender"
 	var="senderHeader" />
@@ -57,5 +57,5 @@
 				code="endorsement.create" />
 		</a>
 	</div>
-
-</security:authorize>
+<!--  
+</security:authorize> -->

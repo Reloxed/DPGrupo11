@@ -16,43 +16,12 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+
 <security:authorize access="hasRole('HANDYWORKER')">
+
 
 <p><spring:message code="curriculum.name" var="name"/></p>
 <h3> <jstl:out value="${name} ${curriculum.personalRecord.fullName}"> </jstl:out> </h3>
-
-
-<!-- Botones para añadir records -->
-<table class="displayStyle">
-		<tr>
-			<th colspan="5"><spring:message code="curriculum.buttonsCreationRecords" /></th>
-		</tr>
-		<tr>
-			<td>
-				<input type="button" name="addPR"
-				value="<spring:message code="curriculum.addPR" />"
-				onclick="redirect: location.href = 'professionalRecord/handyWorker/create.do';" />
-			</td>
-			
-			<td>
-				<input type="button" name="addER"
-				value="<spring:message code="curriculum.addER" />"
-				onclick="redirect: location.href = 'educationRecord/handyWorker/create.do';" />
-			</td>
-			<td>
-				<input type="button" name="addENR"
-				value="<spring:message code="curriculum.addENR" />"
-				onclick="redirect: location.href = 'endorserRecord/handyWorker/create.do';" />
-			</td>
-			<td>
-				<input type="button" name="addMR"
-				value="<spring:message code="curriculum.addMR" />"
-				onclick="redirect: location.href = 'miscellaneousRecord/handyWorker/create.do';" />
-			</td>
-
-		</tr>
-		
-	</table>
 
 <table class="displayStyle">
 
@@ -60,6 +29,8 @@
 <td> <strong> <spring:message code="curriculum.ticker" /> : </strong> </td>
 <td> <jstl:out value="${ curriculum.ticker}"></jstl:out> </td>
 </tr>
+
+<!-- PERSONAL RECORD -->
 
 <tr>
 <td> <strong> <spring:message code="curriculum.personalRecord" /> : </strong> </td>
@@ -96,169 +67,208 @@
 
 </table>
 
-<!-- Solo mostramos un record de cada, si se quiere ver todos los records de un mismo tip, nos vamos a la vista de display de ese record -->
-<!-- ojo con los atributos vacios -->
-<jstl:if test="${ not empty curriculum.professionalRecords}" >
+<!-- PROFESSIONAL RECORDS -->
 
-
+	<jstl:if test="${ not empty curriculum.professionalRecords}" >
 
 <tr>
 <td> <strong> <spring:message code="curriculum.professionalRecords" /> : </strong> </td>
 <td>
+	<jstl:forEach var="pr" items="${curriculum.professionalRecords}">
+	
+	
 	<table class="displayStyle">
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.companyName" /> : </strong></td>
-	<td><jstl:out value="${curriculum.professionalRecords.companyName}"/></td>
+	<td><jstl:out value="${pr.companyName}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.startDate" /> : </strong></td>
-	<td><jstl:out value="${curriculum.professionalRecords.startDate}"/></td>
+	<td><jstl:out value="${pr.startDate}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.endDate" /> : </strong></td>
-	<td><jstl:out value="${curriculum.professionalRecords.endDate}"/></td>
+	<td><jstl:out value="${pr.endDate}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.role" /> : </strong></td>
-	<td><jstl:out value="${curriculum.professionalRecords.role}"/></td>
+	<td><jstl:out value="${pr.role}"/></td>
 	</tr>
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.attachment" /> : </strong></td>
-	<td><a href="${curriculum.professionalRecords.attachment }">${curriculum.professionalRecords.attachment } </a></td>
+	<td><a href="${pr.attachment }">${pr.attachment } </a></td>
 	</tr>
-	<!-- Solo primer comentario -->
+
 	<tr>
 	<td><strong> <spring:message code="curriculum.professionalRecords.comments" /> : </strong></td>
-	<td><jstl:out value="${curriculum.professionalRecords.comments}"/></td>
+	<td>
+		<ul>
+			<jstl:forEach var="comment" items="${pr.comments}">
+			<jstl:out value="${comment }"/>
+			</jstl:forEach>
+		</ul>
+	</td>
 	</tr>
 	
 	</table>
+	</jstl:forEach>
 </td>
 </tr>
-</jstl:if>
 
-
+	</jstl:if>
 <jstl:if test="${ not empty curriculum.educationRecords}" >
-
+<!-- EDUCATION RECORDS -->
 
 <tr>
 <td> <strong> <spring:message code="curriculum.educationRecords" /> : </strong> </td>
 <td>
+
+<jstl:forEach var="er" items="${curriculum.educationRecords}">
+
 	<table class="displayStyle">
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.diplomaTitle" /> : </strong></td>
-	<td><jstl:out value="${curriculum.educationRecords.diplomaTitle}"/></td>
+	<td><jstl:out value="${er.diplomaTitle}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.startDate" /> : </strong></td>
-	<td><jstl:out value="${curriculum.educationRecords.startDate}"/></td>
+	<td><jstl:out value="${er.startDate}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.endDate" /> : </strong></td>
-	<td><jstl:out value="${curriculum.educationRecords.endDate}"/></td>
+	<td><jstl:out value="${er.endDate}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.institutionName" /> : </strong></td>
-	<td><jstl:out value="${curriculum.educationRecords.institutionName}"/></td>
+	<td><jstl:out value="${er.institutionName}"/></td>
 	</tr>
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.linkAttachment" /> : </strong></td>
-	<td><a href="${curriculum.educationRecords.linkAttachment }">${curriculum.educationRecords.linkAttachment } </a></td>
+	<td><a href="${er.linkAttachment }">${er.linkAttachment } </a></td>
 	</tr>
-	<!-- Solo primer comentario -->
+
 	<tr>
 	<td><strong> <spring:message code="curriculum.educationRecords.comments" /> : </strong></td>
-	<td><jstl:out value="${curriculum.educationRecords.comments}"/></td>
+	<td>
+	
+			<ul>
+			<jstl:forEach var="comment" items="${er.comments}">
+			<jstl:out value="${comment }"/>
+			</jstl:forEach>
+		</ul>
+	
+	</td>
 	</tr>
 	
 	</table>
+	</jstl:forEach>
 </td>
 </tr>
 </jstl:if>
 
 
 <jstl:if test="${ not empty curriculum.endorserRecords}" >
-
+<!-- ENDORSER RECORDS -->
 
 <tr>
 <td> <strong> <spring:message code="curriculum.endorserRecords" /> : </strong> </td>
 <td>
+	
+	<jstl:forEach var="ed" items="${curriculum.endorserRecords}">
+	
 	<table class="displayStyle">
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.endorserRecords.fullName" /> : </strong></td>
-	<td><jstl:out value="${curriculum.endorserRecords.fullName}"/></td>
+	<td><jstl:out value="${ed.fullName}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.endorserRecords.email" /> : </strong></td>
-	<td><jstl:out value="${curriculum.endorserRecords.email}"/></td>
+	<td><jstl:out value="${ed.email}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.endorserRecords.phoneNumber" /> : </strong></td>
-	<td><jstl:out value="${curriculum.endorserRecords.phoneNumber}"/></td>
+	<td><jstl:out value="${ed.phoneNumber}"/></td>
 	</tr>
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.endorserRecords.linkedinLink" /> : </strong></td>
-	<td><a href="${curriculum.endorserRecords.linkedinLink }">${curriculum.endorserRecords.linkedinLink } </a></td>
+	<td><a href="${ed.linkedinLink }">${ed.linkedinLink } </a></td>
 	</tr>
-	<!-- Solo primer comentario -->
+
 	<tr>
 	<td><strong> <spring:message code="curriculum.endorserRecords.comments" /> : </strong></td>
-	<td><jstl:out value="${curriculum.endorserRecords.comments}"/></td>
+	<td>
+			<ul>
+			<jstl:forEach var="comment" items="${ed.comments}">
+			<jstl:out value="${comment }"/>
+			</jstl:forEach>
+		</ul>
+
 	</tr>
 	
 	</table>
+	</jstl:forEach>
 </td>
 </tr>
 </jstl:if>
 
 <jstl:if test="${ not empty curriculum.miscellaneousRecords}" >
 
-
+<!-- MISCELLANEOUS RECORDS -->
 <tr>
 <td> <strong> <spring:message code="curriculum.miscellaneousRecords" /> : </strong> </td>
 <td>
+
+<jstl:forEach var="mr" items="${curriculum.miscellaneousRecords}">
+
 	<table class="displayStyle">
 
 	<tr>
 	<td><strong> <spring:message code="curriculum.miscellaneousRecords.title" /> : </strong></td>
-	<td><jstl:out value="${curriculum.miscellaneousRecords.title}"/></td>
+	<td><jstl:out value="${mr.title}"/></td>
 	</tr>
 	
 	<tr>
 	<td><strong> <spring:message code="curriculum.miscellaneousRecords.linkAttachment" /> : </strong></td>
-	<td><a href="${curriculum.miscellaneousRecords.linkAttachment }">${curriculum.miscellaneousRecords.linkAttachment } </a></td>
+	<td><a href="${mr.linkAttachment }">${mr.linkAttachment } </a></td>
 	</tr>
-	<!-- Solo primer comentario -->
+	
 	<tr>
 	<td><strong> <spring:message code="curriculum.miscellaneousRecords.comments" /> : </strong></td>
-	<td><jstl:out value="${curriculum.miscellaneousRecords.comments}"/></td>
+	<td>
+	<ul>
+			<jstl:forEach var="comment" items="${mr.comments}">
+			<jstl:out value="${comment }"/>
+			</jstl:forEach>
+		</ul>
 	</tr>
 	
 	</table>
+	</jstl:forEach>
 </td>
 </tr>
+
 </jstl:if>
 
-	<jstl:if test="${curriculum.id!=0}">
+	
+	
 		<input type="button" name="edit"
 		value="<spring:message code="curriculum.edit" />"
-		onclick="redirect: location.href = 'curriculum/handyWorker/edit.do?curriculumId=${curriculum.id}';" />
-	</jstl:if>
-
+		onclick="redirect: location.href = 'curriculum/handyWorker/edit.do?curriculumID=${curriculum.id}';" />
+	
 
 
 </security:authorize>

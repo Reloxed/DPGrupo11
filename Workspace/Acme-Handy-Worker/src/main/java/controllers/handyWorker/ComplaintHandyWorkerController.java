@@ -35,10 +35,10 @@ public class ComplaintHandyWorkerController extends AbstractController{
 
 	//listing
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final HandyWorker hw){
+	public ModelAndView list(@RequestParam final int hw){
 		final ModelAndView result;	
 		final Collection<Complaint> complaints;
-		complaints=this.complaintService.findAllComplaintsInvolvedByHW(hw);
+		complaints=this.complaintService.findComplaintsByHandyWorkerId(hw);
 		
 		result=new ModelAndView("complaint/list");
 		result.addObject("complaints", complaints);

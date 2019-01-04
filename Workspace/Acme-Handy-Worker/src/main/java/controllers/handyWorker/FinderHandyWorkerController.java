@@ -23,8 +23,8 @@ public class FinderHandyWorkerController extends AbstractController {
 	@Autowired
 	private FinderService			finderService;
 	
-	@Autowired
-	private SystemConfigurationService systemConfigurationService;
+	//@Autowired
+	//private SystemConfigurationService systemConfigurationService;
 	
 	// Constructors
 
@@ -39,16 +39,18 @@ public class FinderHandyWorkerController extends AbstractController {
 		public ModelAndView list() {
 			final ModelAndView result;
 			final Finder finder;
-			int cacheTime;
+			//int cacheTime;
 
-			cacheTime = this.systemConfigurationService.findAll().iterator().next().getTimeResultsCached();
+			//cacheTime = this.systemConfigurationService.findAll().iterator().next().getTimeResultsCached();
 
-			this.finderService.deleteExpireFinders(cacheTime);
+			//this.finderService.deleteExpireFinders(cacheTime);
 
 			finder = this.finderService.findByPrincipal();
 
 			result = new ModelAndView("finder/list");
 			result.addObject("finder", finder);
+			result.addObject("requestUri", "finder/handyWorker/list.do");
+			
 
 			return result;
 

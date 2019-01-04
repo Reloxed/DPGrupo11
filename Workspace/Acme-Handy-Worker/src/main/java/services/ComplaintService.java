@@ -116,17 +116,5 @@ public class ComplaintService {
 
 	// Other business methods --------------------------------
 	
-	public Collection<Complaint> findAllComplaintsInvolvedByHW(final HandyWorker handyWorker) {
-		Assert.notNull(handyWorker);
-		
-		final Collection<Complaint> result=new ArrayList<Complaint>() ;
-		final Collection<Application> applications = handyWorker.getApplications();
-		
-		for (final Application a : applications){
-			for (final Complaint c : a.getFixUpTask().getComplaints()){
-				result.add(c);
-				}
-		}
-		return result;
-	}
+
 }

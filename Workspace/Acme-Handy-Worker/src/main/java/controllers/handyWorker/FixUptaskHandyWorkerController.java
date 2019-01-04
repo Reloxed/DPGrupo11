@@ -50,7 +50,7 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 	}
 	
 	//list
-	@RequestMapping(value="list",method=RequestMethod.GET)
+	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public ModelAndView list(){
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;

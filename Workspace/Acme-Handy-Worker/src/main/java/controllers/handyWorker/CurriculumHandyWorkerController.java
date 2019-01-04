@@ -31,12 +31,12 @@ public class CurriculumHandyWorkerController extends AbstractController{
 	
 	
 	@RequestMapping(value="/display",method=RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int cvId){
+	public ModelAndView display(@RequestParam final int curriculumID){
 		ModelAndView result;
 		Curriculum curriculum;
 		HandyWorker principal;
 		//curriculum = this.curriculumService.findCurriculumByPrincipal();
-		curriculum=this.curriculumService.findOne(cvId);
+		curriculum=this.curriculumService.findOne(curriculumID);
 		Assert.notNull(curriculum);
 		principal=this.handyWorkerService.findByPrincipal();
 		
@@ -98,11 +98,11 @@ public class CurriculumHandyWorkerController extends AbstractController{
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int curriculumId) {
+	public ModelAndView edit(@RequestParam final int curriculumID) {
 		ModelAndView result;
 		Curriculum curriculum;
 
-		curriculum = this.curriculumService.findOne(curriculumId);
+		curriculum = this.curriculumService.findOne(curriculumID);
 		Assert.notNull(curriculum);
 		result = this.createEditModelAndView(curriculum);
 

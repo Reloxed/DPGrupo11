@@ -20,7 +20,10 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-	<form:form action="fixUpTask/finder.do"
+
+
+
+<form:form action="fixUpTask/list.do"
 		modelAttribute="finder">
 
 		<form:hidden path="id" />
@@ -100,13 +103,9 @@
 	</a>
 
 
+
+
 </security:authorize>
-
-
-
-
-
-
 
 
 
