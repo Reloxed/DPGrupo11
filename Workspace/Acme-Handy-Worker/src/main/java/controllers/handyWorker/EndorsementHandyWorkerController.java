@@ -49,6 +49,7 @@ public class EndorsementHandyWorkerController extends AbstractController{
 	public ModelAndView create() {
 		ModelAndView result;
 		Endorsement endorsement;
+		
 
 		endorsement=this.endorsermentService.create();
 		result=this.createEditModelAndView(endorsement);
@@ -159,9 +160,13 @@ public class EndorsementHandyWorkerController extends AbstractController{
 
 	protected ModelAndView createEditModelAndView(final Endorsement endorsement, final String message) {
 		ModelAndView result;
+		Collection<Endorser> endorsers;
+		
+		endorsers=this.endorserService.findAll();
 
 		result = new ModelAndView("endorsement/edit");
 		result.addObject("endorsement", endorsement);
+		result.addObject("endorsers",endorsers);
 
 		result.addObject("message", message);
 		return result;

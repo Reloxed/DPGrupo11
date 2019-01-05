@@ -18,17 +18,17 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('HANDYWORKER')">
 
 
 
 
-<form:form action="fixUpTask/list.do"
+
+<form:form action="finder/handyWorker/list.do"
 		modelAttribute="finder">
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="handyWorker" />
+		
 
 
 		<form:label path="keyword">
@@ -38,7 +38,7 @@
 		<form:errors cssClass="error" path="keyword" />
 		<br />
 
-
+ 
 		<form:label path="category">
 			<spring:message code="finder.category" />:
 	</form:label>
@@ -105,7 +105,7 @@
 
 
 
-</security:authorize>
+
 
 
 
