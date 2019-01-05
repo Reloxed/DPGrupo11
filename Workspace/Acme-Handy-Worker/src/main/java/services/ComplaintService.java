@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -12,10 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
-import domain.Application;
 import domain.Complaint;
 import domain.Customer;
-import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -34,9 +33,6 @@ public class ComplaintService {
 	@Autowired
 	private UtilityService		utilityService;
 
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
-
 	// Constructors ------------------------------------
 
 	public ComplaintService() {
@@ -54,44 +50,40 @@ public class ComplaintService {
 
 		result = new Complaint();
 
-		result.setTicker(this.utilityService.generateTicker());
-		result.setMoment(new Date(System.currentTimeMillis() - 1));
-
 		return result;
 	}
 
 	public Complaint save(final Complaint complaint) {
 		Complaint result;
-		Customer customer;
+		Customer principal;
 
-		customer = this.customerService.findByPrincipal();
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+		
 		// A complaint cannot be updated once they are saved to the database
 		Assert.isTrue(complaint.getId() == 0);
-		Assert.notNull(customer);
 		Assert.notNull(complaint.getFixUpTask());
 		Assert.notNull(complaint.getDescription());
-
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] description = complaint.getDescription().split("(��,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : description)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				customer.setIsSuspicious(true);
-				break;
-			}
+		
+		complaint.setTicker(this.utilityService.generateTicker());
+		complaint.setMoment(new Date(System.currentTimeMillis() - 1));
+		
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(complaint.getDescription());
+		if (complaint.getAttachements() != null)
+			atributosAComprobar.add(complaint.getAttachements());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		result = this.complaintRepository.saveAndFlush(complaint);
-		Collection<Complaint> collCom = customer.getComplaints();
+		Collection<Complaint> collCom = principal.getComplaints();
 		collCom.add(result);
-		customer.setComplaints(collCom);
-		this.customerService.save(customer);
 
+		principal.setComplaints(collCom);
+		this.customerService.save(principal);
 
 		return result;
 	}

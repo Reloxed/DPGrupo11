@@ -17,7 +17,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Application;
-import domain.Curriculum;
 import domain.HandyWorker;
 import domain.Tutorial;
 
@@ -66,11 +65,13 @@ public class HandyWorkerService {
 	}
 
 	public HandyWorker create() {
-		HandyWorker result;
+		HandyWorker result = new HandyWorker();
 		Actor principal;
 
-		final Authority authority = new Authority();
-		final UserAccount ua = new UserAccount();
+		Authority authority = new Authority();
+		authority.setAuthority(Authority.HANDYWORKER);
+		UserAccount ua = new UserAccount();
+		ua.addAuthority(authority);
 
 		try {
 			principal = this.actorService.findByPrincipal();
@@ -80,17 +81,13 @@ public class HandyWorkerService {
 
 		} catch (final IllegalArgumentException e) {
 
-			result = new HandyWorker();
-
-			authority.setAuthority(Authority.HANDYWORKER);
-			ua.addAuthority(authority);
-
 			result.setUserAccount(ua);
 			result.setMake(result.getName() + result.getMiddleName() + result.getSurname());
 			result.setIsSuspicious(false);
 			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
 			result.setTutorial(new HashSet<Tutorial>());
+			
 			return result;
 		}
 	}
@@ -115,10 +112,8 @@ public class HandyWorkerService {
 			Assert.notNull(principal);
 			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
 			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
-			handyWorker.setCurriculum(new Curriculum());
-			handyWorker.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
-
 		}
+		
 		saved = this.handyWorkerRepository.save(handyWorker);
 		Assert.notNull(saved);
 

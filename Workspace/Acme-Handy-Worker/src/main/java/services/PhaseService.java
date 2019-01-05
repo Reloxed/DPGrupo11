@@ -34,9 +34,6 @@ public class PhaseService {
 	@Autowired
 	private UtilityService	utilityService;
 
-
-
-
 	// Constructors ------------------------------------
 
 	public PhaseService() {
@@ -91,7 +88,6 @@ public class PhaseService {
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if(containsSpam) {
 			principal.setIsSuspicious(true);
-
 		}
 
 		fixUpTask = phase.getFixUpTask();
@@ -112,15 +108,20 @@ public class PhaseService {
 
 	public void delete(final Phase phase) {
 		HandyWorker principal;
+		Collection <Application> collApp;
 
 		Assert.notNull(phase);
 		Assert.isTrue(phase.getId() != 0);
 
 		principal = this.handyWorkerService.findByPrincipal();
-
 		Assert.notNull(principal);
-
-		this.phaseRepository.delete(phase);
+		
+		collApp = principal.getApplications();
+		for(Application app : collApp) {
+			if(app.getStatus().equals("ACCEPTED") && app.getFixUpTask().equals(phase.getFixUpTask())){
+				this.phaseRepository.delete(phase);
+			}
+		}
 	}
 
 	// Other business methods
