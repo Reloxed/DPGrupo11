@@ -97,7 +97,7 @@ public class SponsorAdministrationController extends AbstractController {
 			try {
 				Sponsor saved;
 				saved = this.sponsorService.save(sponsor);
-				res = new ModelAndView("redirect:display.do?actorID="
+				res = new ModelAndView("redirect:/actor/display.do?actorID="
 						+ saved.getId());
 
 			} catch (Throwable oops) {

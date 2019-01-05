@@ -41,7 +41,6 @@
 	<form:hidden path="finder" />
 	<form:hidden path="curriculum" />
 
-
 	<form:label path="surname">
 		<spring:message code="actor.surname" />:
 		</form:label>

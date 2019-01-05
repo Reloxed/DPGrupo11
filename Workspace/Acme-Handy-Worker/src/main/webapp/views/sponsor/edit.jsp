@@ -45,11 +45,11 @@
 	<form:errors cssClass="error" path="name" />
 	<br>
 
-	<form:label path="middlename">
+	<form:label path="middleName">
 		<spring:message code="actor.middlename" />:
 		</form:label>
-	<form:input path="middlename" value="${sponsor.middlename}" />
-	<form:errors cssClass="error" path="middlename" />
+	<form:input path="middleName" value="${sponsor.middleName}" />
+	<form:errors cssClass="error" path="middleName" />
 	<br>
 
 	<form:label path="email">

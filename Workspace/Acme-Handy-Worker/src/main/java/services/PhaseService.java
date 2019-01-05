@@ -32,12 +32,9 @@ public class PhaseService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-<<<<<<< HEAD
-	private SystemConfigurationService	systemConfigurationService;
-=======
 	private UtilityService	utilityService;
 
->>>>>>> master
+
 
 
 	// Constructors ------------------------------------
@@ -87,35 +84,6 @@ public class PhaseService {
 
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
-<<<<<<< HEAD
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : description)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (!containsSpam) {
-			final String[] title = phase.getTitle().split("(¿¡,.-_/!?) ");
-			for (final String word : spamWords) {
-				for (final String titleWord : title)
-					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
-						break;
-					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
-				}
-			}
-=======
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(phase.getTitle());
 		atributosAComprobar.add(phase.getDescription());
@@ -123,7 +91,7 @@ public class PhaseService {
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if(containsSpam) {
 			principal.setIsSuspicious(true);
->>>>>>> master
+
 		}
 
 		fixUpTask = phase.getFixUpTask();

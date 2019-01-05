@@ -121,7 +121,6 @@ public class HandyWorkerService {
 		}
 		saved = this.handyWorkerRepository.save(handyWorker);
 		Assert.notNull(saved);
-		this.handyWorkerRepository.flush();
 
 		return saved;
 
