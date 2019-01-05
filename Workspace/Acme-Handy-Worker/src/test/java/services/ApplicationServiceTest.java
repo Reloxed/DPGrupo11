@@ -96,6 +96,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
 		result.setApplications(new ArrayList<Application>());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
@@ -110,7 +111,8 @@ public class ApplicationServiceTest extends AbstractTest {
 		a = this.applicationService.create();
 
 		a.setFixUpTask(saved);
-
+		a.setComments("Hola");
+		
 		apSaved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
 		Assert.isTrue(applications.contains(apSaved));
@@ -158,6 +160,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
 
@@ -181,6 +184,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		Application a, apSaved;
 
 		a = this.applicationService.create();
+		a.setComments("Hola");
 		a.setFixUpTask(saved);
 		apSaved = this.applicationService.save(a);
 		Assert.isTrue(apSaved.getStatus() == "PENDING");
@@ -222,6 +226,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
 
@@ -231,6 +236,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		Application a, apSaved;
 
 		a = this.applicationService.create();
+		a.setComments("Hola");
 		a.setFixUpTask(saved);
 		apSaved = this.applicationService.save(a);
 		Assert.isTrue(apSaved.getStatus() == "PENDING");

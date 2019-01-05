@@ -88,7 +88,21 @@ public class EndorserService {
 		return result;
 	}
 
+
 	
 
 	
+
+	public Collection<Endorsement> findEndorsementsReceivedByEndorser(final int endorserId) {
+		Collection<Endorsement> result;
+		Assert.isTrue(endorserId != 0);
+
+		result = this.endorserRepository.findEndorsementsReceivedByEndorser(endorserId);
+
+		Assert.notNull(result);
+		
+		return result;
+
+
+}
 }

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -23,16 +24,15 @@ public class PhaseService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private PhaseRepository phaseRepository;
+	private PhaseRepository				phaseRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
 	private UtilityService	utilityService;
-
 
 
 	// Constructors ------------------------------------
@@ -109,19 +109,24 @@ public class PhaseService {
 
 	public void delete(final Phase phase) {
 		HandyWorker principal;
+		Collection <Application> collApp;
 
 		Assert.notNull(phase);
 		Assert.isTrue(phase.getId() != 0);
 
 		principal = this.handyWorkerService.findByPrincipal();
-
 		Assert.notNull(principal);
-
-		this.phaseRepository.delete(phase);
+		
+		collApp = principal.getApplications();
+		for(Application app : collApp) {
+			if(app.getStatus().equals("ACCEPTED") && app.getFixUpTask().equals(phase.getFixUpTask())){
+				this.phaseRepository.delete(phase);
+			}
+		}
 	}
 
 	// Other business methods
-	public Collection<Phase> findPhasesFixUpTask(int fixUpTaskID) {
+	public Collection<Phase> findPhasesFixUpTask(final int fixUpTaskID) {
 		Collection<Phase> res;
 
 		res = this.phaseRepository.findAllPhasesByFixUpTaskId(fixUpTaskID);
@@ -130,19 +135,18 @@ public class PhaseService {
 		return res;
 	}
 
-	public HandyWorker creator(int phaseID) {
+	public HandyWorker creator(final int phaseID) {
 		HandyWorker res = null;
 		Phase phase;
 
 		phase = this.findOne(phaseID);
 		Assert.notNull(phase);
 
-		for (Application a : phase.getFixUpTask().getApplications()) {
+		for (final Application a : phase.getFixUpTask().getApplications())
 			if (a.getStatus().contentEquals("ACCEPTED")) {
 				res = a.getApplicant();
 				break;
 			}
-		}
 		return res;
 	}
 

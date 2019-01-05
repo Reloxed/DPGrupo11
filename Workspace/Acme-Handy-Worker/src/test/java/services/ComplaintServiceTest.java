@@ -101,6 +101,7 @@ public class ComplaintServiceTest extends AbstractTest {
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
 		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
 		result.setApplications(this.applicationService.findAll());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);

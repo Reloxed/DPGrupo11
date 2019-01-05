@@ -18,7 +18,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.CreditCard;
-import domain.MessageBox;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -51,7 +50,6 @@ public class SponsorService {
 
 	public Sponsor create() {
 		Sponsor result = new Sponsor();
-		Collection<MessageBox> messageBoxes;
 		Actor principal;
 
 		Authority authority = new Authority();
@@ -62,18 +60,19 @@ public class SponsorService {
 		try {
 			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
+			
+			return null;
+			
 		} catch (IllegalArgumentException e) {
+			
 			result.setUserAccount(ua);
-
-			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-
 			result.setIsSuspicious(false);
-			result.setMessageBoxes(messageBoxes);
+			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 			result.setSponsorships(Collections.<Sponsorship> emptyList());
+			
+			return result;
 		}
-		return result;
-
 	}
 
 	public Collection<Sponsor> findAll() {
@@ -112,28 +111,28 @@ public class SponsorService {
 		return result;
 	}
 
-	public Sponsor save(Sponsor s) {
+	public Sponsor save(Sponsor sponsor) {
 		Sponsor saved;
-		Assert.notNull(s);
+		Assert.notNull(sponsor);
 
-		if (s.getId() == 0) {
+		if (sponsor.getId() == 0) {
 			try {
 				Actor principal;
 				principal = this.actorService.findByPrincipal();
 				Assert.isNull(principal);
 			} catch (IllegalArgumentException e) {
 				Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				s.getUserAccount().setPassword(passwordEncoder.encodePassword(s.getUserAccount().getPassword(), null));
+				sponsor.getUserAccount().setPassword(passwordEncoder.encodePassword(sponsor.getUserAccount().getPassword(), null));
 			}
 		} else {
 			Sponsor principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == s.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == s.getIsSuspicious());
+			Assert.isTrue(principal.getUserAccount().getId() == sponsor.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == sponsor.getIsSuspicious());
 		}
 
-		saved = this.sponsorRepository.saveAndFlush(s);
+		saved = this.sponsorRepository.saveAndFlush(sponsor);
 		return saved;
 	}
 

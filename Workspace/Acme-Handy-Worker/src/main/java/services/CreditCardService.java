@@ -101,12 +101,19 @@ public class CreditCardService {
 		Sponsor ownerSponsor = null;
 		Customer ownerCustomer = null;
 		Calendar expiration;
+		Actor principal;
 
-		try {
-			ownerSponsor = this.sponsorService.findByPrincipal();
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);	
 
-		} catch (final IllegalArgumentException e) {
+		if (principal instanceof Customer) {
+			
 			ownerCustomer = this.customerService.findByPrincipal();
+			
+		} else if (principal instanceof Sponsor) {
+			
+			ownerSponsor = this.sponsorService.findByPrincipal();
+			
 		}
 		if (ownerCustomer == null && ownerSponsor == null)
 			Assert.notNull(ownerSponsor);
@@ -123,23 +130,24 @@ public class CreditCardService {
 		Assert.notNull(res);
 		this.creditCardRepository.flush();
 
-		//		//Metemos la creditCard en la application o sponsorship correspondiente
-		//		if (ownerCustomer != null) {
-		//			if (creditCard.getId() == 0)
-		//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
-		//					for (final Application application : fixUpTasks.getApplications())
-		//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
-		//							application.setCreditCard(creditCard);
-		//							this.applicationService.save(application);
-		//						}
-		//		} else if (ownerSponsor != null)
-		//			if (creditCard.getId() == 0)
-		//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
-		//					if (sponsorship.getCreditCard() == null) {
-		//						sponsorship.setCreditCard(creditCard);
-		//						this.sponsorshipService.save(sponsorship);
-		//					}
 		return res;
+		
+//		//Metemos la creditCard en la application o sponsorship correspondiente
+//		if (ownerCustomer != null) {
+//			if (creditCard.getId() == 0)
+//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
+//					for (final Application application : fixUpTasks.getApplications())
+//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
+//							application.setCreditCard(creditCard);
+//							this.applicationService.save(application);
+//						}
+//		} else if (ownerSponsor != null)
+//			if (creditCard.getId() == 0)
+//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
+//					if (sponsorship.getCreditCard() == null) {
+//						sponsorship.setCreditCard(creditCard);
+//						this.sponsorshipService.save(sponsorship);
+//					}
 	}
 
 	public void delete(final CreditCard creditCard) {
@@ -150,10 +158,11 @@ public class CreditCardService {
 		Collection<Sponsor> collSpo = null;
 
 		// Comprobamos que el customer o sponsor que quiere eliminar la CC es el
-		// dueño de la misma
+		// dueño de la misma	
 		final UserAccount userAccount = LoginService.getPrincipal();
 		collCus = this.customerService.findByCreditCardId(creditCard.getId());
 		collSpo = this.sponsorService.findByCreditCardId(creditCard.getId());
+		
 		for(Customer customer: collCus){
 			collUA.add(customer.getUserAccount());
 		}

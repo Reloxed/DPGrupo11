@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
+import domain.Actor;
 import domain.Application;
 import domain.CreditCard;
 import domain.Customer;
@@ -36,11 +38,13 @@ public class ApplicationService {
 	private CustomerService				customerService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 	@Autowired
 	private MessageService				messageService;
 
+	@Autowired
+	private ActorService				actorService;
 
 	// Constructors ------------------------------------
 
@@ -58,43 +62,78 @@ public class ApplicationService {
 		Assert.notNull(applicant);
 
 		result = new Application();
-		result.setRegisteredMoment(new Date(System.currentTimeMillis() - 1));
-		result.setApplicant(applicant);
-		Assert.notNull(result);
 
 		return result;
 	}
 
 	public Application save(final Application application) {
-		HandyWorker applicant;
+		HandyWorker applicant = null;
 		Application result;
+		Actor actor;
+		Customer customer = null;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
-//		double realPrice;
-
+		
 		Assert.notNull(application);
-		applicant = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(applicant);
+		Assert.notNull(application.getOfferedPrice());
+		Assert.notNull(application.getComments());
 		fixUpTask = application.getFixUpTask();
-
-		//El precio con iva no se calcula aquí, sino en vistas
-//		realPrice = (this.systemConfigurationService.findMySystemConfiguration().getVAT() / 100) * 
-//				application.getOfferedPrice() + application.getOfferedPrice();
-//		
-//		application.setOfferedPrice(realPrice);
-
-		if (application.getId() == 0) { // Not saved in database yet
-			application.setStatus("PENDING");
-			registeredMoment = new Date(System.currentTimeMillis() - 1);
-			Assert.isTrue(registeredMoment.after(fixUpTask.getPublishedMoment())); // The fixUpTask must be published.
-			application.setRegisteredMoment(registeredMoment);
-			application.setComments(new String());
+		Assert.notNull(fixUpTask);
+		
+		
+		actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(application.getComments());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		
+		if (actor instanceof HandyWorker) {
+			applicant = this.handyWorkerService.findByPrincipal();
+			Assert.notNull(applicant);
+			
+			if (application.getId() == 0) { // Not saved in database yet
+				application.setStatus("PENDING");
+				registeredMoment = new Date(System.currentTimeMillis() - 1);
+				application.setApplicant(applicant);
+				Assert.isTrue(registeredMoment.after(fixUpTask.getPublishedMoment())); // The fixUpTask must be published.
+				application.setRegisteredMoment(registeredMoment);
+			
+			} else {
+			
+				Assert.isTrue(application.getFixUpTask().equals(this.findOne(application.getId()).getFixUpTask()));
+				Assert.isTrue(application.getApplicant().equals(applicant));
+				Assert.isTrue(application.getRegisteredMoment().equals(this.findOne(application.getId()).getRegisteredMoment()));
+				Assert.isTrue(application.getStatus().equals(this.findOne(application.getId()).getStatus()));		
+				Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());			
+			}
+			
+			if(containsSpam){
+				applicant.setIsSuspicious(true);
+			}
+			
+		} else if (actor instanceof Customer) {
+			
+			customer = this.customerService.findByPrincipal();
+			Assert.notNull(customer);
+			
+			Assert.isTrue(application.getFixUpTask().equals(this.findOne(application.getId()).getFixUpTask()));
+			Assert.isTrue(application.getApplicant().equals(this.findOne(application.getId()).getApplicant()));
+			Assert.isTrue(application.getRegisteredMoment().equals(this.findOne(application.getId()).getRegisteredMoment()));
+			Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());	
+			
+			if (containsSpam){
+				customer.setIsSuspicious(true);
+			}
 		}
-
-		application.setApplicant(applicant);
-
+		
+		if(application.getStatus().equals("ACCEPTED")) {
+			Assert.notNull(application.getCreditCard());
+		}
+		
 		result = this.applicationRepository.saveAndFlush(application);
 		Assert.notNull(application);
 
@@ -112,21 +151,6 @@ public class ApplicationService {
 
 		// Check contain of strings searching spamWords
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] comments = application.getComments().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : comments)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				applicant.setIsSuspicious(true);
-				break;
-			}
-		}
-
 		bodyHW = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
 		bodyCustomer = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
 		this.messageService.createAndSaveStatus(applicant, bodyHW, result.getRegisteredMoment());
@@ -134,6 +158,7 @@ public class ApplicationService {
 
 		return result;
 	}
+	
 	public Collection<Application> findAll() {
 		Collection<Application> result = new ArrayList<>();
 

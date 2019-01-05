@@ -31,9 +31,12 @@ public class CategoryService {
 	
 	@Autowired
 	private AdministratorService	administratorService;
-
+	
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
+
+	@Autowired
+	private UtilityService	utilityService;
 
 	// Constructors ------------------------------------
 
@@ -58,51 +61,38 @@ public class CategoryService {
 	}
 
 	public Category save(final Category category) {
-		final Administrator admin;
+		final Administrator principal;
 		Category result;
 		final Category parent, root;
 		SystemConfiguration systemConf;
 		Set<String> idiomasCategory;
 
-		admin = this.administratorService.findByPrincipal();
-		root = this.findRoot();
-
-		Assert.isTrue(category.getId() != root.getId());
-		Assert.notNull(admin);
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 		
+		root = this.findRoot();
+		Assert.isTrue(category.getId() != root.getId());
+		Assert.notNull(category.getParentCategory());
 		Assert.notNull(category.getName());
+		
 		systemConf = systemConfigurationService.findMySystemConfiguration();
 		Set<String> idiomasSystemConf = new HashSet<String>(systemConf.getWelcomeMessage().keySet());	
 		idiomasCategory = category.getName().keySet();
-		Assert.isTrue(idiomasSystemConf.containsAll(idiomasCategory));
+		Assert.isTrue(idiomasSystemConf.equals(idiomasCategory));
 		
-		Assert.notNull(category.getParentCategory());
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.addAll(category.getName().values());
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		Collection<String> categoryNames = category.getName().values();
-		List<String> names = new ArrayList<>();
-		for (String catName : categoryNames) { 
-			String[] n = catName.split("(¿¡,.-_/!?) ");
-			for(String name : n){
-				names.add(name);
-			}
-		}
-		for (final String word : spamWords) {
-			for (final String titleWord : names)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				admin.setIsSuspicious(true);
-				break;
-			}
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 		
 		result = this.categoryRepository.saveAndFlush(category);
-
+		Assert.notNull(result);
+		
 		parent = result.getParentCategory();
+		
 		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
 		if (category.getId() == 0)
 			this.newChild(parent, result);
