@@ -64,7 +64,6 @@ public class HandyWorker extends Endorser {
 		this.finder = finder;
 	}
 
-	@NotNull
 	@Valid
 	@OneToOne(optional = true)
 	public Curriculum getCurriculum() {

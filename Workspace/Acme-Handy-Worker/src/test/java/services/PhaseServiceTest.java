@@ -38,11 +38,20 @@ public class PhaseServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
+	public void testFindOne() {
+		Collection<Phase> collP;
+		Phase phase;
+		
+		collP = this.phaseService.findAll();
+		phase = this.phaseService.findOne(collP.iterator().next().getId());
+		Assert.notNull(phase);
+	}
+	
+	@Test
 	public void testFindAll() {
 		Collection<Phase> res;
 		res = this.phaseService.findAll();
 		Assert.notNull(res);
-		Assert.isTrue(res.size() == 3);
 	}
 
 	@Test
@@ -56,8 +65,8 @@ public class PhaseServiceTest extends AbstractTest {
 		Assert.notNull(principal);
 
 		res = this.phaseService.create();
-		res.setStartMoment(new Date(System.currentTimeMillis() - 1));
-		res.setEndMoment(new Date(1564865498468L));
+		res.setStartMoment(new Date(9994865400000L));
+		res.setEndMoment(new Date(9994865498468L));
 		res.setTitle("Title Nigeria");
 		res.setDescription("Description");
 		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
@@ -106,10 +115,17 @@ public class PhaseServiceTest extends AbstractTest {
 		// Delete phase
 
 		phases = this.phaseService.findAll();
+<<<<<<< HEAD
 		toDelete = res;
 		this.phaseService.delete(toDelete);
 		phases = this.phaseService.findAll();
 		System.out.println(phases.size());
 		Assert.isTrue(phases.size() == 2);
+=======
+		Assert.notEmpty(phases);
+		toDelete = this.phaseService.findAll().iterator().next();
+		this.phaseService.delete(toDelete);
+
+>>>>>>> master
 	}
 }

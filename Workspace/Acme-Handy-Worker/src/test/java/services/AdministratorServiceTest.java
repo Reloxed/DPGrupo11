@@ -175,7 +175,6 @@ public class AdministratorServiceTest extends AbstractTest {
 		administrators = this.administratorService.findAll();
 
 		Assert.notNull(administrators);
-		Assert.isTrue(administrators.size() == 2);
 		super.unauthenticate();
 	}
 

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +32,12 @@ public class PhaseService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
+<<<<<<< HEAD
 	private SystemConfigurationService	systemConfigurationService;
+=======
+	private UtilityService	utilityService;
+
+>>>>>>> master
 
 
 	// Constructors ------------------------------------
@@ -80,6 +87,7 @@ public class PhaseService {
 
 		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
+<<<<<<< HEAD
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
 		final String[] description = phase.getDescription().split("(¿¡,.-_/!?) ");
@@ -107,6 +115,15 @@ public class PhaseService {
 					break;
 				}
 			}
+=======
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(phase.getTitle());
+		atributosAComprobar.add(phase.getDescription());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
+>>>>>>> master
 		}
 
 		fixUpTask = phase.getFixUpTask();
@@ -121,6 +138,7 @@ public class PhaseService {
 		Assert.isTrue(canBeSaved);
 		Assert.isTrue(phase.getStartMoment().after(fixUpTask.getStartMoment()));
 		Assert.isTrue(phase.getEndMoment().after(fixUpTask.getEndMoment()));
+		Assert.isTrue(phase.getEndMoment().after(phase.getStartMoment()));
 		return this.phaseRepository.saveAndFlush(phase);
 	}
 

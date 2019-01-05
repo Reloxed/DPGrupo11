@@ -55,7 +55,13 @@ public class UtilityService {
 		year = String.valueOf(date.get(Calendar.YEAR));
 		year = year.substring(year.length() - 2, year.length());
 		month = String.valueOf(date.get(Calendar.MONTH) + 1);
+		if (month.length()== 1){
+			month = "0" + month;
+		}
 		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+		if (day.length()== 1){
+			day = "0" + day;
+		}
 
 		while (unique == false) {
 			alphaNum = this.randomString();
@@ -140,5 +146,23 @@ public class UtilityService {
 		final String makes = this.systemConfigurationService.findMySystemConfiguration().getSpamWords();
 		final List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
 		return listSpamWords;
+	}
+	
+	public boolean isSpam (List<String> atributosAComprobar) {
+		boolean containsSpam = false;
+		String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		for(int i=0; i<atributosAComprobar.size(); i++) {
+			if(containsSpam == false) {
+				for(String spamWord : spamWords) {
+					if(atributosAComprobar.get(i).toLowerCase().contains(spamWord.toLowerCase())){
+						containsSpam = true;
+						break;
+					}
+				}
+			} else {
+				break;
+			}
+		}
+		return containsSpam;
 	}
 }

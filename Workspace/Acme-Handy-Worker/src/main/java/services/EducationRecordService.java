@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import domain.HandyWorker;
 public class EducationRecordService {
 
 	// Managed Repository
-
+	
 	@Autowired
 	private EducationRecordRepository	educationRecordRepository;
 
@@ -26,13 +28,9 @@ public class EducationRecordService {
 
 	@Autowired
 	private HandyWorkerService			handyWorkerService;
-
+	
 	@Autowired
-	private CurriculumService			curriculumService;
-
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
-
+	private UtilityService			utilityService;
 
 	// Constructors ------------------------------------
 
@@ -84,62 +82,29 @@ public class EducationRecordService {
 		if (educationRecord.getEndDate() != null)
 			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] diplomaTitle = educationRecord.getDiplomaTitle().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : diplomaTitle)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (!containsSpam) {
-			final String[] institutionName = educationRecord.getInstitutionName().split("(¿¡,.-_/!?) ");
-			for (final String word : spamWords) {
-				for (final String titleWord : institutionName)
-					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
-						break;
-					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
-				}
-			}
-		if (educationRecord.getComments() != null)
-			if (!containsSpam) {
-				final String[] comments = educationRecord.getComments().split("(¿¡,.-_/!?) ");
-				for (final String word : spamWords) {
-					for (final String titleWord : comments)
-						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-							containsSpam = true;
-							break;
-						}
-					if (containsSpam) {
-						principal.setIsSuspicious(true);
-						break;
-					}
-				}
-			}
-		}
-
-		res = this.educationRecordRepository.save(educationRecord);
+		res = this.educationRecordRepository.save(educationRecord);		
 		this.educationRecordRepository.flush();
-
+		
+		
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(educationRecord.getDiplomaTitle());
+		atributosAComprobar.add(educationRecord.getInstitutionName());
+		if (educationRecord.getComments() != null)
+			atributosAComprobar.add(educationRecord.getComments());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
+		}
+		
 		educationRecords = principal.getCurriculum().getEducationRecords();
-
 		if (educationRecord.getId() == 0) {
 			educationRecords.add(res);
 			Curriculum curriculum;
 			curriculum = principal.getCurriculum();
 			curriculum.setEducationRecords(educationRecords);
-			this.curriculumService.save(curriculum);
 		}
+		
 		return res;
 	}
 
@@ -157,6 +122,9 @@ public class EducationRecordService {
 		Assert.isTrue(educationRecords.contains(educationRecord));
 
 		this.educationRecordRepository.delete(educationRecord);
+
+		educationRecords.remove(educationRecord);
+		principal.getCurriculum().setEducationRecords(educationRecords);
 
 	}
 	// Other business methods

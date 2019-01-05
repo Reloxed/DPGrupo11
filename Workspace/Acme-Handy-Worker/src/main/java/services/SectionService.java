@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -33,7 +34,7 @@ public class SectionService {
 	private TutorialService				tutorialService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -82,34 +83,13 @@ public class SectionService {
 
 		Assert.notNull(section);
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] text = section.getText().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : text)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (!containsSpam) {
-			final String[] title = section.getTitle().split("(¿¡,.-_/!?) ");
-			for (final String word : spamWords) {
-				for (final String titleWord : title)
-					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
-						break;
-					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
-				}
-			}
-
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(section.getTitle());
+		atributosAComprobar.add(section.getText());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		res = this.sectionRepository.save(section);
