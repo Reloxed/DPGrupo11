@@ -76,12 +76,11 @@ public class PhaseServiceTest extends AbstractTest {
 	}
 
 	@Test
-
 	public void testFindCreator() {
 		HandyWorker res;
 		Phase phase;
 
-		phase = this.phaseService.findOne(6487);
+		phase = this.phaseService.findOne(this.phaseService.findAll().iterator().next().getId());
 		res = this.phaseService.creator(phase.getId());
 		Assert.notNull(res);
 	}
