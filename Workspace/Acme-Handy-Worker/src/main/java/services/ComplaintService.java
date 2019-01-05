@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
-import domain.Application;
 import domain.Complaint;
 import domain.Customer;
-import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -84,8 +82,8 @@ public class ComplaintService {
 		Collection<Complaint> collCom = principal.getComplaints();
 		collCom.add(result);
 
-		customer.setComplaints(collCom);
-		this.customerService.save(customer);
+		principal.setComplaints(collCom);
+		this.customerService.save(principal);
 
 		return result;
 	}
