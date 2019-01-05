@@ -76,6 +76,7 @@ public class EndorserService {
 		return result;
 	}
 
+
 	public Collection<Endorsement> findEndorsementsByEndorser(final int endorserId) {
 		Collection<Endorsement> result;
 		Assert.isTrue(endorserId != 0);
@@ -94,7 +95,8 @@ public class EndorserService {
 		result = this.endorserRepository.findEndorsementsReceivedByEndorser(endorserId);
 
 		Assert.notNull(result);
-
+		
 		return result;
-	}
+
+}
 }
