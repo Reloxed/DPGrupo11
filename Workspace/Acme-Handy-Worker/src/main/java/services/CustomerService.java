@@ -20,7 +20,6 @@ import domain.Complaint;
 import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.MessageBox;
 import domain.SocialProfile;
 
 @Service
@@ -46,32 +45,31 @@ public class CustomerService {
 	// Simple CRUD Methods
 
 	public Customer create() {
-		Customer result = null;
-		Collection<MessageBox> messageBoxes;
+		Customer result = new Customer();
 		Actor principal;
+		
 		final Authority authority = new Authority();
 		final UserAccount userAccount = new UserAccount();
 
 		try {
 			principal = this.findByPrincipal();
 			Assert.isNull(principal);
+			
+			return null;
 
 		} catch (final IllegalArgumentException e) {
 
-			result = new Customer();
-
-			messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-
-			result.setMessageBoxes(messageBoxes);
+			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setComplaints(new ArrayList<Complaint>());
 			result.setFixUpTasks(new ArrayList<FixUpTask>());
 			result.setSocialProfiles(new ArrayList<SocialProfile>());
 			authority.setAuthority(Authority.CUSTOMER);
 			userAccount.addAuthority(authority);
 			result.setUserAccount(userAccount);
+			
+			return result;
 		}
-
-		return result;
+		
 	}
 
 	public Collection<Customer> findAll() {

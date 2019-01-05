@@ -21,7 +21,6 @@ import domain.Customer;
 import domain.Endorsement;
 import domain.Endorser;
 import domain.HandyWorker;
-import domain.MessageBox;
 import domain.SocialProfile;
 
 @Service
@@ -61,8 +60,7 @@ public class AdministratorService {
 
 	public Administrator create() {
 		Administrator principal;
-		Administrator result;
-		final Collection<MessageBox> messageBoxes;
+		Administrator result = new Administrator();
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
 
@@ -73,14 +71,10 @@ public class AdministratorService {
 		final UserAccount ua = new UserAccount();
 		ua.setAuthorities(authorities);
 
-		result = new Administrator();
-
-		messageBoxes = this.messageBoxService.createSystemMessageBoxes();
-
 		result.setIsSuspicious(false);
 		ua.setIsBanned(false);
 		result.setUserAccount(ua);
-		result.setMessageBoxes(messageBoxes);
+		result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 		result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 
 		return result;
@@ -89,17 +83,13 @@ public class AdministratorService {
 	public Administrator save(final Administrator admin) {
 		Administrator result, principal;
 		Assert.notNull(admin);
-		Md5PasswordEncoder encoder;
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
-
-		encoder = new Md5PasswordEncoder();
-
-		if (admin.getId() == 0)
-			admin.getUserAccount().setPassword(
-					encoder.encodePassword(
-							admin.getUserAccount().getPassword(), null));
+		if (admin.getId() == 0) {
+			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+			admin.getUserAccount().setPassword(passwordEncoder.encodePassword(admin.getUserAccount().getPassword(), null));
+		}
 
 		result = this.administratorRepository.saveAndFlush(admin);
 
