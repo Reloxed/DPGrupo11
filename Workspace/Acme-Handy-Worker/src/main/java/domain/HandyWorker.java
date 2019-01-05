@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,13 +15,12 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class HandyWorker extends Endorser {
 
-	private double					score;
-	private String					make;
-	private Collection<Tutorial>	tutorial;
-	private Collection<Application>	applications;
-	private Finder					finder;
-	private Curriculum				curriculum;
-
+	private double score;
+	private String make;
+	private Collection<Tutorial> tutorial;
+	private Collection<Application> applications;
+	private Finder finder;
+	private Curriculum curriculum;
 
 	@NotBlank
 	public String getMake() {
@@ -64,7 +61,6 @@ public class HandyWorker extends Endorser {
 		this.finder = finder;
 	}
 
-	@NotNull
 	@Valid
 	@OneToOne(optional = true)
 	public Curriculum getCurriculum() {

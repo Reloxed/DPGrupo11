@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,15 +24,15 @@ public class CategoryService {
 
 	// Managed repository ------------------------------
 	@Autowired
-	private CategoryRepository		categoryRepository;
+	private CategoryRepository categoryRepository;
 
 	// Supporting services -----------------------
-	
-	@Autowired
-	private AdministratorService	administratorService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private AdministratorService administratorService;
+
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 	// Constructors ------------------------------------
 
@@ -52,7 +51,7 @@ public class CategoryService {
 
 		result = new Category();
 		result.setChildCategories(new ArrayList<Category>());
-		result.setName(new HashMap<String,String>());
+		result.setName(new HashMap<String, String>());
 
 		return result;
 	}
@@ -69,22 +68,24 @@ public class CategoryService {
 
 		Assert.isTrue(category.getId() != root.getId());
 		Assert.notNull(admin);
-		
+
 		Assert.notNull(category.getName());
 		systemConf = systemConfigurationService.findMySystemConfiguration();
-		Set<String> idiomasSystemConf = new HashSet<String>(systemConf.getWelcomeMessage().keySet());	
+		Set<String> idiomasSystemConf = new HashSet<String>(systemConf
+				.getWelcomeMessage().keySet());
 		idiomasCategory = category.getName().keySet();
 		Assert.isTrue(idiomasSystemConf.containsAll(idiomasCategory));
-		
+
 		Assert.notNull(category.getParentCategory());
-		
+
 		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
+		final String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
 		Collection<String> categoryNames = category.getName().values();
 		List<String> names = new ArrayList<>();
-		for (String catName : categoryNames) { 
+		for (String catName : categoryNames) {
 			String[] n = catName.split("(¿¡,.-_/!?) ");
-			for(String name : n){
+			for (String name : n) {
 				names.add(name);
 			}
 		}
@@ -99,11 +100,12 @@ public class CategoryService {
 				break;
 			}
 		}
-		
+
 		result = this.categoryRepository.saveAndFlush(category);
 
 		parent = result.getParentCategory();
-		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
+		// Si aún no está guardado en la bbdd, actualizamos las categorías hija
+		// de su padre
 		if (category.getId() == 0)
 			this.newChild(parent, result);
 		else if (!category.getParentCategory().equals(parent)) {
@@ -124,7 +126,9 @@ public class CategoryService {
 		admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 		root = this.findRoot();
-		Assert.isTrue(category.getId() != root.getId()); // Comprobamos que no vamos a borrar la categoría raiz
+		Assert.isTrue(category.getId() != root.getId()); // Comprobamos que no
+															// vamos a borrar la
+															// categoría raiz
 
 		childCategories = category.getChildCategories();
 		aux = null;

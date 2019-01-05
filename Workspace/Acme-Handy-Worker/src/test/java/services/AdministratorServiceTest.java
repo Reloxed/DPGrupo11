@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -18,22 +17,20 @@ import utilities.AbstractTest;
 import domain.Administrator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
-})
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
+		"classpath:spring/config/packages.xml" })
 @Transactional
 public class AdministratorServiceTest extends AbstractTest {
 
 	// Service under test ---------------------------------------------
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService administratorService;
 
 	// Supporting services --------------------------------------------
 
 	@Autowired
-	private ActorService			actorService;
-
+	private ActorService actorService;
 
 	@Test
 	public void testCreate() {

@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -30,16 +29,15 @@ public class AdministratorService {
 	// Managed repository -------------------------
 
 	@Autowired
-	private AdministratorRepository		administratorRepository;
+	private AdministratorRepository administratorRepository;
 
 	// Supporting services -------------------------
 
 	@Autowired
-	private MessageBoxService			messageBoxService;
+	private MessageBoxService messageBoxService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
-
+	private SystemConfigurationService systemConfigurationService;
 
 	// Constructors ------------------------------------
 
@@ -87,7 +85,9 @@ public class AdministratorService {
 		encoder = new Md5PasswordEncoder();
 
 		if (admin.getId() == 0)
-			admin.getUserAccount().setPassword(encoder.encodePassword(admin.getUserAccount().getPassword(), null));
+			admin.getUserAccount().setPassword(
+					encoder.encodePassword(
+							admin.getUserAccount().getPassword(), null));
 
 		result = this.administratorRepository.saveAndFlush(admin);
 
@@ -131,7 +131,8 @@ public class AdministratorService {
 
 		Administrator result;
 
-		result = this.administratorRepository.findAdministratorByUserAccount(userAccountId);
+		result = this.administratorRepository
+				.findAdministratorByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
@@ -143,23 +144,21 @@ public class AdministratorService {
 		String[] positiveWords, negativeWords;
 		final Endorsement endorsements;
 
-		positiveWords = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords().split(",");
-		negativeWords = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords().split(",");
+		positiveWords = this.systemConfigurationService
+				.findMySystemConfiguration().getPositiveWords().split(",");
+		negativeWords = this.systemConfigurationService
+				.findMySystemConfiguration().getNegativeWords().split(",");
 
 		positiveValue = 0.;
 		negativeValue = 0.;
 
-		//endorsements = endorser.getEndorsements(?);
+		// endorsements = endorser.getEndorsements(?);
 		// TODO: Sería algo así pero hay que ver como sacar los endorsements
 		/*
-		 * for (final Endorsement e : endorsements) {
-		 * final String comments = e.getComments();
-		 * for (final String word : comments.split("(¿¡,.-_/!?) ")) {
-		 * if (positiveWords.contains(word))
-		 * positiveValue++;
-		 * if (negativeWords.contains(word))
-		 * negativeValue++;
-		 * }
+		 * for (final Endorsement e : endorsements) { final String comments =
+		 * e.getComments(); for (final String word :
+		 * comments.split("(¿¡,.-_/!?) ")) { if (positiveWords.contains(word))
+		 * positiveValue++; if (negativeWords.contains(word)) negativeValue++; }
 		 * }
 		 */
 

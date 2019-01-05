@@ -30,7 +30,7 @@
 	</jstl:when>
 
 	<jstl:when test="${not empty handyWorker}">
-		<jstl:set var="type" value="handyWorker" />
+		<jstl:set var="type" value="handyworker" />
 	</jstl:when>
 
 	<jstl:when test="${not empty customer}">
