@@ -1422,7 +1422,7 @@
 	<!-- CUSTOMERS -->
 	<bean id="userCustomer1" class="security.UserAccount">
 		<property name="username" value="customer1" />
-		<property name="password" value="340461e43497dfec753fff21808dbe80" />
+		<property name="password" value="668816e02d4658da91aa4526d8c61972" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1435,7 +1435,7 @@
 
 	<bean id="userCustomer2" class="security.UserAccount">
 		<property name="username" value="customer2" />
-		<property name="password" value="cffa89ee1a4ebe9a46e83ae8e1c8f113" />
+		<property name="password" value="668816e02d4658da91aa4526d8c61972" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
