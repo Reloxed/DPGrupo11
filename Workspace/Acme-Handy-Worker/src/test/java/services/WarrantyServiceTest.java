@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Actor;
 import domain.Warranty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,6 +26,9 @@ public class WarrantyServiceTest extends AbstractTest {
 
 	@Autowired
 	private WarrantyService	warrantyService;
+	
+	@Autowired
+	private ActorService	actorService;
 
 
 	// Tests ------------------------------------------------------------
@@ -108,6 +112,7 @@ public class WarrantyServiceTest extends AbstractTest {
 	@Test
 	public void testSave() {
 		super.authenticate("admin1");
+		Actor suspicious;
 		final Warranty w = this.warrantyService.create();
 		w.setTitle("Titulo sexo-nigeria");
 		w.setTerms("Terminos de uso bonitos");
@@ -118,6 +123,8 @@ public class WarrantyServiceTest extends AbstractTest {
 		final Warranty found = this.warrantyService.findOne(res.getId());
 
 		Assert.notNull(found);
+		suspicious = this.actorService.findByPrincipal();
+		Assert.isTrue(suspicious.getIsSuspicious());
 		super.unauthenticate();
 	}
 

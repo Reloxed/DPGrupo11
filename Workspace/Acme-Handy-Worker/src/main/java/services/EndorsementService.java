@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class EndorsementService {
 	private EndorserService			endorserService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -47,8 +49,6 @@ public class EndorsementService {
 		Assert.notNull(endorser);
 
 		result = new Endorsement();
-
-		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 
@@ -76,29 +76,27 @@ public class EndorsementService {
 		Endorsement result;
 		Endorser principal;
 
-		Assert.isTrue(endorsement.getSender() != null);
-		Assert.isTrue(endorsement.getRecipient() != null);
-		Assert.notNull(endorsement.getPublishedMoment());
-		Assert.notNull(endorsement.getComments());
-
 		principal = this.endorserService.findByPrincipal();
-		Assert.isTrue(endorsement.getSender().getId() == principal.getId());
 		Assert.notNull(principal);
-		Assert.isTrue(endorsement.getId() == 0);
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] comments = endorsement.getComments().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : comments)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
+		Assert.notNull(endorsement.getSender());
+		Assert.isTrue(endorsement.getSender().getId() == principal.getId());
+		Assert.notNull(endorsement.getRecipient());
+		Assert.notNull(endorsement.getComments());
+		
+		if (endorsement.getId()==0) {
+			endorsement.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		} else {
+			Assert.isTrue(endorsement.getRecipient().equals(this.findOne(endorsement.getId()).getRecipient()));
+			Assert.isTrue(endorsement.getPublishedMoment().equals(this.findOne(endorsement.getId()).getPublishedMoment()));
+		}
+		
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(endorsement.getComments());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 		
 		result = this.endorsementRepository.save(endorsement);
@@ -112,8 +110,11 @@ public class EndorsementService {
 
 		Assert.notNull(endorsement);
 		Assert.isTrue(endorsement.getId() != 0);
+		
 		principal = this.endorserService.findByPrincipal();
 		Assert.notNull(principal);
+		
+		Assert.isTrue(endorsement.getSender().equals(principal));
 
 		this.endorsementRepository.delete(endorsement);
 

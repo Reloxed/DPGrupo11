@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -29,7 +31,7 @@ public class MiscellaneousRecordService {
 	private HandyWorkerService				handyWorkerService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	//Constructor
@@ -68,35 +70,14 @@ public class MiscellaneousRecordService {
 		Assert.notNull(curriculumHW);
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
 		
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] title = miscellaneousRecord.getTitle().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : title)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (miscellaneousRecord.getComments() != null) {
-			if (!containsSpam) {
-				final String[] comments = miscellaneousRecord.getComments().split("(¿¡,.-_/!?)");
-				for (final String word : spamWords) {
-					for (final String titleWord : comments)
-						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-							containsSpam = true;
-							break;
-						}
-					if (containsSpam) {
-						principal.setIsSuspicious(true);
-						break;
-					}
-				}
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(miscellaneousRecord.getTitle());
+		if (miscellaneousRecord.getComments() != null)
+			atributosAComprobar.add(miscellaneousRecord.getComments());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 		
 		result = this.miscellaneousRecordRepository.saveAndFlush(miscellaneousRecord);
@@ -135,6 +116,7 @@ public class MiscellaneousRecordService {
 		Assert.notNull(curriculumHW);
 
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
+		Assert.isTrue(miscellaneousRecords.contains(miscellaneousRecord));
 
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 		miscellaneousRecords.remove(miscellaneousRecord);

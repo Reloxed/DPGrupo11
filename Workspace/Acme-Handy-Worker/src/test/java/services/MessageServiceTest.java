@@ -17,6 +17,8 @@ import repositories.MessageBoxRepository;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.Administrator;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Message;
 import domain.MessageBox;
 
@@ -73,8 +75,8 @@ public class MessageServiceTest extends AbstractTest {
 		super.authenticate("customer1");
 		Message message, saved;
 		Actor principal;
-		Actor recipient1;
-		Actor recipient2;
+		HandyWorker recipient1;
+		Customer recipient2;
 		Collection<Message> messages;
 		Collection<Actor> recipients;
 		MessageBox outBoxPrincipal;
@@ -88,11 +90,11 @@ public class MessageServiceTest extends AbstractTest {
 
 		recipients = new ArrayList<Actor>();
 		inBoxRecipients = new ArrayList<MessageBox>();
-		messages = new ArrayList<Message>();
-
-		recipient1 = this.handyWorkerRepository.findOne(2453);
-		Assert.notNull(recipient1);
-		recipient2 = this.customerRepository.findOne(2335);
+		messages = new ArrayList<Message>();		
+		
+		recipient1 = this.handyWorkerRepository.findAll().iterator().next();
+		//Assert.notNull(recipient1);
+		recipient2 = this.customerRepository.findAll().iterator().next();
 		Assert.notNull(recipient2);
 
 		recipients.add(recipient1);
@@ -243,7 +245,7 @@ public class MessageServiceTest extends AbstractTest {
 	@Test
 	public void testDelete() {
 		super.authenticate("sponsor2");
-		Message toDelete;
+		Collection<Message> collM;
 		Actor principal;
 		MessageBox inBoxPrincipal;
 		MessageBox trashBoxPrincipal;
@@ -256,15 +258,15 @@ public class MessageServiceTest extends AbstractTest {
 
 		trashBoxPrincipal = this.messageBoxService.findTrashBoxActor(principal);
 		Assert.notNull(trashBoxPrincipal);
-
-		toDelete = this.messageService.findOne(2406);
-		Assert.notNull(toDelete);
-
-		this.messageService.delete(toDelete);
-
-		Assert.isTrue(!(inBoxPrincipal.getMessages().contains(toDelete)));
-		Assert.isTrue(trashBoxPrincipal.getMessages().contains(toDelete));
-
+		
+		collM = this.messageService.findAll();
+		for(Message message : collM){
+			if(message.getRecipients().contains(principal)){
+				this.messageService.delete(message);
+				Assert.isTrue(!(inBoxPrincipal.getMessages().contains(message)));
+				Assert.isTrue(trashBoxPrincipal.getMessages().contains(message));
+			}
+		}		
 		super.unauthenticate();
 	}
 

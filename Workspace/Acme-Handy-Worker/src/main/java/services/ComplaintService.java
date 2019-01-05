@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
+import domain.Application;
 import domain.Complaint;
 import domain.Customer;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -67,10 +70,10 @@ public class ComplaintService {
 		Assert.notNull(customer);
 		Assert.notNull(complaint.getFixUpTask());
 		Assert.notNull(complaint.getDescription());
-		
+
 		boolean containsSpam = false;
 		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] description = complaint.getDescription().split("(¿¡,.-_/!?) ");
+		final String[] description = complaint.getDescription().split("(ï¿½ï¿½,.-_/!?) ");
 		for (final String word : spamWords) {
 			for (final String titleWord : description)
 				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
@@ -88,7 +91,7 @@ public class ComplaintService {
 		collCom.add(result);
 		customer.setComplaints(collCom);
 		this.customerService.save(customer);
-		
+
 
 		return result;
 	}
@@ -112,4 +115,10 @@ public class ComplaintService {
 	}
 
 	// Other business methods --------------------------------
+
+	public Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId) {
+		final Collection<Complaint> collCom = this.complaintRepository.findComplaintsByHandyWorkerId(handyWorkerId);
+		return collCom;
+	}
+
 }

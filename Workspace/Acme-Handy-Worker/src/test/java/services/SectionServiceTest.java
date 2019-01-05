@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Customer;
 import domain.HandyWorker;
 import domain.Section;
 import domain.Tutorial;
@@ -31,43 +30,24 @@ public class SectionServiceTest extends AbstractTest {
 	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private CustomerService customerService;
-
-	@Autowired
 	private TutorialService tutorialService;
 
 	// Tests ------------------------------------------------------------------
 
 	@Test
-	public void testFindAll0() {
-		Collection<Section> res;
-		HandyWorker principal;
-
-		super.authenticate("handyWorker2");
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		res = this.sectionService.findAll();
-		Assert.notNull(res);
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testFindOne1() {
+	public void testFindOne() {
 		Section res;
-		Customer principal;
+		Collection<Section> collSec;
 
-		super.authenticate("customer2");
-		principal = this.customerService.findByPrincipal();
-		Assert.notNull(principal);
+		collSec = this.sectionService.findAll();
 
-		res = this.sectionService.findOne(2337);
+		res = this.sectionService.findOne(collSec.iterator().next().getId());
 		Assert.notNull(res);
-		Assert.isTrue(res.getId() == 2337);
+
 	}
 
 	@Test
-	public void testFindAll1() {
+	public void testFindAll() {
 		Collection<Section> res;
 
 		res = this.sectionService.findAll();

@@ -31,6 +31,15 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	@Test
+	public void testFindOne() {
+		Collection<PersonalRecord> collPR;
+		PersonalRecord personalR;
+		collPR = this.personalRecordService.findAll();
+		personalR = this.personalRecordService.findOne(collPR.iterator().next().getId());
+		Assert.notNull(personalR);
+	}
+	
+	@Test
 	public void testFindAll() {
 		Collection<PersonalRecord> res;
 		res = this.personalRecordService.findAll();
@@ -60,7 +69,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		res = this.personalRecordService.findOne(saved.getId());
 		Assert.notNull(res);
 	}
-
+	
 	@Test
 	public void testDelete() {
 		PersonalRecord toDelete = new PersonalRecord();

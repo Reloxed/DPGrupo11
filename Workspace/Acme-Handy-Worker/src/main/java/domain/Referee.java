@@ -14,7 +14,6 @@ public class Referee extends Actor {
 
 	private Collection<Complaint>	complaints;
 
-
 	@OneToMany
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;

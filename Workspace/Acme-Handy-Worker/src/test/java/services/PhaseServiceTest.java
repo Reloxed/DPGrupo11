@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -16,30 +17,41 @@ import domain.HandyWorker;
 import domain.Phase;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+})
 @Transactional
 public class PhaseServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
 	@Autowired
-	private PhaseService phaseService;
+	private PhaseService		phaseService;
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService	handyWorkerService;
 
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService	fixUpTaskService;
+
 
 	// Tests ------------------------------------------------------------------
 
+	@Test
+	public void testFindOne() {
+		Collection<Phase> collP;
+		Phase phase;
+		
+		collP = this.phaseService.findAll();
+		phase = this.phaseService.findOne(collP.iterator().next().getId());
+		Assert.notNull(phase);
+	}
+	
 	@Test
 	public void testFindAll() {
 		Collection<Phase> res;
 		res = this.phaseService.findAll();
 		Assert.notNull(res);
-		Assert.isTrue(res.size() == 3);
 	}
 
 	@Test
@@ -47,6 +59,41 @@ public class PhaseServiceTest extends AbstractTest {
 		Phase res;
 		Phase saved;
 		HandyWorker principal;
+
+		super.authenticate("handyWorker2");
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		res = this.phaseService.create();
+		res.setStartMoment(new Date(9994865400000L));
+		res.setEndMoment(new Date(9994865498468L));
+		res.setTitle("Title Nigeria");
+		res.setDescription("Description");
+		res.setFixUpTask(this.fixUpTaskService.findAll().iterator().next());
+
+		saved = this.phaseService.save(res);
+		Assert.notNull(saved);
+
+		res = this.phaseService.findOne(saved.getId());
+		Assert.notNull(res);
+	}
+
+	@Test
+	public void testFindCreator() {
+		HandyWorker res;
+		Phase phase;
+
+		phase = this.phaseService.findOne(6487);
+		res = this.phaseService.creator(phase.getId());
+		Assert.notNull(res);
+	}
+
+	public void testDelete() {
+		Phase res, saved, toDelete;
+		HandyWorker principal;
+		Collection<Phase> phases;
+
+		// Create phase
 
 		super.authenticate("handyWorker2");
 		principal = this.handyWorkerService.findByPrincipal();
@@ -64,29 +111,21 @@ public class PhaseServiceTest extends AbstractTest {
 
 		res = this.phaseService.findOne(saved.getId());
 		Assert.notNull(res);
-	}
 
-	@Test
-
-	public void testFindCreator() {
-		HandyWorker res;
-		Phase phase;
-
-		phase = this.phaseService.findOne(6487);
-		res = this.phaseService.creator(phase.getId());
-		Assert.notNull(res);
-	}
-
-	public void testDelete() {
-		Phase toDelete;
-		Collection<Phase> phases;
-
-		super.authenticate("handyWorker2");
+		// Delete phase
 
 		phases = this.phaseService.findAll();
-		toDelete = this.phaseService.findAll().iterator().next();
+<<<<<<< HEAD
+		toDelete = res;
 		this.phaseService.delete(toDelete);
 		phases = this.phaseService.findAll();
+		System.out.println(phases.size());
 		Assert.isTrue(phases.size() == 2);
+=======
+		Assert.notEmpty(phases);
+		toDelete = this.phaseService.findAll().iterator().next();
+		this.phaseService.delete(toDelete);
+
+>>>>>>> master
 	}
 }

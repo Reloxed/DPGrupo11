@@ -77,7 +77,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	public void testFindOneFail() {
 		SystemConfiguration res;
 		super.authenticate("admin1");
-		res = this.systemConfigurationService.findOne(23);
+		res = this.systemConfigurationService.findOne(-2);
 		Assert.notNull(res);
 		super.unauthenticate();
 	}

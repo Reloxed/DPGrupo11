@@ -19,6 +19,7 @@ import utilities.AbstractTest;
 import domain.Application;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Warranty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -75,6 +76,7 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		FixUpTask saved;
 		Calendar startMoment;
 		Calendar endMoment;
+		Warranty war;
 		super.authenticate("customer2");
 
 		principal = this.customerService.findByPrincipal();
@@ -94,7 +96,9 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		result.setStartMoment(startMoment.getTime());
 		result.setEndMoment(endMoment.getTime());
 		result.setCategory(this.categoryService.findAll().iterator().next());
-		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		war = this.warrantyService.findAll().iterator().next();
+		war.setIsFinal(true);
+		result.setWarranty(war);
 		result.setApplications(this.applicationService.findAll());
 		saved = this.fixUpTaskService.save(result);
 		Assert.notNull(saved);
@@ -102,20 +106,70 @@ public class FixUpTaskServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotSave1() {
+		FixUpTask result, saved;
+		Warranty war;
+		
+		// Warranty not final
+		
+		super.authenticate("customer1");
+		result = this.fixUpTaskService.findAll().iterator().next();
+		war = result.getWarranty();
+		war.setIsFinal(false);
+		result.setWarranty(war);
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+		super.unauthenticate();
+	}
 
-	@Test
-	public void Delete1() {
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotDelete1() {
 		Customer principal;
 		FixUpTask result;
 
+		//Customer2 trying to delete a fixUpTask of Customer1
 		super.authenticate("customer2");
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		result = this.fixUpTaskService.findAll().iterator().next();
 		result.setApplications(new ArrayList<Application>());
-		if (result.getApplications().isEmpty())
-			this.fixUpTaskService.delete(result);
+		this.fixUpTaskService.delete(result);
+		super.unauthenticate();
+
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNotDelete2() {
+		Customer principal;
+		FixUpTask result;
+
+		//Trying to delete a fixUpTask with applications
+		super.authenticate("customer2");
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.findAll().iterator().next();
+		this.fixUpTaskService.delete(result);
+
+		super.unauthenticate();
+
+	}
+	
+	@Test
+	public void testDelete1() {
+		Customer principal;
+		FixUpTask result;
+
+		super.authenticate("customer1");
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.findAll().iterator().next();
+		result.setApplications(new ArrayList<Application>());
+		this.fixUpTaskService.delete(result);
 
 		super.unauthenticate();
 

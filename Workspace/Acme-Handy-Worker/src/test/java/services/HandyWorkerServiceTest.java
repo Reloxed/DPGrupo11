@@ -1,6 +1,5 @@
 package services;
 
-
 import java.util.Collection;
 
 import org.junit.Test;
@@ -11,10 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-
-import domain.HandyWorker;
-
 import utilities.AbstractTest;
+import domain.HandyWorker;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -27,16 +24,19 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
-
 	@Autowired
 	private CurriculumService curriculumService;
 
+
 	// Tests ---------------------------------------
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void TestFindOne() {
 		HandyWorker result;
-		result = this.handyWorkerService.findOne(323);
+		Collection<HandyWorker> collHW;
+		collHW = this.handyWorkerService.findAll();
+		result = this.handyWorkerService.findOne(collHW.iterator().next()
+				.getId());
 		Assert.notNull(result);
 
 	}
@@ -51,9 +51,9 @@ public class HandyWorkerServiceTest extends AbstractTest {
 
 	// id incorrecta
 	@Test(expected = IllegalArgumentException.class)
-	public void testFindOne() {
+	public void testNotFindOne() {
 		HandyWorker res;
-		res = this.handyWorkerService.findOne(23);
+		res = this.handyWorkerService.findOne(-2);
 		Assert.notNull(res);
 	}
 
@@ -90,9 +90,7 @@ public class HandyWorkerServiceTest extends AbstractTest {
 
 		// super.unauthenticate();
 	}
-	
-	
-	
+
 	@Test
 	public void testCreateAndSave2() {
 		HandyWorker result;

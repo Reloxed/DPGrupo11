@@ -49,7 +49,6 @@ public class FinderService {
 		result = new Finder();
 
 		result.setFixuptask(new ArrayList<FixUpTask>());
-		result.setSearchMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 
@@ -73,33 +72,54 @@ public class FinderService {
 
 	}
 
-	public Finder save(final Finder finderId) {
+	public Finder save(final Finder finder) {
 		Finder result;
 		HandyWorker principal;
 		Date currentMoment;
 
-		Assert.notNull(finderId);
-		Assert.isTrue(finderId.getId() == 0);
+		Assert.notNull(finder);
+		Assert.isTrue(finder.getId() == 0);
 
 		principal = this.handyWorkerService.findByPrincipal();
-
 		Assert.notNull(principal);
 
 		currentMoment = new Date(System.currentTimeMillis() - 1);
 
-		finderId.setSearchMoment(currentMoment);
+		finder.setSearchMoment(currentMoment);
 
-		if (finderId.getStartMoment() != null && finderId.getEndMoment() != null)
-			Assert.isTrue(finderId.getStartMoment().before(finderId.getEndMoment()));
-		else if (finderId.getPriceHigh() != null && finderId.getPriceLow() != null)
-			Assert.isTrue(finderId.getPriceHigh() >= finderId.getPriceLow());
+		if (finder.getStartMoment() != null && finder.getEndMoment() != null)
+			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
+		else if (finder.getPriceHigh() != null && finder.getPriceLow() != null)
+			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
+		
+		if(principal.getFinder() != null) {
+			this.delete(principal.getFinder());
+		}
 
-		result = this.finderRepository.save(finderId);
+		result = this.finderRepository.save(finder);
 		Assert.notNull(result);
 
 		return result;
 
 	}
+	
+	public void delete(final Finder finder) {
+		HandyWorker principal;
+
+		Assert.notNull(finder);
+		Assert.isTrue(finder.getId() != 0);
+
+		principal = this.handyWorkerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		Assert.isTrue(principal.getFinder().equals(finder));
+
+		this.finderRepository.delete(finder);
+
+		principal.setFinder(null);
+
+	}
+	
 	//expiración de la busqueda cuanto termina tiempo caché
 	public void deleteExpireFinders(final int timeInCache) {
 		Finder finder;
