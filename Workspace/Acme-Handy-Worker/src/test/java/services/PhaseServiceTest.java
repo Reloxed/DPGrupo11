@@ -115,17 +115,8 @@ public class PhaseServiceTest extends AbstractTest {
 		// Delete phase
 
 		phases = this.phaseService.findAll();
-<<<<<<< HEAD
-		toDelete = res;
-		this.phaseService.delete(toDelete);
-		phases = this.phaseService.findAll();
-		System.out.println(phases.size());
-		Assert.isTrue(phases.size() == 2);
-=======
 		Assert.notEmpty(phases);
 		toDelete = this.phaseService.findAll().iterator().next();
 		this.phaseService.delete(toDelete);
-
->>>>>>> master
 	}
 }
