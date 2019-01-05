@@ -117,8 +117,6 @@ public class ApplicationService {
 			
 		} else if (actor instanceof Customer) {
 			
-			
-			
 			customer = this.customerService.findByPrincipal();
 			Assert.notNull(customer);
 			
