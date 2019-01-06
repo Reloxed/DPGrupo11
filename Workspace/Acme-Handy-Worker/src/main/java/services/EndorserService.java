@@ -60,7 +60,7 @@ public class EndorserService {
 
 		res = this.findEndorserByUserAccount(userAccount.getId());
 		Assert.notNull(res);
-
+		
 		return res;
 	}
 

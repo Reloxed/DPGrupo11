@@ -21,26 +21,14 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-
+<table class="displayStyle">
 	<tr>
-		<td><strong> <spring:message code="fixUpTask.customer"
-					var="showCustomer" /> :
-		</strong></td>
-		<td><jstl:out value="${fixUpTask.customer.userAccount.username}" />
-			&nbsp; (<a href="actor/display.do?actorId=${fixUpTask.customer.id}">
-				${showCustomer} </a>)</td>
+		<td>
+					<a href="actor/display.do?profileId=${row.id}"> <spring:message
+					code="profile.customer" />
+			</a>
+		</td>
 	</tr>
-
-	<spring:message code="trip.manager.display" var="showManager" />
-
-	<tr>
-		<td><strong> <spring:message
-					code="fixUpTask.description" /> :
-		</strong></td>
-		<td><jstl:out value="${fixUpTask.description}">
-			</jstl:out></td>
-	</tr>
-
 	<tr>
 		<td><strong> <spring:message
 					code="fixUpTask.description" /> :
@@ -94,11 +82,24 @@
 
 
 	<tr>
-		<td><strong> <spring:message code="fixUpTask.category" />
+	
+	<td><strong> <spring:message code="fixUpTask.category" />
 				:
 		</strong></td>
-		<td><jstl:out value="${fixUpTask.category.name}">
-			</jstl:out></td>
+		<jstl:if test="${language==español}">
+		
+	   <td><jstl:forEach items="${fixUpTask.category.name}" var="entry"  end="0">
+      <jstl:out  value="${entry.value}"/></jstl:forEach> </td>
+     
+		</jstl:if>
+			<jstl:if test="${language==english}">
+		
+	   <td><jstl:forEach items="${fixUpTask.category.name}" var="entry" begin="1" end="1">
+      <jstl:out  value="${entry.value}"/></jstl:forEach> </td>
+     
+		</jstl:if>		
+
+		
 	</tr>
 
 	<tr>
@@ -118,6 +119,6 @@
 			</jstl:out></td>
 	</tr>
 
-
+	</table>
 
 </security:authorize>
