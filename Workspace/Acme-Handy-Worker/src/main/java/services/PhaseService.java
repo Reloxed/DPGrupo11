@@ -34,7 +34,6 @@ public class PhaseService {
 	@Autowired
 	private UtilityService	utilityService;
 
-
 	// Constructors ------------------------------------
 
 	public PhaseService() {
@@ -102,7 +101,7 @@ public class PhaseService {
 			}
 		Assert.isTrue(canBeSaved);
 		Assert.isTrue(phase.getStartMoment().after(fixUpTask.getStartMoment()));
-		Assert.isTrue(phase.getEndMoment().after(fixUpTask.getEndMoment()));
+		Assert.isTrue(phase.getEndMoment().before(fixUpTask.getEndMoment()));
 		Assert.isTrue(phase.getEndMoment().after(phase.getStartMoment()));
 		return this.phaseRepository.saveAndFlush(phase);
 	}

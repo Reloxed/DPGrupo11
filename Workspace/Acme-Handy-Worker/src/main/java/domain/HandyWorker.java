@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -16,13 +15,12 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class HandyWorker extends Endorser {
 
-	private double					score;
-	private String					make;
-	private Collection<Tutorial>	tutorial;
-	private Collection<Application>	applications;
-	private Finder					finder;
-	private Curriculum				curriculum;
-
+	private double score;
+	private String make;
+	private Collection<Tutorial> tutorial;
+	private Collection<Application> applications;
+	private Finder finder;
+	private Curriculum curriculum;
 
 	@NotBlank
 	public String getMake() {

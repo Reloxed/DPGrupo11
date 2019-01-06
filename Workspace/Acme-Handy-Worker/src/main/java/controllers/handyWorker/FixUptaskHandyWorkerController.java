@@ -1,6 +1,7 @@
 package controllers.handyWorker;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CustomerService;
 import services.FixUpTaskService;
 
 import controllers.AbstractController;
 
+import domain.Customer;
 import domain.FixUpTask;
 
 @Controller
@@ -24,6 +27,8 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
 	
+	@Autowired
+	private CustomerService customerService;
 
 
 	//Constructor
@@ -34,14 +39,21 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 	
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int taskId){
+	public ModelAndView display(@RequestParam final int taskId,final Locale locale){
 		final ModelAndView result;	
 		FixUpTask fixUpTask;
-		
+		String language;
+		String español;
+		String english;
+		español="es";
+		english="en";
 		fixUpTask=this.fixUpTaskService.findOne(taskId);
-		
+		language=locale.getLanguage();
 		result=new ModelAndView("fixUpTask/display");
 		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("language",language);
+		result.addObject("español",español);
+		result.addObject("english",english);
 		result.addObject("requestUri", "fixUpTask/handyWorker/display.do");
 		
 		return result;
@@ -54,10 +66,13 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 	public ModelAndView list(){
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
+		//Customer principal;
+		//principal=this.customerService.findByPrincipal();
 		fixUpTasks=this.fixUpTaskService.findAll();
 		
 		result=new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks",fixUpTasks);
+		//result.addObject("principal",principal);
 		result.addObject("requestUri","fixUpTask/handyWorker/list.do");
 		return result;
 		

@@ -1,4 +1,3 @@
-
 package converters;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,21 +6,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import repositories.AdministratorRepository;
-import domain.Administrator;
+import repositories.ApplicationRepository;
+import domain.Application;
 
 @Component
 @Transactional
-public class StringToApplicationConverter implements Converter<String, Administrator> {
+public class StringToApplicationConverter implements
+		Converter<String, Application> {
 
 	@Autowired
-	AdministratorRepository	applicationRepository;
-
+	ApplicationRepository applicationRepository;
 
 	@Override
-	public Administrator convert(final String text) {
-		Administrator result;
+	public Application convert(final String text) {
+		Application result;
 		int id;
+
 		try {
 			if (StringUtils.isEmpty(text))
 				result = null;
@@ -32,6 +32,8 @@ public class StringToApplicationConverter implements Converter<String, Administr
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
+
 		return result;
 	}
+
 }

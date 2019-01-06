@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ public class AdministratorService {
 	// Managed repository -------------------------
 
 	@Autowired
+
 	private AdministratorRepository	administratorRepository;
 
 	// Supporting services -------------------------
@@ -49,7 +49,6 @@ public class AdministratorService {
 
 	@Autowired
 	private UtilityService			utilityService;
-
 
 	// Constructors ------------------------------------
 
@@ -87,12 +86,11 @@ public class AdministratorService {
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
-
 		if (admin.getId() == 0) {
 			Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 			admin.getUserAccount().setPassword(passwordEncoder.encodePassword(admin.getUserAccount().getPassword(), null));
 		}
-		
+
 		result = this.administratorRepository.saveAndFlush(admin);
 
 		return result;
@@ -135,7 +133,8 @@ public class AdministratorService {
 
 		Administrator result;
 
-		result = this.administratorRepository.findAdministratorByUserAccount(userAccountId);
+		result = this.administratorRepository
+				.findAdministratorByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
@@ -143,6 +142,7 @@ public class AdministratorService {
 	}
 
 	public Double calculateScore(final Endorser endorser) {
+
 		Double res, positiveValue, negativeValue;
 		final Collection<Endorsement> endorsements;
 
@@ -166,6 +166,7 @@ public class AdministratorService {
 			res = -1.;
 		else
 			res = (positiveValue - negativeValue) / (positiveValue + negativeValue);
+
 		return res;
 	}
 

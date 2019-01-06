@@ -64,13 +64,31 @@
 
 		<display:column>
 			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
-				src="webapp/images/confirm.png"
 				style="width: center; height: center" /> <spring:message
 					code="applications.create" />
-			</a>
+			</a> 
 		</display:column>
+		
+			<display:column>
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+					code="fixUpTask.display" />
+			</a>
+	</display:column>
 
 	</display:table>
+
+</security:authorize> 
+
+<security:authorize access="hasRole('CUSTOMER')"> 
+
+<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
+		pagesize="10" class="displaytag">
+		
+		
+		
+		
+		</display:table>
+
 
 </security:authorize> 
 

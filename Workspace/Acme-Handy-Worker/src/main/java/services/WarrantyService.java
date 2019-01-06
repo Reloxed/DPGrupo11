@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -22,12 +21,12 @@ public class WarrantyService {
 	// Managed repository
 
 	@Autowired
-	private WarrantyRepository			warrantyRepository;
+	private WarrantyRepository warrantyRepository;
 
 	// Supporting services
 
 	@Autowired
-	private AdministratorService		administratorService;
+	private AdministratorService administratorService;
 
 	@Autowired
 	private UtilityService	utilityService;
@@ -93,10 +92,11 @@ public class WarrantyService {
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
 		} else {
-			Assert.isTrue(this.warrantyRepository.findOne(w.getId()).getIsFinal()== false);
+			Assert.isTrue(this.warrantyRepository.findOne(w.getId())
+					.getIsFinal() == false);
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
-		}		
+		}
 
 		return result;
 	}
@@ -114,7 +114,7 @@ public class WarrantyService {
 		this.warrantyRepository.delete(w);
 	}
 
-	//Other business methods
+	// Other business methods
 
 	public Collection<Warranty> findFinalWarranties() {
 		final Collection<Warranty> result = new ArrayList<>();

@@ -36,9 +36,9 @@
 						code="master.page.administrator.creations" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="register/edit.do"><spring:message
+					<li><a href="administrator/administrator/create.do"><spring:message
 								code="master.page.administrator.create.admin" /></a></li>
-					<li><a href="register/edit.do"><spring:message
+					<li><a href="referee/referee/create.do"><spring:message
 								code="master.page.administrator.create.referee" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -187,11 +187,11 @@
 						code="master.page.signup" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="register/edit.do"><spring:message
+					<li><a href="customer/customer/create.do"><spring:message
 								code="master.page.register.customer" /></a></li>
-					<li><a href="register/edit.do"><spring:message
+					<li><a href="handyworker/handyworker/create.do"><spring:message
 								code="master.page.register.handy.worker" /></a></li>
-					<li><a href="register/edit.do"><spring:message
+					<li><a href="sponsor/sponsor/create.do"><spring:message
 								code="master.page.register.sponsor" /></a></li>
 				</ul></li>
 
