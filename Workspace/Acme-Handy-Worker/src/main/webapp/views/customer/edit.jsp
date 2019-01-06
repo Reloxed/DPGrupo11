@@ -31,13 +31,40 @@
 	<form:hidden path="version" />
 
 	<form:hidden path="socialProfiles" />
-	<form:hidden path="userAccount" />
 	<form:hidden path="messageBoxes" />
 	<form:hidden path="isSuspicious" />
 
 	<form:hidden path="score" />
 	<form:hidden path="fixUpTasks" />
 	<form:hidden path="complaints" />
+
+	<jstl:choose>
+		<jstl:when test="${customer.id == 0}">
+
+			<form:hidden path="userAccount.isBanned" value="false" />
+			<form:hidden path="userAccount.authorities[0].authority" />
+
+			<form:label path="userAccount.username">
+				<spring:message code="actor.userAccount.username" />:
+			</form:label>
+			<form:input path="userAccount.username" size="25" />
+			<form:errors cssClass="error" path="userAccount.username" />
+			<br />
+
+			<form:label path="userAccount.password">
+				<spring:message code="actor.userAccount.password" />:
+			</form:label>
+			<form:password path="userAccount.password" />
+			<form:errors cssClass="error" path="userAccount.password" />
+			<br />
+
+		</jstl:when>
+		<jstl:otherwise>
+
+			<form:hidden path="userAccount" />
+
+		</jstl:otherwise>
+	</jstl:choose>
 
 	<form:label path="surname">
 		<spring:message code="actor.surname" />:
@@ -90,4 +117,7 @@
 
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="actor.save"/>' />
+	<input type="button" name="cancel"
+		value="<spring:message code="actor.cancel" />"
+		onclick="javascript: relativeRedir('/welcome/index.do');" />
 </form:form>

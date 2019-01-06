@@ -27,11 +27,11 @@ import domain.Referee;
 
 @Controller
 @RequestMapping("/referee/referee")
-public class RefereeAdministratorController extends AbstractController {
+public class RefereeAdministrationController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public RefereeAdministratorController() {
+	public RefereeAdministrationController() {
 		super();
 	}
 
@@ -97,7 +97,7 @@ public class RefereeAdministratorController extends AbstractController {
 			try {
 				Referee saved;
 				saved = this.refereeService.save(referee);
-				res = new ModelAndView("redirect:display.do?actorID="
+				res = new ModelAndView("redirect:/actor/display.do?actorID="
 						+ saved.getId());
 
 			} catch (Throwable oops) {

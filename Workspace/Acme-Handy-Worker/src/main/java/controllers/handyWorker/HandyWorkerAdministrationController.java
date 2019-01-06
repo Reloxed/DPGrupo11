@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CurriculumService;
 import services.HandyWorkerService;
 import controllers.AbstractController;
 import domain.Curriculum;
@@ -42,10 +41,7 @@ public class HandyWorkerAdministrationController extends AbstractController {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
-	@Autowired
-	private CurriculumService curriculumService;
-
-	// Creating an admin
+	// Creating an handyworker
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -106,24 +102,10 @@ public class HandyWorkerAdministrationController extends AbstractController {
 		} else {
 			try {
 				HandyWorker saved;
-				if (handyWorker.getId() == 0
-						|| handyWorker.getCurriculum() == null) {
-					saved = this.handyWorkerService.save(handyWorker);
-					res = new ModelAndView(
-							"redirect:/actor/display.do?actorID="
-									+ saved.getId());
-				} else {
-					Curriculum curriculum;
-					curriculum = this.curriculumService.findOne(handyWorker
-							.getCurriculum().getId());
-					saved = this.handyWorkerService
-							.findOne(handyWorker.getId());
-					this.handyWorkerService.save(saved);
-					saved.setCurriculum(curriculum);
-					res = new ModelAndView(
-							"redirect:/actor/display.do?actorID="
-									+ saved.getId());
-				}
+
+				saved = this.handyWorkerService.save(handyWorker);
+				res = new ModelAndView("redirect:/actor/display.do?actorID="
+						+ saved.getId());
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(handyWorker,

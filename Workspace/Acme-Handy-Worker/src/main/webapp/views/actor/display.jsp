@@ -76,7 +76,7 @@
 	<jstl:out value="${actor.address}"></jstl:out>
 </h5>
 
-<jstl:if test="${type == 'customer' || type == 'handyWorker'}">
+<jstl:if test="${type == 'customer' || type == 'handyworker'}">
 	<h5>
 		<strong><spring:message code="actor.score" /></strong>
 	</h5>
@@ -86,7 +86,7 @@
 	</h5>
 </jstl:if>
 
-<jstl:if test="${type == 'handyWorker'}">
+<jstl:if test="${type == 'handyworker'}">
 	<h5>
 		<strong><spring:message code="handyWorker.make" />:</strong>
 		<jstl:out value="${handyWorker.make}"></jstl:out>

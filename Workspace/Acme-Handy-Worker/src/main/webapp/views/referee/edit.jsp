@@ -25,11 +25,38 @@
 	<form:hidden path="version" />
 
 	<form:hidden path="socialProfiles" />
-	<form:hidden path="userAccount" />
 	<form:hidden path="messageBoxes" />
 	<form:hidden path="isSuspicious" />
 
 	<form:hidden path="complaints" />
+
+	<jstl:choose>
+		<jstl:when test="${referee.id == 0}">
+
+			<form:hidden path="userAccount.isBanned" value="false" />
+			<form:hidden path="userAccount.authorities[0].authority" />
+
+			<form:label path="userAccount.username">
+				<spring:message code="actor.userAccount.username" />:
+			</form:label>
+			<form:input path="userAccount.username" />
+			<form:errors cssClass="error" path="userAccount.username" />
+			<br />
+
+			<form:label path="userAccount.password">
+				<spring:message code="actor.userAccount.password" />:
+			</form:label>
+			<form:password path="userAccount.password" />
+			<form:errors cssClass="error" path="userAccount.password" />
+			<br />
+
+		</jstl:when>
+		<jstl:otherwise>
+
+			<form:hidden path="userAccount" />
+
+		</jstl:otherwise>
+	</jstl:choose>
 
 	<form:label path="surname">
 		<spring:message code="actor.surname" />:
@@ -45,11 +72,11 @@
 	<form:errors cssClass="error" path="name" />
 	<br>
 
-	<form:label path="middlename">
+	<form:label path="middleName">
 		<spring:message code="actor.middlename" />:
 		</form:label>
-	<form:input path="middlename" value="${referee.middlename}" />
-	<form:errors cssClass="error" path="middlename" />
+	<form:input path="middleName" value="${referee.middleName}" />
+	<form:errors cssClass="error" path="middleName" />
 	<br>
 
 	<form:label path="email">
@@ -82,5 +109,8 @@
 
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="actor.save"/>' />
+	<input type="button" name="cancel"
+		value="<spring:message code="actor.cancel" />"
+		onclick="javascript: relativeRedir('/actor/display.do?${administrator.id}');" />
 
 </form:form>

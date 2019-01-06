@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -23,16 +22,15 @@ public class MessageBoxService {
 	// Managed repository ----------------------
 
 	@Autowired
-	private MessageBoxRepository	messageBoxRepository;
+	private MessageBoxRepository messageBoxRepository;
 
-	//Supporting services -------------------
+	// Supporting services -------------------
 
 	@Autowired
-	private ActorService			actorService;
-	
-	@Autowired
-	private UtilityService	utilityService;
+	private ActorService actorService;
 
+	@Autowired
+	private UtilityService utilityService;
 
 	// Constructors ------------------------------------
 
@@ -40,7 +38,7 @@ public class MessageBoxService {
 		super();
 	}
 
-	//CRUD Methods --------------------------------
+	// CRUD Methods --------------------------------
 
 	public MessageBox create() {
 		MessageBox result;
@@ -74,7 +72,7 @@ public class MessageBoxService {
 
 		result = this.messageBoxRepository.findAll();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
 
@@ -86,35 +84,43 @@ public class MessageBoxService {
 		Assert.notNull(messageBox);
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		if (messageBox.getIsPredefined() == true) {
-			if(!(messageBox.getId()== 0 && (messageBox.getName().equals("In Box") || messageBox.getName().equals("Out box") || 
-					messageBox.getName().equals("Spam box") || messageBox.getName().equals("Trash box")))) {
+			if (!(messageBox.getId() == 0 && (messageBox.getName().equals(
+					"In Box")
+					|| messageBox.getName().equals("Out box")
+					|| messageBox.getName().equals("Spam box") || messageBox
+					.getName().equals("Trash box")))) {
 			} else {
-				Assert.isTrue(this.findOne(messageBox.getId()).getIsPredefined() == true);
-				Assert.isTrue(this.findOne(messageBox.getId()).getName() == messageBox.getName());
-			}			
+				Assert.isTrue(this.findOne(messageBox.getId())
+						.getIsPredefined() == true);
+				Assert.isTrue(this.findOne(messageBox.getId()).getName() == messageBox
+						.getName());
+			}
 		} else {
-			if(messageBox.getId()== 0) {
-				for (MessageBox messageB : principal.getMessageBoxes()){
-					Assert.isTrue(!messageB.getName().equals(messageBox.getName()));
+			if (messageBox.getId() == 0) {
+				for (MessageBox messageB : principal.getMessageBoxes()) {
+					Assert.isTrue(!messageB.getName().equals(
+							messageBox.getName()));
 				}
 			}
-			if (messageBox.getId()!= 0){
+			if (messageBox.getId() != 0) {
 				boxes = principal.getMessageBoxes();
 				boxes.remove(messageBox);
-				for (MessageBox messageB : principal.getMessageBoxes()){
-					Assert.isTrue(!messageB.getName().equals(messageBox.getName()));
+				for (MessageBox messageB : principal.getMessageBoxes()) {
+					Assert.isTrue(!messageB.getName().equals(
+							messageBox.getName()));
 				}
-				Assert.isTrue(this.findOne(messageBox.getId()).getIsPredefined() == false);
+				Assert.isTrue(this.findOne(messageBox.getId())
+						.getIsPredefined() == false);
 			}
 		}
-		
+
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(messageBox.getName());
-		
+
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+		if (containsSpam) {
 			principal.setIsSuspicious(true);
 		}
 
@@ -143,10 +149,8 @@ public class MessageBoxService {
 		principal.getMessageBoxes().remove(messageBox);
 	}
 
-	
+	// Other business methods -----------------------------
 
-	//Other business methods -----------------------------
-	
 	public Collection<MessageBox> createSystemMessageBoxes() {
 		Collection<MessageBox> result;
 		Collection<String> names;
@@ -247,7 +251,8 @@ public class MessageBoxService {
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.messageBoxRepository.findAllByPrincipal(principal.getId());
+		result = this.messageBoxRepository
+				.findAllByPrincipal(principal.getId());
 		Assert.notNull(result);
 		return result;
 	}
