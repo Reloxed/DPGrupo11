@@ -85,7 +85,7 @@ public class MessageBoxService {
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (messageBox.getIsPredefined() == true) {
+		if (messageBox.getIsPredefined()) {
 			if (!(messageBox.getId() == 0 && (messageBox.getName().equals(
 					"In Box")
 					|| messageBox.getName().equals("Out box")
@@ -93,7 +93,7 @@ public class MessageBoxService {
 					.getName().equals("Trash box")))) {
 			} else {
 				Assert.isTrue(this.findOne(messageBox.getId())
-						.getIsPredefined() == true);
+						.getIsPredefined());
 				Assert.isTrue(this.findOne(messageBox.getId()).getName() == messageBox
 						.getName());
 			}
@@ -111,8 +111,8 @@ public class MessageBoxService {
 					Assert.isTrue(!messageB.getName().equals(
 							messageBox.getName()));
 				}
-				Assert.isTrue(this.findOne(messageBox.getId())
-						.getIsPredefined() == false);
+				Assert.isTrue(!this.findOne(messageBox.getId())
+						.getIsPredefined());
 			}
 		}
 

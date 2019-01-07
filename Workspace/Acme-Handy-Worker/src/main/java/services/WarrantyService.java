@@ -88,12 +88,11 @@ public class WarrantyService {
 		}		
 		
 		if (w.getId() == 0){
-			Assert.isTrue(w.getIsFinal() == false);
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
 		} else {
-			Assert.isTrue(this.warrantyRepository.findOne(w.getId())
-					.getIsFinal() == false);
+			Assert.isTrue(!this.warrantyRepository.findOne(w.getId())
+					.getIsFinal());
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
 		}
@@ -104,7 +103,7 @@ public class WarrantyService {
 	public void delete(final Warranty w) {
 		Assert.notNull(w);
 		Assert.isTrue(w.getId() != 0);
-		Assert.isTrue(w.getIsFinal() == false);
+		Assert.isTrue(!w.getIsFinal());
 
 		Administrator principal;
 		
