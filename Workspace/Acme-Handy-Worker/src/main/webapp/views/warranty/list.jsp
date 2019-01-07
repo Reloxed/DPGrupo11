@@ -17,19 +17,41 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<display:table name="warranties" id="row" requestURI="$(requestURI)"
+<!-- Listing grid -->
+<display:table name="warranties" id="row" requestURI="warranty/administrator/list.do"
 pagesize="5" class="displaytag">
 	
-	<display:column property="title" titleKey="warranty.title"/>
-	<display:column property="terms" titleKey="warranty.terms"/>
-	<display:column property="laws" titleKey="warranty.laws"/>
-	<display:column property="is Final" titleKey="warranty.isFinal"/>
+	<!-- Action links -->
 	
-	<security:authorize access="hasRole('ADMIN')">
-		<display:column>
-			<a href="warranty/administrator/edit.do?warrantyId=${warranty.id}">
-				<spring:message code="warranty.edit"/>
-			</a> 
-		</display:column>
-	</security:authorize>
+	<display:column>
+		<jstl:if test="${row.isFinal == false}">
+			<a href="warranty/administrator/edit.do?warrantyId=${row.id}">
+			<spring:message code="warranty.edit"/>
+			</a>
+		</jstl:if>
+	
+	</display:column>
+	
+	<!-- Attributes -->
+	<spring:message code="warranty.title" var="titleHeader"/>
+	<display:column property="title" title="${titleHeader}"
+		sortable="true"/>
+	
+	<spring:message code="warranty.terms" var="termsHeader"/>
+	<display:column property="terms" title="${termsHeader}"
+		sortable="true"/>
+	
+	<display:column>
+		<a href="warranty/administrator/display.do?warrantyId=${row.id}">
+		<spring:message code="warranty.display"/>
+		
+		</a>
+	</display:column>
 </display:table>
+
+<div>
+	<a href="warranty/administrator/create.do">
+		<spring:message code="warranty.create"/>	
+	</a>
+	
+</div>

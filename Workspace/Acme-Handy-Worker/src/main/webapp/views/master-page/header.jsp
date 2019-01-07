@@ -45,10 +45,9 @@
 						code="master.page.administrator.warranties" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="warranty/list.do"><spring:message
+					<li><a href="warranty/administrator/list.do"><spring:message
 								code="master.page.administrator.warranties.show" /></a></li>
-					<li><a href="warranty/edit.do"><spring:message
-								code="master.page.administrator.warranty.new" /></a></li>
+		
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.categories" /></a>

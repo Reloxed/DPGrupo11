@@ -72,6 +72,7 @@ public class ReportService {
 	public Report save(final Report report) {
 		Referee principal;
 		Report res;
+		
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
@@ -88,7 +89,7 @@ public class ReportService {
 		if(containsSpam) {
 			principal.setIsSuspicious(true);
 		}
-
+		
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
 

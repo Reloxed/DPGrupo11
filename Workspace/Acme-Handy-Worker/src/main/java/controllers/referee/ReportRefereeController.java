@@ -2,14 +2,19 @@ package controllers.referee;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
+import services.NoteService;
 import services.RefereeService;
 import services.ReportService;
 import controllers.AbstractController;
@@ -30,6 +35,10 @@ public class ReportRefereeController extends AbstractController{
 	
 	@Autowired
 	private ComplaintService complaintService;
+	
+	@Autowired
+	private NoteService noteService;
+	
 	
 	//Constructors
 	
@@ -66,6 +75,60 @@ public class ReportRefereeController extends AbstractController{
 		result.addObject("report",report);
 		result.addObject("requestURI","report/referee/display.do");
 			
+		return result;
+	}
+	
+	//Edition--------------------------------------------------------------------
+	
+	@RequestMapping(value="/edit", method= RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int reportId){
+		ModelAndView result;
+		Report report;
+		
+		report = this.reportService.findOne(reportId);
+		Assert.notNull(report);
+		
+		result = this.createEditModelAndView(report);
+		return result;
+	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.POST, params="saveFinal")
+	public ModelAndView saveFinal(@Valid final Report report, final BindingResult binding){
+		ModelAndView result;
+		
+		if(binding.hasErrors())
+			result = this.createEditModelAndView(report);
+		else
+			try{
+				this.reportService.save(report);
+				result = new ModelAndView("redirect:list.do");
+			}catch (final Throwable oops){
+				result = this.createEditModelAndView(report,"report.commit.error");
+			}
+		return result;
+	}
+	
+	//Ancillary methods--------------------------------------------------------------------
+	
+	protected ModelAndView createEditModelAndView(final Report report){
+		ModelAndView result;
+		
+		result = this.createEditModelAndView(report,null);
+		
+		return result;
+		
+	}
+	
+	protected ModelAndView createEditModelAndView(final Report report, final String message){
+		final ModelAndView result;
+	
+		
+
+		
+		result= new ModelAndView("report/edit");
+		result.addObject("report", report);
+		result.addObject("message", message);
+		
 		return result;
 	}
 }

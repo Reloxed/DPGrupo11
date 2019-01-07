@@ -19,7 +19,7 @@
 	
 	<display:column>
 			<security:authorize access="hasRole('REFEREE')"/>
-				<jstl:if test="${row.isFinal}">
+				<jstl:if test="${row.isFinal == false}">
 					<a href="report/referee/edit.do?reportId=${row.id}">
 						<spring:message code="report.edit"/>
 					</a>
