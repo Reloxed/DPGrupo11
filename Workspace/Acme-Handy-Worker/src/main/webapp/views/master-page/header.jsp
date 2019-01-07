@@ -130,7 +130,7 @@
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
 					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
-					<li><a href="finder/handyWorker/list.do"><spring:message
+					<li><a href="finder/handyWorker/search.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message

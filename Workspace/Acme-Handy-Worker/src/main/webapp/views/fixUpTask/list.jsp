@@ -26,7 +26,7 @@
 	<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/handyWorker/list.do"
 		pagesize="10" class="displaytag">
 
-
+ 
 
 
 		<display:column>
