@@ -29,13 +29,12 @@
 					code="profile.customer" />
 			</a>
 		</display:column>
-
-		<display:column>
-
-			<spring:message code="fixUpTask.description" var="descriptionHeader" />
-			<a href="${descriptionHeader}"> </a>
-		</display:column>
-
+		
+		<spring:message code="fixUpTask.description" var="descriptionHeader" />
+		
+			<display:column property="address" title="${descriptionHeader}"
+			sortable="true" />
+		
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -69,7 +68,6 @@
 					code="fixUpTask.display" />
 			</a>
 	</display:column>
-
 	</display:table>
 	
 	
