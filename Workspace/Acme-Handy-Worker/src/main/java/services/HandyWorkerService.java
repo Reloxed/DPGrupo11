@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -27,16 +26,15 @@ public class HandyWorkerService {
 	// Managed repository-----------
 
 	@Autowired
-	private HandyWorkerRepository	handyWorkerRepository;
+	private HandyWorkerRepository handyWorkerRepository;
 
 	// Supporting services ----------
 
 	@Autowired
-	private MessageBoxService		messageBoxService;
+	private MessageBoxService messageBoxService;
 
 	@Autowired
-	private ActorService			actorService;
-
+	private ActorService actorService;
 
 	// Constructor ----------------------------------------------------
 
@@ -69,9 +67,7 @@ public class HandyWorkerService {
 		Actor principal;
 
 		Authority authority = new Authority();
-		authority.setAuthority(Authority.HANDYWORKER);
 		UserAccount ua = new UserAccount();
-		ua.addAuthority(authority);
 
 		try {
 			principal = this.actorService.findByPrincipal();
@@ -81,13 +77,17 @@ public class HandyWorkerService {
 
 		} catch (final IllegalArgumentException e) {
 
+			authority.setAuthority(Authority.HANDYWORKER);
+			ua.addAuthority(authority);
 			result.setUserAccount(ua);
-			result.setMake(result.getName() + result.getMiddleName() + result.getSurname());
+			result.setMake(result.getName() + result.getMiddleName()
+					+ result.getSurname());
 			result.setIsSuspicious(false);
-			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			result.setMessageBoxes(this.messageBoxService
+					.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
 			result.setTutorial(new HashSet<Tutorial>());
-			
+
 			return result;
 		}
 	}
@@ -103,20 +103,23 @@ public class HandyWorkerService {
 				Assert.isNull(principal);
 			} catch (final IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				handyWorker.getUserAccount().setPassword(passwordEncoder.encodePassword(handyWorker.getUserAccount().getPassword(), null));
+				handyWorker.getUserAccount().setPassword(
+						passwordEncoder.encodePassword(handyWorker
+								.getUserAccount().getPassword(), null));
 			}
 		else {
 
 			HandyWorker principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == handyWorker.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == handyWorker.getIsSuspicious());
+			Assert.isTrue(principal.getUserAccount().getId() == handyWorker
+					.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == handyWorker
+					.getIsSuspicious());
 		}
-		
+
 		saved = this.handyWorkerRepository.save(handyWorker);
 		Assert.notNull(saved);
-		this.handyWorkerRepository.flush();
 
 		return saved;
 
@@ -142,7 +145,8 @@ public class HandyWorkerService {
 
 		HandyWorker result;
 
-		result = this.handyWorkerRepository.findHandyWorkerByUserAccount(userAccountId);
+		result = this.handyWorkerRepository
+				.findHandyWorkerByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
@@ -150,20 +154,23 @@ public class HandyWorkerService {
 	}
 
 	public Collection<HandyWorker> findMoreApplicationsThanAvg() {
-		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findMoreApplicationsThanAvg();
+		final Collection<HandyWorker> colHandys = this.handyWorkerRepository
+				.findMoreApplicationsThanAvg();
 		return colHandys;
 
 	}
 
 	public Collection<HandyWorker> findTopComplaintsHandyWorkers() {
-		final Collection<HandyWorker> colHandys = this.handyWorkerRepository.findTopComplaintsHandyWorkers();
+		final Collection<HandyWorker> colHandys = this.handyWorkerRepository
+				.findTopComplaintsHandyWorkers();
 		return colHandys;
 	}
-	
+
 	public HandyWorker findHandyWorkerByApplicationId(int applicationId) {
 		HandyWorker result;
 
-		result = this.handyWorkerRepository.findHandyWorkerByApplicationId(applicationId);
+		result = this.handyWorkerRepository
+				.findHandyWorkerByApplicationId(applicationId);
 
 		return result;
 	}

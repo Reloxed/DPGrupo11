@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.CustomerService;
+import services.HandyWorkerService;
+import services.RefereeService;
+import services.SponsorService;
+import services.AdministratorService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Customer;
@@ -22,6 +27,21 @@ public class ActorController {
 
 	@Autowired
 	private ActorService actorService;
+
+	@Autowired
+	private HandyWorkerService handyWorkerService;
+
+	@Autowired
+	private RefereeService refereeService;
+
+	@Autowired
+	private SponsorService sponsorService;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private AdministratorService administratorService;
 
 	// Constructors
 
@@ -50,23 +70,24 @@ public class ActorController {
 		} else {
 			if (actor instanceof Customer) {
 				Customer customer;
-				customer = (Customer) actor;
+				customer = this.customerService.findOne(actor.getId());
 				res.addObject("customer", customer);
 			} else if (actor instanceof Referee) {
 				Referee referee;
-				referee = (Referee) actor;
+				referee = this.refereeService.findOne(actor.getId());
 				res.addObject("referee", referee);
 			} else if (actor instanceof HandyWorker) {
 				HandyWorker handyWorker;
-				handyWorker = (HandyWorker) actor;
+				handyWorker = this.handyWorkerService.findOne(actor.getId());
 				res.addObject("handyWorker", handyWorker);
 			} else if (actor instanceof Sponsor) {
 				Sponsor sponsor;
-				sponsor = (Sponsor) actor;
+				sponsor = this.sponsorService.findOne(actor.getId());
 				res.addObject("sponsor", sponsor);
 			} else {
 				Administrator administrator;
-				administrator = (Administrator) actor;
+				administrator = this.administratorService
+						.findOne(actor.getId());
 				res.addObject("administrator", administrator);
 			}
 
@@ -89,27 +110,29 @@ public class ActorController {
 		if (actor != null) {
 			if (actor instanceof Customer) {
 				Customer customer;
-				customer = (Customer) actor;
+				customer = this.customerService.findOne(actor.getId());
 				res.addObject("customer", customer);
 			} else if (actor instanceof Referee) {
 				Referee referee;
-				referee = (Referee) actor;
+				referee = this.refereeService.findOne(actor.getId());
 				res.addObject("referee", referee);
 			} else if (actor instanceof HandyWorker) {
 				HandyWorker handyWorker;
-				handyWorker = (HandyWorker) actor;
+				handyWorker = this.handyWorkerService.findOne(actor.getId());
 				res.addObject("handyWorker", handyWorker);
 			} else if (actor instanceof Sponsor) {
 				Sponsor sponsor;
-				sponsor = (Sponsor) actor;
+				sponsor = this.sponsorService.findOne(actor.getId());
 				res.addObject("sponsor", sponsor);
 			} else {
 				Administrator administrator;
-				administrator = (Administrator) actor;
+				administrator = this.administratorService
+						.findOne(actor.getId());
 				res.addObject("administrator", administrator);
 			}
 
 		}
 		return res;
 	}
+
 }

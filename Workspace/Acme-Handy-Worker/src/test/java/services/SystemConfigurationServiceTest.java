@@ -92,6 +92,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 		Assert.notNull(res);
 		Assert.isTrue(this.systemConfigurationService.findAll().contains(
 				this.systemConfigurationService.findOne(res.getId())));
+		System.out.println(convert(res));
 		super.unauthenticate();
 	}
 
@@ -139,28 +140,37 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 
 	// FindMySystemConfiguration correcto
 	@Test
-	public void testFindMySystemConfiguration1(){
+	public void testFindMySystemConfiguration1() {
 		SystemConfiguration res;
 		super.authenticate("customer1");
 		res = this.systemConfigurationService.findMySystemConfiguration();
 		Assert.notNull(res);
 		super.unauthenticate();
 	}
-	
+
 	// FindMySystemConfiguration sin nadie logueado
 	@Test(expected = IllegalArgumentException.class)
-	public void testFindMySystemConfiguration2(){
+	public void testFindMySystemConfiguration2() {
 		SystemConfiguration res;
 		res = this.systemConfigurationService.findMySystemConfiguration();
 		Assert.notNull(res);
 	}
-	
+
 	// SpamWords correcto
 	@Test
-	public void testSpamWords1(){
+	public void testSpamWords1() {
 		String res;
 		res = this.systemConfigurationService.findSpamWords();
 		Assert.isTrue(!res.isEmpty());
 	}
-	
+
+	public String convert(final SystemConfiguration systemConfiguration) {
+		String result;
+
+		if (systemConfiguration == null)
+			result = null;
+		else
+			result = String.valueOf(systemConfiguration.getId());
+		return result;
+	}
 }

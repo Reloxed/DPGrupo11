@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -27,15 +26,15 @@ public class ApplicationService {
 	// Managed repository -----------------------
 
 	@Autowired
-	private ApplicationRepository		applicationRepository;
+	private ApplicationRepository applicationRepository;
 
 	// Supporting services --------------------------
 
 	@Autowired
-	private HandyWorkerService			handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private CustomerService				customerService;
+	private CustomerService customerService;
 
 	@Autowired
 	private UtilityService	utilityService;
@@ -75,7 +74,7 @@ public class ApplicationService {
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
 		final String bodyHW, bodyCustomer;
-		
+
 		Assert.notNull(application);
 		Assert.notNull(application.getOfferedPrice());
 		Assert.notNull(application.getComments());
@@ -136,6 +135,7 @@ public class ApplicationService {
 		
 		result = this.applicationRepository.saveAndFlush(application);
 		Assert.notNull(application);
+		this.applicationRepository.flush();
 
 		// Add application to collection of applications of handyWorker
 		applications = applicant.getApplications();
@@ -194,10 +194,19 @@ public class ApplicationService {
 		a.setStatus("ACCEPTED");
 		this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
+		bodyHandyWorker = "The status of your application of the fix up task whose ticker is"
+				+ a.getFixUpTask().getTicker()
+				+ "has been changed to "
+				+ a.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is"
+				+ a.getFixUpTask().getTicker()
+				+ "has been changed to "
+				+ a.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(),
+				bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(
+				this.customerService.findCustomerByApplicationId(a.getId()),
+				bodyCustomer, a.getRegisteredMoment());
 
 		if (a.getStatus() == "ACCEPTED")
 			a.setCreditCard(creditCard);
@@ -220,32 +229,46 @@ public class ApplicationService {
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
-		bodyCustomer = "The status of application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
+		bodyHandyWorker = "The status of your application of the fix up task with ticker number"
+				+ saved.getFixUpTask().getTicker()
+				+ "has been changed to "
+				+ saved.getStatus();
+		bodyCustomer = "The status of application of the fix up task with ticker number"
+				+ saved.getFixUpTask().getTicker()
+				+ "has been changed to "
+				+ saved.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(),
+				bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(
+				this.customerService.findCustomerByApplicationId(a.getId()),
+				bodyCustomer, a.getRegisteredMoment());
 	}
 
-	public Collection<Application> findAllApplicationsByHandyWorker(final int handyWorkerId) {
+	public Collection<Application> findAllApplicationsByHandyWorker(
+			final int handyWorkerId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository.findAllApplicationsByHandyWorker(handyWorkerId);
+		result = this.applicationRepository
+				.findAllApplicationsByHandyWorker(handyWorkerId);
 
 		return result;
 	}
-	
+
 	public Collection<Application> findAllApplicationsByCustomer(int customerId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository.findAllApplicationsByCustomer(customerId);
+		result = this.applicationRepository
+				.findAllApplicationsByCustomer(customerId);
 
 		return result;
 	}
-	
-	public Collection<Application> findAllApplicationsByFixUpTask(final int fixUptaskId) {
+
+	public Collection<Application> findAllApplicationsByFixUpTask(
+			final int fixUptaskId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository.findAllApplicationsByFixUpTask(fixUptaskId);
+		result = this.applicationRepository
+				.findAllApplicationsByFixUpTask(fixUptaskId);
 
 		return result;
 	}
@@ -261,7 +284,8 @@ public class ApplicationService {
 	public Double ratioPendingApplicationsElapsedPeriod() {
 		Double result;
 
-		result = this.applicationRepository.ratioPendingApplicationsElapsedPeriod();
+		result = this.applicationRepository
+				.ratioPendingApplicationsElapsedPeriod();
 
 		return result;
 	}
