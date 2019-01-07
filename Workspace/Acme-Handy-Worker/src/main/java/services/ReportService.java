@@ -80,7 +80,7 @@ public class ReportService {
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.notNull(report);
-		Assert.isTrue(principal.getComplaints().equals(report.getComplaint()));
+		Assert.isTrue(principal.getComplaints().contains(report.getComplaint()));
 
 		if (report.getId() == 0) {
 			report.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
@@ -121,7 +121,7 @@ public class ReportService {
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
-		Assert.isTrue(principal.getComplaints().equals(report.getComplaint()));
+		Assert.isTrue(principal.getComplaints().contains(report.getComplaint()));
 		
 		reports = this.findReportByPrincipal();
 		Assert.isTrue(reports.contains(report));
