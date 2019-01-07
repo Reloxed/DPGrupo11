@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
 import domain.Complaint;
+import domain.Note;
 import domain.Referee;
 import domain.Report;
 
@@ -45,14 +46,17 @@ public class ReportService {
 
 	public Report create() {
 		Referee principal;
-		Report res;
+		Report result;
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 
-		res = new Report();
+		result = new Report();
+		
+		Collection<Note> notes = new ArrayList<Note>();
+		result.setNotes(notes);
 
-		return res;
+		return result;
 	}
 
 	public Collection<Report> findAll() {
@@ -71,15 +75,27 @@ public class ReportService {
 
 	public Report save(final Report report) {
 		Referee principal;
-		Report res;
+		Report result;
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
+		Assert.notNull(report);
+		Assert.isTrue(principal.getComplaints().equals(report.getComplaint()));
 
-		if (report.getId() != 0) {
+		if (report.getId() == 0) {
+			report.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		} else {
+			
 			Assert.isTrue(report.getComplaint().equals(this.findOne(report.getId()).getComplaint()));
+			Assert.isTrue(report.getPublishedMoment().equals(this.findOne(report.getId()).getPublishedMoment()));
+			
+			if (this.findOne(report.getId()).getIsFinal()) {
+				Assert.isTrue(report.getIsFinal());
+				Assert.isTrue(report.getAttachments().equals(this.findOne(report.getId()).getAttachments()));
+				Assert.isTrue(report.getDescription().equals(this.findOne(report.getId()).getDescription()));
+			}
 		}
-		Assert.isTrue(report.getPublishedMoment().before(new Date(System.currentTimeMillis())));
+		
 
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(report.getDescription());
@@ -89,23 +105,24 @@ public class ReportService {
 			principal.setIsSuspicious(true);
 		}
 
-		res = this.reportRepository.save(report);
-		Assert.notNull(res);
+		result = this.reportRepository.save(report);
+		Assert.notNull(result);
 
-		return res;
+		return result;
 	}
 
 	public void delete(final Report report) {
 		Referee principal;
 		Collection<Report> reports;
-
+		
 		Assert.notNull(report);
 		Assert.isTrue(report.getId() != 0);
 		Assert.isTrue(!report.getIsFinal());
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
-
+		Assert.isTrue(principal.getComplaints().equals(report.getComplaint()));
+		
 		reports = this.findReportByPrincipal();
 		Assert.isTrue(reports.contains(report));
 		
