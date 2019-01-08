@@ -10,6 +10,8 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"
@@ -26,8 +28,8 @@
 	<jstl:if test="${user == owner.userAccount.username}">
 
 		<display:table name="applications" id="applications"
-			requestURI="application/customer/list.do" pagesize="10"
-			class="displaytag">
+			requestURI="application/handy-worker/list-handy-worker.do"
+			pagesize="10" class="displaytag">
 
 			<display:column property="fixUpTask.description"
 				titleKey="application.fixuptask" />
@@ -43,6 +45,13 @@
 
 			<display:column property="status" titleKey="application.status" />
 
+			<display:column>
+				<jstl:if test="${applications.status == 'ACCEPTED'}">
+					<a
+						href="phase/handy-worker/list.do?fixuptaskID=${applications.fixUpTask.id}"><spring:message
+							code="application.workplan" /> </a>
+				</jstl:if>
+			</display:column>
 		</display:table>
 
 	</jstl:if>
