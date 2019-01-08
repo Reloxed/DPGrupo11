@@ -74,7 +74,7 @@ public class WarrantyService {
 		Assert.notNull(w);
 
 		principal = this.administratorService.findByPrincipal();
-		Assert.notNull(principal);
+		Assert.notNull(principal);	
 
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(w.getTitle());
@@ -85,27 +85,29 @@ public class WarrantyService {
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if(containsSpam) {
 			principal.setIsSuspicious(true);
-		}		
+		}	
 		
 		if (w.getId() == 0){
-			Assert.isTrue(w.getIsFinal() == false);
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
 		} else {
-			Assert.isTrue(this.warrantyRepository.findOne(w.getId())
-					.getIsFinal() == false);
+			Assert.isTrue(!this.warrantyRepository.findOne(w.getId())
+					.getIsFinal());
 			result = this.warrantyRepository.save(w);
 			this.warrantyRepository.flush();
 		}
 		
+
 		
+
+
 		return result;
 	}
 
 	public void delete(final Warranty w) {
 		Assert.notNull(w);
 		Assert.isTrue(w.getId() != 0);
-		Assert.isTrue(w.getIsFinal() == false);
+		Assert.isTrue(!w.getIsFinal());
 
 		Administrator principal;
 		

@@ -184,11 +184,11 @@ public class CustomerServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	@Test
-	public void testTopThreeCustomersTenPercentMoraThanAverage() {
-		Collection<Customer> collCC;
-		collCC = this.customerService.topThreeCustomersTenPercentMoraThanAverage();
-		Assert.notEmpty(collCC);
-	}
+//	@Test
+//	public void testTopThreeCustomersTenPercentMoraThanAverage() {
+//		Collection<Customer> collCC;
+//		collCC = this.customerService.topThreeCustomersTenPercentMoraThanAverage();
+//		Assert.notEmpty(collCC);
+//	}
 
 }
