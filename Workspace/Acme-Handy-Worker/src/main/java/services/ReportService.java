@@ -75,7 +75,12 @@ public class ReportService {
 
 	public Report save(final Report report) {
 		Referee principal;
+
+		Report res;
+		
+
 		Report result;
+
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
@@ -105,8 +110,14 @@ public class ReportService {
 			principal.setIsSuspicious(true);
 		}
 
+		
+		res = this.reportRepository.save(report);
+		Assert.notNull(res);
+
+
 		result = this.reportRepository.save(report);
 		Assert.notNull(result);
+
 
 		return result;
 	}

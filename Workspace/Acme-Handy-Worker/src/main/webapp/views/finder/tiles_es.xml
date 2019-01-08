@@ -15,12 +15,12 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
       
 <tiles-definitions>
-<definition name="finder/list" extends="master.page">
+<definition name="finder/search" extends="master.page">
 		<put-attribute name="title" value="Busqueda" />
-		<put-attribute name="body" value="/views/finder/list.jsp" />
+		<put-attribute name="body" value="/views/finder/search.jsp" />
 	</definition>
-			<definition name="finder/showResults" extends="master.page">
+			<definition name="finder/list" extends="master.page">
 		<put-attribute name="title" value="Resultados" />
-		<put-attribute name="body" value="/views/finder/showResults.jsp" />
+		<put-attribute name="body" value="/views/finder/list.jsp" />
 	</definition>
 </tiles-definitions>

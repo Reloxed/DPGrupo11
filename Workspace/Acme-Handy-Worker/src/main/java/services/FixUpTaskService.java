@@ -159,5 +159,10 @@ public class FixUpTaskService {
 		return res;
 
 	}
+	public Collection<FixUpTask> FixUpTaskByCustomer(int customerId){
+		Collection<FixUpTask> res=this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
+		return res;
+		
+	}
 
 }

@@ -17,10 +17,10 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+
 <display:table name="complaints" id="complaints"
 	requestURI="complaints/referee/list.do" pagesize="10"
 	class="displaytag">
-
 	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
 	<display:column property="moment" titleKey="complaint.moment"
 		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
