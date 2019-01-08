@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -26,24 +27,25 @@ public class ApplicationService {
 	// Managed repository -----------------------
 
 	@Autowired
-	private ApplicationRepository applicationRepository;
+	private ApplicationRepository	applicationRepository;
 
 	// Supporting services --------------------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService			customerService;
 
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService			utilityService;
 
 	@Autowired
-	private MessageService				messageService;
+	private MessageService			messageService;
 
 	@Autowired
-	private ActorService				actorService;
+	private ActorService			actorService;
+
 
 	// Constructors ------------------------------------
 
@@ -73,66 +75,62 @@ public class ApplicationService {
 		Date registeredMoment;
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
-		final String bodyHW, bodyCustomer;
+		final String bodyHW, bodyHWSpa, bodyCustomer, bodyCustomerSpa;
 
 		Assert.notNull(application);
 		Assert.notNull(application.getOfferedPrice());
 		Assert.notNull(application.getComments());
 		fixUpTask = application.getFixUpTask();
 		Assert.notNull(fixUpTask);
-		
-		
+
 		actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		
-		List<String> atributosAComprobar = new ArrayList<>();
+
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(application.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+
 		if (actor instanceof HandyWorker) {
 			applicant = this.handyWorkerService.findByPrincipal();
 			Assert.notNull(applicant);
-			
+
 			if (application.getId() == 0) { // Not saved in database yet
 				application.setStatus("PENDING");
 				registeredMoment = new Date(System.currentTimeMillis() - 1);
 				application.setApplicant(applicant);
 				Assert.isTrue(registeredMoment.after(fixUpTask.getPublishedMoment())); // The fixUpTask must be published.
 				application.setRegisteredMoment(registeredMoment);
-			
+
 			} else {
-			
+
 				Assert.isTrue(application.getFixUpTask().equals(this.findOne(application.getId()).getFixUpTask()));
 				Assert.isTrue(application.getApplicant().equals(applicant));
 				Assert.isTrue(application.getRegisteredMoment().equals(this.findOne(application.getId()).getRegisteredMoment()));
-				Assert.isTrue(application.getStatus().equals(this.findOne(application.getId()).getStatus()));		
-				Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());			
+				Assert.isTrue(application.getStatus().equals(this.findOne(application.getId()).getStatus()));
+				Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());
 			}
-			
-			if(containsSpam){
+
+			if (containsSpam)
 				applicant.setIsSuspicious(true);
-			}
-			
+
 		} else if (actor instanceof Customer) {
-			
+
 			customer = this.customerService.findByPrincipal();
 			Assert.notNull(customer);
-			
+
 			Assert.isTrue(application.getFixUpTask().equals(this.findOne(application.getId()).getFixUpTask()));
 			Assert.isTrue(application.getApplicant().equals(this.findOne(application.getId()).getApplicant()));
 			Assert.isTrue(application.getRegisteredMoment().equals(this.findOne(application.getId()).getRegisteredMoment()));
-			Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());	
-			
-			if (containsSpam){
+			Assert.isTrue(application.getOfferedPrice() == this.findOne(application.getId()).getOfferedPrice());
+
+			if (containsSpam)
 				customer.setIsSuspicious(true);
-			}
 		}
-		
-		if(application.getStatus().equals("ACCEPTED")) {
+
+		if (application.getStatus().equals("ACCEPTED"))
 			Assert.notNull(application.getCreditCard());
-		}
-		
+
 		result = this.applicationRepository.saveAndFlush(application);
 		Assert.notNull(application);
 		this.applicationRepository.flush();
@@ -153,12 +151,16 @@ public class ApplicationService {
 
 		bodyHW = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
 		bodyCustomer = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
-		this.messageService.createAndSaveStatus(applicant, bodyHW, result.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyCustomer, result.getRegisteredMoment());
+		bodyHWSpa = "El estado de su solicitud de la chapuza cuyo ticker es " + result.getFixUpTask().getTicker() + "ha sido cambiado a " + result.getStatus();
+		bodyCustomerSpa = "El estado de la solicitud de la chapuza cuyo ticker es " + result.getFixUpTask().getTicker() + "ha sido cambiado a " + result.getStatus();
 
+		this.messageService.createAndSaveStatus(applicant, bodyHW, result.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(applicant, bodyHWSpa, result.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyCustomer, result.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(result.getId()), bodyCustomerSpa, result.getRegisteredMoment());
 		return result;
 	}
-	
+
 	public Collection<Application> findAll() {
 		Collection<Application> result = new ArrayList<>();
 
@@ -194,19 +196,10 @@ public class ApplicationService {
 		a.setStatus("ACCEPTED");
 		this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is"
-				+ a.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ a.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is"
-				+ a.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ a.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(),
-				bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(
-				this.customerService.findCustomerByApplicationId(a.getId()),
-				bodyCustomer, a.getRegisteredMoment());
+		bodyHandyWorker = "The status of your application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		bodyCustomer = "The status of application of the fix up task whose ticker is" + a.getFixUpTask().getTicker() + "has been changed to " + a.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 
 		if (a.getStatus() == "ACCEPTED")
 			a.setCreditCard(creditCard);
@@ -229,46 +222,32 @@ public class ApplicationService {
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task with ticker number"
-				+ saved.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ saved.getStatus();
-		bodyCustomer = "The status of application of the fix up task with ticker number"
-				+ saved.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ saved.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(),
-				bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(
-				this.customerService.findCustomerByApplicationId(a.getId()),
-				bodyCustomer, a.getRegisteredMoment());
+		bodyHandyWorker = "The status of your application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		bodyCustomer = "The status of application of the fix up task with ticker number" + saved.getFixUpTask().getTicker() + "has been changed to " + saved.getStatus();
+		this.messageService.createAndSaveStatus(a.getApplicant(), bodyHandyWorker, a.getRegisteredMoment());
+		this.messageService.createAndSaveStatus(this.customerService.findCustomerByApplicationId(a.getId()), bodyCustomer, a.getRegisteredMoment());
 	}
 
-	public Collection<Application> findAllApplicationsByHandyWorker(
-			final int handyWorkerId) {
+	public Collection<Application> findAllApplicationsByHandyWorker(final int handyWorkerId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository
-				.findAllApplicationsByHandyWorker(handyWorkerId);
+		result = this.applicationRepository.findAllApplicationsByHandyWorker(handyWorkerId);
 
 		return result;
 	}
 
-	public Collection<Application> findAllApplicationsByCustomer(int customerId) {
+	public Collection<Application> findAllApplicationsByCustomer(final int customerId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository
-				.findAllApplicationsByCustomer(customerId);
+		result = this.applicationRepository.findAllApplicationsByCustomer(customerId);
 
 		return result;
 	}
 
-	public Collection<Application> findAllApplicationsByFixUpTask(
-			final int fixUptaskId) {
+	public Collection<Application> findAllApplicationsByFixUpTask(final int fixUptaskId) {
 		Collection<Application> result;
 
-		result = this.applicationRepository
-				.findAllApplicationsByFixUpTask(fixUptaskId);
+		result = this.applicationRepository.findAllApplicationsByFixUpTask(fixUptaskId);
 
 		return result;
 	}
@@ -284,8 +263,7 @@ public class ApplicationService {
 	public Double ratioPendingApplicationsElapsedPeriod() {
 		Double result;
 
-		result = this.applicationRepository
-				.ratioPendingApplicationsElapsedPeriod();
+		result = this.applicationRepository.ratioPendingApplicationsElapsedPeriod();
 
 		return result;
 	}
