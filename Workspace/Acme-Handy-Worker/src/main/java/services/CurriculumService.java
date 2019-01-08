@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,16 +24,15 @@ public class CurriculumService {
 	// Managed Repository
 
 	@Autowired
-	private CurriculumRepository	curriculumRepository;
+	private CurriculumRepository curriculumRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private HandyWorkerService		handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private UtilityService			utilityService;
-
+	private UtilityService utilityService;
 
 	// Constructors ------------------------------------
 
@@ -89,23 +87,21 @@ public class CurriculumService {
 	public Curriculum save(final Curriculum curriculum) {
 		Curriculum result;
 		HandyWorker principal;
-		
+
 		Assert.notNull(curriculum);
-		
-		
-		
+
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		if (curriculum.getId() == 0) {
 			curriculum.setTicker(this.utilityService.generateTicker());
 		} else {
-			Assert.isTrue(curriculum.getTicker().equals(principal.getCurriculum().getTicker()));
+			Assert.isTrue(curriculum.getTicker().equals(
+					principal.getCurriculum().getTicker()));
 		}
-			
+
 		Assert.notNull(curriculum.getPersonalRecord());
-		result = this.curriculumRepository.save(curriculum);
-		this.curriculumRepository.flush();
+		result = this.curriculumRepository.saveAndFlush(curriculum);
 		return result;
 
 	}

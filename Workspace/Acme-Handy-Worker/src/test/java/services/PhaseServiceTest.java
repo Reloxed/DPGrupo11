@@ -41,12 +41,12 @@ public class PhaseServiceTest extends AbstractTest {
 	public void testFindOne() {
 		Collection<Phase> collP;
 		Phase phase;
-		
+
 		collP = this.phaseService.findAll();
 		phase = this.phaseService.findOne(collP.iterator().next().getId());
 		Assert.notNull(phase);
 	}
-	
+
 	@Test
 	public void testFindAll() {
 		Collection<Phase> res;

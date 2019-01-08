@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,15 +24,15 @@ public class CategoryService {
 
 	// Managed repository ------------------------------
 	@Autowired
-	private CategoryRepository		categoryRepository;
+	private CategoryRepository categoryRepository;
 
 	// Supporting services -----------------------
-	
+
 	@Autowired
 	private AdministratorService	administratorService;
 	
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private SystemConfigurationService systemConfigurationService;
 
 	@Autowired
 	private UtilityService	utilityService;
@@ -55,7 +54,7 @@ public class CategoryService {
 
 		result = new Category();
 		result.setChildCategories(new ArrayList<Category>());
-		result.setName(new HashMap<String,String>());
+		result.setName(new HashMap<String, String>());
 
 		return result;
 	}
@@ -76,7 +75,8 @@ public class CategoryService {
 		Assert.notNull(category.getName());
 		
 		systemConf = systemConfigurationService.findMySystemConfiguration();
-		Set<String> idiomasSystemConf = new HashSet<String>(systemConf.getWelcomeMessage().keySet());	
+		Set<String> idiomasSystemConf = new HashSet<String>(systemConf
+				.getWelcomeMessage().keySet());
 		idiomasCategory = category.getName().keySet();
 		Assert.isTrue(idiomasSystemConf.equals(idiomasCategory));
 		
@@ -87,11 +87,12 @@ public class CategoryService {
 		if(containsSpam) {
 			principal.setIsSuspicious(true);
 		}
-		
+
 		result = this.categoryRepository.saveAndFlush(category);
 		Assert.notNull(result);
 		
 		parent = result.getParentCategory();
+
 		
 		// Si aún no está guardado en la bbdd, actualizamos las categorías hija de su padre
 		if (category.getId() == 0)
@@ -114,7 +115,9 @@ public class CategoryService {
 		admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 		root = this.findRoot();
-		Assert.isTrue(category.getId() != root.getId()); // Comprobamos que no vamos a borrar la categoría raiz
+		Assert.isTrue(category.getId() != root.getId()); // Comprobamos que no
+															// vamos a borrar la
+															// categoría raiz
 
 		childCategories = category.getChildCategories();
 		aux = null;

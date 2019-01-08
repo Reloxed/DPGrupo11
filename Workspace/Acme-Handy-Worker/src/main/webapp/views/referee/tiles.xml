@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
- * tiles.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * tiles.xml * * Copyright (C) 2018 Universidad de Sevilla * * The use 
+	of this project is hereby constrained to the conditions of the * TDG Licence, 
+	a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+
 <tiles-definitions>
 
-	<definition name="referee/action-1" extends="master.page">	
-		<put-attribute name="title" value="referee: Action 1" />
-		<put-attribute name="body" value="/views/referee/action-1.jsp" />
+	<definition name="referee/edit" extends="master.page">
+		<put-attribute name="title" value="Edit profile" />
+		<put-attribute name="body" value="/views/referee/edit.jsp" />
 	</definition>
-	
-	<definition name="referee/action-2" extends="master.page">	
-		<put-attribute name="title" value="referee: Action 2" />
-		<put-attribute name="body" value="/views/referee/action-2.jsp" />
-	</definition>
-	
+
 </tiles-definitions>

@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -29,16 +28,15 @@ public class SponsorService {
 	// Managed repository
 
 	@Autowired
-	private SponsorRepository	sponsorRepository;
+	private SponsorRepository sponsorRepository;
 
 	// Supporting services
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private MessageBoxService	messageBoxService;
-
+	private MessageBoxService messageBoxService;
 
 	// Constructors ------------------------------------
 
@@ -53,24 +51,25 @@ public class SponsorService {
 		Actor principal;
 
 		Authority authority = new Authority();
-		authority.setAuthority(Authority.SPONSOR);
 		UserAccount ua = new UserAccount();
-		ua.addAuthority(authority);
 
 		try {
 			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
-			
+
 			return null;
-			
+
 		} catch (IllegalArgumentException e) {
-			
+
+			authority.setAuthority(Authority.SPONSOR);
+			ua.addAuthority(authority);
 			result.setUserAccount(ua);
 			result.setIsSuspicious(false);
-			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
+			result.setMessageBoxes(this.messageBoxService
+					.createSystemMessageBoxes());
 			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 			result.setSponsorships(Collections.<Sponsorship> emptyList());
-			
+
 			return result;
 		}
 	}
@@ -107,7 +106,8 @@ public class SponsorService {
 	public Sponsor findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		Sponsor result;
-		result = this.sponsorRepository.findByUserAccountId(userAccount.getId());
+		result = this.sponsorRepository
+				.findByUserAccountId(userAccount.getId());
 		return result;
 	}
 
@@ -122,14 +122,18 @@ public class SponsorService {
 				Assert.isNull(principal);
 			} catch (IllegalArgumentException e) {
 				Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				sponsor.getUserAccount().setPassword(passwordEncoder.encodePassword(sponsor.getUserAccount().getPassword(), null));
+				sponsor.getUserAccount().setPassword(
+						passwordEncoder.encodePassword(sponsor.getUserAccount()
+								.getPassword(), null));
 			}
 		} else {
 			Sponsor principal;
 			principal = this.findByPrincipal();
 			Assert.notNull(principal);
-			Assert.isTrue(principal.getUserAccount().getId() == sponsor.getUserAccount().getId());
-			Assert.isTrue(principal.getIsSuspicious() == sponsor.getIsSuspicious());
+			Assert.isTrue(principal.getUserAccount().getId() == sponsor
+					.getUserAccount().getId());
+			Assert.isTrue(principal.getIsSuspicious() == sponsor
+					.getIsSuspicious());
 		}
 
 		saved = this.sponsorRepository.saveAndFlush(sponsor);

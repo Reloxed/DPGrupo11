@@ -35,6 +35,9 @@ public class CustomerService {
 
 	@Autowired
 	private MessageBoxService messageBoxService;
+	
+	@Autowired
+	private ActorService actorService;
 
 	// Constructors ------------------------------------
 
@@ -52,7 +55,7 @@ public class CustomerService {
 		final UserAccount userAccount = new UserAccount();
 
 		try {
-			principal = this.findByPrincipal();
+			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
 			
 			return null;
@@ -93,7 +96,7 @@ public class CustomerService {
 		if (customer.getId() == 0)
 			try {
 				Actor principal;
-				principal = this.findByPrincipal();
+				principal = this.actorService.findByPrincipal();
 				Assert.isNull(principal);
 
 			} catch (final IllegalArgumentException e) {

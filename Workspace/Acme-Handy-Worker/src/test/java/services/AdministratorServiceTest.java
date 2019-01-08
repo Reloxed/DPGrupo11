@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -21,16 +20,15 @@ import domain.Endorsement;
 import domain.Endorser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
-})
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
+		"classpath:spring/config/packages.xml" })
 @Transactional
 public class AdministratorServiceTest extends AbstractTest {
 
 	// Service under test ---------------------------------------------
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService administratorService;
 
 	// Supporting services --------------------------------------------
 
@@ -45,7 +43,6 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
 	private CustomerService			customerService;
-
 
 	@Test
 	public void testCreate() {

@@ -29,9 +29,6 @@ public class ReportServiceTest extends AbstractTest {
 	@Autowired
 	private RefereeService refereeService;
 
-	@Autowired
-	private ComplaintService complaintService;
-
 	// Tests ------------------------------------------------------------------
 
 	@Test
@@ -77,7 +74,7 @@ public class ReportServiceTest extends AbstractTest {
 		Assert.notNull(principal);
 
 		res = this.reportService.create();
-		res.setComplaint(this.complaintService.findAll().iterator().next());
+		res.setComplaint(principal.getComplaints().iterator().next());
 		res.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		res.setDescription("Description nigeria-sexo");
 		res.setIsFinal(false);
@@ -102,8 +99,6 @@ public class ReportServiceTest extends AbstractTest {
 		toDelete = reports.iterator().next();
 		toDelete.setIsFinal(false);
 		this.reportService.delete(toDelete);
-
-		reports = this.reportService.findReportByPrincipal();
 
 	}
 }

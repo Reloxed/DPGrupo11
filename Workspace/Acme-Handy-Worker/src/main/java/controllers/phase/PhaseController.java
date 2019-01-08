@@ -108,8 +108,8 @@ public class PhaseController extends AbstractController {
 					&& a.getStatus().contains("ACCEPTED")) {
 				editable = true;
 			}
-
 		}
+
 		res = new ModelAndView("phase/edit");
 		res.addObject("phase", phase);
 		res.addObject("message", messageCode);
