@@ -42,8 +42,11 @@
 		<value>/views/warranty/messages</value>
 
 		<value>/views/report/messages</value>
-
-
+		<value>/views/educationRecord/messages</value>
+		<value>/views/professionalRecord/messages</value>
+		<value>/views/endorserRecord/messages</value>
+		<value>/views/miscellaneousRecord/messages</value>
+		
 	</util:list>
 
 </beans>
