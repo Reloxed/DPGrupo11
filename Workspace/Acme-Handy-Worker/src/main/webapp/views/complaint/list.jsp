@@ -17,27 +17,15 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<h2 style="font-family: sans-serif;">
-	<spring:message code="complaints.list" />
-</h2>
-
 <display:table name="complaints" id="complaints"
 	requestURI="complaints/referee/list.do" pagesize="10"
 	class="displaytag">
 
-	<display:column property="fixUpTask" titleKey="complaint.fixuptask" />
+	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
 	<display:column property="moment" titleKey="complaint.moment"
 		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 	<display:column property="description" titleKey="complaint.description" />
 	<display:column property="attachements"
 		titleKey="complaint.attachements" />
 	<display:column property="ticker" titleKey="complaint.ticker" />
-	<display:column titleKey="complaint.buttons">
-		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
-			style="width: center; height: center"> <spring:message
-				code="complaint.edit" /></a>
-		<a href="${requestURI}"> <img src="/webapp/images/edit.png"
-			style="width: center; height: center"> <spring:message
-				code="complaint.edit" /></a>
-	</display:column>
 </display:table>
