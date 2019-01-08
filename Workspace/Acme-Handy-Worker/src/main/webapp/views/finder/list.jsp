@@ -18,101 +18,59 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<security:authorize access="hasRole('HANDYWORKER')">
 
-
-
-
-
-<form:form action="finder/handyWorker/list.do"
-		modelAttribute="finder">
-
-		<form:hidden path="id" />
-		<form:hidden path="version" />
+	<display:table name="finder" id="row"
+		requestURI="fixUpTask/handyWorker/list.do" pagesize="10" class="displaytag">
+	
+	
+		<display:column>
+			<a href="actor/display.do?profileId=${row.id}"> <spring:message
+					code="profile.customer" />
+			</a>
+		</display:column>
+		
+		<spring:message code="fixUpTask.description" var="descriptionHeader" />
+		
+			<display:column property="address" title="${descriptionHeader}"
+			sortable="true" />
 		
 
 
-		<form:label path="keyword">
-			<spring:message code="finder.keyword" />:
-	</form:label>
-		<form:input path="keyword" />
-		<form:errors cssClass="error" path="keyword" />
-		<br />
-
- 
-		<form:label path="category">
-			<spring:message code="finder.category" />:
-	</form:label>
-		<form:input path="category" />
-		<form:errors cssClass="error" path="category" />
-		<br />
-
-		<form:label path="warranty">
-			<spring:message code="finder.warranty" />:
-	</form:label>
-		<form:input path="warranty" />
-		<form:errors cssClass="error" path="warranty" />
-		<br />
+		<spring:message code="fixUpTask.address" var="addressHeader" />
+		<display:column property="address" title="${addressHeader}"
+			sortable="true" />
 
 
-		<form:label path="startMoment">
-			<spring:message code="finder.startMoment" />:
-	</form:label>
-		<form:input path="startMoment" placeholder="dd/MM/yyyy HH:mm" />
-		<form:errors cssClass="error" path="startMoment" />
-		<br />
+		<spring:message code="fixUpTask.maxPrice" var="maxPriceHeader" />
+		<display:column property="maxPrice" title="${maxPriceHeader}"
+			sortable="true" />
 
 
-		<form:label path="endMoment">
-			<spring:message code="finder.endMoment" />:
-	</form:label>
-		<form:input path="endMoment" placeholder="dd/MM/yyyy HH:mm" />
-		<form:errors cssClass="error" path="endMoment" />
-		<br />
+		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
+		<display:column property="startMoment" title="${startMomentHeader}"
+			sortable="true" />
 
 
-		<form:label path="priceLow">
-			<spring:message code="finder.priceLow" />:
-	</form:label>
-		<form:input path="priceLow" placeholder="200.00" />
-		<form:errors cssClass="error" path="priceLow" />
-		<br />
+		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
+		<display:column property="endMoment" title="${endMomentHeader}"
+			sortable="true" />
 
-		<form:label path="priceHigh">
-			<spring:message code="finder.priceHigh" />:
-	</form:label>
-		<form:input path="priceHigh" placeholder="200.00" />
-		<form:errors cssClass="error" path="priceHigh" />
-		<br />
-
-		<input type="submit" name="search"
-			value="<spring:message code="finder.search" />" />&nbsp; 
+		<display:column>
+			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
+				style="width: center; height: center" /> <spring:message
+					code="applications.create" />
+			</a> 
+		</display:column>
 		
-		<input type="button" name="cancel"
-			value="<spring:message code="finder.cancel" />"
-			onclick="javascript: relativeRedir('fixUpTask/list.do');" />
-		<br />
+			<display:column>
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+					code="fixUpTask.display" />
+			</a>
+	</display:column>
+	</display:table>
+	
+	
+	
 
-	</form:form>
-
-	<!-- Action links -->
-
-
-
-	<a href="finder/finder.do?finderId=${row.id}"> <spring:message
-			code="finder.showResults" />
-	</a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</security:authorize>

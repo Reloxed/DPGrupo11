@@ -45,10 +45,9 @@
 						code="master.page.administrator.warranties" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="warranty/list.do"><spring:message
+					<li><a href="warranty/administrator/list.do"><spring:message
 								code="master.page.administrator.warranties.show" /></a></li>
-					<li><a href="warranty/edit.do"><spring:message
-								code="master.page.administrator.warranty.new" /></a></li>
+		
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.categories" /></a>
@@ -84,7 +83,7 @@
 						code="master.page.customer.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/list.do"><spring:message
+					<li><a href="fixUpTask/customer/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
 					<li><a href="fixuptask/edit.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>
@@ -114,11 +113,19 @@
 						code="master.page.referee.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/list.do"><spring:message
+					<li><a href="complaint/referee/list2.do"><spring:message
 								code="master.page.referee.not.assigned.complaints" /></a></li>
-					<li><a href="complaint/list.do"><spring:message
+					<li><a href="complaint/referee/list1.do"><spring:message
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
+			<li><a class="fNiv"></a>
+						
+					<li class="arrow"></li>
+					<li><a href="report/referee/list.do"><spring:message
+								code="master.page.referee.reports" /></a></li>
+					<li><a href="note/referee/list.do"><spring:message
+								code="master.page.referee.notes" /></a></li>
+			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">
@@ -130,7 +137,7 @@
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
 					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
-					<li><a href="finder/handyWorker/list.do"><spring:message
+					<li><a href="finder/handyWorker/search.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message

@@ -1449,7 +1449,7 @@
 	<!-- REFEREE -->
 	<bean id="userReferee1" class="security.UserAccount">
 		<property name="username" value="referee1" />
-		<property name="password" value="2ffad883c128b6ff7c9c2c4f1cb3b100" />
+		<property name="password" value="092d469d0a71c8002e32f808b861f9a4" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1784,6 +1784,7 @@
 			<list>
 				<ref bean="complaint1_2_2" />
 				<ref bean="complaint2_2_2" />
+				<ref bean="complaint_X" />
 			</list>
 		</property>
 	</bean>
@@ -2406,6 +2407,17 @@
 			<ref bean="fixUpTask2_2" />
 		</property>
 	</bean>
+	
+	<!-- Complaint non-assigned -->
+	<bean id="complaint_X" class="domain.Complaint">
+		<property name="ticker" value="612456-ASDFGH" />
+		<property name="moment" value="06/11/2016 08:15" />
+		<property name="description" value="Want more attention." />
+		<property name="fixUpTask">
+			<ref bean="fixUpTask2_2" />
+		</property>
+	</bean>
+	
 
 
 	<!-- REPORTs -->

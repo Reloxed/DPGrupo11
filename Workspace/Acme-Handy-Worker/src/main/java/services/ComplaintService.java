@@ -16,6 +16,13 @@ import repositories.ComplaintRepository;
 import domain.Complaint;
 import domain.Customer;
 
+
+import domain.Referee;
+
+import domain.HandyWorker;
+
+
+
 @Service
 @Transactional
 public class ComplaintService {
@@ -27,6 +34,9 @@ public class ComplaintService {
 
 	// Supporting services -----------------------------------
 
+	@Autowired
+	private RefereeService refereeService;
+	
 	@Autowired
 	private CustomerService		customerService;
 
@@ -108,9 +118,26 @@ public class ComplaintService {
 
 	// Other business methods --------------------------------
 
+	
+	public Collection<Complaint> findComplaintsByReferee(){
+		Collection<Complaint>result;
+		Referee principal;
+		
+		principal = this.refereeService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.complaintRepository.findComplaintsByReferee(principal.getId());
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+
+
 	public Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId) {
 		final Collection<Complaint> collCom = this.complaintRepository.findComplaintsByHandyWorkerId(handyWorkerId);
 		return collCom;
 	}
+
 
 }
