@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
+import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -29,6 +30,12 @@ public class FinderService {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
+	
+	@Autowired
+	private AdministratorService administratorService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
 
 
 	//Constructor -----------------------
@@ -120,40 +127,6 @@ public class FinderService {
 
 	}
 	
-	//expiración de la busqueda cuanto termina tiempo caché
-	public void deleteExpireFinders(final int timeInCache) {
-		Finder finder;
-		Collection<Finder> finders;
-		Collection<Finder> findersDelete;
-		Collection<Finder> currentFinders;
-
-		HandyWorker principal;
-		Date currentMoment;
-		Date expireCache;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		currentMoment = new Date();
-		expireCache = DateUtils.addHours(currentMoment, timeInCache);
-
-		finders = new ArrayList<Finder>();
-		finder = principal.getFinder();
-		finders.add(finder);
-
-		findersDelete = new ArrayList<Finder>();
-		currentFinders = new ArrayList<Finder>(finders);
-
-		for (final Finder f : finders)
-			if (f.getSearchMoment().before(expireCache)) {
-				findersDelete.add(f);
-				this.finderRepository.delete(f);
-			}
-
-		currentFinders.removeAll(findersDelete);
-
-	}
-
 	//Other business methods--------
 
 	public Finder findByPrincipal() {
@@ -166,6 +139,30 @@ public class FinderService {
 		finder = principal.getFinder();
 
 		return finder;
+	}
+	
+	//expiración de la busqueda cuando termina tiempo caché
+	public void deleteExpireFinders() {
+		Administrator principal;
+		Collection<Finder> collFind;
+		Date maxLivedMoment = new Date();
+		int timeChachedFind;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
+		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
+		
+		collFind = this.findAll();
+		
+		for(Finder finder : collFind) {
+			if(finder.getSearchMoment().before(maxLivedMoment)) {
+				System.out.println("hola");
+				this.finderRepository.delete(finder);
+			}
+		}
+		
 	}
 
 }
