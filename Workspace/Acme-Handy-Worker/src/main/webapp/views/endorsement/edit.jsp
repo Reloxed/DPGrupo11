@@ -18,19 +18,25 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-<form:form action="endorserment/handyWorker/edit.do" modelAttribute="endorsement" id="form">
-
+<form:form action="endorserment/handyWorker/edit.do" modelAttribute="endorsement" methodParam="post">
+	
+	<form:hidden path="id" />
+	
+	<form:hidden path="version" />
+	
+	<form:hidden path="publishedMoment"/>
+	
 
 <div>
 <fieldset>
-
 <legend> <form:label path="comments"> <spring:message code="endorsement.comments" />: </form:label> </legend>
-	<form:textarea path="comments" /> 
+	<form:textarea  path="comments" /> 
 	<br />
 	</fieldset>
 	<br />
 	</div>
-	<div>
+	<jstl:if test="${endorsement.id==0}">
+	<div>	
 <fieldset>
 	<legend>  <spring:message code="endorsement.recipient" /></legend>
 		<form:select path="recipient" style="width:100px;">
@@ -43,6 +49,7 @@
 </fieldset>
 	<br />
 	</div>
+	</jstl:if>
 		<br />
 		<br />
 		<br />
@@ -57,9 +64,5 @@
 		value="${cancelEndorsement}"
 		onclick="javascript: relativeRedir('endorsement/handyWorker/list.do');" />
 	<br />
-		
-		
-		
-		
 </form:form>
 </security:authorize>

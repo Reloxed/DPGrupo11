@@ -161,13 +161,18 @@ public class EndorsementHandyWorkerController extends AbstractController{
 	protected ModelAndView createEditModelAndView(final Endorsement endorsement, final String message) {
 		ModelAndView result;
 		Collection<Endorser> endorsers;
-		
+		//int guardado;
+		//guardado=endorsement.getId();
+		//String receptor;
+		//receptor=endorsement.getRecipient().getName();
 		endorsers=this.endorserService.findAll();
-
+		
 		result = new ModelAndView("endorsement/edit");
 		result.addObject("endorsement", endorsement);
 		result.addObject("endorsers",endorsers);
-
+		//result.addObject("guardado",guardado);
+		//result.addObject("receptor",receptor);
+		
 		result.addObject("message", message);
 		return result;
 	}

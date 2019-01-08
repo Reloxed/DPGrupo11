@@ -83,7 +83,7 @@
 						code="master.page.customer.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/list.do"><spring:message
+					<li><a href="fixUpTask/customer/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
 					<li><a href="fixuptask/edit.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>
@@ -137,7 +137,7 @@
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
 					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
-					<li><a href="finder/handyWorker/list.do"><spring:message
+					<li><a href="finder/handyWorker/search.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
