@@ -84,7 +84,7 @@
 						code="master.page.customer.fixuptasks" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="fixuptask/list.do"><spring:message
+					<li><a href="fixUpTask/customer/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
 					<li><a href="fixuptask/edit.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>

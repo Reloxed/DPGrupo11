@@ -37,7 +37,7 @@
 		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 		
-			<display:column property="address" title="${descriptionHeader}"
+			<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
 		
 
@@ -62,7 +62,7 @@
 			sortable="true" />
 
 		<display:column>
-			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
+			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> <img
 				style="width: center; height: center" /> <spring:message
 					code="applications.create" />
 			</a> 
@@ -83,7 +83,44 @@
 <display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
 		pagesize="10" class="displaytag">
 		
+				<display:column>
+			<a href="actor/display.do?profileId=${row.id}"> <spring:message
+					code="profile.customer" />
+			</a>
+		</display:column>
 		
+		<spring:message code="fixUpTask.description" var="descriptionHeader" />
+		
+			<display:column property="description" title="${descriptionHeader}"
+			sortable="true" />
+		
+
+
+		<spring:message code="fixUpTask.address" var="addressHeader" />
+		<display:column property="address" title="${addressHeader}"
+			sortable="true" />
+
+
+		<spring:message code="fixUpTask.maxPrice" var="maxPriceHeader" />
+		<display:column property="maxPrice" title="${maxPriceHeader}"
+			sortable="true" />
+
+
+		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
+		<display:column property="startMoment" title="${startMomentHeader}"
+			sortable="true" />
+
+
+		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
+		<display:column property="endMoment" title="${endMomentHeader}"
+			sortable="true" />
+
+		
+			<display:column>
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+					code="fixUpTask.display" />
+			</a>
+	</display:column>
 		
 		
 		</display:table>

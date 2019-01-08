@@ -1,5 +1,7 @@
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +25,8 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	// B/3
 	@Query("select count(f) /(select count(f) from FixUpTask f where f.complaints is not empty)*1.0 from FixUpTask f")
 	Double ratioFixUpTaskWithComplaints();
+	
+	@Query("select a from Customer c join c.fixUpTasks a where c.id=?1")
+	Collection<FixUpTask> FixUpTaskByCustomer(int customerId);
+	
 }
