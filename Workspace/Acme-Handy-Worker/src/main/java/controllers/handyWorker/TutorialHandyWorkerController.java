@@ -121,19 +121,4 @@ public class TutorialHandyWorkerController extends AbstractController{
 		return result;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

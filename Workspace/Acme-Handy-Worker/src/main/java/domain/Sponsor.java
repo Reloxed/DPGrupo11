@@ -15,6 +15,7 @@ public class Sponsor extends Actor implements Cloneable {
 	// Attributes
 
 	private Collection<Sponsorship> sponsorships;
+	private Collection<CreditCard> creditCards;
 
 	// Metodos
 	@OneToMany(mappedBy="sponsor")
@@ -27,6 +28,16 @@ public class Sponsor extends Actor implements Cloneable {
 		this.sponsorships = sponsorships;
 	}
 	
+	@Valid
+	@OneToMany
+	public Collection<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+
+	public void setCreditCards(Collection<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+
 	@Override
 	public Sponsor clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
