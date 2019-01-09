@@ -142,20 +142,20 @@ public class CategoryAdministratorController {
 		}
 		//Delete
 
-//		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-//		public ModelAndView delete(@RequestParam int categoryId) {
-//			ModelAndView result;
-//			Category category;
-//			category=this.categoryService.findOne(categoryId);
-//			try {
-//				this.categoryService.delete(category);
-//				result = new ModelAndView("redirect:list.do");
-//			} catch (final Throwable oops) {
-//				result = this.createEditModelAndView(category, "category.commit.error");
-//			}
-//
-//			return result;
-//		}
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+		public ModelAndView delete(@RequestParam int categoryId) {
+			ModelAndView result;
+			Category category;
+			category=this.categoryService.findOne(categoryId);
+			try {
+				this.categoryService.delete(category);
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(category, "category.commit.error");
+			}
+
+			return result;
+		}
 	
 	//Ancillary methods
 	
@@ -177,7 +177,7 @@ public class CategoryAdministratorController {
 
 		
 		result = new ModelAndView("category/edit");
-		result.addObject("categroy", category);
+		result.addObject("category", category);
 		result.addObject("principal",principal);
 		result.addObject("message", message);
 		return result;
