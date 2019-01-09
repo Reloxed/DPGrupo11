@@ -4,8 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
-import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -26,21 +24,18 @@ public class FinderService {
 	//Managed repository-----------
 
 	@Autowired
-	private FinderRepository	finderRepository;
+	private FinderRepository			finderRepository;
 
 	//Supporting services ----------
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
-	
+	private HandyWorkerService			handyWorkerService;
+
 	@Autowired
-	private AdministratorService administratorService;
-	
+	private SystemConfigurationService	systemConfigurationService;
+
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
-	
-	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService			fixUpTaskService;
 
 
 	//Constructor -----------------------
@@ -103,10 +98,9 @@ public class FinderService {
 			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
 		else if (finder.getPriceHigh() != null && finder.getPriceLow() != null)
 			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
-		
-		if(principal.getFinder() != null) {
+
+		if (principal.getFinder() != null)
 			this.delete(principal.getFinder());
-		}
 
 		result = this.finderRepository.save(finder);
 		Assert.notNull(result);
@@ -114,7 +108,7 @@ public class FinderService {
 		return result;
 
 	}
-	
+
 	public void delete(final Finder finder) {
 		HandyWorker principal;
 
@@ -131,7 +125,7 @@ public class FinderService {
 		principal.setFinder(null);
 
 	}
-	
+
 	//Other business methods--------
 
 	public Finder findByPrincipal() {
@@ -145,60 +139,50 @@ public class FinderService {
 
 		return finder;
 	}
-	
+
 	//expiración de la busqueda cuando termina tiempo caché
 	public void deleteExpireFinders() {
-		Administrator principal;
+		HandyWorker principal;
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
-		
-		principal = this.administratorService.findByPrincipal();
+
+		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
 		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
-		
+
 		collFind = this.findAll();
-		
-		for(Finder finder : collFind) {
-			if(finder.getSearchMoment().before(maxLivedMoment)) {
+
+		for (final Finder finder : collFind)
+			if (finder.getSearchMoment().before(maxLivedMoment))
 				this.finderRepository.delete(finder);
-			}
-		}
 	}
-	
-	public Finder resultadosFinder (Finder finder) {
-		Set<FixUpTask> result = new HashSet<>();
-		Collection <FixUpTask> collFix = this.fixUpTaskService.findAll();
-		
-		for(FixUpTask fixUpTask : collFix) {
-			if(finder.getPriceLow() != null && finder.getPriceHigh() != null 
-				&& finder.getPriceLow()<= fixUpTask.getMaxPrice() && finder.getPriceHigh()>= fixUpTask.getMaxPrice()){
-				
+
+	public Finder resultadosFinder(final Finder finder) {
+		final List<FixUpTask> result = new ArrayList<>();
+		final Collection<FixUpTask> collFix = this.fixUpTaskService.findAll();
+
+		for (final FixUpTask fixUpTask : collFix) {
+			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
 				result.add(fixUpTask);
-			}
-			if(finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty())){
+			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
 				result.add(fixUpTask);
-			}
-			if(finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory())){
+			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
 				result.add(fixUpTask);
-			}
-			if(finder.getStartMoment() != null && finder.getEndMoment() != null 
-				&& finder.getStartMoment().before(fixUpTask.getStartMoment()) 
-					&& finder.getEndMoment().after(fixUpTask.getEndMoment())){
-				
+			if (finder.getStartMoment() != null && finder.getEndMoment() != null && finder.getStartMoment().before(fixUpTask.getStartMoment()) && finder.getEndMoment().after(fixUpTask.getEndMoment()))
 				result.add(fixUpTask);
-			}
-			if(finder.getKeyWord() != null && (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
-				|| fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
-					|| fixUpTask.getDescription().toLowerCase().contains(finder.getKeyWord().toLowerCase()))) {
-				
+			if (finder.getKeyWord() != null
+				&& (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getDescription().toLowerCase()
+					.contains(finder.getKeyWord().toLowerCase())))
 				result.add(fixUpTask);
-			}
+			if (result.size() > this.systemConfigurationService.findMySystemConfiguration().getMaxResults())
+				finder.setFixuptask(result.subList(0, this.systemConfigurationService.findMySystemConfiguration().getMaxResults() - 1));
+			else
+				finder.setFixuptask(result);
 		}
-		finder.setFixuptask(result);
-				
+
 		return finder;
 	}
 

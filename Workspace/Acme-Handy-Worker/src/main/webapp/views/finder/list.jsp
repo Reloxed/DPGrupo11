@@ -20,8 +20,8 @@
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-	<display:table name="finder" id="row"
-		requestURI="fixUpTask/handyWorker/list.do" pagesize="10" class="displaytag">
+	<display:table name="results" id="row"
+		requestURI="finder/handyWorker/list.do?finderId=${finder.id}" pagesize="10" class="displaytag">
 	
 	
 		<display:column>
@@ -69,8 +69,5 @@
 			</a>
 	</display:column>
 	</display:table>
-	
-	
-	
 
 </security:authorize>
