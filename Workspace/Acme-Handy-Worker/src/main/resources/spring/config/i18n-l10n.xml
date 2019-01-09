@@ -31,6 +31,8 @@
 		<value>/views/customer/messages</value>
 		<value>/views/handyWorker/messages</value>
 		<value>/views/sponsor/messages</value>
+		
+		<value>/views/category/messages</value>
 
 
 		<value>/views/fixUpTask/messages</value>
