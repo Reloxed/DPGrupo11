@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,11 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import utilities.AbstractTest;
 import domain.Finder;
 import domain.HandyWorker;
-
-
-import utilities.AbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -34,19 +33,33 @@ public class FinderServiceTest extends AbstractTest {
 
 	@Autowired
 	private HandyWorkerService handyWorkerService;
-
+	
+	@Autowired
+	private WarrantyService	warrantyService;
 
 
 
 
 	//Tests ---------------------------------------
-
+	
 	@Test
-	public void testExpire(){
-		super.authenticate("admin1");
-		this.finderService.deleteExpireFinders();
+	public void testResults() {
+		Finder find = new Finder();
 		
-		super.unauthenticate();
+		find.setPriceHigh(100.);
+		find.setPriceLow(25.);
+		Calendar startMoment = Calendar.getInstance();
+		startMoment.set(2021, 1, 22);
+		Calendar endMoment = Calendar.getInstance();
+		endMoment.set(2022, 8, 22);
+		find.setStartMoment(startMoment.getTime());
+		find.setEndMoment(endMoment.getTime());
+		
+		find.setWarranty(this.warrantyService.findOne(this.warrantyService.findAll().iterator().next().getId()));
+		find.setKeyWord("fix");
+		
+		this.finderService.resultadosFinder(find);
+
 	}
 	
 	@Test
@@ -62,7 +75,7 @@ public class FinderServiceTest extends AbstractTest {
 		Finder saved;
 		HandyWorker principal;
 		super.authenticate("handyWorker2");
-
+		
 		principal=this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
@@ -72,7 +85,7 @@ public class FinderServiceTest extends AbstractTest {
 		result.setKeyWord("clave");
 		saved=this.finderService.save(result);
 		Assert.notNull(saved);
-
+		
 		super.unauthenticate();
 
 	}
@@ -121,13 +134,10 @@ public class FinderServiceTest extends AbstractTest {
 
 		super.authenticate("handyWorker2");
 
-
 		result=this.finderService.findOne(-2);
 		Assert.notNull(result);
 
 		super.unauthenticate();
-
-
 
 	}
 }
