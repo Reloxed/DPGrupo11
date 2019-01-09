@@ -22,6 +22,8 @@ import domain.FixUpTask;
 @Transactional
 public class FixUpTaskService {
 
+
+
 	// Managed repository-----------
 
 	@Autowired
@@ -162,6 +164,31 @@ public class FixUpTaskService {
 	public Collection<FixUpTask> FixUpTaskByCustomer(int customerId){
 		Collection<FixUpTask> res=this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
 		return res;
+		
+	}
+	
+	public int CreatorFixUpTask(int FixUpTaskId){
+		Collection<Customer>customers;
+		Collection<FixUpTask> tasks;
+		int customerId=0;
+		customers=this.customerService.findAll();
+		
+		for(Customer c:customers){
+			
+			tasks=c.getFixUpTasks();
+			for(FixUpTask t:tasks ){
+				if(FixUpTaskId==t.getId()){
+					customerId=c.getId();
+					break;
+				}
+				
+			}
+			if(customerId!=0){
+				break;
+			}
+		}
+		
+		return customerId;
 		
 	}
 

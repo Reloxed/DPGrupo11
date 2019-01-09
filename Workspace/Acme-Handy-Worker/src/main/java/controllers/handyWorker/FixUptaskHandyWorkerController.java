@@ -14,8 +14,6 @@ import services.CustomerService;
 import services.FixUpTaskService;
 
 import controllers.AbstractController;
-
-import domain.Customer;
 import domain.FixUpTask;
 
 @Controller
@@ -47,9 +45,13 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 		String english;
 		español="es";
 		english="en";
+		int customerId;
+		
 		fixUpTask=this.fixUpTaskService.findOne(taskId);
+		customerId=this.fixUpTaskService.CreatorFixUpTask(fixUpTask.getId());
 		language=locale.getLanguage();
 		result=new ModelAndView("fixUpTask/display");
+		result.addObject("customerId",customerId);
 		result.addObject("fixUpTask", fixUpTask);
 		result.addObject("language",language);
 		result.addObject("español",español);
@@ -66,6 +68,7 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 	public ModelAndView list(){
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
+		int customerId;
 		//Customer principal;
 		//principal=this.customerService.findByPrincipal();
 		fixUpTasks=this.fixUpTaskService.findAll();
