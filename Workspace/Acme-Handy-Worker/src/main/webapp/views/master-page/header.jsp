@@ -92,9 +92,9 @@
 						code="master.page.customer.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/list.do"><spring:message
+					<li><a href="complaint/customer/list.do"><spring:message
 								code="master.page.customer.complaints.show" /></a></li>
-					<li><a href="complaint/edit.do"><spring:message
+					<li><a href="complaint/customer/create.do"><spring:message
 								code="master.page.customer.complaints.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
