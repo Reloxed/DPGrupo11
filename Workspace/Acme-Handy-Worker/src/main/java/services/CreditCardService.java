@@ -4,7 +4,6 @@ package services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.CreditCardRepository;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.CreditCard;
 import domain.Customer;
@@ -37,12 +34,6 @@ public class CreditCardService {
 
 	@Autowired
 	private SponsorService			sponsorService;
-
-	@Autowired
-	private SponsorshipService		sponsorshipService;
-
-	@Autowired
-	private ApplicationService		applicationService;
 
 	@Autowired
 	private UtilityService			utilityService;
@@ -132,53 +123,37 @@ public class CreditCardService {
 
 		return res;
 		
-//		//Metemos la creditCard en la application o sponsorship correspondiente
-//		if (ownerCustomer != null) {
-//			if (creditCard.getId() == 0)
-//				for (final FixUpTask fixUpTasks : ownerCustomer.getFixUpTasks())
-//					for (final Application application : fixUpTasks.getApplications())
-//						if (application.getCreditCard() == null && application.getStatus().equals("ACCEPTED")) {
-//							application.setCreditCard(creditCard);
-//							this.applicationService.save(application);
-//						}
-//		} else if (ownerSponsor != null)
-//			if (creditCard.getId() == 0)
-//				for (final Sponsorship sponsorship : ownerSponsor.getSponsorships())
-//					if (sponsorship.getCreditCard() == null) {
-//						sponsorship.setCreditCard(creditCard);
-//						this.sponsorshipService.save(sponsorship);
-//					}
 	}
 
-	public void delete(final CreditCard creditCard) {
-		Assert.notNull(creditCard);
-		Assert.isTrue(creditCard.getId() != 0);
-		Collection<UserAccount> collUA = new HashSet<>();
-		Collection<Customer> collCus = null;
-		Collection<Sponsor> collSpo = null;
-
-		// Comprobamos que el customer o sponsor que quiere eliminar la CC es el
-		// dueño de la misma	
-		final UserAccount userAccount = LoginService.getPrincipal();
-		collCus = this.customerService.findByCreditCardId(creditCard.getId());
-		collSpo = this.sponsorService.findByCreditCardId(creditCard.getId());
-		
-		for(Customer customer: collCus){
-			collUA.add(customer.getUserAccount());
-		}
-		for(Sponsor sponsor: collSpo){
-			collUA.add(sponsor.getUserAccount());
-		}
-		
-		Assert.isTrue(collUA.contains(userAccount) || collSpo.contains(userAccount));
-
-		// Comprobamos que no hay ninguna application ni sponsorship que tenga
-		// asociada la CC a eliminar
-		Assert.isNull(this.applicationService.findByCreditCardId(creditCard.getId()));
-		Assert.isNull(this.sponsorshipService.findByCreditCardId(creditCard.getId()));
-
-		this.creditCardRepository.delete(creditCard);
-	}
+//	public void delete(final CreditCard creditCard) {
+//		Assert.notNull(creditCard);
+//		Assert.isTrue(creditCard.getId() != 0);
+//		Collection<UserAccount> collUA = new HashSet<>();
+//		Collection<Customer> collCus = null;
+//		Collection<Sponsor> collSpo = null;
+//
+//		// Comprobamos que el customer o sponsor que quiere eliminar la CC es el
+//		// dueño de la misma	
+//		final UserAccount userAccount = LoginService.getPrincipal();
+//		collCus = this.customerService.findByCreditCardId(creditCard.getId());
+//		collSpo = this.sponsorService.findByCreditCardId(creditCard.getId());
+//		
+//		for(Customer customer: collCus){
+//			collUA.add(customer.getUserAccount());
+//		}
+//		for(Sponsor sponsor: collSpo){
+//			collUA.add(sponsor.getUserAccount());
+//		}
+//		
+//		Assert.isTrue(collUA.contains(userAccount) || collSpo.contains(userAccount));
+//
+//		// Comprobamos que no hay ninguna application ni sponsorship que tenga
+//		// asociada la CC a eliminar
+//		Assert.isNull(this.applicationService.findByCreditCardId(creditCard.getId()));
+//		Assert.isNull(this.sponsorshipService.findByCreditCardId(creditCard.getId()));
+//
+//		this.creditCardRepository.delete(creditCard);
+//	}
 
 	// Other business methods
 

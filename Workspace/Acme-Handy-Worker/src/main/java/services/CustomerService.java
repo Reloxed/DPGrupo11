@@ -38,6 +38,9 @@ public class CustomerService {
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private ApplicationService applicationService;
 
 	// Constructors ------------------------------------
 
@@ -65,6 +68,7 @@ public class CustomerService {
 			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setComplaints(new ArrayList<Complaint>());
 			result.setFixUpTasks(new ArrayList<FixUpTask>());
+			result.setCreditCards(new ArrayList<CreditCard>());
 			result.setSocialProfiles(new ArrayList<SocialProfile>());
 			authority.setAuthority(Authority.CUSTOMER);
 			userAccount.addAuthority(authority);
@@ -113,6 +117,8 @@ public class CustomerService {
 					customer.getUserAccount()));
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
+			Assert.isTrue(this.applicationService.findAllApplicationsByCustomer(customer.getId()).containsAll(principalC.getCreditCards()));
+
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();

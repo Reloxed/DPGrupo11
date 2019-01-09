@@ -38,6 +38,9 @@ public class SponsorService {
 	@Autowired
 	private MessageBoxService messageBoxService;
 
+	@Autowired
+	private SponsorshipService sponsorshipService;
+	
 	// Constructors ------------------------------------
 
 	public SponsorService() {
@@ -69,6 +72,7 @@ public class SponsorService {
 					.createSystemMessageBoxes());
 			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 			result.setSponsorships(Collections.<Sponsorship> emptyList());
+			result.setCreditCards(new ArrayList<CreditCard>());
 
 			return result;
 		}
@@ -134,7 +138,12 @@ public class SponsorService {
 					.getUserAccount().getId());
 			Assert.isTrue(principal.getIsSuspicious() == sponsor
 					.getIsSuspicious());
+			
+			Assert.isTrue(this.sponsorshipService.findByPrincipal().containsAll(principal.getCreditCards()));
+
 		}
+		
+		
 
 		saved = this.sponsorRepository.saveAndFlush(sponsor);
 		return saved;

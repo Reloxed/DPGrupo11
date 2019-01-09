@@ -36,7 +36,12 @@
 				<ref bean="fixUpTask2_1" />
 			</list>
 		</property>
-
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard1" />
+				<ref bean="creditCard2" />
+			</list>
+		</property>
 		<property name="complaints">
 			<list>
 				<ref bean="complaint1_1_1" />
@@ -79,6 +84,12 @@
 			<list>
 				<ref bean="fixUpTask1_2" />
 				<ref bean="fixUpTask2_2" />
+			</list>
+		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard3" />
+				<ref bean="creditCard4" />
 			</list>
 		</property>
 		<property name="complaints">
@@ -257,6 +268,11 @@
 				<ref bean="sponsorship3_1" />
 			</list>
 		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard5" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="sponsor2" class="domain.Sponsor">
@@ -289,6 +305,11 @@
 				<ref bean="sponsorship1_2" />
 				<ref bean="sponsorship2_2" />
 				<ref bean="sponsorship3_2" />
+			</list>
+		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard6" />
 			</list>
 		</property>
 	</bean>
