@@ -19,7 +19,7 @@ import services.FixUpTaskService;
 import controllers.AbstractController;
 
 import domain.Customer;
-import domain.Endorsement;
+
 import domain.FixUpTask;
 
 @Controller
@@ -41,7 +41,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 	public FixUpTaskCustomerController() {
 		super();
 	}
-	/*
+	
 	//Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -70,7 +70,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 		return result;
 		
 	}
-	*/
+	
 	//list
 		@RequestMapping(value="/list",method=RequestMethod.GET)
 		public ModelAndView list(){
@@ -92,7 +92,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 	//Delete
 	
 	
-	/*
+	
 	
 	//Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -113,9 +113,9 @@ public class FixUpTaskCustomerController extends AbstractController{
 		
 	}
 	
-	*/
+	
 	//Ancillary methods
-/*
+
 	protected ModelAndView createEditModelAndView(final FixUpTask task) {
 		ModelAndView result;
 
@@ -127,11 +127,11 @@ public class FixUpTaskCustomerController extends AbstractController{
 	protected ModelAndView createEditModelAndView(final FixUpTask task, final String message) {
 		ModelAndView result;
 
-		
+		result = new ModelAndView("fixUpTask/edit");
 		result.addObject("message", message);
 		return result;
 	}
 	
 	
-	*/
+	
 }

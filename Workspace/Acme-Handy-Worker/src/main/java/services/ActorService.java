@@ -3,7 +3,6 @@ package services;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,30 +15,31 @@ import domain.Actor;
 import domain.Administrator;
 
 @Service
-@Transactional(value = TxType.REQUIRES_NEW)
+@Transactional(dontRollbackOn = Exception.class)
 public class ActorService {
 
 	// Managed repository -----------------
 
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository			actorRepository;
 
 	// Supporting services ----------------
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService			customerService;
 
 	@Autowired
-	private SponsorService sponsorService;
+	private SponsorService			sponsorService;
 
 	@Autowired
-	private RefereeService refereeService;
+	private RefereeService			refereeService;
+
 
 	// Constructors ------------------------------------
 

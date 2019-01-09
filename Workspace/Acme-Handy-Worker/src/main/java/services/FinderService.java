@@ -4,6 +4,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
+import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -29,6 +32,15 @@ public class FinderService {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
+	
+	@Autowired
+	private AdministratorService administratorService;
+	
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+	
+	@Autowired
+	private FixUpTaskService fixUpTaskService;
 
 
 	//Constructor -----------------------
@@ -120,40 +132,6 @@ public class FinderService {
 
 	}
 	
-	//expiración de la busqueda cuanto termina tiempo caché
-	public void deleteExpireFinders(final int timeInCache) {
-		Finder finder;
-		Collection<Finder> finders;
-		Collection<Finder> findersDelete;
-		Collection<Finder> currentFinders;
-
-		HandyWorker principal;
-		Date currentMoment;
-		Date expireCache;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		currentMoment = new Date();
-		expireCache = DateUtils.addHours(currentMoment, timeInCache);
-
-		finders = new ArrayList<Finder>();
-		finder = principal.getFinder();
-		finders.add(finder);
-
-		findersDelete = new ArrayList<Finder>();
-		currentFinders = new ArrayList<Finder>(finders);
-
-		for (final Finder f : finders)
-			if (f.getSearchMoment().before(expireCache)) {
-				findersDelete.add(f);
-				this.finderRepository.delete(f);
-			}
-
-		currentFinders.removeAll(findersDelete);
-
-	}
-
 	//Other business methods--------
 
 	public Finder findByPrincipal() {
@@ -165,6 +143,62 @@ public class FinderService {
 
 		finder = principal.getFinder();
 
+		return finder;
+	}
+	
+	//expiración de la busqueda cuando termina tiempo caché
+	public void deleteExpireFinders() {
+		Administrator principal;
+		Collection<Finder> collFind;
+		Date maxLivedMoment = new Date();
+		int timeChachedFind;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
+		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
+		
+		collFind = this.findAll();
+		
+		for(Finder finder : collFind) {
+			if(finder.getSearchMoment().before(maxLivedMoment)) {
+				this.finderRepository.delete(finder);
+			}
+		}
+	}
+	
+	public Finder resultadosFinder (Finder finder) {
+		Set<FixUpTask> result = new HashSet<>();
+		Collection <FixUpTask> collFix = this.fixUpTaskService.findAll();
+		
+		for(FixUpTask fixUpTask : collFix) {
+			if(finder.getPriceLow() != null && finder.getPriceHigh() != null 
+				&& finder.getPriceLow()<= fixUpTask.getMaxPrice() && finder.getPriceHigh()>= fixUpTask.getMaxPrice()){
+				
+				result.add(fixUpTask);
+			}
+			if(finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty())){
+				result.add(fixUpTask);
+			}
+			if(finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory())){
+				result.add(fixUpTask);
+			}
+			if(finder.getStartMoment() != null && finder.getEndMoment() != null 
+				&& finder.getStartMoment().before(fixUpTask.getStartMoment()) 
+					&& finder.getEndMoment().after(fixUpTask.getEndMoment())){
+				
+				result.add(fixUpTask);
+			}
+			if(finder.getKeyWord() != null && (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
+				|| fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
+					|| fixUpTask.getDescription().toLowerCase().contains(finder.getKeyWord().toLowerCase()))) {
+				
+				result.add(fixUpTask);
+			}
+		}
+		finder.setFixuptask(result);
+				
 		return finder;
 	}
 

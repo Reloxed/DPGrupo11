@@ -24,7 +24,7 @@
 <table class="displayStyle">
 	<tr>
 		<td>
-					<a href="actor/display.do?profileId=${row.id}"> <spring:message
+					<a href="actor/display.do?actorID=${customerId}"> <spring:message
 					code="profile.customer" />
 			</a>
 		</td>
