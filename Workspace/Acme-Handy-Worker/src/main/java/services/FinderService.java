@@ -4,7 +4,9 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,34 +158,36 @@ public class FinderService {
 		collFind = this.findAll();
 
 		for (final Finder finder : collFind)
-			if (finder.getSearchMoment().before(maxLivedMoment))
-				this.finderRepository.delete(finder);
+			if (finder.getSearchMoment().before(maxLivedMoment)) {
+				finder.setFixuptask(null);
+				this.save(finder);
+			}
 	}
 
 	public Finder resultadosFinder(final Finder finder) {
-		final List<FixUpTask> result = new ArrayList<>();
+		final Set<FixUpTask> setFix = new HashSet<>();
 		final Collection<FixUpTask> collFix = this.fixUpTaskService.findAll();
 
 		for (final FixUpTask fixUpTask : collFix) {
 			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
-				result.add(fixUpTask);
+				setFix.add(fixUpTask);
 			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
-				result.add(fixUpTask);
+				setFix.add(fixUpTask);
 			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
-				result.add(fixUpTask);
+				setFix.add(fixUpTask);
 			if (finder.getStartMoment() != null && finder.getEndMoment() != null && finder.getStartMoment().before(fixUpTask.getStartMoment()) && finder.getEndMoment().after(fixUpTask.getEndMoment()))
-				result.add(fixUpTask);
+				setFix.add(fixUpTask);
 			if (finder.getKeyWord() != null
 				&& (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getDescription().toLowerCase()
 					.contains(finder.getKeyWord().toLowerCase())))
-				result.add(fixUpTask);
-			if (result.size() > this.systemConfigurationService.findMySystemConfiguration().getMaxResults())
-				finder.setFixuptask(result.subList(0, this.systemConfigurationService.findMySystemConfiguration().getMaxResults() - 1));
-			else
-				finder.setFixuptask(result);
+				setFix.add(fixUpTask);
 		}
+
+		final List<FixUpTask> aux = new ArrayList<>(setFix);
+		final List<FixUpTask> result = new ArrayList<>(aux.subList(0, this.systemConfigurationService.findMySystemConfiguration().getMaxResults()));
+
+		finder.setFixuptask(result);
 
 		return finder;
 	}
-
 }

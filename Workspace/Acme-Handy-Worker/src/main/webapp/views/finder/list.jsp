@@ -32,7 +32,7 @@
 		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 		
-			<display:column property="address" title="${descriptionHeader}"
+			<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
 		
 
