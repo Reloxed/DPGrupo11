@@ -53,7 +53,7 @@
 			sortable="true" />
 
 		<display:column>
-			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> <img
+			<a href="application/handyWorker/create.do?fixUpTaskId=${row.id}"> <img
 				style="width: center; height: center" /> <spring:message
 					code="applications.create" />
 			</a> 
