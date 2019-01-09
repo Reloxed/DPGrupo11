@@ -25,15 +25,6 @@
 
 	<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/handyWorker/list.do"
 		pagesize="10" class="displaytag">
-
- 
-
-
-		<display:column>
-			<a href="actor/display.do?profileId=${row.id}"> <spring:message
-					code="profile.customer" />
-			</a>
-		</display:column>
 		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 		
@@ -83,11 +74,6 @@
 <display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
 		pagesize="10" class="displaytag">
 		
-				<display:column>
-			<a href="actor/display.do?profileId=${row.id}"> <spring:message
-					code="profile.customer" />
-			</a>
-		</display:column>
 		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 		
