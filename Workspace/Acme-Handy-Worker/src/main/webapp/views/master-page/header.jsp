@@ -172,9 +172,9 @@
 						code="master.page.sponsor.sponsorship" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="sponsor/sponsorship-create.do"><spring:message
+					<li><a href="sponsorship/sponsor/create.do"><spring:message
 								code="master.page.sponsor.sponsorship.create" /></a></li>
-					<li><a href="sponsor/sponsorship-show.do"><spring:message
+					<li><a href="sponsorship/sponsor/list.do"><spring:message
 								code="master.page.sponsor.sponsorship.show" /></a></li>
 				</ul></li>
 		</security:authorize>

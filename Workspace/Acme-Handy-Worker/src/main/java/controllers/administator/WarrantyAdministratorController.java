@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.WarrantyService;
+import controllers.AbstractController;
 import domain.Warranty;
 
 @Controller
 @RequestMapping("/warranty/administrator")
-public class WarrantyAdministratorController {
+public class WarrantyAdministratorController extends AbstractController{
 
 	//Services
 	@Autowired

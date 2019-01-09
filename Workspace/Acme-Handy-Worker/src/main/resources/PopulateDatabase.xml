@@ -1422,7 +1422,7 @@
 	<!-- CUSTOMERS -->
 	<bean id="userCustomer1" class="security.UserAccount">
 		<property name="username" value="customer1" />
-		<property name="password" value="668816e02d4658da91aa4526d8c61972" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1476,7 +1476,7 @@
 	<!-- SPONSOR -->
 	<bean id="userSponsor1" class="security.UserAccount">
 		<property name="username" value="sponsor1" />
-		<property name="password" value="8b2f8c3d122ea8076feaf1fb6bdaadf0" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
