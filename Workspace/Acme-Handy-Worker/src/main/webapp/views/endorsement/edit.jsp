@@ -69,7 +69,7 @@
 			<div>
 				<p><spring:message code="endorsement.recipient" /></p>
 				<form:select path="recipient" style="width:100px;">
-					<jstl:forEach var="x" items="${endorsers}">
+					<jstl:forEach var="x" items="${recipients}">
 						<form:option value="${x.name}" />
 						<jstl:out value="${x.name}" />
 					</jstl:forEach>

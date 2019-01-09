@@ -17,6 +17,7 @@ import services.EndorserService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.Endorsement;
+import domain.HandyWorker;
 
 @Controller
 @RequestMapping("/endorsement/customer")
@@ -71,6 +72,20 @@ public class EndorsementCustomerController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int endorsementId) {
+		final ModelAndView result;
+		Endorsement endorsement;
+
+		endorsement = this.endorsementService.findOne(endorsementId);
+
+		result = new ModelAndView("endorsement/display");
+		result.addObject("endorsement", endorsement);
+		result.addObject("requestUri", "endorsement/customer/display.do");
+
+		return result;
+	}
+
 	//Ancillary methods------------------------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Endorsement endorsement) {
@@ -83,9 +98,16 @@ public class EndorsementCustomerController extends AbstractController {
 	}
 	protected ModelAndView createEditModelAndView(final Endorsement endorsement, final String message) {
 		ModelAndView result;
+		Customer principal;
+		Collection<HandyWorker> recipients;
+
+		principal = this.customerService.findByPrincipal();
+
+		recipients = this.endorsementService.possibleHwRecipients(principal.getId());
 
 		result = new ModelAndView("endorsement/edit");
 		result.addObject("endorsement", endorsement);
+		result.addObject("recipients", recipients);
 
 		return result;
 
