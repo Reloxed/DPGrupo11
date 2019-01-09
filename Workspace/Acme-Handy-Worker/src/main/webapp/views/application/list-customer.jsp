@@ -46,20 +46,21 @@
 
 			<display:column titleKey="application.buttons">
 				<jstl:choose>
-					<jstl:when test="${applications.status == 'PENDING'}">
+					<jstl:when test="${hasAccepted}">
+						<spring:message code="application.noaction" />
+					</jstl:when>
+					<jstl:when
+						test="${applications.status == 'PENDING' && hasAccepted == false}">
 						<a
-							onclick="redirect: location.href = 'application/customer/accept.do?applicationID=${applicationID}';">
+							onclick="redirect: location.href = 'application/customer/accept.do?applicationID=${applications.id}';">
 							<img src="images/confirm.png">
 						</a>
 
 						<a
-							onclick="redirect: location.href = 'application/customer/deny.do?applicationID=${applicationID}';">
+							onclick="redirect: location.href = 'application/customer/deny.do?applicationID=${applications.id}';">
 							<img src="images/delete.png">
 						</a>
 					</jstl:when>
-					<jstl:otherwise>
-						<spring:message code="application.noaction" />
-					</jstl:otherwise>
 				</jstl:choose>
 			</display:column>
 

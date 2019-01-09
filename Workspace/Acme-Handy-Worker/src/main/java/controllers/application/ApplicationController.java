@@ -44,17 +44,26 @@ public class ApplicationController extends AbstractController {
 		ModelAndView res;
 		Collection<Application> applications;
 		Customer fixUpTaskOwner;
+		boolean hasAccepted = false;
 
 		applications = this.applicationService
 				.findAllApplicationsByFixUpTask(fixuptaskID);
 		fixUpTaskOwner = this.customerService
 				.findCustomerByApplicationId(applications.iterator().next()
 						.getId());
-
+		
+		for (Application application : applications) {
+			if (application.getStatus().equals("ACCEPTED")) {
+				hasAccepted = true;
+				break;
+			}
+		}
+		
 		res = new ModelAndView("application/listCustomer");
 		res.addObject("requestURI", "application/customer/list-customer.do");
 		res.addObject("applications", applications);
 		res.addObject("owner", fixUpTaskOwner);
+		res.addObject("hasAccepted", hasAccepted);
 		return res;
 	}
 
@@ -73,6 +82,16 @@ public class ApplicationController extends AbstractController {
 		res.addObject("requestURI", "application/customer/list-.do");
 		res.addObject("applications", applications);
 		res.addObject("owner", principal);
+		return res;
+	}
+	
+	// Accept application
+	
+	@RequestMapping(value = "/customer/accept")
+	public ModelAndView accept(@RequestParam int applicationID){
+		ModelAndView res;
+		Application toAccept;
+		
 		return res;
 	}
 }
