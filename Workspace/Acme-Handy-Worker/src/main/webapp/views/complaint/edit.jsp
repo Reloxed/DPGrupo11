@@ -13,14 +13,10 @@
 <form:form action="complaint/customer/edit.do" modelAttribute="complaint"
 	id="form">
 	<form:hidden path="id" />
-	<form:errors cssClass="error" path="id" />
 	<form:hidden path="version" />
-	<form:errors cssClass="error" path="version" />
 	<form:hidden path="ticker" value="000000-AAAAAA"/>
-	<form:errors cssClass="error" path="ticker" />
 	<form:hidden path="moment" value="01/01/2001 00:00"/>
-	<form:errors cssClass="error" path="moment" />
-
+	
 	<form:label path="fixUpTask">
 		<spring:message code="complaint.fixuptask" />
 	</form:label>
