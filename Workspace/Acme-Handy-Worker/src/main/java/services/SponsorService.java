@@ -3,6 +3,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -139,8 +141,16 @@ public class SponsorService {
 			Assert.isTrue(principal.getIsSuspicious() == sponsor
 					.getIsSuspicious());
 			
-			Assert.isTrue(this.sponsorshipService.findByPrincipal().containsAll(principal.getCreditCards()));
-
+			Collection<Sponsorship> collSs = this.sponsorshipService.findByPrincipal();
+			
+			if(collSs.size()>0){
+				Set<CreditCard> setCC = new HashSet<>();
+				
+				for(Sponsorship ss : collSs){
+					setCC.add(ss.getCreditCard());
+				}
+					Assert.isTrue(sponsor.getCreditCards().contains(setCC));
+			}
 		}
 		
 		
