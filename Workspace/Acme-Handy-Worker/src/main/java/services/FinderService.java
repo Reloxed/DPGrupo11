@@ -170,29 +170,29 @@ public class FinderService {
 		final int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
 
 		for (final FixUpTask fixUpTask : collFix) {
-			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice()) {
+			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
 				setFix.add(fixUpTask);
-				if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
-					setFix.add(fixUpTask);
-				if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
-					setFix.add(fixUpTask);
-				if (finder.getStartMoment() != null && finder.getEndMoment() != null && finder.getStartMoment().before(fixUpTask.getStartMoment()) && finder.getEndMoment().after(fixUpTask.getEndMoment()))
-					setFix.add(fixUpTask);
-				if (finder.getKeyWord() != null
-					&& (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getDescription().toLowerCase()
-						.contains(finder.getKeyWord().toLowerCase())))
-					setFix.add(fixUpTask);
-			}
-
-			final List<FixUpTask> aux = new ArrayList<>();
-			aux.addAll(setFix);
-			final List<FixUpTask> result = new ArrayList<>();
-			if (aux.size() > 100) {
-				result.addAll(aux.subList(0, maxResults));
-				finder.setFixuptask(result);
-			} else
-				finder.setFixuptask(setFix);
+			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
+				setFix.add(fixUpTask);
+			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
+				setFix.add(fixUpTask);
+			if (finder.getStartMoment() != null && finder.getEndMoment() != null && finder.getStartMoment().before(fixUpTask.getStartMoment()) && finder.getEndMoment().after(fixUpTask.getEndMoment()))
+				setFix.add(fixUpTask);
+			if (finder.getKeyWord() != null
+				&& (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getDescription().toLowerCase()
+					.contains(finder.getKeyWord().toLowerCase())))
+				setFix.add(fixUpTask);
 		}
+
+		final List<FixUpTask> aux = new ArrayList<>();
+		aux.addAll(setFix);
+		final List<FixUpTask> result = new ArrayList<>();
+		if (aux.size() > 100) {
+			result.addAll(aux.subList(0, maxResults));
+			finder.setFixuptask(result);
+		} else
+			finder.setFixuptask(setFix);
+
 		return finder;
 	}
 }
