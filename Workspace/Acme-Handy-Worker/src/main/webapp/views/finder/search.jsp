@@ -26,8 +26,7 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-
-
+		<form:hidden path="results" />
 
 		<form:label path="keyWord">
 			<spring:message code="finder.keyWord" />:
@@ -38,20 +37,22 @@
 		<br />
 
 		<form:label path="category">
-			<spring:message code="finder.category" />:
+				<spring:message code="finder.category" />:
 		</form:label>
-		<form:input path="category" />
-		<form:errors cssClass="error" path="category" />
-		<br />
-		<br />
+		<form:select path="category">
+			<form:option value="0" label="  --  "/>
+			<form:options items="${categories}" itemLabel="name" />
+		</form:select>
+		<br><br>
 
 		<form:label path="warranty">
-			<spring:message code="finder.warranty" />:
+				<spring:message code="finder.warranty" />:
 		</form:label>
-		<form:input path="warranty" />
-		<form:errors cssClass="error" path="warranty" />
-		<br />
-		<br />
+		<form:select path="warranty">
+			<form:option value="0" label="  --  "/>
+			<form:options items="${warranties}" itemLabel="title" />
+		</form:select>
+		<br><br>
 
 		<form:label path="startMoment">
 			<spring:message code="finder.startMoment" />:
@@ -87,9 +88,8 @@
 		<br />
 		<br />
 
-		<a href="finder/handyWorker/list.do?finderId=${finder.id}"> <spring:message
-				code="finder.showResults" />
-		</a>&nbsp; 
+		<input type="submit" name="save"
+			value="<spring:message code="finder.showResults" />"/>
 		
 		<input type="button" name="cancel"
 			value="<spring:message code="finder.cancel" />"

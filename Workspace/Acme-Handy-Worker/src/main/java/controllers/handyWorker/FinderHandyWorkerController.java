@@ -2,19 +2,22 @@
 package controllers.handyWorker;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.FinderService;
 import services.HandyWorkerService;
+import services.WarrantyService;
 import controllers.AbstractController;
 import domain.Finder;
 import domain.FixUpTask;
@@ -32,9 +35,12 @@ public class FinderHandyWorkerController extends AbstractController {
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
 
+	@Autowired
+	private CategoryService		categoryService;
 
-	//@Autowired
-	//private SystemConfigurationService systemConfigurationService;
+	@Autowired
+	private WarrantyService		warrantyService;
+
 
 	// Constructors
 
@@ -45,18 +51,19 @@ public class FinderHandyWorkerController extends AbstractController {
 	// Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int finderId) {
+	public ModelAndView list() {
 		final ModelAndView result;
-		final Finder finder;
+		Finder finder;
 		Collection<FixUpTask> results;
+		HandyWorker h;
 
-		//this.finderService.deleteExpireFinders();
-		finder = this.finderService.findByPrincipal();
+		h = this.handyWorkerService.findByPrincipal();
+		finder = h.getFinder();
 		results = finder.getFixuptask();
 
 		result = new ModelAndView("finder/list");
-		result.addObject("finder", finder);
 		result.addObject("results", results);
+		result.addObject("requestUri", "finder/handyWorker/list.do");
 
 		return result;
 
@@ -70,29 +77,36 @@ public class FinderHandyWorkerController extends AbstractController {
 
 		hw = this.handyWorkerService.findByPrincipal();
 		finder = hw.getFinder();
-		result = new ModelAndView("finder/search");
-		result.addObject("finder", finder);
-		result.addObject("requestUri", "finder/handyWorker/list.do");
+		result = this.createEditModelAndView(finder);
+		result.addObject("categories", this.categoryService.findAll());
+		result.addObject("warranties", this.warrantyService.findAll());
 
 		return result;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Finder finder, final BindingResult binding) {
+	public ModelAndView search(@Valid final Finder finder, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			final List<ObjectError> errors = binding.getAllErrors();
+			for (final ObjectError e : errors)
+				System.out.println(e.toString());
 			result = this.createEditModelAndView(finder);
-		else
+
+		} else
 			try {
-				this.finderService.save(finder);
-				result = new ModelAndView("redirect:list.do");
+				this.finderService.resultadosFinder(finder);
+				result = new ModelAndView("redirect:/finder/handyWorker/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(finder, "finder.update.error");
+				System.out.println(finder);
+				System.out.println(oops.getMessage());
+				System.out.println(oops.getClass());
+				System.out.println(oops.getCause());
+				result = this.createEditModelAndView(finder);
 			}
 		return result;
 	}
-
 	protected ModelAndView createEditModelAndView(final Finder finder) {
 		ModelAndView result;
 
@@ -103,12 +117,12 @@ public class FinderHandyWorkerController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Finder finder, final String messageCode) {
 		ModelAndView result;
-		Collection<FixUpTask> results;
+		final Collection<FixUpTask> results;
 
-		results = finder.getFixuptask();
+		results = this.finderService.resultadosFinder(finder).getFixuptask();
 
-		result = new ModelAndView("finder/handyWorker/edit");
-		result.addObject("messageCode", messageCode);
+		result = new ModelAndView("finder/search");
+		result.addObject("message", messageCode);
 		result.addObject("finder", finder);
 		result.addObject("results", results);
 

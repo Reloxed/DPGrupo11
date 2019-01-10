@@ -22,19 +22,18 @@ import domain.FixUpTask;
 @Transactional
 public class FixUpTaskService {
 
-
-
 	// Managed repository-----------
 
 	@Autowired
-	private FixUpTaskRepository			fixUpTaskRepository;
+	private FixUpTaskRepository	fixUpTaskRepository;
 
 	//Supporting services ----------
 	@Autowired
-	private UtilityService				utilityService;
+	private UtilityService		utilityService;
 
 	@Autowired
-	private CustomerService				customerService;
+	private CustomerService		customerService;
+
 
 	//Constructor ----------------------------------------------------
 
@@ -86,17 +85,16 @@ public class FixUpTaskService {
 
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getEndMoment());
 		Assert.notNull(fixUpTask.getStartMoment());
-		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));		
+		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
-		
-		
+
 		if (fixUpTask.getId() == 0) {
 			fixUpTask.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 			fixUpTask.setTicker(this.utilityService.generateTicker());
@@ -105,15 +103,14 @@ public class FixUpTaskService {
 			Assert.isTrue(fixUpTask.getTicker().equals(this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
-		List<String> atributosAComprobar = new ArrayList<>();
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
+
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
 		principal.getFixUpTasks().add(result);
@@ -130,7 +127,7 @@ public class FixUpTaskService {
 
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
 
 		Assert.isTrue(fixUpTask.getApplications().isEmpty());
@@ -161,35 +158,32 @@ public class FixUpTaskService {
 		return res;
 
 	}
-	public Collection<FixUpTask> FixUpTaskByCustomer(int customerId){
-		Collection<FixUpTask> res=this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
+	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
 		return res;
-		
+
 	}
-	
-	public int CreatorFixUpTask(int FixUpTaskId){
-		Collection<Customer>customers;
+
+	public int creatorFixUpTask(final int fixUpTaskId) {
+		Collection<Customer> customers;
 		Collection<FixUpTask> tasks;
-		int customerId=0;
-		customers=this.customerService.findAll();
-		
-		for(Customer c:customers){
-			
-			tasks=c.getFixUpTasks();
-			for(FixUpTask t:tasks ){
-				if(FixUpTaskId==t.getId()){
-					customerId=c.getId();
+		int customerId = 0;
+		customers = this.customerService.findAll();
+
+		for (final Customer c : customers) {
+
+			tasks = c.getFixUpTasks();
+			for (final FixUpTask t : tasks)
+				if (fixUpTaskId == t.getId()) {
+					customerId = c.getId();
 					break;
 				}
-				
-			}
-			if(customerId!=0){
+			if (customerId != 0)
 				break;
-			}
 		}
-		
+
 		return customerId;
-		
+
 	}
 
 }

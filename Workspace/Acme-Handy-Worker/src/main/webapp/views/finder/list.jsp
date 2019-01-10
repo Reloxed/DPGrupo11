@@ -21,36 +21,30 @@
 <security:authorize access="hasRole('HANDYWORKER')">
 
 	<display:table name="results" id="row"
-		requestURI="finder/handyWorker/list.do?finderId=${finder.id}" pagesize="10" class="displaytag">
-	
-	
+		requestURI="${ requestURI }" pagesize="10" class="displaytag">
+
 		<display:column>
 			<a href="actor/display.do?profileId=${row.id}"> <spring:message
 					code="profile.customer" />
 			</a>
 		</display:column>
-		
-		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		
-			<display:column property="description" title="${descriptionHeader}"
-			sortable="true" />
-		
 
+		<spring:message code="fixUpTask.description" var="descriptionHeader" />
+
+		<display:column property="description" title="${descriptionHeader}"
+			sortable="true" />
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
 		<display:column property="address" title="${addressHeader}"
 			sortable="true" />
 
-
 		<spring:message code="fixUpTask.maxPrice" var="maxPriceHeader" />
 		<display:column property="maxPrice" title="${maxPriceHeader}"
 			sortable="true" />
 
-
 		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
 		<display:column property="startMoment" title="${startMomentHeader}"
 			sortable="true" />
-
 
 		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
 		<display:column property="endMoment" title="${endMomentHeader}"
@@ -60,14 +54,14 @@
 			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
 				style="width: center; height: center" /> <spring:message
 					code="applications.create" />
-			</a> 
+			</a>
 		</display:column>
-		
-			<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+
+		<display:column>
+			<a href="fixUpTask/handyWorker/display.do?fixUpTaskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
-	</display:column>
+		</display:column>
 	</display:table>
 
 </security:authorize>

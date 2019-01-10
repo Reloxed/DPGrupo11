@@ -195,4 +195,24 @@ public class FinderService {
 
 		return finder;
 	}
+
+	public void update(final int finderId, final String keyWord, final Double startPrice, final Double endPrice, final Date startDate, final Date endDate) {
+
+		Assert.isTrue(this.finderRepository.exists(finderId));
+		Finder finder;
+		Collection<FixUpTask> results;
+
+		finder = this.finderRepository.findOne(finderId);
+
+		results = this.resultadosFinder(finder).getFixuptask();
+
+		finder.setEndMoment(endDate);
+		finder.setPriceHigh(endPrice);
+		finder.setKeyWord(keyWord);
+		finder.setStartMoment(startDate);
+		finder.setPriceLow(startPrice);
+		finder.setFixuptask(results);
+		finder.setSearchMoment(new Date(System.currentTimeMillis() - 1));
+
+	}
 }
