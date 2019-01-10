@@ -10,7 +10,7 @@
 
 <tiles-definitions>
 
-	<definition name="application/edit" extends="master.page">
+	<definition name="application/handy-worker/edit" extends="master.page">
 		<put-attribute name="title" value="Edit application" />
 		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
@@ -26,15 +26,10 @@
 			value="/views/application/list-customer.jsp" />
 	</definition>
 
-	<definition name="application/listHandyWorker" extends="master.page">
+	<definition name="application/handy-worker/list-handy-worker" extends="master.page">
 		<put-attribute name="title" value="List of applications" />
 		<put-attribute name="body"
 			value="/views/application/list-handy-worker.jsp" />
-	</definition>
-	
-	<definition name="application/edit" extends="master.page">
-		<put-attribute name="title" value="Edit a" />
-		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

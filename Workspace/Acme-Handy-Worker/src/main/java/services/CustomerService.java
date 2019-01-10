@@ -39,9 +39,6 @@ public class CustomerService {
 	@Autowired
 	private ActorService actorService;
 	
-	@Autowired
-	private ApplicationService applicationService;
-
 	// Constructors ------------------------------------
 
 	public CustomerService() {
@@ -117,8 +114,12 @@ public class CustomerService {
 					customer.getUserAccount()));
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
-			//			Assert.isTrue(this.applicationService.findAllApplicationsByCustomer(customer.getId()).containsAll(principalC.getCreditCards()));
-
+			
+			Collection<CreditCard> collCc = this.customerRepository.findCreditCardsByCustomerId(customer.getId());
+			
+			if(collCc.size()>0){
+				Assert.isTrue(customer.getCreditCards().contains(collCc));
+			}
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();

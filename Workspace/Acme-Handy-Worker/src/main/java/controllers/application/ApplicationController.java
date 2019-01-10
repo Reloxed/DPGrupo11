@@ -91,8 +91,8 @@ public class ApplicationController extends AbstractController {
 		applications = this.applicationService
 				.findAllApplicationsByHandyWorker(principal.getId());
 
-		res = new ModelAndView("application/listHandyWorker");
-		res.addObject("requestURI", "application/customer/list.do");
+		res = new ModelAndView("application/handy-worker/list-handy-worker");
+		res.addObject("requestURI", "application/handy-worker/list-handy-worker.do");
 		res.addObject("applications", applications);
 		res.addObject("owner", principal);
 		return res;
@@ -169,8 +169,8 @@ public class ApplicationController extends AbstractController {
 		res.addObject("fixuptaskID", toReject.getFixUpTask().getId());
 		return res;
 	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/handy-worker/create", method = RequestMethod.GET, params = "fixUpTaskId")
 	public ModelAndView create(@RequestParam int fixUpTaskId) {
 		ModelAndView result;
 		Application application;
@@ -184,7 +184,7 @@ public class ApplicationController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/handy-worker/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int applicationId) {
 		ModelAndView result;
 		Application application;
@@ -196,9 +196,8 @@ public class ApplicationController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Application application,
-			BindingResult binding) {
+	@RequestMapping(value="/handy-worker/edit", method=RequestMethod.POST, params="save")
+	public ModelAndView save(@Valid Application application, BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -206,7 +205,7 @@ public class ApplicationController extends AbstractController {
 		} else {
 			try {
 				this.applicationService.save(application);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:list-handy-worker.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(application,
 						"application.commit.error");
@@ -229,8 +228,8 @@ public class ApplicationController extends AbstractController {
 	protected ModelAndView createEditModelAndView(Application application,
 			String messageCode) {
 		ModelAndView result;
-
-		result = new ModelAndView("application/edit");
+		
+		result = new ModelAndView("application/handy-worker/edit");
 		result.addObject("application", application);
 		result.addObject("message", messageCode);
 

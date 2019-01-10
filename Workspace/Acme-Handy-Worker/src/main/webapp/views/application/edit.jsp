@@ -24,13 +24,12 @@
 	</h2>
 </div>
 
-<form:form action="application/edit.do" modelAttribute="application"
+<form:form action="application/handy-worker/edit.do" modelAttribute="application"
 	id="form">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
 	<form:hidden path="fixUpTask" />
-	<form:errors cssClass="error" path="fixUpTask"></form:errors>
 	<form:hidden path="applicant"/>
 	<form:hidden path="creditCard"/>
 	<form:hidden path="status" />
@@ -55,8 +54,6 @@
 	<form:errors cssClass="error" path="comments"></form:errors>
 
 	<br />
-
-
 
 	<br />
 	
