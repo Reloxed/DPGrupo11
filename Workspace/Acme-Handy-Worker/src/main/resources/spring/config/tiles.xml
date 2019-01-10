@@ -32,7 +32,7 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/handyWorker/tiles.xml</value>
 		<value>/views/sponsor/tiles.xml</value>
-
+		<value>/views/creditcard/tiles.xml</value>
 
 		<value>/views/fixUpTask/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>

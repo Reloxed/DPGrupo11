@@ -15,6 +15,11 @@
 		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
 
+	<definition name="application/accept" extends="master.page">
+		<put-attribute name="title" value="Accept application" />
+		<put-attribute name="body" value="/views/application/accept.jsp" />
+	</definition>
+
 	<definition name="application/listCustomer" extends="master.page">
 		<put-attribute name="title" value="List of applications" />
 		<put-attribute name="body"

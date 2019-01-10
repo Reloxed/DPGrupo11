@@ -117,7 +117,7 @@ public class CustomerService {
 					customer.getUserAccount()));
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
-			Assert.isTrue(this.applicationService.findAllApplicationsByCustomer(customer.getId()).containsAll(principalC.getCreditCards()));
+			//			Assert.isTrue(this.applicationService.findAllApplicationsByCustomer(customer.getId()).containsAll(principalC.getCreditCards()));
 
 		}
 		cus = this.customerRepository.save(customer);

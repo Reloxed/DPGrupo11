@@ -37,6 +37,7 @@
 	<form:hidden path="score" />
 	<form:hidden path="fixUpTasks" />
 	<form:hidden path="complaints" />
+	<form:hidden path="creditCards" />
 
 	<jstl:choose>
 		<jstl:when test="${customer.id == 0}">

@@ -52,12 +52,12 @@
 					<jstl:when
 						test="${applications.status == 'PENDING' && hasAccepted == false}">
 						<a
-							onclick="redirect: location.href = 'application/customer/accept.do?applicationID=${applications.id}';">
+							onclick="redirect: location.href = 'application/customer/acceptv.do?applicationID=${applications.id}';">
 							<img src="images/confirm.png">
 						</a>
 
 						<a
-							onclick="redirect: location.href = 'application/customer/deny.do?applicationID=${applications.id}';">
+							onclick="redirect: location.href = 'application/customer/reject.do?applicationID=${applications.id}';">
 							<img src="images/delete.png">
 						</a>
 					</jstl:when>

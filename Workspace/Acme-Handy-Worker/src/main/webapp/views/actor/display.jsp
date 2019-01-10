@@ -103,3 +103,26 @@
 		value="<spring:message code="actor.edit" />"
 		onclick="redirect: location.href = '${type}/${type}/edit.do?${type}ID=${actor.id}';" />
 </jstl:if>
+
+<jstl:if test="${user == actor.userAccount.username}">
+	<jstl:if test="${type == 'customer' || type == 'sponsor'}">
+
+		<table class="displayStyle">
+			<tr>
+				<td><display:table pagesize="5" class="displaytag"
+						name="creditCards"
+						requestURI="actor/display.do?actorID=${actor.id}" id="creditCards">
+
+						<display:column titleKey="actor.creditcard.holdername"
+							value="${creditCards.holderName}" sortable="true" />
+						<display:column titleKey="actor.creditcard.brand"
+							value="${creditCards.brandName}" sortable="true" />
+					</display:table></td>
+			</tr>
+		</table>
+
+		<input type="button" name="addCredCard"
+			value="<spring:message code="actor.add.creditcard" />"
+			onclick="redirect: location.href = 'creditcard/create.do?';" />
+	</jstl:if>
+</jstl:if>

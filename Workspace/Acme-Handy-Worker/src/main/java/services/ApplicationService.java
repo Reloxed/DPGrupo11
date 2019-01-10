@@ -194,7 +194,7 @@ public class ApplicationService {
 		Assert.notNull(customer);
 
 		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
-		Assert.isTrue(a.getStatus() == "PENDING");
+		Assert.isTrue(a.getStatus().equals("PENDING"));
 		a.setStatus("ACCEPTED");
 		this.applicationRepository.saveAndFlush(a);
 
@@ -220,7 +220,7 @@ public class ApplicationService {
 		Assert.notNull(customer);
 
 		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
-		Assert.isTrue(a.getStatus() == "PENDING");
+		Assert.isTrue(a.getStatus().equals("PENDING"));
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
 
