@@ -85,6 +85,18 @@
 	</jstl:if>
 </security:authorize>
 
+<<<<<<< HEAD
+<display:table name="complaints" id="complaints"
+	requestURI="complaints/referee/list.do" pagesize="10"
+	class="displaytag">
+	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
+	<display:column property="moment" titleKey="complaint.moment"
+		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
+	<display:column property="description" titleKey="complaint.description" />
+	<display:column property="attachements"
+		titleKey="complaint.attachements" />
+	<display:column property="ticker" titleKey="complaint.ticker" />
+=======
 <security:authorize access="hasRole('CUSTOMER')">
 	<jstl:set var="uri" value="complaint/fixUpTask.do" />
 </security:authorize>
@@ -101,4 +113,5 @@
 		<!-- TODO: solo para el customer que lo ha escrito: <a href="${requestURI}"><spring:message	code="complaint.edit" /></a>-->
 		<a href="complaint/handyWorker/display.do?complaintId=${row.id}"><spring:message code="complaint.display" /></a>
 	</display:column>
+>>>>>>> fb12e78e6ba2d3d8f9543e8b72eca7987cec1d89
 </display:table>
