@@ -60,7 +60,7 @@ public class EndorserService {
 
 		res = this.findEndorserByUserAccount(userAccount.getId());
 		Assert.notNull(res);
-		
+
 		return res;
 	}
 
@@ -76,7 +76,6 @@ public class EndorserService {
 		return result;
 	}
 
-
 	public Collection<Endorsement> findEndorsementsByEndorser(final int endorserId) {
 		Collection<Endorsement> result;
 		Assert.isTrue(endorserId != 0);
@@ -88,10 +87,17 @@ public class EndorserService {
 		return result;
 	}
 
+	public Collection<Endorsement> findEndorsementsSendedByEndorser(final int endorserId) {
+		Collection<Endorsement> result;
+		Assert.isTrue(endorserId != 0);
 
-	
+		result = this.endorserRepository.findEndorsementsSendedByEndorser(endorserId);
 
-	
+		Assert.notNull(result);
+
+		return result;
+
+	}
 
 	public Collection<Endorsement> findEndorsementsReceivedByEndorser(final int endorserId) {
 		Collection<Endorsement> result;
@@ -100,9 +106,8 @@ public class EndorserService {
 		result = this.endorserRepository.findEndorsementsReceivedByEndorser(endorserId);
 
 		Assert.notNull(result);
-		
+
 		return result;
 
-
-}
+	}
 }

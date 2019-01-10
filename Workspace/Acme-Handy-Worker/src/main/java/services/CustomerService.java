@@ -35,10 +35,10 @@ public class CustomerService {
 
 	@Autowired
 	private MessageBoxService messageBoxService;
-	
+
 	@Autowired
 	private ActorService actorService;
-	
+
 	// Constructors ------------------------------------
 
 	public CustomerService() {
@@ -50,14 +50,14 @@ public class CustomerService {
 	public Customer create() {
 		Customer result = new Customer();
 		Actor principal;
-		
+
 		final Authority authority = new Authority();
 		final UserAccount userAccount = new UserAccount();
 
 		try {
 			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
-			
+
 			return null;
 
 		} catch (final IllegalArgumentException e) {
@@ -70,10 +70,10 @@ public class CustomerService {
 			authority.setAuthority(Authority.CUSTOMER);
 			userAccount.addAuthority(authority);
 			result.setUserAccount(userAccount);
-			
+
 			return result;
 		}
-		
+
 	}
 
 	public Collection<Customer> findAll() {
@@ -114,9 +114,9 @@ public class CustomerService {
 					customer.getUserAccount()));
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
-			
+
 			Collection<CreditCard> collCc = this.customerRepository.findCreditCardsByCustomerId(customer.getId());
-			
+
 			if(collCc.size()>0){
 				Assert.isTrue(customer.getCreditCards().contains(collCc));
 			}
@@ -190,6 +190,14 @@ public class CustomerService {
 
 		result = this.customerRepository
 				.findCustomerByApplicationId(applicationId);
+
+		return result;
+	}
+
+	public Customer findCustomerByFixUpTask(FixUpTask fixUpTask) {
+		Customer result;
+
+		result = this.customerRepository.findCustomerByFixUpTask(fixUpTask);
 
 		return result;
 	}

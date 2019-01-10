@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
-import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -27,21 +26,18 @@ public class FinderService {
 	//Managed repository-----------
 
 	@Autowired
-	private FinderRepository	finderRepository;
+	private FinderRepository			finderRepository;
 
 	//Supporting services ----------
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
-	
+	private HandyWorkerService			handyWorkerService;
+
 	@Autowired
-	private AdministratorService administratorService;
-	
+	private SystemConfigurationService	systemConfigurationService;
+
 	@Autowired
-	private SystemConfigurationService systemConfigurationService;
-	
-	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService			fixUpTaskService;
 
 
 	//Constructor -----------------------
@@ -104,10 +100,9 @@ public class FinderService {
 			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
 		else if (finder.getPriceHigh() != null && finder.getPriceLow() != null)
 			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
-		
-		if(principal.getFinder() != null) {
+
+		if (principal.getFinder() != null)
 			this.delete(principal.getFinder());
-		}
 
 		result = this.finderRepository.save(finder);
 		Assert.notNull(result);
@@ -115,7 +110,7 @@ public class FinderService {
 		return result;
 
 	}
-	
+
 	public void delete(final Finder finder) {
 		HandyWorker principal;
 
@@ -132,7 +127,7 @@ public class FinderService {
 		principal.setFinder(null);
 
 	}
-	
+
 	//Other business methods--------
 
 	public Finder findByPrincipal() {
@@ -146,72 +141,78 @@ public class FinderService {
 
 		return finder;
 	}
-	
+
 	//expiración de la busqueda cuando termina tiempo caché
 	public void deleteExpireFinders() {
-		Administrator principal;
+		HandyWorker principal;
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
-		
-		principal = this.administratorService.findByPrincipal();
+
+		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
 		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
-		
+
 		collFind = this.findAll();
-		
-		for(Finder finder : collFind) {
-			if(finder.getSearchMoment().before(maxLivedMoment)) {
+
+		for (final Finder finder : collFind)
+			if (finder.getSearchMoment().before(maxLivedMoment)) {
 				finder.setFixuptask(null);
 				this.save(finder);
 			}
-		}
 	}
-	
-	public Finder resultadosFinder (Finder finder) {
-		Set<FixUpTask> setFix = new HashSet<>();
-		Collection <FixUpTask> collFix = this.fixUpTaskService.findAll();
-		int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
-		
-		for(FixUpTask fixUpTask : collFix) {
-			if(finder.getPriceLow() != null && finder.getPriceHigh() != null 
-				&& finder.getPriceLow()<= fixUpTask.getMaxPrice() && finder.getPriceHigh()>= fixUpTask.getMaxPrice()){
-				
+
+	public Finder resultadosFinder(final Finder finder) {
+		final Set<FixUpTask> setFix = new HashSet<>();
+		final Collection<FixUpTask> collFix = this.fixUpTaskService.findAll();
+		final int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
+
+		for (final FixUpTask fixUpTask : collFix) {
+			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
 				setFix.add(fixUpTask);
-			}
-			if(finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty())){
+			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
 				setFix.add(fixUpTask);
-			}
-			if(finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory())){
+			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
 				setFix.add(fixUpTask);
-			}
-			if(finder.getStartMoment() != null && finder.getEndMoment() != null 
-				&& finder.getStartMoment().before(fixUpTask.getStartMoment()) 
-					&& finder.getEndMoment().after(fixUpTask.getEndMoment())){
-				
+			if (finder.getStartMoment() != null && finder.getEndMoment() != null && finder.getStartMoment().before(fixUpTask.getStartMoment()) && finder.getEndMoment().after(fixUpTask.getEndMoment()))
 				setFix.add(fixUpTask);
-			}
-			if(finder.getKeyWord() != null && (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
-				|| fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) 
-					|| fixUpTask.getDescription().toLowerCase().contains(finder.getKeyWord().toLowerCase()))) {
-				
+			if (finder.getKeyWord() != null
+				&& (fixUpTask.getTicker().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getAddress().toLowerCase().contains(finder.getKeyWord().toLowerCase()) || fixUpTask.getDescription().toLowerCase()
+					.contains(finder.getKeyWord().toLowerCase())))
 				setFix.add(fixUpTask);
-			}
 		}
-		
-		List<FixUpTask> aux = new ArrayList<>();
+
+		final List<FixUpTask> aux = new ArrayList<>();
 		aux.addAll(setFix);
-		List<FixUpTask> result = new ArrayList<>();
-		if(aux.size()>100){
+		final List<FixUpTask> result = new ArrayList<>();
+		if (aux.size() > 100) {
 			result.addAll(aux.subList(0, maxResults));
 			finder.setFixuptask(result);
-		} else {
+		} else
 			finder.setFixuptask(setFix);
-		}
-				
+
 		return finder;
 	}
 
+	public void update(final int finderId, final String keyWord, final Double startPrice, final Double endPrice, final Date startDate, final Date endDate) {
+
+		Assert.isTrue(this.finderRepository.exists(finderId));
+		Finder finder;
+		Collection<FixUpTask> results;
+
+		finder = this.finderRepository.findOne(finderId);
+
+		results = this.resultadosFinder(finder).getFixuptask();
+
+		finder.setEndMoment(endDate);
+		finder.setPriceHigh(endPrice);
+		finder.setKeyWord(keyWord);
+		finder.setStartMoment(startDate);
+		finder.setPriceLow(startPrice);
+		finder.setFixuptask(results);
+		finder.setSearchMoment(new Date(System.currentTimeMillis() - 1));
+
+	}
 }

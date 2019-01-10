@@ -28,10 +28,10 @@ public class FixUpTaskService {
 
 	// Supporting services ----------
 	@Autowired
-	private UtilityService utilityService;
+	private UtilityService		utilityService;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService		customerService;
 
 	// Constructor ----------------------------------------------------
 
@@ -87,8 +87,7 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getEndMoment());
 		Assert.notNull(fixUpTask.getStartMoment());
-		Assert.isTrue(fixUpTask.getStartMoment().before(
-				fixUpTask.getEndMoment()));
+		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
@@ -105,10 +104,11 @@ public class FixUpTaskService {
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
-		List<String> atributosAComprobar = new ArrayList<>();
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
+<<<<<<< HEAD
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if (containsSpam) {
 			principal.setIsSuspicious(true);
@@ -168,20 +168,30 @@ public class FixUpTaskService {
 		return res;
 
 	}
+<<<<<<< HEAD
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(int customerId) {
 		Collection<FixUpTask> res = this.fixUpTaskRepository
 				.FixUpTaskByCustomer(customerId);
+=======
+	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
+		final Collection<FixUpTask> res = this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
+>>>>>>> Lucia
 		return res;
 
 	}
 
+<<<<<<< HEAD
 	public int CreatorFixUpTask(int FixUpTaskId) {
+=======
+	public int creatorFixUpTask(final int fixUpTaskId) {
+>>>>>>> Lucia
 		Collection<Customer> customers;
 		Collection<FixUpTask> tasks;
 		int customerId = 0;
 		customers = this.customerService.findAll();
 
+<<<<<<< HEAD
 		for (Customer c : customers) {
 
 			tasks = c.getFixUpTasks();
@@ -193,8 +203,18 @@ public class FixUpTaskService {
 
 			}
 			if (customerId != 0) {
+=======
+		for (final Customer c : customers) {
+
+			tasks = c.getFixUpTasks();
+			for (final FixUpTask t : tasks)
+				if (fixUpTaskId == t.getId()) {
+					customerId = c.getId();
+					break;
+				}
+			if (customerId != 0)
+>>>>>>> Lucia
 				break;
-			}
 		}
 
 		return customerId;
