@@ -17,7 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<link href="commom.css" rel="stylesheet" type="text/css"/>
+<link href="misc.css" rel="stylesheet" type="text/css"/>
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
@@ -29,13 +29,16 @@
 		<form:hidden path="childCategories" />
 
 
-
+<div class="tooltip"><spring:message code="category.name" />
+  <span class="tooltiptext"><spring:message code="category.info" /></span>
+	</div>
 		<form:label path="name" value="${category.name.get('Español')}">
-			<spring:message code="category.name" />
+			
 		</form:label>
 		<form:input path="name" value="${category.name}" style="width:400px;" />
 		<form:errors cssClass="error" path="name"
 			value="${category.name.get('Español')}" />
+			
 		<br />
 		<br />
 
