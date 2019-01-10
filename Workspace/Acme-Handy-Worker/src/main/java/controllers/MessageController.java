@@ -58,7 +58,7 @@ public class MessageController {
 	
 	// Edition
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("m") @Valid final domain.Message m, final BindingResult binding) {
+	public ModelAndView save(@Valid final Message m, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
@@ -90,7 +90,6 @@ public class MessageController {
 		
 		
 		result = new ModelAndView("message/edit");
-		
 		result.addObject("m", m);
 		result.addObject("messageCode", messageCode);
 		result.addObject("actors", actors);
@@ -98,6 +97,7 @@ public class MessageController {
 		result.addObject("sender", m.getSender());
 		result.addObject("isSpam", m.getIsSpam());
 		result.addObject("messageBoxes", m.getMessageBoxes());
+		
 		
 		return result;
 	}

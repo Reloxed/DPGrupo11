@@ -172,69 +172,70 @@ public class MessageService {
 				result.setMessageBoxes(spamBoxes);
 			} else {
 
-//				inBox = this.messageBoxService.findInBoxActor(a);
-//				messages = inBox.getMessages();
-//				updated = new ArrayList<Message>(messages);
-//				updated.add(result);
-//				inBox.setMessages(updated);
-//				Assert.isTrue(!(inBox.getMessages().size() == 0));
-//				inBoxesRecipients.add(inBox);
-//				Assert.notNull(inBoxesRecipients);
-//				result.setMessageBoxes(inBoxesRecipients);
+				inBox = this.messageBoxService.findInBoxActor(a);
+				System.out.println(inBox);
+				messages = inBox.getMessages();
+				updated = new ArrayList<Message>(messages);
+				updated.add(result);
+				inBox.setMessages(updated);
+				Assert.isTrue(!(inBox.getMessages().size() == 0));
+				inBoxesRecipients.add(inBox);
+				Assert.notNull(inBoxesRecipients);
+				result.setMessageBoxes(inBoxesRecipients);
 			}
 
 		saved = this.messageRepository.save(result);
 		Assert.notNull(saved);
 		System.out.println("Message saved: \n" + saved);
-//		Assert.isTrue(this.messageRepository.findAll().contains(saved));
+		Assert.isTrue(this.messageRepository.findAll().contains(saved));
 
 		System.out.println("Saved messageBoxes: \n" + saved.getMessageBoxes());
 
-//		copy = this.create();
-//		copy.setSubject(saved.getSubject());
-//		copy.setBody(saved.getBody());
-//		copy.setPriority(saved.getPriority());
-//		copy.setTags(saved.getTags());
-//		copy.setSender(saved.getSender());
-//		copy.setRecipients(saved.getRecipients());
-//		copy.setIsSpam(saved.getIsSpam());
-//
-//		if (principal.getIsSuspicious() == true) {
-//			spamBoxPrincipal = this.messageBoxService.findSpamBoxActor(principal);
-//			Assert.notNull(spamBoxPrincipal);
-//			spamBoxMessagesPrincipal = spamBoxPrincipal.getMessages();
-//			Assert.notNull(spamBoxMessagesPrincipal);
-//			updatedSpamPrincipal = new ArrayList<Message>(spamBoxMessagesPrincipal);
-//			updatedSpamPrincipal.add(copy);
-//			spamBoxPrincipal.setMessages(updatedSpamPrincipal);
-//			spamBoxesPrincipal.add(spamBoxPrincipal);
-//
-//			copy.setMessageBoxes(spamBoxesPrincipal);
-//		} else {
-//			outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
-//			Assert.notNull(outBoxPrincipal);
-//
-//			final Collection<Message> outBoxMessages = outBoxPrincipal.getMessages();
-//			Assert.notNull(outBoxMessages);
-//			outBoxMessages.add(copy);
-//
-//			updated2 = outBoxPrincipal.getMessages();
-//			Assert.notNull(updated2);
-//			updated2.add(copy);
-//			outBoxPrincipal.setMessages(updated2);
-//
-//			copyOutBoxes = saved.getMessageBoxes();
-//			Assert.notNull(copyOutBoxes);
-//			copyOutBoxes.removeAll(inBoxesRecipients);
-//			copyOutBoxes.add(outBoxPrincipal);
-//			copy.setMessageBoxes(copyOutBoxes);
-//		}
-//
-//		principalMessage = this.messageRepository.saveAndFlush(copy);
-//
-//		Assert.isTrue(this.messageRepository.findAll().contains(principalMessage));
-//
-//		System.out.println("Copy message: \n" + principalMessage);
+		copy = this.create();
+		copy.setSubject(saved.getSubject());
+		copy.setBody(saved.getBody());
+		copy.setPriority(saved.getPriority());
+		copy.setTags(saved.getTags());
+		copy.setSender(saved.getSender());
+		copy.setRecipients(saved.getRecipients());
+		copy.setIsSpam(saved.getIsSpam());
+
+		if (principal.getIsSuspicious() == true) {
+			spamBoxPrincipal = this.messageBoxService.findSpamBoxActor(principal);
+			Assert.notNull(spamBoxPrincipal);
+			spamBoxMessagesPrincipal = spamBoxPrincipal.getMessages();
+			Assert.notNull(spamBoxMessagesPrincipal);
+			updatedSpamPrincipal = new ArrayList<Message>(spamBoxMessagesPrincipal);
+			updatedSpamPrincipal.add(copy);
+			spamBoxPrincipal.setMessages(updatedSpamPrincipal);
+			spamBoxesPrincipal.add(spamBoxPrincipal);
+
+			copy.setMessageBoxes(spamBoxesPrincipal);
+		} else {
+			outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
+			Assert.notNull(outBoxPrincipal);
+
+			final Collection<Message> outBoxMessages = outBoxPrincipal.getMessages();
+			Assert.notNull(outBoxMessages);
+			outBoxMessages.add(copy);
+
+			updated2 = outBoxPrincipal.getMessages();
+			Assert.notNull(updated2);
+			updated2.add(copy);
+			outBoxPrincipal.setMessages(updated2);
+
+			copyOutBoxes = saved.getMessageBoxes();
+			Assert.notNull(copyOutBoxes);
+			copyOutBoxes.removeAll(inBoxesRecipients);
+			copyOutBoxes.add(outBoxPrincipal);
+			copy.setMessageBoxes(copyOutBoxes);
+		}
+
+		principalMessage = this.messageRepository.saveAndFlush(copy);
+
+		Assert.isTrue(this.messageRepository.findAll().contains(principalMessage));
+
+		System.out.println("Copy message: \n" + principalMessage);
 
 		return saved;
 
