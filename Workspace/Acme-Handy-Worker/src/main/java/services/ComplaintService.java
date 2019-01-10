@@ -128,6 +128,19 @@ public class ComplaintService {
 		return result;
 	}
 	
+	public Collection<Complaint> findComplaintsByCustomer(){
+		Collection<Complaint>result;
+		Customer principal;
+		
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.complaintRepository.findComplaintsByCustomer(principal.getId());
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 
 
 	public Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId) {

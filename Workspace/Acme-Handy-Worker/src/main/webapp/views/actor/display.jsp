@@ -86,6 +86,15 @@
 	</h5>
 </jstl:if>
 
+<jstl:if test="${type == 'customer'}">
+	<div>
+		<jstl:forEach var="customer.fixUpTasks" begin="1" end="${customer.fixUpTasks.length()}">
+			<jstl:out value="${customer.fixUpTask.description}"		/>
+		</jstl:forEach>
+	
+	</div>
+</jstl:if>
+
 <jstl:if test="${type == 'handyworker'}">
 	<h5>
 		<strong><spring:message code="handyWorker.make" />:</strong>

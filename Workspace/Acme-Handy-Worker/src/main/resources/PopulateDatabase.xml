@@ -1613,7 +1613,7 @@
 
 	<!-- FixUpTask 1 del customer1 -->
 	<bean id="fixUpTask1_1" class="domain.FixUpTask">
-		<property name="ticker" value="012345-ASDFGH" />
+		<property name="ticker" value="012348-ASDFGH" />
 		<property name="publishedMoment" value="08/11/2017 10:37" />
 		<property name="description"
 			value="Replace the window of my house because its broken" />

@@ -236,10 +236,15 @@ public class ApplicationService {
 		return result;
 	}
 
-	public Collection<Application> findAllApplicationsByCustomer(final int customerId) {
+	public Collection<Application> findAllApplicationsByCustomer() {
 		Collection<Application> result;
-
-		result = this.applicationRepository.findAllApplicationsByCustomer(customerId);
+		Customer principal;
+		
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result = this.applicationRepository.findAllApplicationsByCustomer(principal.getId());
+		Assert.notNull(result);
 
 		return result;
 	}

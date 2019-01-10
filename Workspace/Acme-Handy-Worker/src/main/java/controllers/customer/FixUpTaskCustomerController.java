@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ApplicationService;
+import services.ComplaintService;
 import services.CustomerService;
 import services.FixUpTaskService;
-
 import controllers.AbstractController;
-
+import domain.Application;
+import domain.Complaint;
 import domain.Customer;
-
 import domain.FixUpTask;
 
 @Controller
@@ -35,7 +36,11 @@ public class FixUpTaskCustomerController extends AbstractController{
 	@Autowired
 	private CustomerService customerService;
 
+	@Autowired
+	private ComplaintService complaintService;
 	
+	@Autowired
+	private ApplicationService applicationService;
 	//Constructor
 	
 	public FixUpTaskCustomerController() {
@@ -56,9 +61,27 @@ public class FixUpTaskCustomerController extends AbstractController{
 		
 	}
 	
+	//Display-----------------------------------------------------------
+	
+	@RequestMapping(value="/display", method=RequestMethod.GET)
+	public ModelAndView display(@RequestParam int taskId){
+		
+		ModelAndView result;
+		FixUpTask fixUpTask;
+		
+		fixUpTask = this.fixUpTaskService.findOne(taskId);
+		
+		result = new ModelAndView("fixUpTask/display");
+		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("requestURI", "fixUpTask/customer/display.do");
+		
+		return result;
+	}
+	
+	
 	//edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int fixUpTaskId) {
+	public ModelAndView edit(@RequestParam int fixUpTaskId) {
 		final ModelAndView result;
 		FixUpTask task;
 
@@ -90,9 +113,21 @@ public class FixUpTaskCustomerController extends AbstractController{
 		}
 
 	//Delete
-	
-	
-	
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+		public ModelAndView delete(@Valid final FixUpTask task) {
+			ModelAndView result;
+
+				try {
+					this.fixUpTaskService.delete(task);
+					result = new ModelAndView("redirect:list.do");
+				} catch (final Throwable oops) {
+					result = this.createEditModelAndView(task, "fixUpTask.commit.error");
+				}
+
+			return result;
+			
+		}
+		
 	
 	//Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -106,7 +141,8 @@ public class FixUpTaskCustomerController extends AbstractController{
 				this.fixUpTaskService.save(task);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(task, "endorsement.commit.error");
+				System.out.println(binding.getAllErrors());
+				result = this.createEditModelAndView(task, "fixUpTask.commit.error");
 			}
 
 		return result;
@@ -126,9 +162,21 @@ public class FixUpTaskCustomerController extends AbstractController{
 
 	protected ModelAndView createEditModelAndView(final FixUpTask task, final String message) {
 		ModelAndView result;
-
+		Collection<Complaint> complaints;
+		Collection<Application> applications;
+		String ticker;
+		
+		complaints = this.complaintService.findComplaintsByCustomer();
+		applications = this.applicationService.findAllApplicationsByCustomer();
+		ticker = task.getTicker();
+		
+		
 		result = new ModelAndView("fixUpTask/edit");
+		result.addObject("fixUpTask", task);
 		result.addObject("message", message);
+		result.addObject("complaints", complaints);
+		result.addObject("applications", applications);
+		result.addObject("ticker", ticker);
 		return result;
 	}
 	

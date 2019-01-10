@@ -8,19 +8,27 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div style="text-align: center;">
-	<h2 style="font-family: sans-serif;">
-		<spring:message code="fixuptask.edit.title" />
-	</h2>
-</div>
 
-<form:form action="fixuptask/edit.do" modelAttribute="fixUpTask"
+
+<form:form action="fixUpTask/customer/edit.do" modelAttribute="fixUpTask"
 	id="form">
-	<form:hidden path="ticker" />
+	
 	<form:hidden path="publishedMoment" />
+	
+	
+		<form:label path="ticker">
+		<spring:message code="fixUpTask.ticker" />
+	</form:label>
+	<spring:message code="fixuptask.ticker.placeholder"
+		var="placeholder" />
+	<form:input placeholder="${placeholder}" path="ticker" />
+	<form:errors cssClass="error" path="ticker" />
+	<br />
 
+	
+	
 	<form:label path="description">
-		<spring:message code="fixuptask.description" />
+		<spring:message code="fixUpTask.description" />
 	</form:label>
 	<spring:message code="fixuptask.description.placeholder"
 		var="placeholder" />
@@ -29,7 +37,7 @@
 	<br />
 
 	<form:label path="address">
-		<spring:message code="fixuptask.address" />
+		<spring:message code="fixUpTask.address" />
 	</form:label>
 	<spring:message code="fixuptask.address.placeholder" var="placeholder" />
 	<form:input placeholder="${placeholder}" path="address" />
@@ -62,7 +70,7 @@
 	<form:hidden path="applications" />
 	
 	<form:label path="category">
-		<spring:message code="fixuptask.category" />
+		<spring:message code="fixUpTask.category" />
 	</form:label>
 	<spring:message code="fixuptask.category.placeholder"
 		var="placeholder" />
@@ -71,7 +79,7 @@
 	<br />
 	
 	<form:label path="warranty">
-		<spring:message code="fixuptask.warranty" />
+		<spring:message code="fixUpTask.warranty" />
 	</form:label>
 	<spring:message code="fixuptask.warranty.placeholder"
 		var="placeholder" />
@@ -81,8 +89,17 @@
 	
 	<form:hidden path="complaints" />
 	
-	<input type="submit" name="save" id="save"
-		value="<spring:message code="fixuptask.save" />" />
+	<spring:message code="fixuptask.save" var="saveFixUpTask"/>
+	<spring:message code="fixUpTask.delete" var="deleteFixUpTask"/>
+	<input type="submit" id="submit" name="save" 
+		value="${saveFixUpTask}" />
+	<jstl:if test="${fixUpTask.id != 0}">
+		
+		<input type="submit" 	id="delete"	name="delete" 
+		value="${deleteFixUpTask}" />
+		
+	</jstl:if>
+	
 	<input type="button" name="cancel" id="cancel"
 		onclick="window.history.back()"
 		value="<spring:message code="fixuptask.cancel" />" />

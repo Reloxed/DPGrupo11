@@ -18,5 +18,9 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
 	@Query("select c from HandyWorker h join h.applications a join a.fixUpTask f join f.complaints c where h.id=?1 group by c.id")
 	Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId);
+	
+	@Query("select c.complaints from Customer c where c.id=?1")
+	Collection<Complaint> findComplaintsByCustomer(int customerId);
+	
 
 }

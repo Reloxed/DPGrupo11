@@ -1,4 +1,4 @@
-package controllers.administator;
+/*package controllers.administator;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -142,7 +142,7 @@ public class CategoryAdministratorController {
 		}
 		//Delete
 
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
+		/*@RequestMapping(value = "/edit", method = RequestMethod.GET)
 		public ModelAndView delete(@RequestParam int categoryId) {
 			ModelAndView result;
 			Category category;
@@ -186,3 +186,4 @@ public class CategoryAdministratorController {
 	
 
 }
+*/

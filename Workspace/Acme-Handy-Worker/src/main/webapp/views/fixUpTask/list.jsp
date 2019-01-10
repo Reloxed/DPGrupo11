@@ -53,15 +53,14 @@
 			sortable="true" />
 
 		<display:column>
-			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> <img
-				style="width: center; height: center" /> <spring:message
-					code="applications.create" />
+			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> 
+			 	<spring:message code="applications.create" />
 			</a> 
 		</display:column>
 		
 			<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
-					code="fixUpTask.display" />
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}">
+			 <spring:message code="fixUpTask.display" />
 			</a>
 	</display:column>
 
@@ -74,6 +73,12 @@
 <display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
 		pagesize="10" class="displaytag">
 		
+		
+			<display:column>
+			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> 
+				<spring:message	code="fixUpTask.edit" />
+			</a>
+		</display:column>
 		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 		
@@ -103,8 +108,8 @@
 
 		
 			<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
-					code="fixUpTask.display" />
+			<a href="fixUpTask/customer/display.do?taskId=${row.id}"> 
+				<spring:message	code="fixUpTask.display" />
 			</a>
 	</display:column>
 		

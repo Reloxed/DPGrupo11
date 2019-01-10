@@ -54,12 +54,16 @@
 	<br/>
 	
 	<spring:message code="warranty.save.final" var="saveWarrantyFinal"/>
+	<spring:message code="warranty.save.normal" var="saveWarrantyNormal"/>
 	<spring:message code="warranty.delete" var="deleteWarranty"/>
 	<spring:message code="warranty.confirm.delete" var="confirmDeleteWarranty"/>
 	<spring:message code="warranty.cancel" var="cancelWarranty"/>
 	
 	<input	type="submit" id="submit" name="saveFinal"
 	value="${saveWarrantyFinal}"	/>&nbsp;
+	
+	<input	type="submit" id="submit" name="saveNormal"
+	value="${saveWarrantyNormal}"	/>&nbsp;
 	
 	<jstl:if test="${warranty.id != 0}">
 		<input	type="submit" name="delete" value="${deleteWarranty}"
