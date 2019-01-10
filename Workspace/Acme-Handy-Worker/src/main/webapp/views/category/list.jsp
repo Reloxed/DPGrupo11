@@ -58,6 +58,8 @@
 					code="category.edit" />
 			</a>
 	</display:column>
+	
+	
 			
 		
 

@@ -34,6 +34,8 @@
 			<list>
 				<ref bean="fixUpTask1_1" />
 				<ref bean="fixUpTask2_1" />
+				<ref bean="fixUpTask3_1" />
+				<ref bean="fixUpTask4_1" />
 			</list>
 		</property>
 
