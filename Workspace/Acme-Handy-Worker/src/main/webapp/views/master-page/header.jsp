@@ -62,10 +62,9 @@
 						code="master.page.administrator.statistics" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/statistics-1.do"><spring:message
-								code="master.page.administrator.statistics.1" /></a></li>
-					<li><a href="administrator/statistics-2.do"><spring:message
-								code="master.page.administrator.statistics.2" /></a></li>
+					<li><a href="statistics/administrator/display.do"><spring:message
+								code="master.page.administrator.dashboard" /></a></li>
+					
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.manage" /></a>

@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
@@ -59,11 +62,38 @@ public class ComplaintRefereeController extends AbstractController{
 		
 		result = new ModelAndView("complaint/list");
 		result.addObject("requestURI", "complaint/referee/list2.do");
-		result.addObject("complaints", notAssigned);
+		result.addObject("notAssigned", notAssigned);
 		
 		
 		return result;
 		
 	}
+	@RequestMapping(value="/assignReferee", method = RequestMethod.GET)
+	public ModelAndView assign(@RequestParam final int complaintId){
+		final ModelAndView result;
+		final Complaint complaint;
+		Collection<Complaint>notAssigned,complaints;
+		
+		notAssigned = this.complaintService.findAll();
+		complaint = this.complaintService.findOne(complaintId);
+		complaints = this.complaintService.findComplaintsByReferee();
+		
+		Assert.isTrue(notAssigned.contains(complaint));
+		
+		notAssigned.removeAll(complaints);
+		
+		notAssigned.remove(complaint);
+		complaints.add(complaint);
+		
+		result = new ModelAndView("complaint/list");
+		result.addObject("notAssigned", notAssigned);
+		result.addObject("complaints", complaints);
+		result.addObject("requestURI", "complaint/referee/list.do");
+		
+		return result;
+	}
 	
 }
+	//Ancillary methods
+	
+	
