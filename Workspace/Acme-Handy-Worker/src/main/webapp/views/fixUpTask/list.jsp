@@ -53,9 +53,9 @@
 			sortable="true" />
 
 		<display:column>
-			<a href="application/handyWorker/create.do?fixUpTaskId=${row.id}"> <img
-				style="width: center; height: center" /> <spring:message
-					code="applications.create" />
+			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}"> <!-- <img
+				style="width: center; height: center" /> --> <spring:message
+					code="application.create" />
 			</a> 
 		</display:column>
 		
