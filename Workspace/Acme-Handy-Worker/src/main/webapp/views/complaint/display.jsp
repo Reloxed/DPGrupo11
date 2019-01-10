@@ -27,8 +27,8 @@
 
 </display:table>
 
-<jstl:if test="${complaint.attachements }">
-	<display:table name="complaint.attachements" id="row">
+<jstl:if test="${complaint.attachments }">
+	<display:table name="complaint.attachments" id="row">
 		<display:column>${row.link}</display:column>
 		<display:caption>
 			<spring:message code="complaint.attachments" />
@@ -36,14 +36,15 @@
 	</display:table>
 </jstl:if>
 
+<!--<jstl:if test="${not empty complaint.reports }">
+	<display:table name="complaint.reports"  id="row" >
+		<display:column>${row.description}</display:column>
+	<display:caption><spring:message code="complaint.reports"/></display:caption>
+	</display:table>
+</jstl:if>-->
+
 <security:authorize access="hasRole('HANDYWORKER')">
 	<input type="button" name="goBack"
-		value="<spring:message code="complaint.back" />"
+		value="<spring:message code="complaint.goBack" />"
 		onClick="javascript: window.location.replace('complaint/handyWorker/list.do')" />
-</security:authorize>
-
-<security:authorize access="hasRole('CUSTOMER')">
-	<input type="button" name="goBack"
-		value="<spring:message code="complaint.back" />"
-		onClick="javascript: window.location.replace('complaint/customer/list.do')" />
 </security:authorize>
