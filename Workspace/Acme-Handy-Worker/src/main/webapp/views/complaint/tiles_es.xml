@@ -26,17 +26,13 @@
 	</definition>
 	
 	<definition name="complaint/customer/edit" extends="master.page">
-		<put-attribute name="title" value="Crear una complaint" />
-<<<<<<< HEAD
-		<put-attribute name="body" value="/views/complaint/edit.jsp" />	
-=======
+		<put-attribute name="title" value="Crear una queja" />
 		<put-attribute name="body" value="/views/complaint/edit.jsp" />
 	</definition>	
 		
 	<definition name="complaint/display" extends="master.page">
 		<put-attribute name="title" value="Detalle de queja" />
 		<put-attribute name="body" value="/views/complaint/display.jsp" />
->>>>>>> fb12e78e6ba2d3d8f9543e8b72eca7987cec1d89
 	</definition>
 
 </tiles-definitions>
