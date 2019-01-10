@@ -57,54 +57,6 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	//Display
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int fixUpTaskId,final Locale locale){
-		final ModelAndView result;	
-
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int fixUpTaskId, final Locale locale) {
-		final ModelAndView result;
-
-		FixUpTask fixUpTask;
-		String language;
-		String español;
-		String english;
-
-		español="es";
-		english="en";
-		int customerId;
-
-		fixUpTask=this.fixUpTaskService.findOne(fixUpTaskId);
-		customerId=this.fixUpTaskService.CreatorFixUpTask(fixUpTask.getId());
-		language=locale.getLanguage();
-		result=new ModelAndView("fixUpTask/display");
-		result.addObject("customerId",customerId);
-		result.addObject("fixUpTask", fixUpTask);
-		result.addObject("language",language);
-		result.addObject("español",español);
-		result.addObject("english",english);
-
-		español = "es";
-		english = "en";
-		int customerId;
-
-		fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
-		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
-		language = locale.getLanguage();
-		result = new ModelAndView("fixUpTask/display");
-		result.addObject("customerId", customerId);
-		result.addObject("fixUpTask", fixUpTask);
-		result.addObject("language", language);
-		result.addObject("español", español);
-		result.addObject("english", english);
-
-		result.addObject("requestUri", "fixUpTask/customer/display.do");
-
-		return result;
-	}
-
-
-
 
 
 	//Create
@@ -124,7 +76,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	//Display-----------------------------------------------------------
 
-	/*@RequestMapping(value="/display", method=RequestMethod.GET)
+	@RequestMapping(value="/display", method=RequestMethod.GET)
 	public ModelAndView display(@RequestParam int taskId){
 
 		ModelAndView result;
@@ -139,12 +91,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 		return result;
 	}
 
-		task = this.fixUpTaskService.create();
-		result = this.createEditModelAndView(task);
-		return result;
-
-	}
-
+		
+	
 
 	//edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

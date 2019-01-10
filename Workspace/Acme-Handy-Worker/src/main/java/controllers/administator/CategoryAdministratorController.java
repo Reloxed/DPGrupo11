@@ -1,4 +1,5 @@
-/*package controllers.administator;
+
+package controllers.administator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -121,16 +122,6 @@ public class CategoryAdministratorController {
 
 	}
 
-
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-
-		
-
-		public ModelAndView delete(@RequestParam int categoryId) {
-			ModelAndView result;
-			Category category;
-			category=this.categoryService.findOne(categoryId);
-
 	// Save
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -141,7 +132,6 @@ public class CategoryAdministratorController {
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(category);
 		else
-
 			try {
 				this.categoryService.save(category);
 				result = new ModelAndView("redirect:list.do");

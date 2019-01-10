@@ -17,8 +17,6 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-
-<<<<<<< HEAD
 <security:authorize access="hasRole('REFEREE')">
 
 	
@@ -87,24 +85,3 @@
 
 	</jstl:if>
 </security:authorize>
-
-
-
-
-
-
-
-
-=======
-<display:table name="complaints" id="complaints"
-	requestURI="complaints/referee/list.do" pagesize="10"
-	class="displaytag">
-	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
-	<display:column property="moment" titleKey="complaint.moment"
-		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
-	<display:column property="description" titleKey="complaint.description" />
-	<display:column property="attachements"
-		titleKey="complaint.attachements" />
-	<display:column property="ticker" titleKey="complaint.ticker" />
-</display:table>
->>>>>>> master
