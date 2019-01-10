@@ -173,6 +173,7 @@ public class FinderService {
 	public Finder resultadosFinder (Finder finder) {
 		Set<FixUpTask> setFix = new HashSet<>();
 		Collection <FixUpTask> collFix = this.fixUpTaskService.findAll();
+		int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
 		
 		for(FixUpTask fixUpTask : collFix) {
 			if(finder.getPriceLow() != null && finder.getPriceHigh() != null 
@@ -200,10 +201,15 @@ public class FinderService {
 			}
 		}
 		
-		List<FixUpTask> aux = new ArrayList<>(setFix);
-		List<FixUpTask> result = new ArrayList<>(aux.subList(0, this.systemConfigurationService.findMySystemConfiguration().getMaxResults()));
-		
-		finder.setFixuptask(result);
+		List<FixUpTask> aux = new ArrayList<>();
+		aux.addAll(setFix);
+		List<FixUpTask> result = new ArrayList<>();
+		if(aux.size()>100){
+			result.addAll(aux.subList(0, maxResults));
+			finder.setFixuptask(result);
+		} else {
+			finder.setFixuptask(setFix);
+		}
 				
 		return finder;
 	}
