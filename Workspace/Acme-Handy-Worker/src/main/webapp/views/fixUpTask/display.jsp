@@ -127,6 +127,7 @@
 
 <table class="displayStyle">
 	<tr>
+
 		<td>
 					<a href="actor/display.do?actorID=${customerId}"> <spring:message
 					code="profile.customer" />
@@ -134,6 +135,8 @@
 		</td>
 	</tr>
 	<tr>
+
+
 		<td><strong> <spring:message
 					code="fixUpTask.description" /> :
 		</strong></td>
@@ -224,5 +227,15 @@
 	</tr>
 
 	</table>
+
+
+	
+	<input type="button" name="back"
+		value="<spring:message code="fixuptask.back" />"
+		onclick="javascript: relativeRedir('fixUpTask/customer/list.do');" />
+		
+	<br/>
+	
+
 
 </security:authorize>

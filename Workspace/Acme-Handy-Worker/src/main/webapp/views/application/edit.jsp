@@ -20,32 +20,19 @@
 
 <div style="text-align: center;">
 	<h2 style="font-family: sans-serif;">
-		<spring:message code="application.edit" />
+		<spring:message code="application.create" />
 	</h2>
 </div>
 
-<form:form action="application/edit.do" modelAttribute="application"
+<form:form action="application/handy-worker/edit.do" modelAttribute="application"
 	id="form">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="registeredMoment" />
-	<form:hidden path="fixuptask" />
-	<form:hidden path="applicant" />
-
-	<form:label path="status">
-		<spring:message code="application.status" />
-	</form:label>
-	<form:select path="status">
-		<form:option value="PENDING">
-			<spring:message code="tutorial.status.pending" />
-		</form:option>
-		<form:option value="PENDING">
-			<spring:message code="tutorial.status.rejected" />
-		</form:option>
-		<form:option value="PENDING">
-			<spring:message code="tutorial.status.accepted" />
-		</form:option>
-	</form:select>
+	<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
+	<form:hidden path="fixUpTask" />
+	<form:hidden path="applicant"/>
+	<form:hidden path="creditCard"/>
+	<form:hidden path="status" />
 
 	<br />
 
@@ -64,21 +51,18 @@
 	<spring:message code="application.commentsPlaceholder"
 		var="placeholder" />
 	<form:input path="comments" placeholder="${placeholder}" />
+	<form:errors cssClass="error" path="comments"></form:errors>
 
 	<br />
 
-	<form:label path="creditCard">
-		<spring:message code="application.creditCard" />
-	</form:label>
-	<jstl:set var="listCreditCard" value="" />
-	<form:select path="creditCard">
-		<jstl:forEach var="x" items="${listFixUpTask}">
-			<form:option value="${x.brandName}">
-				<jstl:out value="${x.brandName}" />
-			</form:option>
-		</jstl:forEach>
-	</form:select>
-
 	<br />
+	
+	<input type="submit" name="save" id="save"
+		value='<spring:message code="application.save"/>' />
+	<input type="button" name="cancel"
+		value="<spring:message code="application.cancel" />"
+		onclick="javascript: relativeRedir('fixUpTask/handyWorker/list.do');" />
+		
+	<br/>
 
 </form:form>

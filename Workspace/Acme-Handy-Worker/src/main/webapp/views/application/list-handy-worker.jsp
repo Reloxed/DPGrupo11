@@ -29,8 +29,8 @@
 
 		<display:table name="applications" id="applications"
 			requestURI="application/handy-worker/list-handy-worker.do"
-			pagesize="10" class="displaytag">
-
+			pagesize="10" class="displaytag" >
+		
 			<display:column property="fixUpTask.description"
 				titleKey="application.fixuptask" />
 
@@ -44,7 +44,7 @@
 			<display:column property="comments" titleKey="application.comments" />
 
 			<display:column property="status" titleKey="application.status" />
-
+			
 			<display:column>
 				<jstl:if test="${applications.status == 'ACCEPTED'}">
 					<a
@@ -52,6 +52,7 @@
 							code="application.workplan" /> </a>
 				</jstl:if>
 			</display:column>
+
 		</display:table>
 
 	</jstl:if>

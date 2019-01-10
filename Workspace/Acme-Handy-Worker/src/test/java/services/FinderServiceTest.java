@@ -44,7 +44,9 @@ public class FinderServiceTest extends AbstractTest {
 	
 	@Test
 	public void testResults() {
-		Finder find = new Finder();
+		Finder result,find = new Finder();
+		
+		super.authenticate("handyWorker2");
 		
 		find.setPriceHigh(100.);
 		find.setPriceLow(25.);
@@ -58,7 +60,10 @@ public class FinderServiceTest extends AbstractTest {
 		find.setWarranty(this.warrantyService.findOne(this.warrantyService.findAll().iterator().next().getId()));
 		find.setKeyWord("fix");
 		
-		this.finderService.resultadosFinder(find);
+		result = this.finderService.resultadosFinder(find);
+//		System.out.println(result.getFixuptask());
+		
+		super.unauthenticate();
 
 	}
 	

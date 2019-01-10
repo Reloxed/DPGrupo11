@@ -142,7 +142,11 @@ public class CategoryAdministratorController {
 		}
 		//Delete
 
+
 		/*@RequestMapping(value = "/edit", method = RequestMethod.GET)
+
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+
 		public ModelAndView delete(@RequestParam int categoryId) {
 			ModelAndView result;
 			Category category;
@@ -177,7 +181,7 @@ public class CategoryAdministratorController {
 
 		
 		result = new ModelAndView("category/edit");
-		result.addObject("categroy", category);
+		result.addObject("category", category);
 		result.addObject("principal",principal);
 		result.addObject("message", message);
 		return result;

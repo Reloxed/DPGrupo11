@@ -1,6 +1,7 @@
 package controllers.customer;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -46,6 +47,32 @@ public class FixUpTaskCustomerController extends AbstractController{
 	public FixUpTaskCustomerController() {
 		super();
 	}
+	
+	//Display
+		@RequestMapping(value = "/display", method = RequestMethod.GET)
+		public ModelAndView display(@RequestParam final int fixUpTaskId,final Locale locale){
+			final ModelAndView result;	
+			FixUpTask fixUpTask;
+			String language;
+			String español;
+			String english;
+			español="es";
+			english="en";
+			int customerId;
+			
+			fixUpTask=this.fixUpTaskService.findOne(fixUpTaskId);
+			customerId=this.fixUpTaskService.CreatorFixUpTask(fixUpTask.getId());
+			language=locale.getLanguage();
+			result=new ModelAndView("fixUpTask/display");
+			result.addObject("customerId",customerId);
+			result.addObject("fixUpTask", fixUpTask);
+			result.addObject("language",language);
+			result.addObject("español",español);
+			result.addObject("english",english);
+			result.addObject("requestUri", "fixUpTask/customer/display.do");
+			
+			return result;
+		}
 	
 	//Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
