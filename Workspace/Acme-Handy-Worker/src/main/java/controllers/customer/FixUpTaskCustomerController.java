@@ -1,3 +1,4 @@
+
 package controllers.customer;
 
 import java.util.Collection;
@@ -19,14 +20,16 @@ import services.ComplaintService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import controllers.AbstractController;
+
 import domain.Application;
 import domain.Complaint;
+
 import domain.Customer;
 import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/fixUpTask/customer")
-public class FixUpTaskCustomerController extends AbstractController{
+public class FixUpTaskCustomerController extends AbstractController {
 
 
 	//Services
@@ -34,14 +37,18 @@ public class FixUpTaskCustomerController extends AbstractController{
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
 
+
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService		customerService;
+
+
 
 	@Autowired
 	private ComplaintService complaintService;
 
 	@Autowired
 	private ApplicationService applicationService;
+
 	//Constructor
 
 	public FixUpTaskCustomerController() {
@@ -49,13 +56,20 @@ public class FixUpTaskCustomerController extends AbstractController{
 	}
 
 	//Display
-	/*@RequestMapping(value = "/display", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int fixUpTaskId,final Locale locale){
 		final ModelAndView result;	
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int fixUpTaskId, final Locale locale) {
+		final ModelAndView result;
+
 		FixUpTask fixUpTask;
 		String language;
 		String español;
 		String english;
+
 		español="es";
 		english="en";
 		int customerId;
@@ -69,16 +83,36 @@ public class FixUpTaskCustomerController extends AbstractController{
 		result.addObject("language",language);
 		result.addObject("español",español);
 		result.addObject("english",english);
+
+		español = "es";
+		english = "en";
+		int customerId;
+
+		fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
+		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
+		language = locale.getLanguage();
+		result = new ModelAndView("fixUpTask/display");
+		result.addObject("customerId", customerId);
+		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
+
 		result.addObject("requestUri", "fixUpTask/customer/display.do");
 
 		return result;
 	}
-*/
+
+
+
+
+
 	//Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		FixUpTask task;
+
 
 		task=this.fixUpTaskService.create();
 		result=this.createEditModelAndView(task);
@@ -104,7 +138,13 @@ public class FixUpTaskCustomerController extends AbstractController{
 
 		return result;
 	}
-*/
+
+		task = this.fixUpTaskService.create();
+		result = this.createEditModelAndView(task);
+		return result;
+
+	}
+
 
 	//edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -112,21 +152,25 @@ public class FixUpTaskCustomerController extends AbstractController{
 		final ModelAndView result;
 		FixUpTask task;
 
-		task=this.fixUpTaskService.findOne(fixUpTaskId);
+		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
 
-		result=this.createEditModelAndView(task);
+		result = this.createEditModelAndView(task);
 
 		return result;
 
 	}
 
 	//list
-	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public ModelAndView list(){
+
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
 		Customer principal;
+
 
 		principal=this.customerService.findByPrincipal();
 		fixUpTasks=this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
@@ -135,11 +179,21 @@ public class FixUpTaskCustomerController extends AbstractController{
 		result.addObject("fixUpTasks",fixUpTasks);
 		result.addObject("principal",principal);
 		result.addObject("requestUri","fixUpTask/customer/list.do");
+
+		principal = this.customerService.findByPrincipal();
+		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
+
+		result = new ModelAndView("fixUpTask/list");
+		result.addObject("fixUpTasks", fixUpTasks);
+		result.addObject("principal", principal);
+		result.addObject("requestUri", "fixUpTask/customer/list.do");
+
 		return result;
 
 	}
 
-	//Delete
+	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(@Valid final FixUpTask task) {
 		ModelAndView result;
@@ -154,6 +208,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 		return result;
 
 	}
+
 
 
 	//Save
@@ -175,6 +230,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 		return result;
 
 	}
+
 
 
 	//Ancillary methods
@@ -206,6 +262,7 @@ public class FixUpTaskCustomerController extends AbstractController{
 		result.addObject("ticker", ticker);
 		return result;
 	}
+
 
 
 
