@@ -103,7 +103,7 @@
 
 		
 			<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
 	</display:column>
