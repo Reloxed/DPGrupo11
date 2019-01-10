@@ -60,7 +60,6 @@ public class ComplaintHandyWorkerController extends AbstractController {
 
 		result = new ModelAndView("complaint/display");
 		result.addObject("complaint", complaint);
-		result.addObject("requestUri", "complaint/handyWorker/display.do");
 
 		return result;
 
