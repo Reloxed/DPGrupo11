@@ -18,7 +18,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('REFEREE')">
-
 	
 		<jstl:if test="${requestURI.endsWith('list2.do')}">
 
@@ -85,3 +84,21 @@
 
 	</jstl:if>
 </security:authorize>
+
+<security:authorize access="hasRole('CUSTOMER')">
+	<jstl:set var="uri" value="complaint/fixUpTask.do" />
+</security:authorize>
+<security:authorize access="hasRole('HANDYWORKER')">
+	<jstl:set var="uri" value="complaint/handyWorker/list.do" />
+</security:authorize>
+<security:authorize access="hasRole('REFEREE')">
+	<jstl:set var="uri" value="complaint/list.do" />
+</security:authorize>
+
+<display:table name="complaints" id="row" requestURI="${ uri }" pagesize="10" class="displaytag">
+	
+	<display:column>
+		<!-- TODO: solo para el customer que lo ha escrito: <a href="${requestURI}"><spring:message	code="complaint.edit" /></a>-->
+		<a href="complaint/handyWorker/display.do?complaintId=${row.id}"><spring:message code="complaint.display" /></a>
+	</display:column>
+</display:table>

@@ -20,6 +20,7 @@
 		<put-attribute name="body" value="/views/complaint/edit.jsp" />
 	</definition>
 	
+
 	<definition name="complaint/customer/list" extends="master.page">
 		<put-attribute name="title" value="Complaints list" />
 		<put-attribute name="body" value="/views/complaint/list.jsp" />
@@ -28,6 +29,11 @@
 	<definition name="complaint/customer/edit" extends="master.page">
 		<put-attribute name="title" value="Create a complaint" />
 		<put-attribute name="body" value="/views/complaint/edit.jsp" />	
+	</definition>
+
+	<definition name="complaint/display" extends="master.page">
+		<put-attribute name="title" value="Display complaint" />
+		<put-attribute name="body" value="/views/complaint/display.jsp" />
 	</definition>
 
 </tiles-definitions>
