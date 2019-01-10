@@ -18,6 +18,7 @@ public class Customer extends Endorser {
 	
 	private Collection<FixUpTask> fixUpTasks;
 	private Collection<Complaint> complaints;
+	private Collection<CreditCard> creditCards;
 	
 	
 	@Valid
@@ -49,4 +50,15 @@ public class Customer extends Endorser {
 		this.complaints = complaints;
 	}
 
+	@Valid
+	@OneToMany
+	public Collection<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+
+	public void setCreditCards(Collection<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+
+	
 }
