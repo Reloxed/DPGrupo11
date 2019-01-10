@@ -1,5 +1,5 @@
 /*
- * ProfileController.java
+ * AdministratorController.java
  * 
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -15,7 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/profile")
-public class ProfileController extends AbstractController {
+@RequestMapping("/administrator")
+public class AdministratorController extends AbstractController {
+
+	// Constructors -----------------------------------------------------------
+
+	public AdministratorController() {
+		super();
+	}
 
 }
