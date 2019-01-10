@@ -26,8 +26,7 @@
 	<jstl:if test="${user == owner.userAccount.username}">
 
 		<display:table name="applications" id="applications"
-			requestURI="application/customer/list.do" pagesize="10"
-			class="displaytag">
+			requestURI="${requestURI}" pagesize="10" class="displaytag">
 
 			<display:column property="applicant.name"
 				titleKey="application.applicant" />

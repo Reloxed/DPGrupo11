@@ -69,8 +69,10 @@ public class ApplicationController extends AbstractController {
 			}
 		}
 
+		String requestURI = "application/customer/list-customer.do?fixuptaskID="
+				+ fixuptaskID;
 		res = new ModelAndView("application/listCustomer");
-		res.addObject("requestURI", "application/customer/list-customer.do");
+		res.addObject("requestURI", requestURI);
 		res.addObject("applications", applications);
 		res.addObject("owner", fixUpTaskOwner);
 		res.addObject("hasAccepted", hasAccepted);
