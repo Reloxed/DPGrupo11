@@ -3,6 +3,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -38,6 +40,9 @@ public class SponsorService {
 	@Autowired
 	private MessageBoxService messageBoxService;
 
+	@Autowired
+	private SponsorshipService sponsorshipService;
+	
 	// Constructors ------------------------------------
 
 	public SponsorService() {
@@ -69,6 +74,7 @@ public class SponsorService {
 					.createSystemMessageBoxes());
 			result.setSocialProfiles(Collections.<SocialProfile> emptyList());
 			result.setSponsorships(Collections.<Sponsorship> emptyList());
+			result.setCreditCards(new ArrayList<CreditCard>());
 
 			return result;
 		}
@@ -134,7 +140,20 @@ public class SponsorService {
 					.getUserAccount().getId());
 			Assert.isTrue(principal.getIsSuspicious() == sponsor
 					.getIsSuspicious());
+			
+			Collection<Sponsorship> collSs = this.sponsorshipService.findByPrincipal();
+			
+			if(collSs.size()>0){
+				Set<CreditCard> setCC = new HashSet<>();
+				
+				for(Sponsorship ss : collSs){
+					setCC.add(ss.getCreditCard());
+				}
+					Assert.isTrue(sponsor.getCreditCards().contains(setCC));
+			}
 		}
+		
+		
 
 		saved = this.sponsorRepository.saveAndFlush(sponsor);
 		return saved;

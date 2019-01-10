@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -29,15 +30,16 @@ public class CustomerService {
 	// Managed Repository
 
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerRepository	customerRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private MessageBoxService messageBoxService;
-	
+	private MessageBoxService	messageBoxService;
+
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+
 
 	// Constructors ------------------------------------
 
@@ -48,16 +50,16 @@ public class CustomerService {
 	// Simple CRUD Methods
 
 	public Customer create() {
-		Customer result = new Customer();
+		final Customer result = new Customer();
 		Actor principal;
-		
+
 		final Authority authority = new Authority();
 		final UserAccount userAccount = new UserAccount();
 
 		try {
 			principal = this.actorService.findByPrincipal();
 			Assert.isNull(principal);
-			
+
 			return null;
 
 		} catch (final IllegalArgumentException e) {
@@ -65,14 +67,15 @@ public class CustomerService {
 			result.setMessageBoxes(this.messageBoxService.createSystemMessageBoxes());
 			result.setComplaints(new ArrayList<Complaint>());
 			result.setFixUpTasks(new ArrayList<FixUpTask>());
+			result.setCreditCards(new ArrayList<CreditCard>());
 			result.setSocialProfiles(new ArrayList<SocialProfile>());
 			authority.setAuthority(Authority.CUSTOMER);
 			userAccount.addAuthority(authority);
 			result.setUserAccount(userAccount);
-			
+
 			return result;
 		}
-		
+
 	}
 
 	public Collection<Customer> findAll() {
@@ -101,18 +104,20 @@ public class CustomerService {
 
 			} catch (final IllegalArgumentException e) {
 				final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-				customer.getUserAccount().setPassword(
-						passwordEncoder.encodePassword(customer
-								.getUserAccount().getPassword(), null));
+				customer.getUserAccount().setPassword(passwordEncoder.encodePassword(customer.getUserAccount().getPassword(), null));
 			}
 		else {
 			Customer principalC;
 			principalC = this.findByPrincipal();
 			Assert.notNull(principalC);
-			Assert.isTrue(principalC.getUserAccount().equals(
-					customer.getUserAccount()));
-			Assert.isTrue(customer.getIsSuspicious() == principalC
-					.getIsSuspicious());
+			Assert.isTrue(principalC.getUserAccount().equals(customer.getUserAccount()));
+			Assert.isTrue(customer.getIsSuspicious() == principalC.getIsSuspicious());
+
+			final Collection<CreditCard> collCc = this.customerRepository.findCreditCardsByCustomerId(customer.getId());
+
+			if (collCc.size() > 0)
+				Assert.isTrue(customer.getCreditCards().contains(collCc));
+
 		}
 		cus = this.customerRepository.save(customer);
 		this.customerRepository.flush();
@@ -139,8 +144,7 @@ public class CustomerService {
 
 		Customer result;
 
-		result = this.customerRepository
-				.findCustomerByUserAccount(userAccountId);
+		result = this.customerRepository.findCustomerByUserAccount(userAccountId);
 
 		Assert.notNull(result);
 
@@ -155,11 +159,9 @@ public class CustomerService {
 		return res;
 	}
 
-	public Collection<CreditCard> findCreditCardsByCustomerId(
-			final int customerId) {
+	public Collection<CreditCard> findCreditCardsByCustomerId(final int customerId) {
 		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = this.customerRepository
-				.findCreditCardsByCustomerId(customerId);
+		collCC = this.customerRepository.findCreditCardsByCustomerId(customerId);
 		return collCC;
 	}
 
@@ -172,16 +174,14 @@ public class CustomerService {
 	}
 
 	public List<Customer> customerTenPercentMoraThanAverage() {
-		final List<Customer> collC = this.customerRepository
-				.customerTenPercentMoreFixUpTasksThanAverage();
+		final List<Customer> collC = this.customerRepository.customerTenPercentMoreFixUpTasksThanAverage();
 		return collC;
 	}
 
 	public Customer findCustomerByApplicationId(final int applicationId) {
 		Customer result;
 
-		result = this.customerRepository
-				.findCustomerByApplicationId(applicationId);
+		result = this.customerRepository.findCustomerByApplicationId(applicationId);
 
 		return result;
 	}

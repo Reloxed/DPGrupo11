@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import repositories.EndorsementRepository;
 import domain.Endorsement;
 import domain.Endorser;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -28,9 +29,9 @@ public class EndorsementService {
 
 	@Autowired
 	private EndorserService			endorserService;
-	
+
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService			utilityService;
 
 
 	// Constructors ------------------------------------
@@ -78,27 +79,26 @@ public class EndorsementService {
 
 		principal = this.endorserService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.notNull(endorsement.getSender());
 		Assert.isTrue(endorsement.getSender().getId() == principal.getId());
 		Assert.notNull(endorsement.getRecipient());
 		Assert.notNull(endorsement.getComments());
-		
-		if (endorsement.getId()==0) {
+
+		if (endorsement.getId() == 0)
 			endorsement.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		} else {
+		else {
 			Assert.isTrue(endorsement.getRecipient().equals(this.findOne(endorsement.getId()).getRecipient()));
 			Assert.isTrue(endorsement.getPublishedMoment().equals(this.findOne(endorsement.getId()).getPublishedMoment()));
 		}
-		
-		List<String> atributosAComprobar = new ArrayList<>();
+
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(endorsement.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
+
 		result = this.endorsementRepository.save(endorsement);
 
 		return result;
@@ -110,10 +110,10 @@ public class EndorsementService {
 
 		Assert.notNull(endorsement);
 		Assert.isTrue(endorsement.getId() != 0);
-		
+
 		principal = this.endorserService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.isTrue(endorsement.getSender().equals(principal));
 
 		this.endorsementRepository.delete(endorsement);
@@ -121,5 +121,13 @@ public class EndorsementService {
 	}
 
 	//Other business methods--------
+
+	public Collection<HandyWorker> possibleHwRecipients(final int customerId) {
+		Collection<HandyWorker> result;
+
+		result = this.endorsementRepository.possibleHwRecipients(customerId);
+
+		return result;
+	}
 
 }

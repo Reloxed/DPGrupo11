@@ -63,6 +63,8 @@ public class ApplicationService {
 
 		result = new Application();
 
+		result.setApplicant(this.handyWorkerService.findByPrincipal());
+		result.setStatus("PENDING");
 		return result;
 	}
 
@@ -148,8 +150,8 @@ public class ApplicationService {
 
 		// Check contain of strings searching spamWords
 
-		bodyHW = "The status of your application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		bodyHW = "The status of your application of the fix up task which ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
+		bodyCustomer = "The status of application of the fix up task which ticker is" + result.getFixUpTask().getTicker() + "has been changed to " + result.getStatus();
 		bodyHWSpa = "El estado de su solicitud de la chapuza cuyo ticker es " + result.getFixUpTask().getTicker() + "ha sido cambiado a " + result.getStatus();
 		bodyCustomerSpa = "El estado de la solicitud de la chapuza cuyo ticker es " + result.getFixUpTask().getTicker() + "ha sido cambiado a " + result.getStatus();
 
@@ -284,4 +286,3 @@ public class ApplicationService {
 	}
 
 }
-
