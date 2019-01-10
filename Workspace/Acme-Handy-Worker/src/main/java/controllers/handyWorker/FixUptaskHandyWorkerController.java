@@ -1,3 +1,4 @@
+
 package controllers.handyWorker;
 
 import java.util.ArrayList;
@@ -22,13 +23,14 @@ import domain.FixUpTask;
 @RequestMapping("/fixUpTask/handyWorker")
 public class FixUptaskHandyWorkerController extends AbstractController {
 
-	// Services
+
+	//Services
 
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService	fixUpTaskService;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService		customerService;
 
 	// Constructor
 
@@ -36,10 +38,10 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		super();
 	}
 
-	// Display
+	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int taskId,
-			final Locale locale) {
+	public ModelAndView display(@RequestParam final int taskId, final Locale locale) {
+
 		final ModelAndView result;
 		FixUpTask fixUpTask;
 		String language;
@@ -50,7 +52,9 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		int customerId;
 
 		fixUpTask = this.fixUpTaskService.findOne(taskId);
-		customerId = this.fixUpTaskService.CreatorFixUpTask(fixUpTask.getId());
+
+		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
+
 		language = locale.getLanguage();
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("customerId", customerId);
@@ -64,11 +68,13 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 	}
 
-	// list
+
+	//list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
+
 		fixUpTasks = this.fixUpTaskService.findAll();
 
 		List<FixUpTask> collFixUpTasks = new ArrayList<>();

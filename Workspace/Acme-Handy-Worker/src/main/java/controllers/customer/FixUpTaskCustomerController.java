@@ -1,3 +1,4 @@
+
 package controllers.customer;
 
 import java.util.Collection;
@@ -14,113 +15,150 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ApplicationService;
+import services.ComplaintService;
 import services.CustomerService;
 import services.FixUpTaskService;
-
 import controllers.AbstractController;
 
-import domain.Customer;
+import domain.Application;
+import domain.Complaint;
 
+import domain.Customer;
 import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/fixUpTask/customer")
-public class FixUpTaskCustomerController extends AbstractController{
+public class FixUpTaskCustomerController extends AbstractController {
 
-	
+
 	//Services
-	
+
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
-	
-	@Autowired
-	private CustomerService customerService;
 
-	
+
+	@Autowired
+	private CustomerService		customerService;
+
+
+
+	@Autowired
+	private ComplaintService complaintService;
+
+	@Autowired
+	private ApplicationService applicationService;
+
 	//Constructor
-	
+
 	public FixUpTaskCustomerController() {
 		super();
 	}
-	
+
 	//Display
-		@RequestMapping(value = "/display", method = RequestMethod.GET)
-		public ModelAndView display(@RequestParam final int fixUpTaskId,final Locale locale){
-			final ModelAndView result;	
-			FixUpTask fixUpTask;
-			String language;
-			String español;
-			String english;
-			español="es";
-			english="en";
-			int customerId;
-			
-			fixUpTask=this.fixUpTaskService.findOne(fixUpTaskId);
-			customerId=this.fixUpTaskService.CreatorFixUpTask(fixUpTask.getId());
-			language=locale.getLanguage();
-			result=new ModelAndView("fixUpTask/display");
-			result.addObject("customerId",customerId);
-			result.addObject("fixUpTask", fixUpTask);
-			result.addObject("language",language);
-			result.addObject("español",español);
-			result.addObject("english",english);
-			result.addObject("requestUri", "fixUpTask/customer/display.do");
-			
-			return result;
-		}
-	
+
+
+
 	//Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		FixUpTask task;
-		
+
+
 		task=this.fixUpTaskService.create();
 		result=this.createEditModelAndView(task);
 		return result;
-		
-		
-		
+
+
+
 	}
+
+	//Display-----------------------------------------------------------
+
+	@RequestMapping(value="/display", method=RequestMethod.GET)
+	public ModelAndView display(@RequestParam int taskId){
+
+		ModelAndView result;
+		FixUpTask fixUpTask;
+
+		fixUpTask = this.fixUpTaskService.findOne(taskId);
+
+		result = new ModelAndView("fixUpTask/display");
+		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("requestURI", "fixUpTask/customer/display.do");
+
+		return result;
+	}
+
+		
 	
+
 	//edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int fixUpTaskId) {
+	public ModelAndView edit(@RequestParam int fixUpTaskId) {
 		final ModelAndView result;
 		FixUpTask task;
 
-		task=this.fixUpTaskService.findOne(fixUpTaskId);
+		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
 
-		result=this.createEditModelAndView(task);
+		result = this.createEditModelAndView(task);
 
 		return result;
-		
+
 	}
-	
+
 	//list
-		@RequestMapping(value="/list",method=RequestMethod.GET)
-		public ModelAndView list(){
-			ModelAndView result;
-			Collection<FixUpTask> fixUpTasks;
-			Customer principal;
-			
-			principal=this.customerService.findByPrincipal();
-			fixUpTasks=this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
-			
-			result=new ModelAndView("fixUpTask/list");
-			result.addObject("fixUpTasks",fixUpTasks);
-			result.addObject("principal",principal);
-			result.addObject("requestUri","fixUpTask/customer/list.do");
-			return result;
-			
+
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+
+		ModelAndView result;
+		Collection<FixUpTask> fixUpTasks;
+		Customer principal;
+
+
+		principal=this.customerService.findByPrincipal();
+		fixUpTasks=this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
+
+		result=new ModelAndView("fixUpTask/list");
+		result.addObject("fixUpTasks",fixUpTasks);
+		result.addObject("principal",principal);
+		result.addObject("requestUri","fixUpTask/customer/list.do");
+
+		principal = this.customerService.findByPrincipal();
+		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
+
+		result = new ModelAndView("fixUpTask/list");
+		result.addObject("fixUpTasks", fixUpTasks);
+		result.addObject("principal", principal);
+		result.addObject("requestUri", "fixUpTask/customer/list.do");
+
+		return result;
+
+	}
+
+	
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@Valid final FixUpTask task) {
+		ModelAndView result;
+
+		try {
+			this.fixUpTaskService.delete(task);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(task, "fixUpTask.commit.error");
 		}
 
-	//Delete
-	
-	
-	
-	
+		return result;
+
+	}
+
+
+
 	//Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final FixUpTask task, final BindingResult binding) {
@@ -133,14 +171,16 @@ public class FixUpTaskCustomerController extends AbstractController{
 				this.fixUpTaskService.save(task);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(task, "endorsement.commit.error");
+				System.out.println(binding.getAllErrors());
+				result = this.createEditModelAndView(task, "fixUpTask.commit.error");
 			}
 
 		return result;
-		
+
 	}
-	
-	
+
+
+
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final FixUpTask task) {
@@ -153,12 +193,25 @@ public class FixUpTaskCustomerController extends AbstractController{
 
 	protected ModelAndView createEditModelAndView(final FixUpTask task, final String message) {
 		ModelAndView result;
+		Collection<Complaint> complaints;
+		Collection<Application> applications;
+		String ticker;
+
+		complaints = this.complaintService.findComplaintsByCustomer();
+		applications = this.applicationService.findAllApplicationsByCustomer();
+		ticker = task.getTicker();
+
 
 		result = new ModelAndView("fixUpTask/edit");
+		result.addObject("fixUpTask", task);
 		result.addObject("message", message);
+		result.addObject("complaints", complaints);
+		result.addObject("applications", applications);
+		result.addObject("ticker", ticker);
 		return result;
 	}
-	
-	
-	
+
+
+
+
 }

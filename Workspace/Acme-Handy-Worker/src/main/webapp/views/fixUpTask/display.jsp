@@ -127,6 +127,16 @@
 
 <table class="displayStyle">
 	<tr>
+
+		<td>
+					<a href="actor/display.do?actorID=${customerId}"> <spring:message
+					code="profile.customer" />
+			</a>
+		</td>
+	</tr>
+	<tr>
+
+
 		<td><strong> <spring:message
 					code="fixUpTask.description" /> :
 		</strong></td>
@@ -217,6 +227,8 @@
 	</tr>
 
 	</table>
+
+
 	
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
@@ -224,5 +236,6 @@
 		
 	<br/>
 	
+
 
 </security:authorize>

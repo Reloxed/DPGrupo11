@@ -19,6 +19,8 @@ public interface EndorserRepository extends JpaRepository<Endorser, Integer> {
 	@Query("select e from Endorsement e where e.sender.id=?1 or e.recipient.id=?1")
 	Collection<Endorsement> findEndorsementsByEndorser(int endorserId);
 
+	@Query("select e from Endorsement e where e.sender.id=?1")
+	Collection<Endorsement> findEndorsementsSendedByEndorser(int endorserId);
 
 	@Query("select e from Endorsement e where e.recipient.id=?1")
 	Collection<Endorsement> findEndorsementsReceivedByEndorser(int endorserId);

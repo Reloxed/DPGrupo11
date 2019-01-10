@@ -42,7 +42,6 @@ public class Category extends DomainEntity {
 		this.parentCategory = parentCategory;
 	}
 
-	@NotNull
 	@OneToMany(mappedBy = "parentCategory")
 	public Collection<Category> getChildCategories() {
 		return this.childCategories;

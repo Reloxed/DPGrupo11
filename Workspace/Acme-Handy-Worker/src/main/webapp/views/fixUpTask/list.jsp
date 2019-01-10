@@ -63,23 +63,20 @@
 		</jstl:forEach>
 
 		<display:column>
-			<jstl:choose>
-				<jstl:when test="${contains == false}">
-					<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
-						<!-- <img
-				style="width: center; height: center" /> --> <spring:message
-							code="application.create" />
-					</a>
-				</jstl:when>
-				<jstl:otherwise>
-					<p>ckwhbskhbs</p>
-				</jstl:otherwise>
-			</jstl:choose>
-		</display:column>
 
-		<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
-					code="fixUpTask.display" />
+			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> 
+			 	<spring:message code="applications.create" />
+
+			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}"> <!-- <img
+				style="width: center; height: center" /> --> <spring:message
+					code="application.create" />
+
+			</a> 
+		</display:column>
+		
+			<display:column>
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}">
+			 <spring:message code="fixUpTask.display" />
 			</a>
 		</display:column>
 
@@ -93,6 +90,16 @@
 		requestURI="fixUpTask/customer/list.do" pagesize="10"
 		class="displaytag">
 
+
+<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
+		pagesize="10" class="displaytag">
+		
+		
+			<display:column>
+			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> 
+				<spring:message	code="fixUpTask.edit" />
+			</a>
+		</display:column>
 
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 
@@ -120,10 +127,10 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
-
 		<display:column>
 			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
+
 			</a>
 		</display:column>
 
