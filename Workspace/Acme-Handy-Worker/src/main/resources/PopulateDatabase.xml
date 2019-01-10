@@ -38,7 +38,12 @@
 				<ref bean="fixUpTask4_1" />
 			</list>
 		</property>
-
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard1" />
+				<ref bean="creditCard2" />
+			</list>
+		</property>
 		<property name="complaints">
 			<list>
 				<ref bean="complaint1_1_1" />
@@ -81,6 +86,12 @@
 			<list>
 				<ref bean="fixUpTask1_2" />
 				<ref bean="fixUpTask2_2" />
+			</list>
+		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard3" />
+				<ref bean="creditCard4" />
 			</list>
 		</property>
 		<property name="complaints">
@@ -259,6 +270,11 @@
 				<ref bean="sponsorship3_1" />
 			</list>
 		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard5" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="sponsor2" class="domain.Sponsor">
@@ -291,6 +307,11 @@
 				<ref bean="sponsorship1_2" />
 				<ref bean="sponsorship2_2" />
 				<ref bean="sponsorship3_2" />
+			</list>
+		</property>
+		<property name="creditCards">
+			<list>
+				<ref bean="creditCard6" />
 			</list>
 		</property>
 	</bean>
@@ -1424,7 +1445,7 @@
 	<!-- CUSTOMERS -->
 	<bean id="userCustomer1" class="security.UserAccount">
 		<property name="username" value="customer1" />
-		<property name="password" value="668816e02d4658da91aa4526d8c61972" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1437,7 +1458,7 @@
 
 	<bean id="userCustomer2" class="security.UserAccount">
 		<property name="username" value="customer2" />
-		<property name="password" value="668816e02d4658da91aa4526d8c61972" />
+		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>

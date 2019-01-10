@@ -59,7 +59,6 @@ public class FixUptaskHandyWorkerController extends AbstractController{
 		result.addObject("requestUri", "fixUpTask/handyWorker/display.do");
 		
 		return result;
-	
 		
 	}
 	
