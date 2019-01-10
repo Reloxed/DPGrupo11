@@ -20,17 +20,18 @@
 
 
 
-  
-<security:authorize access="hasRole('HANDYWORKER')"> 
 
-	<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/handyWorker/list.do"
-		pagesize="10" class="displaytag">
-		
+<security:authorize access="hasRole('HANDYWORKER')">
+
+	<display:table name="fixUpTasks" id="row"
+		requestURI="fixUpTask/handyWorker/list.do" pagesize="10"
+		class="displaytag">
+
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		
-			<display:column property="description" title="${descriptionHeader}"
+
+		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
-		
+
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -52,34 +53,52 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
+		<jstl:set var="contains" value="${false}" />
+		<jstl:forEach items="${fixUpTasks}" var="fix">
+			<jstl:forEach items="${collFixUpTasks}" var="fixaux">
+				<jstl:if test="${fix.ticker} eq ${fixaux.ticker}">
+					<jstl:set var="contains" value="${true}" />
+				</jstl:if>
+			</jstl:forEach>
+		</jstl:forEach>
+
 		<display:column>
-			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}"> <!-- <img
+			<jstl:choose>
+				<jstl:when test="${contains == false}">
+					<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
+						<!-- <img
 				style="width: center; height: center" /> --> <spring:message
-					code="application.create" />
-			</a> 
+							code="application.create" />
+					</a>
+				</jstl:when>
+				<jstl:otherwise>
+					<p>ckwhbskhbs</p>
+				</jstl:otherwise>
+			</jstl:choose>
 		</display:column>
-		
-			<display:column>
+
+		<display:column>
 			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
-	</display:column>
+		</display:column>
 
 	</display:table>
 
-</security:authorize> 
+</security:authorize>
 
-<security:authorize access="hasRole('CUSTOMER')"> 
+<security:authorize access="hasRole('CUSTOMER')">
 
-<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
-		pagesize="10" class="displaytag">
-		
-		
+	<display:table name="fixUpTasks" id="row"
+		requestURI="fixUpTask/customer/list.do" pagesize="10"
+		class="displaytag">
+
+
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		
-			<display:column property="description" title="${descriptionHeader}"
+
+		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
-		
+
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -101,17 +120,17 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
-		
-			<display:column>
+
+		<display:column>
 			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
-	</display:column>
-		
-		
-		</display:table>
+		</display:column>
 
 
-</security:authorize> 
+	</display:table>
+
+
+</security:authorize>
 
 
