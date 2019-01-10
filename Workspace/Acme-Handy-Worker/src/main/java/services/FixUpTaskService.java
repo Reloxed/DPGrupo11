@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class FixUpTaskService {
 	// Managed repository-----------
 
 	@Autowired
-	private FixUpTaskRepository fixUpTaskRepository;
+	private FixUpTaskRepository	fixUpTaskRepository;
 
 	// Supporting services ----------
 	@Autowired
@@ -32,6 +33,7 @@ public class FixUpTaskService {
 
 	@Autowired
 	private CustomerService		customerService;
+
 
 	// Constructor ----------------------------------------------------
 
@@ -94,25 +96,20 @@ public class FixUpTaskService {
 		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
 
 		if (fixUpTask.getId() == 0) {
-			fixUpTask.setPublishedMoment(new Date(
-					System.currentTimeMillis() - 1));
+			fixUpTask.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 			fixUpTask.setTicker(this.utilityService.generateTicker());
 		} else {
-			Assert.isTrue(fixUpTask.getPublishedMoment().equals(
-					this.findOne(fixUpTask.getId()).getPublishedMoment()));
-			Assert.isTrue(fixUpTask.getTicker().equals(
-					this.findOne(fixUpTask.getId()).getTicker()));
+			Assert.isTrue(fixUpTask.getPublishedMoment().equals(this.findOne(fixUpTask.getId()).getPublishedMoment()));
+			Assert.isTrue(fixUpTask.getTicker().equals(this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
-<<<<<<< HEAD
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if (containsSpam) {
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
@@ -141,69 +138,43 @@ public class FixUpTaskService {
 	// Other business methods--------
 
 	public Double[] findApplicationsNumberOperations() {
-		final Double[] res = this.fixUpTaskRepository
-				.findApplicationsNumberOperations();
+		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
 		return res;
 	}
 
 	public Double[] findMaxPricesNumberOperations() {
-		final Double[] res = this.fixUpTaskRepository
-				.findMaxPricesNumberOperations();
+		final Double[] res = this.fixUpTaskRepository.findMaxPricesNumberOperations();
 		return res;
 
 	}
 
 	public Double[] findComplaintsNumberOperations() {
 
-		final Double[] res = this.fixUpTaskRepository
-				.findComplaintsNumberOperations();
+		final Double[] res = this.fixUpTaskRepository.findComplaintsNumberOperations();
 		return res;
 
 	}
 
 	public Double ratioFixUpTaskWithComplaints() {
 
-		final Double res = this.fixUpTaskRepository
-				.ratioFixUpTaskWithComplaints();
+		final Double res = this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
 		return res;
 
 	}
-<<<<<<< HEAD
 
-	public Collection<FixUpTask> FixUpTaskByCustomer(int customerId) {
-		Collection<FixUpTask> res = this.fixUpTaskRepository
-				.FixUpTaskByCustomer(customerId);
-=======
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
->>>>>>> Lucia
 		return res;
 
 	}
 
-<<<<<<< HEAD
-	public int CreatorFixUpTask(int FixUpTaskId) {
-=======
 	public int creatorFixUpTask(final int fixUpTaskId) {
->>>>>>> Lucia
+
 		Collection<Customer> customers;
 		Collection<FixUpTask> tasks;
 		int customerId = 0;
 		customers = this.customerService.findAll();
 
-<<<<<<< HEAD
-		for (Customer c : customers) {
-
-			tasks = c.getFixUpTasks();
-			for (FixUpTask t : tasks) {
-				if (FixUpTaskId == t.getId()) {
-					customerId = c.getId();
-					break;
-				}
-
-			}
-			if (customerId != 0) {
-=======
 		for (final Customer c : customers) {
 
 			tasks = c.getFixUpTasks();
@@ -213,7 +184,6 @@ public class FixUpTaskService {
 					break;
 				}
 			if (customerId != 0)
->>>>>>> Lucia
 				break;
 		}
 
