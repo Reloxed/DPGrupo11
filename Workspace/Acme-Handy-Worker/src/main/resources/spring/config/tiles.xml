@@ -48,7 +48,7 @@
 		<value>/views/endorserRecord/tiles.xml</value>
 		<value>/views/miscellaneousRecord/tiles.xml</value>
 		
-
+		<value>/views/message/tiles.xml</value>
 
 	</util:list>
 
