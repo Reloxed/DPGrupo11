@@ -173,6 +173,7 @@ public class MessageService {
 			} else {
 
 				inBox = this.messageBoxService.findInBoxActor(a);
+				System.out.println(inBox);
 				messages = inBox.getMessages();
 				updated = new ArrayList<Message>(messages);
 				updated.add(result);
@@ -183,7 +184,7 @@ public class MessageService {
 				result.setMessageBoxes(inBoxesRecipients);
 			}
 
-		saved = this.messageRepository.saveAndFlush(result);
+		saved = this.messageRepository.save(result);
 		Assert.notNull(saved);
 		System.out.println("Message saved: \n" + saved);
 		Assert.isTrue(this.messageRepository.findAll().contains(saved));

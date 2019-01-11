@@ -47,9 +47,15 @@
 		<value>/views/professionalRecord/tiles.xml</value>
 		<value>/views/endorserRecord/tiles.xml</value>
 		<value>/views/miscellaneousRecord/tiles.xml</value>
+
+		<value>/views/sponsorship/tiles.xml</value>
+
+		<value>/views/message/tiles.xml</value>
 		
 
 
-	</util:list>
 
+	</util:list>
 </beans>
+
+

@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.WarrantyService;
+import controllers.AbstractController;
 import domain.Warranty;
 
 @Controller
 @RequestMapping("/warranty/administrator")
-public class WarrantyAdministratorController {
+public class WarrantyAdministratorController extends AbstractController{
 
 	//Services
 	@Autowired
@@ -83,7 +84,7 @@ public class WarrantyAdministratorController {
 	public ModelAndView edit(@RequestParam final int warrantyId){
 		ModelAndView result;
 		Warranty warranty;
-
+		
 		warranty = this.warrantyService.findOne(warrantyId);
 		Assert.notNull(warranty);
 
@@ -93,7 +94,26 @@ public class WarrantyAdministratorController {
 	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.POST, params = "saveFinal")
-	public ModelAndView save(@Valid final Warranty warranty, final BindingResult binding){
+	public ModelAndView saveFinal(@Valid final Warranty warranty, final BindingResult binding){
+		ModelAndView result;
+
+		if(binding.hasErrors())
+			result = this.createEditModelAndView(warranty);
+		else
+			try{
+				
+				warranty.setIsFinal(true);
+				this.warrantyService.save(warranty);
+				
+				result = new ModelAndView("redirect:list.do");
+			}catch(final Throwable oops){
+				result = this.createEditModelAndView(warranty, "warranty.commit.error");
+			}
+		return result;
+	}
+
+	@RequestMapping(value="/edit", method=RequestMethod.POST, params = "saveNormal")
+	public ModelAndView saveNormal(@Valid final Warranty warranty, final BindingResult binding){
 		ModelAndView result;
 
 		if(binding.hasErrors())
@@ -107,9 +127,8 @@ public class WarrantyAdministratorController {
 			}
 		return result;
 	}
-
 	@RequestMapping(value="/edit", method=RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Warranty warranty, final BindingResult binding){
+	public ModelAndView delete(@Valid final Warranty warranty){
 		ModelAndView result;
 
 		try{

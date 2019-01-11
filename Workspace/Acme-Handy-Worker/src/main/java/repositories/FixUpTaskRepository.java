@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ import domain.FixUpTask;
 
 @Repository
 public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
+
 	// C/2
 	@Query("select max(f.applications.size), min(f.applications.size), avg(f.applications.size),sqrt(sum(f.applications.size * f.applications.size) / count(f.applications.size) -(avg(f.applications.size) * avg(f.applications.size))) from FixUpTask f")
 	Double[] findApplicationsNumberOperations();
@@ -25,8 +27,8 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 	// B/3
 	@Query("select count(f) /(select count(f) from FixUpTask f where f.complaints is not empty)*1.0 from FixUpTask f")
 	Double ratioFixUpTaskWithComplaints();
-	
-	@Query("select a from Customer c join c.fixUpTasks a where c.id=?1")
+
+	@Query("select f from Customer c join c.fixUpTasks f where c.id=?1")
 	Collection<FixUpTask> FixUpTaskByCustomer(int customerId);
-	
+
 }

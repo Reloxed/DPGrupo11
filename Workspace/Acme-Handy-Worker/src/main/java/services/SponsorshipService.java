@@ -93,7 +93,7 @@ public class SponsorshipService {
 		Assert.notNull(principal);
 		
 		Assert.isTrue(s.getSponsor().equals(principal));
-
+		
 		result = this.sponsorshipRepository.save(s);
 		Assert.notNull(result);
 		this.sponsorshipRepository.flush();
@@ -102,6 +102,8 @@ public class SponsorshipService {
 		sponsorships.addAll(principal.getSponsorships());
 		sponsorships.add(s);
 		principal.setSponsorships(sponsorships);
+		
+		
 
 		for (final Tutorial t : this.tutorialService.findAll()) {
 			Collection<Sponsorship> aux;

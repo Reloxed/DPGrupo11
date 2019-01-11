@@ -62,10 +62,9 @@
 						code="master.page.administrator.statistics" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/statistics-1.do"><spring:message
-								code="master.page.administrator.statistics.1" /></a></li>
-					<li><a href="administrator/statistics-2.do"><spring:message
-								code="master.page.administrator.statistics.2" /></a></li>
+					<li><a href="statistics/administrator/display.do"><spring:message
+								code="master.page.administrator.dashboard" /></a></li>
+					
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.manage" /></a>
@@ -101,9 +100,9 @@
 						code="master.page.customer.endorsements" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/endorsements.do"><spring:message
+					<li><a href="endorsement/customer/list.do"><spring:message
 								code="master.page.customer.endorsements.show" /></a></li>
-					<li><a href="customer/endorsement-create.do"><spring:message
+					<li><a href="endorsement/customer/create.do"><spring:message
 								code="master.page.customer.endorsements.create" /></a></li>
 				</ul></li>
 		</security:authorize>
@@ -215,4 +214,3 @@
 		</security:authorize>
 	</ul>
 </div>
-

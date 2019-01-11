@@ -36,7 +36,9 @@
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" />
 		<security:intercept-url pattern="/security/login.do" access="permitAll" />
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" />
-
+		<security:intercept-url pattern="/complaint/customer/create.do" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')"/>
+		
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 

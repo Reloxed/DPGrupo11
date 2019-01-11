@@ -83,8 +83,24 @@
 	<h5>
 		<jstl:out value="${handyWorker.score}" />
 		<jstl:out value="${customer.score}" />
+		<br/>
+		<br/>
+		<br/>
+			<spring:message code="customer.fixs"/>
+			<br/>
+			<br/>
+		
+			<jstl:forEach var="fixUpTask" items="${customer.fixUpTasks}">
+				
+				<jstl:out value="${fixUpTask.description}"> </jstl:out>
+				<br/>
+			</jstl:forEach>
+		
+
 	</h5>
 </jstl:if>
+
+
 
 <jstl:if test="${type == 'handyworker'}">
 	<h5>
