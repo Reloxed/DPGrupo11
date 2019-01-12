@@ -1,4 +1,3 @@
-
 package repositories;
 
 import java.util.Collection;
@@ -23,10 +22,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	@Query("select c from Customer c join c.fixUpTasks fix join fix.applications app join app.creditCard cc where cc.id = ?1 group by c.id")
 	Collection<Customer> findByCreditCardId(int creditCardId);
 
-	@Query("select c from Customer c join c.fixUpTasks f where c.fixUpTasks.size" + ">(select avg(c.fixUpTasks.size)*1.1 from Customer c) order by count(f.applications.size) desc")
+	// C/9
+	@Query("select c from Customer c join c.fixUpTasks f where c.fixUpTasks.size >(select avg(c.fixUpTasks.size)*1.1 from Customer c) order by count(f.applications.size) desc")
 	List<Customer> customerTenPercentMoreFixUpTasksThanAverage();
 
 	@Query("select c from Customer c join c.fixUpTasks f join f.applications a where a.id=?1")
 	Customer findCustomerByApplicationId(int applicationId);
 
+	@Query("select c from Customer c order by c.complaints.size desc")
+	List<Customer> findCustomersWithMoreComplaints();
 }

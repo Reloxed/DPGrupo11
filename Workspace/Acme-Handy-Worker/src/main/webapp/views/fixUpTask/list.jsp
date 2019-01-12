@@ -20,17 +20,18 @@
 
 
 
-  
-<security:authorize access="hasRole('HANDYWORKER')"> 
 
-	<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/handyWorker/list.do"
-		pagesize="10" class="displaytag">
-		
+<security:authorize access="hasRole('HANDYWORKER')">
+
+	<display:table name="fixUpTasks" id="row"
+		requestURI="fixUpTask/handyWorker/list.do" pagesize="10"
+		class="displaytag">
+
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		
-			<display:column property="description" title="${descriptionHeader}"
+
+		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
-		
+
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -54,43 +55,46 @@
 
 		<display:column>
 
-			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> 
-			 	<spring:message code="applications.create" />
+			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}">
+				<spring:message code="applications.create" />
+			</a>
 
-			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}"> <!-- <img
+			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
+				<!-- <img
 				style="width: center; height: center" /> --> <spring:message
 					code="application.create" />
 
-			</a> 
-		</display:column>
-		
-			<display:column>
-			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}">
-			 <spring:message code="fixUpTask.display" />
 			</a>
-	</display:column>
+		</display:column>
+
+		<display:column>
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
+					code="fixUpTask.display" />
+			</a>
+		</display:column>
 
 	</display:table>
 
-</security:authorize> 
+</security:authorize>
 
-<security:authorize access="hasRole('CUSTOMER')"> 
+<security:authorize access="hasRole('CUSTOMER')">
 
-<display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
-		pagesize="10" class="displaytag">
-		
-		
-			<display:column>
-			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> 
-				<spring:message	code="fixUpTask.edit" />
+	<display:table name="fixUpTasks" id="row"
+		requestURI="fixUpTask/customer/list.do" pagesize="10"
+		class="displaytag">
+
+
+		<display:column>
+			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> <spring:message
+					code="fixUpTask.edit" />
 			</a>
 		</display:column>
-		
+
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-		
-			<display:column property="description" title="${descriptionHeader}"
+
+		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
-		
+
 
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
@@ -112,22 +116,21 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
-		
-			<display:column>
 
-			<a href="fixUpTask/customer/display.do?taskId=${row.id}"> 
-				<spring:message	code="fixUpTask.display" />
+		<display:column>
 
-			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
-					code="fixUpTask.display" />
+			<a href="fixUpTask/customer/display.do?taskId=${row.id}"> <spring:message
+					code="fixUpTask.display" /> <a
+				href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
+						code="fixUpTask.display" />
 
 			</a>
-	</display:column>
-		
-		
-		</display:table>
+		</display:column>
 
 
-</security:authorize> 
+	</display:table>
+
+
+</security:authorize>
 
 
