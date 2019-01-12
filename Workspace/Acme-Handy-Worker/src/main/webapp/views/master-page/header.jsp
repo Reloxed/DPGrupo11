@@ -106,9 +106,9 @@
 						code="master.page.referee.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/referee/list2.do"><spring:message
+					<li><a href="complaint/referee/listNotAssigned.do"><spring:message
 								code="master.page.referee.not.assigned.complaints" /></a></li>
-					<li><a href="complaint/referee/list1.do"><spring:message
+					<li><a href="complaint/referee/listAssigned.do"><spring:message
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"></a>
