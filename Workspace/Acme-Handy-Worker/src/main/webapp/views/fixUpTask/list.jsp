@@ -19,8 +19,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-
-
 <security:authorize access="hasRole('HANDYWORKER')">
 
 	<display:table name="fixUpTasks" id="row"
@@ -31,8 +29,6 @@
 
 		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
-
-
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
 		<display:column property="address" title="${addressHeader}"
@@ -120,13 +116,13 @@
 			sortable="true" />
 
 		<display:column>
-
-			<a href="fixUpTask/customer/display.do?taskId=${row.id}"> <spring:message
-					code="fixUpTask.display" /> <a
-				href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
-						code="fixUpTask.display" />
-
-			</a>
+			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
+						code="fixUpTask.display" /></a>
+		</display:column>
+		
+		<display:column>
+			<a href="application/customer/list-customer.do?fixUpTaskId=${row.id}"> <spring:message
+						code="fixUpTask.applications" /></a>
 		</display:column>
 
 

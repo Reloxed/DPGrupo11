@@ -38,7 +38,9 @@
 			<display:column property="offeredPrice"
 				titleKey="application.offeredPrice" sortable="true" />
 
-			<display:column property="comments" titleKey="application.comments" />
+			<display:column property="handyWorkerComment" titleKey="application.handyWorkerComment" />
+			
+			<display:column property="customerComment" titleKey="application.myComment" />
 
 			<display:column property="status" titleKey="application.status" />
 

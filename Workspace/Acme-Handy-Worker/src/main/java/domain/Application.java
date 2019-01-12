@@ -24,7 +24,8 @@ public class Application extends DomainEntity {
 	private Date registeredMoment;
 	private String status;
 	private double offeredPrice;
-	private String comments;
+	private String customerComment;
+	private String handyWorkerComment;
 	private CreditCard creditCard;
 	private FixUpTask fixUpTask;
 	private HandyWorker applicant;
@@ -48,13 +49,21 @@ public class Application extends DomainEntity {
 		this.offeredPrice = offeredPrice;
 	}
 
-	@NotNull
-	public String getComments() {
-		return this.comments;
+	public String getCustomerComment() {
+		return customerComment;
 	}
 
-	public void setComments(final String comment) {
-		this.comments = comment;
+	public void setCustomerComment(String customerComment) {
+		this.customerComment = customerComment;
+	}
+
+	@NotNull
+	public String getHandyWorkerComment() {
+		return handyWorkerComment;
+	}
+
+	public void setHandyWorkerComment(String handyWorkerComment) {
+		this.handyWorkerComment = handyWorkerComment;
 	}
 
 	@Valid

@@ -71,6 +71,7 @@ public class ApplicationService {
 		HandyWorker applicant = null;
 		Application result;
 		Actor actor;
+		boolean containsSpamC = false;
 		Customer customer = null;
 		Date registeredMoment;
 		FixUpTask fixUpTask;
@@ -79,18 +80,15 @@ public class ApplicationService {
 
 		Assert.notNull(application);
 		Assert.notNull(application.getOfferedPrice());
-		Assert.notNull(application.getComments());
+		Assert.notNull(application.getHandyWorkerComment());
 		fixUpTask = application.getFixUpTask();
 		Assert.notNull(fixUpTask);
 
 		actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-
-		final List<String> atributosAComprobar = new ArrayList<>();
-		atributosAComprobar.add(application.getComments());
-
-		final boolean containsSpam = this.utilityService
-				.isSpam(atributosAComprobar);
+		
+		if (application.getStatus().equals("ACCEPTED"))
+			Assert.notNull(application.getCreditCard());
 
 		if (actor instanceof HandyWorker) {
 			applicant = this.handyWorkerService.findByPrincipal();
@@ -117,13 +115,24 @@ public class ApplicationService {
 						this.findOne(application.getId()).getStatus()));
 				Assert.isTrue(application.getOfferedPrice() == this.findOne(
 						application.getId()).getOfferedPrice());
+				if(application.getCustomerComment() != null) {
+					Assert.isTrue(application.getCustomerComment()
+							.equals(this.findOne(application.getId())
+									.getCustomerComment()));
+				}
 			}
 
-			if (containsSpam)
+			final List<String> atributosAComprobarHW = new ArrayList<>();
+			atributosAComprobarHW.add(application.getHandyWorkerComment());
+
+			final boolean containsSpamHW = this.utilityService
+					.isSpam(atributosAComprobarHW);
+			
+			if (containsSpamHW)
 				applicant.setIsSuspicious(true);
 
 		} else if (actor instanceof Customer) {
-
+			
 			customer = this.customerService.findByPrincipal();
 			Assert.notNull(customer);
 
@@ -135,17 +144,23 @@ public class ApplicationService {
 					this.findOne(application.getId()).getRegisteredMoment()));
 			Assert.isTrue(application.getOfferedPrice() == this.findOne(
 					application.getId()).getOfferedPrice());
+			Assert.isTrue(application.getHandyWorkerComment() == this.findOne(
+					application.getId()).getHandyWorkerComment());
 
-			if (containsSpam)
+			if(application.getCustomerComment() != null) {
+				final List<String> atributosAComprobarC = new ArrayList<>();
+				atributosAComprobarC.add(application.getCustomerComment());
+
+				containsSpamC = this.utilityService
+						.isSpam(atributosAComprobarC);
+			}
+			
+			if (containsSpamC)
 				customer.setIsSuspicious(true);
 		}
 
-		if (application.getStatus().equals("ACCEPTED"))
-			Assert.notNull(application.getCreditCard());
-
 		result = this.applicationRepository.saveAndFlush(application);
 		Assert.notNull(application);
-		this.applicationRepository.flush();
 
 		// Add application to collection of applications of handyWorker
 		applications = applicant.getApplications();

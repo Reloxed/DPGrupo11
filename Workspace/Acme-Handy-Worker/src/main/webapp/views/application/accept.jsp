@@ -34,11 +34,24 @@
 	<form:hidden path="creditCard" />
 	<form:hidden path="status" />
 	<form:hidden path="offeredPrice" />
-	<form:hidden path="comments" />
+	<form:hidden path="handyWorkerComment" />
 
 	<form:select path="creditCard" items="${principal.creditCards}"></form:select>
 	<br />
-
+	
+	<br />
+	
+		<form:label path="customerComment">
+			<spring:message code="application.myComments" />
+		</form:label>
+		<spring:message code="application.customerCommentsPlaceholder"
+			var="placeholder" />
+		<form:input path="customerComment" placeholder="${placeholder}" />
+		<form:errors cssClass="error" path="customerComment"></form:errors>
+	
+	<br />
+	<br />
+		
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="application.save"/>' />
 	<input type="button" name="cancel"
