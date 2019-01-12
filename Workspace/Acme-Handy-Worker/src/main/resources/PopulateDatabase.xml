@@ -367,7 +367,9 @@
 		<property name="registeredMoment" value="08/11/2018 17:55" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="40." />
-		<property name="comments"
+		<property name="customerComment"
+			value="Okay man" />
+		<property name="handyWorkerComment"
 			value="I am experienced in window reparation because..." />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
@@ -382,8 +384,10 @@
 		<property name="registeredMoment" value="08/11/2018 18:43" />
 		<property name="status" value="ACCEPTED" />
 		<property name="offeredPrice" value="43." />
-		<property name="comments"
-			value="I am better than other Handy Workers because..." />
+		<property name="customerComment"
+			value="Okay bro" />
+		<property name="handyWorkerComment"
+			value="I am experienced in all type of reparations because..." />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -398,7 +402,8 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="80." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment"
+			value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -414,7 +419,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_1" />
 		</property>
@@ -428,7 +433,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard3" />
 		</property>
@@ -446,7 +451,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
@@ -460,7 +465,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_2" />
 		</property>
@@ -474,7 +479,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -1771,7 +1776,7 @@
 			<ref bean="pestControl" />
 		</property>
 		<property name="warranty">
-			<ref bean="warranty2" />
+			<ref bean="warranty1" />
 		</property>
 		<property name="complaints">
 			<list>
@@ -1801,7 +1806,7 @@
 			<ref bean="roofing" />
 		</property>
 		<property name="warranty">
-			<ref bean="warranty2" />
+			<ref bean="warranty1" />
 		</property>
 		<property name="complaints">
 			<list>
@@ -2274,15 +2279,15 @@
 
 	<!-- Warranty for the customer 1 -->
 	<bean id="warranty1" class="domain.Warranty">
-		<property name="title" value="Warranty for the customer 1" />
+		<property name="title" value="Warranty final" />
 		<property name="terms" value="Terms and conditions" />
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 		<property name="laws" value="law1,law4,law93" />
 	</bean>
 
 	<!-- Warranty for the customer 2 -->
 	<bean id="warranty2" class="domain.Warranty">
-		<property name="title" value="Warranty for the customer 2S" />
+		<property name="title" value="Warranty not final" />
 		<property name="terms" value="Terms and conditions" />
 		<property name="isFinal" value="false" />
 		<property name="laws" value="law13,law54,law73" />

@@ -110,7 +110,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		a = this.applicationService.create();
 
 		a.setFixUpTask(saved);
-		a.setComments("Hola");
+		a.setHandyWorkerComment("Hola");
 		
 		apSaved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
@@ -183,7 +183,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		Application a, apSaved;
 
 		a = this.applicationService.create();
-		a.setComments("Hola");
+		a.setHandyWorkerComment("Hola");
 		a.setFixUpTask(saved);
 		apSaved = this.applicationService.save(a);
 		Assert.isTrue(apSaved.getStatus() == "PENDING");
@@ -235,7 +235,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		Application a, apSaved;
 
 		a = this.applicationService.create();
-		a.setComments("Hola");
+		a.setHandyWorkerComment("Hola");
 		a.setFixUpTask(saved);
 		apSaved = this.applicationService.save(a);
 		Assert.isTrue(apSaved.getStatus() == "PENDING");

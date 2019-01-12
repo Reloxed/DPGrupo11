@@ -84,7 +84,9 @@
 			<display:column property="offeredPrice"
 				titleKey="application.offeredPrice" sortable="true" />
 
-			<display:column property="comments" titleKey="application.comments" />
+			<display:column property="handyWorkerComment" titleKey="application.myComments" />
+
+			<display:column property="customerComment" titleKey="application.customerComment" />
 
 			<display:column property="status" titleKey="application.status"
 				class="${bgcolor}" />

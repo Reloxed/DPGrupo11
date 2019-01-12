@@ -50,14 +50,14 @@ public class ApplicationController extends AbstractController {
 	// List
 
 	@RequestMapping(value = "/customer/list-customer")
-	public ModelAndView list(@RequestParam int fixuptaskID) {
+	public ModelAndView list(@RequestParam int fixUpTaskId) {
 		ModelAndView res;
 		Collection<Application> applications;
 		Customer fixUpTaskOwner;
 		boolean hasAccepted = false;
 
 		applications = this.applicationService
-				.findAllApplicationsByFixUpTask(fixuptaskID);
+				.findAllApplicationsByFixUpTask(fixUpTaskId);
 		fixUpTaskOwner = this.customerService
 				.findCustomerByApplicationId(applications.iterator().next()
 						.getId());
@@ -68,15 +68,14 @@ public class ApplicationController extends AbstractController {
 				break;
 			}
 		}
-
-		String requestURI = "application/customer/list-customer.do?fixuptaskID="
-				+ fixuptaskID;
+		String requestURI = "application/customer/list-customer.do?fixUpTaskId="
+				+ fixUpTaskId;
 		res = new ModelAndView("application/listCustomer");
 		res.addObject("requestURI", requestURI);
 		res.addObject("applications", applications);
 		res.addObject("owner", fixUpTaskOwner);
 		res.addObject("hasAccepted", hasAccepted);
-		res.addObject("fixuptaskID", fixuptaskID);
+		res.addObject("fixUpTaskId", fixUpTaskId);
 		return res;
 	}
 
@@ -125,10 +124,10 @@ public class ApplicationController extends AbstractController {
 					application.getCreditCard());
 			accepted = this.applicationService.findOne(application.getId());
 			res = new ModelAndView(
-					"redirect:/application/customer/list-customer.do?fixuptaskID="
+					"redirect:/application/customer/list-customer.do?fixUpTaskId="
 							+ accepted.getFixUpTask().getId());
 		} catch (Throwable oops) {
-			res = this.createEditModelAndView(application,
+			res = this.createEditModelAndViewC(application,
 					"administrator.commit.error");
 		}
 		return res;
@@ -166,7 +165,7 @@ public class ApplicationController extends AbstractController {
 		res.addObject("applications", applications);
 		res.addObject("owner", fixUpTaskOwner);
 		res.addObject("hasAccepted", hasAccepted);
-		res.addObject("fixuptaskID", toReject.getFixUpTask().getId());
+		res.addObject("fixUpTaskId", toReject.getFixUpTask().getId());
 		return res;
 	}
 	
@@ -179,35 +178,65 @@ public class ApplicationController extends AbstractController {
 		FixUpTask fix = this.fixUpTaskService.findOne(fixUpTaskId);
 		application.setFixUpTask(fix);
 
-		result = this.createEditModelAndView(application);
+		result = this.createEditModelAndViewHW(application);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/handy-worker/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int applicationId) {
+	public ModelAndView editHW(@RequestParam int applicationId) {
 		ModelAndView result;
 		Application application;
 
 		application = this.applicationService.findOne(applicationId);
 		Assert.notNull(application);
-		result = createEditModelAndView(application);
+		result = createEditModelAndViewHW(application);
 
 		return result;
 	}
 
 	@RequestMapping(value="/handy-worker/edit", method=RequestMethod.POST, params="save")
-	public ModelAndView save(@Valid Application application, BindingResult binding) {
+	public ModelAndView saveHW(@Valid Application application, BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(application);
+			result = createEditModelAndViewHW(application);
 		} else {
 			try {
 				this.applicationService.save(application);
 				result = new ModelAndView("redirect:list-handy-worker.do");
 			} catch (Throwable oops) {
-				result = createEditModelAndView(application,
+				result = createEditModelAndViewHW(application,
+						"application.commit.error");
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
+	public ModelAndView editC(@RequestParam int applicationId) {
+		ModelAndView result;
+		Application application;
+
+		application = this.applicationService.findOne(applicationId);
+		Assert.notNull(application);
+		result = createEditModelAndViewC(application);
+
+		return result;
+	}
+
+	@RequestMapping(value="/customer/edit", method=RequestMethod.POST, params="save")
+	public ModelAndView saveC(@Valid Application application, BindingResult binding) {
+		ModelAndView result;
+
+		if (binding.hasErrors()) {
+			result = createEditModelAndViewC(application);
+		} else {
+			try {
+				this.applicationService.save(application);
+				result = new ModelAndView("redirect:list-customer.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndViewC(application,
 						"application.commit.error");
 			}
 		}
@@ -217,19 +246,38 @@ public class ApplicationController extends AbstractController {
 	// Create edit ModelAndView para customers
 	// -----------------------------------------------
 
-	protected ModelAndView createEditModelAndView(Application application) {
+	protected ModelAndView createEditModelAndViewHW(Application application) {
 		ModelAndView result;
 
-		result = createEditModelAndView(application, null);
+		result = createEditModelAndViewHW(application, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Application application,
+	protected ModelAndView createEditModelAndViewHW(Application application,
 			String messageCode) {
 		ModelAndView result;
 		
 		result = new ModelAndView("application/handy-worker/edit");
+		result.addObject("application", application);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndViewC(Application application) {
+		ModelAndView result;
+
+		result = createEditModelAndViewHW(application, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewC(Application application,
+			String messageCode) {
+		ModelAndView result;
+		
+		result = new ModelAndView("application/customer/edit");
 		result.addObject("application", application);
 		result.addObject("message", messageCode);
 

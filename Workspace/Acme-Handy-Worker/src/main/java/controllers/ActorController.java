@@ -21,6 +21,7 @@ import domain.Sponsor;
 
 @Controller
 @RequestMapping("/actor")
+
 public class ActorController extends AbstractController {
 
 	// Services
