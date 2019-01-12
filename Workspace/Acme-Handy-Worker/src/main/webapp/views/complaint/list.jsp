@@ -17,12 +17,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('REFEREE')">
-
-	<jstl:if test="${requestURI.endsWith('listNotAssigned.do')}">
-
 		<display:table name="complaints" id="row"
-			requestURI="complaint/referee/listNotAssigned.do" pagesize="10"
+			requestURI="${requestURI}" pagesize="10"
 			class="displaytag">
 			<display:column property="fixUpTask.description"
 				titleKey="complaint.fixuptask" />
@@ -33,42 +29,25 @@
 			<display:column property="attachements"
 				titleKey="complaint.attachements" />
 			<display:column property="ticker" titleKey="complaint.ticker" />
-			<spring:message code="complaint.assign" var="assignRefereeHeader" />
-
-			<display:column title="${assignRefereeHeader}">
-				<a href="complaint/referee/assignReferee.do?complaintId=${row.id}">
-					<spring:message code="complaint.assign" />
-				</a>
-			</display:column>
-
-		</display:table>
-	</jstl:if>
-
-	<jstl:if test="${requestURI.endsWith('listAssigned.do')}">
-
-		<display:table name="complaints" id="row"
-			requestURI="complaint/referee/listAssigned.do" pagesize="10"
-			class="displaytag">
-			<display:column property="fixUpTask.description"
-				titleKey="complaint.fixuptask" />
-			<display:column property="moment" titleKey="complaint.moment"
-				sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
-			<display:column property="description"
-				titleKey="complaint.description" />
-			<display:column property="attachements"
-				titleKey="complaint.attachements" />
-			<display:column property="ticker" titleKey="complaint.ticker" />
-			<spring:message code="complaint.assign" var="assignRefereeHeader" />
-			<spring:message code="complaint.create.report"
+			
+			<security:authorize access="hasRole('REFEREE')">
+			<jstl:if test="${requestURI.endsWith('listNotAssigned.do')}">
+				<spring:message code="complaint.assign" var="assignRefereeHeader" />
+				<display:column title="${assignRefereeHeader}">
+					<a href="complaint/referee/assignReferee.do?complaintId=${row.id}">
+						<spring:message code="complaint.assign" />
+					</a>
+				</display:column>
+			</jstl:if>
+			
+			<jstl:if test="${requestURI.endsWith('listAssigned.do')}">
+				<spring:message code="complaint.create.report"
 				var="createReportHeader" />
-			<display:column title="${createReportHeader}">
-				<a href="report/complaint/create.do?complaintId=${row.id}"> <spring:message
-						code="complaint.create.report" />
-				</a>
-			</display:column>
+				<display:column title="${createReportHeader}">
+					<a href="report/complaint/create.do?complaintId=${row.id}"><spring:message code="complaint.create.report" /></a>
+				</display:column>
+			</jstl:if>
+			</security:authorize>
 
 		</display:table>
-
-
-	</jstl:if>
-</security:authorize>
+	
