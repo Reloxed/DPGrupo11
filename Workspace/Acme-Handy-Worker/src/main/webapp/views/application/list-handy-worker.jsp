@@ -18,6 +18,26 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<style>
+<!--
+.tableColorGreen {
+	background-color: chartreuse;
+}
+
+.tableColorOrange {
+	background-color: orange;
+}
+
+.tableColorGrey {
+	background-color: grey;
+}
+
+.tableColorDefault {
+	background-color: white;
+}
+-->
+</style>
+
 <h2 style="font-family: sans-serif;">
 	<spring:message code="applications.list" />
 </h2>
@@ -29,8 +49,31 @@
 
 		<display:table name="applications" id="applications"
 			requestURI="application/handy-worker/list-handy-worker.do"
-			pagesize="10" class="displaytag" >
-		
+			pagesize="10" class="displaytag">
+
+			<jstl:catch>
+				<fmt:parseDate value="${applications.fixUpTask.startMoment}"
+					pattern="yyyy-MM-dd HH:mm" var="fixUpTaskStartMoment" />
+			</jstl:catch>
+			<jstl:choose>
+				<jstl:when test="${applications.status == 'ACCEPTED'}">
+					<jstl:set var="bgcolor" value="tableColorGreen" />
+				</jstl:when>
+
+				<jstl:when test="${applications.status == 'REJECTED'}">
+					<jstl:set var="bgcolor" value="tableColorOrange" />
+				</jstl:when>
+
+				<jstl:when
+					test="${applications.status == 'PENDING' && date gt fixUpTaskStartDate}">
+					<jstl:set var="bgcolor" value="tableColorGrey" />
+				</jstl:when>
+
+				<jstl:otherwise>
+					<jstl:set var="bgcolor" value="tableColorDefault" />
+				</jstl:otherwise>
+			</jstl:choose>
+
 			<display:column property="fixUpTask.description"
 				titleKey="application.fixuptask" />
 
@@ -43,8 +86,9 @@
 
 			<display:column property="comments" titleKey="application.comments" />
 
-			<display:column property="status" titleKey="application.status" />
-			
+			<display:column property="status" titleKey="application.status"
+				class="${bgcolor}" />
+
 			<display:column>
 				<jstl:if test="${applications.status == 'ACCEPTED'}">
 					<a
