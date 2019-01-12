@@ -168,6 +168,7 @@ public class FixUpTaskService {
 		return res;
 
 	}
+	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);

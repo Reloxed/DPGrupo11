@@ -77,12 +77,12 @@ public class FixUpTaskCustomerController extends AbstractController {
 	//Display-----------------------------------------------------------
 
 	@RequestMapping(value="/display", method=RequestMethod.GET)
-	public ModelAndView display(@RequestParam int taskId){
+	public ModelAndView display(@RequestParam int fixUpTaskId){
 
 		ModelAndView result;
 		FixUpTask fixUpTask;
 
-		fixUpTask = this.fixUpTaskService.findOne(taskId);
+		fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
 
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("fixUpTask", fixUpTask);

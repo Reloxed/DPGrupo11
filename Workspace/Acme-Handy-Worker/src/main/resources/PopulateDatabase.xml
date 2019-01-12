@@ -499,7 +499,7 @@
 					value="Welcome to Acme-HandyWorker! price,quality,and trust in a single place" />
 			</util:map>
 		</property>
-		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
+		<property name="banner" value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
 		<property name="countryCode" value="+034" />

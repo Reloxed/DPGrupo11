@@ -85,18 +85,6 @@
 	</jstl:if>
 </security:authorize>
 
-<<<<<<< HEAD
-<display:table name="complaints" id="complaints"
-	requestURI="complaints/referee/list.do" pagesize="10"
-	class="displaytag">
-	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
-	<display:column property="moment" titleKey="complaint.moment"
-		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
-	<display:column property="description" titleKey="complaint.description" />
-	<display:column property="attachements"
-		titleKey="complaint.attachements" />
-	<display:column property="ticker" titleKey="complaint.ticker" />
-=======
 <security:authorize access="hasRole('CUSTOMER')">
 	<jstl:set var="uri" value="complaint/fixUpTask.do" />
 </security:authorize>

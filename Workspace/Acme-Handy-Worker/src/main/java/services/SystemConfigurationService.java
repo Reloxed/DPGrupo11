@@ -110,6 +110,15 @@ public class SystemConfigurationService {
 
 		return result;
 	}
+	
+	public String findMyBanner() {
+
+		String result;
+
+		result = this.systemConfigurationRepository.findAll().get(0).getBanner();
+
+		return result;
+	}
 
 	public String findSpamWords() {
 		final String result;

@@ -64,9 +64,6 @@
 
 		<display:column>
 
-			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}"> 
-			 	<spring:message code="applications.create" />
-
 			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}"> <!-- <img
 				style="width: center; height: center" /> --> <spring:message
 					code="application.create" />
@@ -85,11 +82,6 @@
 </security:authorize>
 
 <security:authorize access="hasRole('CUSTOMER')">
-
-	<display:table name="fixUpTasks" id="row"
-		requestURI="fixUpTask/customer/list.do" pagesize="10"
-		class="displaytag">
-
 
 <display:table name="fixUpTasks" id="row" requestURI="fixUpTask/customer/list.do"
 		pagesize="10" class="displaytag">
