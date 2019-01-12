@@ -18,15 +18,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('REFEREE')">
-	
-		<jstl:if test="${requestURI.endsWith('list2.do')}">
 
-		<h2 style="font-family: sans-serif;">
-			<spring:message code="complaint.list" />
-		</h2>
+	<jstl:if test="${requestURI.endsWith('listNotAssigned.do')}">
 
-		<display:table name="notAssigned" id="row"
-			requestURI="complaint/referee/list2.do" pagesize="10"
+		<display:table name="complaints" id="row"
+			requestURI="complaint/referee/listNotAssigned.do" pagesize="10"
 			class="displaytag">
 			<display:column property="fixUpTask.description"
 				titleKey="complaint.fixuptask" />
@@ -48,14 +44,10 @@
 		</display:table>
 	</jstl:if>
 
-	<jstl:if test="${requestURI.endsWith('list1.do')}">
-
-		<h2 style="font-family: sans-serif;">
-			<spring:message code="complaint.list" />
-		</h2>
+	<jstl:if test="${requestURI.endsWith('listAssigned.do')}">
 
 		<display:table name="complaints" id="row"
-			requestURI="complaint/referee/list.do" pagesize="10"
+			requestURI="complaint/referee/listAssigned.do" pagesize="10"
 			class="displaytag">
 			<display:column property="fixUpTask.description"
 				titleKey="complaint.fixuptask" />
@@ -67,49 +59,16 @@
 				titleKey="complaint.attachements" />
 			<display:column property="ticker" titleKey="complaint.ticker" />
 			<spring:message code="complaint.assign" var="assignRefereeHeader" />
-
-			
-				
 			<spring:message code="complaint.create.report"
-			var="createReportHeader" />
-		<display:column title="${createReportHeader}">
-			<a href="report/complaint/create.do?complaintId=${row.id}"> <spring:message
-					code="complaint.create.report" />
+				var="createReportHeader" />
+			<display:column title="${createReportHeader}">
+				<a href="report/complaint/create.do?complaintId=${row.id}"> <spring:message
+						code="complaint.create.report" />
+				</a>
+			</display:column>
 
-			</a>
-		</display:column>
-			
 		</display:table>
-		
+
 
 	</jstl:if>
 </security:authorize>
-<!-- Hay que unificar la vista: lo vemos para la siguiente entrega pero en principio es algo como lo que tengo yo
-
-<security:authorize access="hasRole('CUSTOMER')">
-	<jstl:set var="uri" value="complaint/fixUpTask.do" />
-</security:authorize>
-<security:authorize access="hasRole('HANDYWORKER')">
-	<jstl:set var="uri" value="complaint/handyWorker/list.do" />
-</security:authorize>
-<security:authorize access="hasRole('REFEREE')">
-	<jstl:set var="uri" value="complaint/list.do" />
-</security:authorize>
-
-<display:table name="complaints" id="row" requestURI="${ uri }" pagesize="10" class="displaytag">
-	<display:column property="fixUpTask.description" titleKey="complaint.fixuptask" />
-	
-	<display:column property="moment" titleKey="complaint.moment"
-		sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
-	
-	<display:column property="description" titleKey="complaint.description" />
-	
-	<display:column property="attachements"
-		title=<spring:message code="complaint.attachments" /> />
-	
-	<display:column property="ticker" titleKey="complaint.ticker" />
-	<display:column>
-		TODO: solo para el customer que lo ha escrito: <a href="${requestURI}"><spring:message	code="complaint.edit" /></a>
-		<a href="complaint/handyWorker/display.do?complaintId=${row.id}"><spring:message code="complaint.display" /></a>
-	</display:column>
-</display:table>-->

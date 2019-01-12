@@ -1,5 +1,4 @@
 
-
 package repositories;
 
 import java.util.Collection;
@@ -12,17 +11,16 @@ import domain.Complaint;
 
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
-	
 
 	@Query("select r.complaints from Referee r where r.id=?1")
 	Collection<Complaint> findComplaintsByReferee(int refereeId);
 
 	@Query("select c from HandyWorker h join h.applications a join a.fixUpTask f join f.complaints c where h.id=?1 group by c.id")
 	Collection<Complaint> findComplaintsByHandyWorkerId(int handyWorkerId);
-	
+
 	@Query("select c.complaints from Customer c where c.id=?1")
 	Collection<Complaint> findComplaintsByCustomer(int customerId);
-	
 
+	@Query("select c1 from Complaint c1 where not exists (select c2 from Referee r join r.complaints c2 where c2 = c1)")
+	Collection<Complaint> findNotAssignedComplaints();
 }
-
