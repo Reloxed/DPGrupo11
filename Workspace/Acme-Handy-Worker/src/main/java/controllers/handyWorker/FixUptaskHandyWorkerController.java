@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomerService;
 import services.FixUpTaskService;
 import controllers.AbstractController;
 import domain.Application;
@@ -28,9 +27,6 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
-
-	@Autowired
-	private CustomerService		customerService;
 
 	// Constructor
 

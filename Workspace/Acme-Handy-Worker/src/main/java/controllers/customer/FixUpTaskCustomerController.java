@@ -1,8 +1,6 @@
-
 package controllers.customer;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -16,32 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
+import services.CategoryService;
 import services.ComplaintService;
 import services.CustomerService;
 import services.FixUpTaskService;
+import services.WarrantyService;
 import controllers.AbstractController;
-
 import domain.Application;
+import domain.Category;
 import domain.Complaint;
-
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Warranty;
 
 @Controller
 @RequestMapping("/fixUpTask/customer")
 public class FixUpTaskCustomerController extends AbstractController {
 
-
-	//Services
+	// Services
 
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
 
-
 	@Autowired
-	private CustomerService		customerService;
-
-
+	private CustomerService customerService;
 
 	@Autowired
 	private ComplaintService complaintService;
@@ -49,35 +45,36 @@ public class FixUpTaskCustomerController extends AbstractController {
 	@Autowired
 	private ApplicationService applicationService;
 
-	//Constructor
+	@Autowired
+	private CategoryService categoryService;
+
+	@Autowired
+	private WarrantyService warrantyService;
+
+	// Constructor
 
 	public FixUpTaskCustomerController() {
 		super();
 	}
 
-	//Display
+	// Display
 
-
-
-	//Create
+	// Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		FixUpTask task;
 
-
-		task=this.fixUpTaskService.create();
-		result=this.createEditModelAndView(task);
+		task = this.fixUpTaskService.create();
+		result = this.createEditModelAndView(task);
 		return result;
-
-
 
 	}
 
-	//Display-----------------------------------------------------------
+	// Display-----------------------------------------------------------
 
-	@RequestMapping(value="/display", method=RequestMethod.GET)
-	public ModelAndView display(@RequestParam int fixUpTaskId){
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int fixUpTaskId) {
 
 		ModelAndView result;
 		FixUpTask fixUpTask;
@@ -91,14 +88,12 @@ public class FixUpTaskCustomerController extends AbstractController {
 		return result;
 	}
 
-		
-	
-
-	//edit
+	// edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int fixUpTaskId) {
 		final ModelAndView result;
 		FixUpTask task;
+		
 
 		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
@@ -109,8 +104,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	}
 
-	//list
-
+	// list
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -119,17 +113,18 @@ public class FixUpTaskCustomerController extends AbstractController {
 		Collection<FixUpTask> fixUpTasks;
 		Customer principal;
 
+		principal = this.customerService.findByPrincipal();
+		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal
+				.getId());
 
-		principal=this.customerService.findByPrincipal();
-		fixUpTasks=this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
-
-		result=new ModelAndView("fixUpTask/list");
-		result.addObject("fixUpTasks",fixUpTasks);
-		result.addObject("principal",principal);
-		result.addObject("requestUri","fixUpTask/customer/list.do");
+		result = new ModelAndView("fixUpTask/list");
+		result.addObject("fixUpTasks", fixUpTasks);
+		result.addObject("principal", principal);
+		result.addObject("requestUri", "fixUpTask/customer/list.do");
 
 		principal = this.customerService.findByPrincipal();
-		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal.getId());
+		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal
+				.getId());
 
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
@@ -140,8 +135,6 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	}
 
-	
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(@Valid final FixUpTask task) {
 		ModelAndView result;
@@ -150,18 +143,18 @@ public class FixUpTaskCustomerController extends AbstractController {
 			this.fixUpTaskService.delete(task);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(task, "fixUpTask.commit.error");
+			result = this
+					.createEditModelAndView(task, "fixUpTask.commit.error");
 		}
 
 		return result;
 
 	}
 
-
-
-	//Save
+	// Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final FixUpTask task, final BindingResult binding) {
+	public ModelAndView save(@Valid final FixUpTask task,
+			final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
@@ -172,16 +165,15 @@ public class FixUpTaskCustomerController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println(binding.getAllErrors());
-				result = this.createEditModelAndView(task, "fixUpTask.commit.error");
+				result = this.createEditModelAndView(task,
+						"fixUpTask.commit.error");
 			}
 
 		return result;
 
 	}
 
-
-
-	//Ancillary methods
+	// Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final FixUpTask task) {
 		ModelAndView result;
@@ -191,18 +183,26 @@ public class FixUpTaskCustomerController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final FixUpTask task, final String message) {
+	protected ModelAndView createEditModelAndView(final FixUpTask task,
+			final String message) {
 		ModelAndView result;
 		Collection<Complaint> complaints;
 		Collection<Application> applications;
 		String ticker;
+		Collection<Category> categories;
+		Collection<Warranty> warranties;
+		
+		categories = this.categoryService.findAll();
+		warranties = this.warrantyService.findFinalWarranties();
 
+		
 		complaints = this.complaintService.findComplaintsByCustomer();
 		applications = this.applicationService.findAllApplicationsByCustomer();
 		ticker = task.getTicker();
-
-
+		
 		result = new ModelAndView("fixUpTask/edit");
+		result.addObject("categories", categories);
+		result.addObject("warranties", warranties);
 		result.addObject("fixUpTask", task);
 		result.addObject("message", message);
 		result.addObject("complaints", complaints);
@@ -210,8 +210,5 @@ public class FixUpTaskCustomerController extends AbstractController {
 		result.addObject("ticker", ticker);
 		return result;
 	}
-
-
-
 
 }

@@ -82,7 +82,7 @@
 					<li class="arrow"></li>
 					<li><a href="fixUpTask/customer/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
-					<li><a href="fixuptask/edit.do"><spring:message
+					<li><a href="fixUpTask/customer/create.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message

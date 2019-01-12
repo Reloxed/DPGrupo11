@@ -31,7 +31,6 @@
 	<form:hidden path="registeredMoment" />
 	<form:hidden path="fixUpTask" />
 	<form:hidden path="applicant" />
-	<form:hidden path="creditCard" />
 	<form:hidden path="status" />
 	<form:hidden path="offeredPrice" />
 	<form:hidden path="handyWorkerComment" />
@@ -42,7 +41,7 @@
 	<br />
 	
 		<form:label path="customerComment">
-			<spring:message code="application.myComments" />
+			<spring:message code="application.myComment" />
 		</form:label>
 		<spring:message code="application.customerCommentsPlaceholder"
 			var="placeholder" />

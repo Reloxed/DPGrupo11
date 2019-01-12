@@ -85,9 +85,8 @@
 				titleKey="application.offeredPrice" sortable="true" />
 
 			<display:column property="handyWorkerComment" titleKey="application.myComments" />
-			<jstl:if test="${application.customerComment != null}">
-					<display:column property="customerComment" titleKey="application.customerComment" />
-			</jstl:if>
+
+			<display:column property="customerComment" titleKey="application.customerComment" />
 
 			<display:column property="status" titleKey="application.status"
 				class="${bgcolor}" />
