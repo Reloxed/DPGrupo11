@@ -160,9 +160,15 @@ public class HandyWorkerService {
 
 	}
 
-	public Collection<HandyWorker> findTopComplaintsHandyWorkers() {
-		final Collection<HandyWorker> colHandys = this.handyWorkerRepository
+
+	public List<HandyWorker> findTopComplaintsHandyWorkers() {
+		List<HandyWorker> colHandys = this.handyWorkerRepository
 				.findTopComplaintsHandyWorkers();
+
+		if (colHandys.size() > 3) {
+			colHandys = colHandys.subList(0, 2);
+		}
+
 		return colHandys;
 	}
 

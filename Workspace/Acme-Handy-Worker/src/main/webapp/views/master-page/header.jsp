@@ -14,7 +14,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
-<%@ page import="services.SystemConfigurationService" %>
 
 
 <div style="float: right">
@@ -22,6 +21,7 @@
 		style="width: 50px; height: 25px" /></a> <a href="?language=en" id="en"><img
 		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
+
 			
 <div>	
 	<a href="#"><img
@@ -49,7 +49,7 @@
 					<li class="arrow"></li>
 					<li><a href="warranty/administrator/list.do"><spring:message
 								code="master.page.administrator.warranties.show" /></a></li>
-		
+
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.categories" /></a>
@@ -60,14 +60,10 @@
 					<li><a href="category/administrator/create.do"><spring:message
 								code="master.page.administrator.category.new" /></a></li>
 				</ul></li>
-			<li><a class="fNiv"><spring:message
-						code="master.page.administrator.statistics" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="statistics/administrator/display.do"><spring:message
-								code="master.page.administrator.dashboard" /></a></li>
-					
-				</ul></li>
+
+			<li><a class="fNiv" href="statistics/administrator/display.do"><spring:message
+						code="master.page.administrator.dashboard" /></a></li>
+
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.manage" /></a>
 				<ul>
@@ -120,12 +116,12 @@
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"></a>
-						
-					<li class="arrow"></li>
-					<li><a href="report/referee/list.do"><spring:message
-								code="master.page.referee.reports" /></a></li>
-					<li><a href="note/referee/list.do"><spring:message
-								code="master.page.referee.notes" /></a></li>
+
+			<li class="arrow"></li>
+			<li><a href="report/referee/list.do"><spring:message
+						code="master.page.referee.reports" /></a></li>
+			<li><a href="note/referee/list.do"><spring:message
+						code="master.page.referee.notes" /></a></li>
 			</li>
 		</security:authorize>
 

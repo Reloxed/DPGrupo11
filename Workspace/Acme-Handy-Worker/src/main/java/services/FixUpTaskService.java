@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,15 +24,14 @@ public class FixUpTaskService {
 	// Managed repository-----------
 
 	@Autowired
-	private FixUpTaskRepository	fixUpTaskRepository;
+	private FixUpTaskRepository fixUpTaskRepository;
 
 	// Supporting services ----------
 	@Autowired
-	private UtilityService		utilityService;
+	private UtilityService utilityService;
 
 	@Autowired
-	private CustomerService		customerService;
-
+	private CustomerService customerService;
 
 	// Constructor ----------------------------------------------------
 
@@ -89,28 +87,31 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getEndMoment());
 		Assert.notNull(fixUpTask.getStartMoment());
-		Assert.isTrue(fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()));
+		Assert.isTrue(fixUpTask.getStartMoment().before(
+				fixUpTask.getEndMoment()));
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 
-		//Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
-		
-
+		// Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
 
 		if (fixUpTask.getId() == 0) {
-			fixUpTask.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+			fixUpTask.setPublishedMoment(new Date(
+					System.currentTimeMillis() - 1));
 			fixUpTask.setTicker(this.utilityService.generateTicker());
 		} else {
-			Assert.isTrue(fixUpTask.getPublishedMoment().equals(this.findOne(fixUpTask.getId()).getPublishedMoment()));
-			Assert.isTrue(fixUpTask.getTicker().equals(this.findOne(fixUpTask.getId()).getTicker()));
+			Assert.isTrue(fixUpTask.getPublishedMoment().equals(
+					this.findOne(fixUpTask.getId()).getPublishedMoment()));
+			Assert.isTrue(fixUpTask.getTicker().equals(
+					this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
-		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		final boolean containsSpam = this.utilityService
+				.isSpam(atributosAComprobar);
 		if (containsSpam)
 			principal.setIsSuspicious(true);
 
@@ -131,47 +132,52 @@ public class FixUpTaskService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		
-		//Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
+		// Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
 
-
-		
-
-		//Assert.isTrue(fixUpTask.getApplications().isEmpty());
+		// Assert.isTrue(fixUpTask.getApplications().isEmpty());
 		this.fixUpTaskRepository.delete(fixUpTask);
 		principal.getFixUpTasks().remove(fixUpTask);
 	}
 
 	// Other business methods--------
 
+	public Double[] findFixUpTaskNumberOperation() {
+
+		final Double[] res = this.fixUpTaskRepository
+				.findFixUpTaskNumberOperations();
+		return res;
+	}
+
 	public Double[] findApplicationsNumberOperations() {
-		final Double[] res = this.fixUpTaskRepository.findApplicationsNumberOperations();
+		final Double[] res = this.fixUpTaskRepository
+				.findApplicationsNumberOperations();
 		return res;
 	}
 
 	public Double[] findMaxPricesNumberOperations() {
-		final Double[] res = this.fixUpTaskRepository.findMaxPricesNumberOperations();
+		final Double[] res = this.fixUpTaskRepository
+				.findMaxPricesNumberOperations();
 		return res;
-
 	}
 
 	public Double[] findComplaintsNumberOperations() {
 
-		final Double[] res = this.fixUpTaskRepository.findComplaintsNumberOperations();
+		final Double[] res = this.fixUpTaskRepository
+				.findComplaintsNumberOperations();
 		return res;
-
 	}
 
 	public Double ratioFixUpTaskWithComplaints() {
 
-		final Double res = this.fixUpTaskRepository.ratioFixUpTaskWithComplaints();
+		final Double res = this.fixUpTaskRepository
+				.ratioFixUpTaskWithComplaints();
 		return res;
-
 	}
 	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
-		final Collection<FixUpTask> res = this.fixUpTaskRepository.FixUpTaskByCustomer(customerId);
+		final Collection<FixUpTask> res = this.fixUpTaskRepository
+				.FixUpTaskByCustomer(customerId);
 		return res;
 
 	}
