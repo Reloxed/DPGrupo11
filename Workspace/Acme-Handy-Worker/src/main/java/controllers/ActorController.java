@@ -52,7 +52,7 @@ public class ActorController {
 	// Display with no parameters
 	@RequestMapping(value = "/display")
 	public ModelAndView display() {
-		final ModelAndView res;
+		ModelAndView res;
 		Actor actor;
 
 		res = new ModelAndView("actor/display");
@@ -100,7 +100,7 @@ public class ActorController {
 	// Display with "actorID" as parameter
 	@RequestMapping(value = "/display", params = "actorID")
 	public ModelAndView display(@RequestParam int actorID) {
-		final ModelAndView res;
+		ModelAndView res;
 		Actor actor;
 
 		actor = this.actorService.findOne(actorID);

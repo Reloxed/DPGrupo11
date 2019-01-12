@@ -63,10 +63,6 @@
 		</jstl:forEach>
 
 		<display:column>
-			<a href="application/handyWorker/edit.do?fixUpTaskId=${row.id}">
-				<spring:message code="applications.create" />
-			</a>
-
 			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
 				<!-- <img
 				style="width: center; height: center" /> --> <spring:message
