@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -16,5 +17,4 @@ public interface RefereeRepository extends JpaRepository<Referee, Integer> {
 
 	@Query("select r from Referee r where r.isSuspicious = true")
 	Collection<Referee> findRefereeBySuspicious();
-
 }
