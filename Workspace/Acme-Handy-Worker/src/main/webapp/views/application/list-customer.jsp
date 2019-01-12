@@ -26,8 +26,7 @@
 	<jstl:if test="${user == owner.userAccount.username}">
 
 		<display:table name="applications" id="applications"
-			requestURI="application/customer/list.do" pagesize="10"
-			class="displaytag">
+			requestURI="${requestURI}" pagesize="10" class="displaytag">
 
 			<display:column property="applicant.name"
 				titleKey="application.applicant" />
@@ -46,20 +45,21 @@
 
 			<display:column titleKey="application.buttons">
 				<jstl:choose>
-					<jstl:when test="${applications.status == 'PENDING'}">
+					<jstl:when test="${hasAccepted}">
+						<spring:message code="application.noaction" />
+					</jstl:when>
+					<jstl:when
+						test="${applications.status == 'PENDING' && hasAccepted == false}">
 						<a
-							onclick="redirect: location.href = 'application/customer/accept.do?applicationID=${applicationID}';">
+							onclick="redirect: location.href = 'application/customer/acceptv.do?applicationID=${applications.id}';">
 							<img src="images/confirm.png">
 						</a>
 
 						<a
-							onclick="redirect: location.href = 'application/customer/deny.do?applicationID=${applicationID}';">
+							onclick="redirect: location.href = 'application/customer/reject.do?applicationID=${applications.id}';">
 							<img src="images/delete.png">
 						</a>
 					</jstl:when>
-					<jstl:otherwise>
-						<spring:message code="application.noaction" />
-					</jstl:otherwise>
 				</jstl:choose>
 			</display:column>
 

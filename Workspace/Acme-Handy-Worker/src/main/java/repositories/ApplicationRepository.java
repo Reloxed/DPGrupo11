@@ -1,4 +1,3 @@
-
 package repositories;
 
 import java.util.Collection;
@@ -10,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import domain.Application;
 
 @Repository
-public interface ApplicationRepository extends JpaRepository<Application, Integer> {
+public interface ApplicationRepository extends
+		JpaRepository<Application, Integer> {
 
 	@Query("select a from HandyWorker h join h.applications a where h.id=?1")
 	Collection<Application> findAllApplicationsByHandyWorker(int handyWorkerId);
-	
+
 	@Query("select a from Customer c join c.fixUpTasks f join f.applications a where c.id=?1")
 	Collection<Application> findAllApplicationsByCustomer(int customerId);
 
@@ -32,4 +32,20 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select app from Application app join app.creditCard cc where cc.id = ?1")
 	Collection<Application> findByCreditCardId(int creditCardId);
+
+	// C/5
+	@Query("select (sum(case when a.status='PENDING' then 1.0 else 0 end)/count(*)) from Application a")
+	Double findRatioPendingApplications();
+
+	// C/6
+	@Query("select (sum(case when a.status='ACCEPTED' then 1.0 else 0 end)/count(*)) from Application a")
+	Double findRatioAcceptedApplications();
+
+	// C/7
+	@Query("select (sum(case when a.status='REJECTED' then 1.0 else 0 end)/count(*)) from Application a")
+	Double findRatioRejectedApplications();
+
+	// C/8
+	@Query("select count(a)/(select count(a) from Application a where a.fixUpTask.endMoment < CURRENT_DATE and a.status='PENDING')*1.0 from Application a where a.status='PENDING'")
+	Double findRatioPendingExpiredApplications();
 }

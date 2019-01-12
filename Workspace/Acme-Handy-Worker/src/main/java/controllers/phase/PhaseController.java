@@ -51,10 +51,17 @@ public class PhaseController extends AbstractController {
 	public ModelAndView list(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		Collection<Phase> phases;
-		HandyWorker creator;
+		HandyWorker creator = null;
+		Collection<Application> applicationsFUT;
 
+		applicationsFUT = this.fixUpTaskService.findOne(fixuptaskID)
+				.getApplications();
 		phases = this.phaseService.findPhasesFixUpTask(fixuptaskID);
-		creator = this.phaseService.creator(phases.iterator().next().getId());
+		for (Application application : applicationsFUT) {
+			if (application.getStatus().equals("ACCEPTED")) {
+				creator = application.getApplicant();
+			}
+		}
 
 		res = new ModelAndView("phase/list");
 		res.addObject("requestURI", "phase/handy-worker/list.do");

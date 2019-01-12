@@ -29,7 +29,7 @@
 	<form:hidden path="isSuspicious" />
 
 	<form:hidden path="sponsorships" />
-
+	<form:hidden path="creditCards" />
 	<jstl:choose>
 		<jstl:when test="${sponsor.id == 0}">
 

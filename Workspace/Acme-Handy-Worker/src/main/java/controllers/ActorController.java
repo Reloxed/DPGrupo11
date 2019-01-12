@@ -72,6 +72,7 @@ public class ActorController {
 				Customer customer;
 				customer = this.customerService.findOne(actor.getId());
 				res.addObject("customer", customer);
+				res.addObject("creditCards", customer.getCreditCards());
 			} else if (actor instanceof Referee) {
 				Referee referee;
 				referee = this.refereeService.findOne(actor.getId());
@@ -84,6 +85,7 @@ public class ActorController {
 				Sponsor sponsor;
 				sponsor = this.sponsorService.findOne(actor.getId());
 				res.addObject("sponsor", sponsor);
+				res.addObject("creditCards", sponsor.getCreditCards());
 			} else {
 				Administrator administrator;
 				administrator = this.administratorService
