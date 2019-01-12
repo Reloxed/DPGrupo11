@@ -19,7 +19,7 @@ import domain.Message;
 
 @Controller
 @RequestMapping("/message")
-public class MessageController {
+public class MessageController extends AbstractController{
 	
 	// Services
 

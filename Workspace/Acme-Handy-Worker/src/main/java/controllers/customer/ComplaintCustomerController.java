@@ -15,12 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
 import services.CustomerService;
+import controllers.AbstractController;
 import domain.Complaint;
 import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/complaint/customer")
-public class ComplaintCustomerController {
+public class ComplaintCustomerController extends AbstractController{
 
 	// Services used
 
