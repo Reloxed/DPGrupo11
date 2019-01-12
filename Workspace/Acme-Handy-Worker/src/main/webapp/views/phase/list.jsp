@@ -49,6 +49,11 @@
 
 					<jstl:if test="${user == creator.userAccount.username}">
 						<display:column>
+							<input type="button" name="edit"
+								value="<spring:message code="phase.edit" />"
+								onclick="redirect: location.href = 'phase/handy-worker/edit.do?phaseID=${phases.id}';" />
+						</display:column>
+						<display:column>
 							<input type="button" name="delete"
 								value="<spring:message code="phase.delete" />"
 								onclick="redirect: location.href = 'phase/handy-worker/delete.do?phaseID=${phases.id}';" />
