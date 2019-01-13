@@ -51,11 +51,7 @@
 			requestURI="application/handy-worker/list-handy-worker.do"
 			pagesize="10" class="displaytag">
 
-			<jstl:catch>
-				<fmt:parseDate value="${applications.fixUpTask.startMoment}"
-					pattern="yyyy-MM-dd HH:mm" var="fixUpTaskStartMoment" />
-			</jstl:catch>
-			<jsp:useBean id="now" class="java.util.Date"/>
+
 			<jstl:choose>
 				<jstl:when test="${applications.status == 'ACCEPTED'}">
 					<jstl:set var="bgcolor" value="tableColorGreen" />
@@ -66,7 +62,9 @@
 				</jstl:when>
 				
 				<jstl:when
-					test="${applications.status == 'PENDING' && application.fixUpTask.startMoment le application.registeredMoment}">
+
+					test="${applications.status == 'PENDING' && application.fixUpTask.startMoment le date}">
+
 					<jstl:set var="bgcolor" value="tableColorGrey" />
 				</jstl:when>
 
@@ -78,6 +76,12 @@
 			<display:column property="fixUpTask.description"
 				titleKey="application.fixuptask" />
 
+			<display:column titleKey="application.fixuptask.goto">
+				<a
+					href="fixUpTask/handyWorker/display.do?taskId=${applications.fixUpTask.id}"><spring:message
+						code="fixuptask.display" /></a>
+			</display:column>
+
 			<display:column property="registeredMoment"
 				titleKey="application.registeredMoment" sortable="true"
 				format="{0,date,dd/MM/yyyy HH:mm}" />
@@ -85,9 +89,13 @@
 			<display:column property="offeredPrice"
 				titleKey="application.offeredPrice" sortable="true" />
 
-			<display:column property="handyWorkerComment" titleKey="application.myComment"/>
 
-			<display:column property="customerComment" titleKey="application.customerComment"/>
+			<display:column property="handyWorkerComment"
+				titleKey="application.myComments" />
+
+			<display:column property="customerComment"
+				titleKey="application.customerComment" />
+
 
 			<display:column property="status" titleKey="application.status"  sortable="true"
 				class="${bgcolor}" />
