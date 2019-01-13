@@ -127,6 +127,14 @@ public class SystemConfigurationService {
 
 		return result;
 	}
+	
+	public Double findVAT() {
+		final Double result;
+
+		result = this.systemConfigurationRepository.findAll().get(0).getVAT();
+
+		return result;
+	}
 
 
 	public Double generateScore(final Endorser e) {

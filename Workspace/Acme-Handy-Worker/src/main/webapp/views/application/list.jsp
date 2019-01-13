@@ -51,6 +51,14 @@
 			requestURI="application/customer,handy-worker/list.do"
 			pagesize="10" class="displaytag">
 
+			<jstl:catch>
+				<fmt:parseDate value="${applications.fixUpTask.startMoment}"
+					pattern="yyyy-MM-dd HH:mm" var="fixUpTaskStartMoment" />
+			</jstl:catch>
+			
+			<jstl:set var="a" value="${applications.fixUpTask.startMoment}"/>			
+			<jsp:useBean id="now" class="java.util.Date" />
+			
 			<jstl:choose>
 				<jstl:when test="${applications.status == 'ACCEPTED'}">
 					<jstl:set var="bgcolor" value="tableColorGreen" />
@@ -61,8 +69,7 @@
 				</jstl:when>
 
 				<jstl:when
-					test="${applications.status == 'PENDING' and date gt applications.fixUpTask.startMoment}">
-
+					test="${applications.status == 'PENDING' && a < now}">
 					<jstl:set var="bgcolor" value="tableColorGrey" />
 				</jstl:when>
 
