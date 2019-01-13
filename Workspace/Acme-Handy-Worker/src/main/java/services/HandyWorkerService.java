@@ -161,6 +161,7 @@ public class HandyWorkerService {
 
 	}
 
+
 	public List<HandyWorker> findTopComplaintsHandyWorkers() {
 		List<HandyWorker> colHandys = this.handyWorkerRepository
 				.findTopComplaintsHandyWorkers();
@@ -168,6 +169,7 @@ public class HandyWorkerService {
 		if (colHandys.size() > 3) {
 			colHandys = colHandys.subList(0, 2);
 		}
+
 		return colHandys;
 	}
 

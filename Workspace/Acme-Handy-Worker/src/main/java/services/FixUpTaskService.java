@@ -173,6 +173,7 @@ public class FixUpTaskService {
 				.ratioFixUpTaskWithComplaints();
 		return res;
 	}
+	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository

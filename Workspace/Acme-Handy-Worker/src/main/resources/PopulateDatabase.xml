@@ -367,7 +367,9 @@
 		<property name="registeredMoment" value="08/11/2018 17:55" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="40." />
-		<property name="comments"
+		<property name="customerComment"
+			value="Okay man" />
+		<property name="handyWorkerComment"
 			value="I am experienced in window reparation because..." />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
@@ -382,8 +384,10 @@
 		<property name="registeredMoment" value="08/11/2018 18:43" />
 		<property name="status" value="ACCEPTED" />
 		<property name="offeredPrice" value="43." />
-		<property name="comments"
-			value="I am better than other Handy Workers because..." />
+		<property name="customerComment"
+			value="Okay bro" />
+		<property name="handyWorkerComment"
+			value="I am experienced in all type of reparations because..." />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -398,7 +402,8 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="80." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment"
+			value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -414,7 +419,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_1" />
 		</property>
@@ -428,7 +433,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard3" />
 		</property>
@@ -446,7 +451,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_2" />
 		</property>
@@ -460,7 +465,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask2_2" />
 		</property>
@@ -474,7 +479,7 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="REJECTED" />
 		<property name="offeredPrice" value="20." />
-		<property name="comments" value="I can fix it" />
+		<property name="handyWorkerComment" value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -499,7 +504,7 @@
 					value="Welcome to Acme-HandyWorker! price,quality,and trust in a single place" />
 			</util:map>
 		</property>
-		<property name="banner" value="https://tinyurl.com/acme-handy-worker-logo" />
+		<property name="banner" value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
 		<property name="countryCode" value="+034" />
@@ -1527,7 +1532,7 @@
 
 	<bean id="userHandyWorker1" class="security.UserAccount">
 		<property name="username" value="handyWorker1" />
-		<property name="password" value="78da4cd657c85d3cf54ae4497ed223f2" />
+		<property name="password" value="3d0e201c52a6e13f27d22b6777711541" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1540,7 +1545,7 @@
 
 	<bean id="userHandyWorker2" class="security.UserAccount">
 		<property name="username" value="handyWorker2" />
-		<property name="password" value="118ad5acc8ff3ea8006c280b310cd492" />
+		<property name="password" value="549dbd77d30ecab6ca4c047cd795333f" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1642,7 +1647,7 @@
 			value="Replace the window of my house because its broken" />
 		<property name="address" value="c/Nostromo, 8, Seville" />
 		<property name="maxPrice" value="50." />
-		<property name="startMoment" value="15/11/2020 17:30" />
+		<property name="startMoment" value="13/01/2019 17:40" />
 		<property name="endMoment" value="17/11/2020 18:30" />
 		<property name="applications">
 			<list>
@@ -1771,7 +1776,7 @@
 			<ref bean="pestControl" />
 		</property>
 		<property name="warranty">
-			<ref bean="warranty2" />
+			<ref bean="warranty1" />
 		</property>
 		<property name="complaints">
 			<list>
@@ -1801,7 +1806,7 @@
 			<ref bean="roofing" />
 		</property>
 		<property name="warranty">
-			<ref bean="warranty2" />
+			<ref bean="warranty1" />
 		</property>
 		<property name="complaints">
 			<list>
@@ -2274,15 +2279,15 @@
 
 	<!-- Warranty for the customer 1 -->
 	<bean id="warranty1" class="domain.Warranty">
-		<property name="title" value="Warranty for the customer 1" />
+		<property name="title" value="Warranty final" />
 		<property name="terms" value="Terms and conditions" />
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 		<property name="laws" value="law1,law4,law93" />
 	</bean>
 
 	<!-- Warranty for the customer 2 -->
 	<bean id="warranty2" class="domain.Warranty">
-		<property name="title" value="Warranty for the customer 2S" />
+		<property name="title" value="Warranty not final" />
 		<property name="terms" value="Terms and conditions" />
 		<property name="isFinal" value="false" />
 		<property name="laws" value="law13,law54,law73" />

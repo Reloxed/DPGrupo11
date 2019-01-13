@@ -56,7 +56,7 @@ public class CreateJSON {
 		ap1.setRegisteredMoment(LocalDate.parse("2018-10-30").toDate());
 		ap1.setStatus("PENDING");
 		ap1.setOfferedPrice(180.);
-		ap1.setComments("Comment del handy");
+		ap1.setHandyWorkerComment("Comment del handy");
 
 		Warranty w = new Warranty();
 		w.setTitle("Warranty");

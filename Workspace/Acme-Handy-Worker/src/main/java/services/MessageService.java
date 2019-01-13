@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -38,7 +39,7 @@ public class MessageService {
 	private AdministratorService		administratorService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -114,48 +115,15 @@ public class MessageService {
 		result.setTags(message.getTags());
 		result.setRecipients(recipients);
 
-		boolean containsSpam = false;
-		final String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		final String[] subject = message.getSubject().split("(¿¡,.-_/!?) ");
-		for (final String word : spamWords) {
-			for (final String titleWord : subject)
-				if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-					containsSpam = true;
-					break;
-				}
-			if (containsSpam) {
-				principal.setIsSuspicious(true);
-				break;
-			}
-		}
-		if (!containsSpam) {
-			final String[] body = message.getBody().split("(¿¡,.-_/!?) ");
-			for (final String word : spamWords) {
-				for (final String titleWord : body)
-					if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-						containsSpam = true;
-						break;
-					}
-				if (containsSpam) {
-					principal.setIsSuspicious(true);
-					break;
-				}
-			}
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(message.getSubject());
+		atributosAComprobar.add(message.getBody());
 		if (message.getTags() != null)
-			if (!containsSpam) {
-				final String[] tags = message.getTags().split("(¿¡,.-_/!?) ");
-				for (final String word : spamWords) {
-					for (final String titleWord : tags)
-						if (titleWord.toLowerCase().contains(word.toLowerCase())) {
-							containsSpam = true;
-							break;
-						}
-					if (containsSpam) {
-						principal.setIsSuspicious(true);
-						break;
-					}
-				}
-			}
+			atributosAComprobar.add(message.getTags());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
 		}
 
 		result.setIsSpam(containsSpam);

@@ -18,6 +18,22 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<script>
+	function checkPhone() {
+		var phone = document.getElementById("phoneNumber");
+		var phonePattern = new RegExp(
+				/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/);
+		var phoneOK = phone.value.match(phonePattern);
+
+		if (!phoneOK) {
+			var confirmation = confirm("<spring:message code="phone.confirmation" />");
+			if (!confirmation) {
+				document.getElementById('save').disabled = true;
+			}
+		}
+	}
+</script>
+
 <p>
 	<spring:message code="actor.edit" />
 </p>
@@ -98,7 +114,8 @@
 	<form:label path="phoneNumber">
 		<spring:message code="actor.phone" />:
 		</form:label>
-	<form:input path="phoneNumber" value="${administrator.phoneNumber}" />
+	<form:input path="phoneNumber" value="${administrator.phoneNumber}"
+		id="phoneNumber" onblur="checkPhone()" />
 	<form:errors cssClass="error" path="phoneNumber" />
 	<br>
 

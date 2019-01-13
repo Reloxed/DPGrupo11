@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import domain.Application;
 
 @Repository
-public interface ApplicationRepository extends
-		JpaRepository<Application, Integer> {
+public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
 	@Query("select a from HandyWorker h join h.applications a where h.id=?1")
 	Collection<Application> findAllApplicationsByHandyWorker(int handyWorkerId);
@@ -48,4 +47,5 @@ public interface ApplicationRepository extends
 	// C/8
 	@Query("select count(a)/(select count(a) from Application a where a.fixUpTask.endMoment < CURRENT_DATE and a.status='PENDING')*1.0 from Application a where a.status='PENDING'")
 	Double findRatioPendingExpiredApplications();
+
 }

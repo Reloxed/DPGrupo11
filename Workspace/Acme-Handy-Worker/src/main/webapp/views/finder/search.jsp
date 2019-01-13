@@ -26,7 +26,6 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="results" />
 
 		<form:label path="keyWord">
 			<spring:message code="finder.keyWord" />:

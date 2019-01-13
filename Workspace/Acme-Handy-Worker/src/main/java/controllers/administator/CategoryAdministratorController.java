@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import controllers.AbstractController;
+
 import services.AdministratorService;
 import services.CategoryService;
 import domain.Administrator;
@@ -23,7 +25,7 @@ import domain.Category;
 
 @Controller
 @RequestMapping("/category/administrator")
-public class CategoryAdministratorController {
+public class CategoryAdministratorController extends AbstractController{
 
 	// Services
 	@Autowired
