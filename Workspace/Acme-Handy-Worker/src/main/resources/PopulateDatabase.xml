@@ -1647,7 +1647,7 @@
 			value="Replace the window of my house because its broken" />
 		<property name="address" value="c/Nostromo, 8, Seville" />
 		<property name="maxPrice" value="50." />
-		<property name="startMoment" value="15/11/2020 17:30" />
+		<property name="startMoment" value="13/01/2019 11:46" />
 		<property name="endMoment" value="17/11/2020 18:30" />
 		<property name="applications">
 			<list>
