@@ -1,7 +1,6 @@
 package controllers.application;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -100,26 +99,6 @@ public class ApplicationController extends AbstractController {
 
 	}
 
-	// @RequestMapping(value = "/customer,handy-worker/list")
-	// public ModelAndView listHandy() {
-	// ModelAndView res;
-	// Collection<Application> applications;
-	// HandyWorker principal;
-	//
-	// principal = this.handyWorkerService.findByPrincipal();
-	//
-	// applications = this.applicationService
-	// .findAllApplicationsByHandyWorker(principal.getId());
-	//
-	// res = new ModelAndView("application/handy-worker/list-handy-worker");
-	// res.addObject("requestURI",
-	// "application/handy-worker/list-handy-worker.do");
-	// res.addObject("applications", applications);
-	// res.addObject("owner", principal);
-	//
-	// return res;
-	// }
-
 	// Accept application
 
 	@RequestMapping(value = "/customer/acceptv")
@@ -147,7 +126,7 @@ public class ApplicationController extends AbstractController {
 					application.getCreditCard());
 			accepted = this.applicationService.findOne(application.getId());
 			res = new ModelAndView(
-					"redirect:/application/customer/list-customer.do?fixUpTaskId="
+					"redirect:/application/customer,handy-worker/list.do?fixUpTaskId="
 							+ accepted.getFixUpTask().getId());
 		} catch (Throwable oops) {
 			res = this.createEditModelAndViewC(application,
@@ -183,8 +162,8 @@ public class ApplicationController extends AbstractController {
 			}
 		}
 
-		res = new ModelAndView("application/listCustomer");
-		res.addObject("requestURI", "application/customer/list-customer.do");
+		res = new ModelAndView("application/list");
+		res.addObject("requestURI", "application/customer,handy-worker/list.do");
 		res.addObject("applications", applications);
 		res.addObject("owner", fixUpTaskOwner);
 		res.addObject("hasAccepted", hasAccepted);
@@ -228,7 +207,8 @@ public class ApplicationController extends AbstractController {
 		} else {
 			try {
 				this.applicationService.save(application);
-				result = new ModelAndView("redirect:list-handy-worker.do");
+				result = new ModelAndView(
+						"redirect:/application/customer,handy-worker/list.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndViewHW(application,
 						"application.commit.error");
@@ -259,7 +239,8 @@ public class ApplicationController extends AbstractController {
 		} else {
 			try {
 				this.applicationService.save(application);
-				result = new ModelAndView("redirect:list-customer.do");
+				result = new ModelAndView(
+						"redirect:/application/customer,handy-worker/list.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndViewC(application,
 						"application.commit.error");
