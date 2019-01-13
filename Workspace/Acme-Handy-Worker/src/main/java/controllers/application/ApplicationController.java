@@ -1,10 +1,10 @@
 package controllers.application;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -263,7 +263,7 @@ public class ApplicationController extends AbstractController {
 		result.addObject("application", application);
 		result.addObject("message", messageCode);
 		
-		LocalDateTime now = LocalDateTime.now();
+		Date now = new Date();
 
 		result.addObject("date", now);
 		

@@ -24,6 +24,9 @@
 	<display:table name="fixUpTasks" id="row"
 		requestURI="fixUpTask/handyWorker/list.do" pagesize="10"
 		class="displaytag">
+		
+		<jstl:set var="a" value="${row.startMoment}"/>			
+		<jsp:useBean id="now" class="java.util.Date" />
 
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
 
@@ -59,12 +62,14 @@
 		</jstl:forEach>
 
 		<display:column>
+		
+		<jstl:if test="${a > now}">
 			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
 				<!-- <img
 				style="width: center; height: center" /> --> <spring:message
-					code="application.create" />
-
+					code="fixUpTask.apply" />
 			</a>
+		</jstl:if>
 		</display:column>
 
 		<display:column>
