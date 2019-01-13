@@ -50,7 +50,7 @@
 		<br />
 	
 		<form:label path="handyWorkerComment">
-			<spring:message code="application.myComments" />
+			<spring:message code="application.myComment" />
 		</form:label>
 		<spring:message code="application.handyWorkerCommentsPlaceholder"
 			var="placeholder" />

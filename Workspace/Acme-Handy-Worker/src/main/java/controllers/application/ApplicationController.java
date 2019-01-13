@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -261,7 +262,11 @@ public class ApplicationController extends AbstractController {
 		result = new ModelAndView("application/handy-worker/edit");
 		result.addObject("application", application);
 		result.addObject("message", messageCode);
+		
+		LocalDateTime now = LocalDateTime.now();
 
+		result.addObject("date", now);
+		
 		return result;
 	}
 	

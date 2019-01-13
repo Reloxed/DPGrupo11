@@ -13,8 +13,8 @@
 <form:form action="fixUpTask/customer/edit.do"
 	modelAttribute="fixUpTask" id="form">
 
-	<form:hidden path="publishedMoment" />
-	<form:hidden path="ticker" />
+	<form:hidden path="ticker" value="000000-AAAAAA"/>
+	<form:hidden path="publishedMoment" value="01/01/2001 00:00"/>
 	<form:hidden path="applications" />
 	<form:hidden path="complaints" />
 
