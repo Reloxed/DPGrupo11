@@ -50,53 +50,75 @@ public class ApplicationController extends AbstractController {
 
 	// List
 
-	@RequestMapping(value = "/customer/list-customer")
-	public ModelAndView list(@RequestParam int fixUpTaskId) {
+	@RequestMapping(value = "/customer,handy-worker/list")
+	public ModelAndView list(@RequestParam(required = false) Integer fixUpTaskId) {
 		ModelAndView res;
 		Collection<Application> applications;
-		Customer fixUpTaskOwner;
-		boolean hasAccepted = false;
 
-		applications = this.applicationService
-				.findAllApplicationsByFixUpTask(fixUpTaskId);
-		fixUpTaskOwner = this.customerService
-				.findCustomerByApplicationId(applications.iterator().next()
-						.getId());
+		try {
+			HandyWorker principal;
 
-		for (Application application : applications) {
-			if (application.getStatus().equals("ACCEPTED")) {
-				hasAccepted = true;
-				break;
+			principal = this.handyWorkerService.findByPrincipal();
+
+			applications = this.applicationService
+					.findAllApplicationsByHandyWorker(principal.getId());
+
+			res = new ModelAndView("application/list");
+			res.addObject("applications", applications);
+			res.addObject("owner", principal);
+
+			return res;
+
+		} catch (Throwable oops) {
+			Customer fixUpTaskOwner;
+			boolean hasAccepted = false;
+
+			applications = this.applicationService
+					.findAllApplicationsByFixUpTask(fixUpTaskId);
+			fixUpTaskOwner = this.customerService
+					.findCustomerByApplicationId(applications.iterator().next()
+							.getId());
+
+			for (Application application : applications) {
+				if (application.getStatus().equals("ACCEPTED")) {
+					hasAccepted = true;
+					break;
+				}
 			}
+			String requestURI = "application/customer,handyworker/list.do?fixUpTaskId="
+					+ fixUpTaskId;
+			res = new ModelAndView("application/list");
+			res.addObject("requestURI", requestURI);
+			res.addObject("applications", applications);
+			res.addObject("owner", fixUpTaskOwner);
+			res.addObject("hasAccepted", hasAccepted);
+			res.addObject("fixUpTaskId", fixUpTaskId);
+
+			return res;
+
 		}
-		String requestURI = "application/customer/list-customer.do?fixUpTaskId="
-				+ fixUpTaskId;
-		res = new ModelAndView("application/listCustomer");
-		res.addObject("requestURI", requestURI);
-		res.addObject("applications", applications);
-		res.addObject("owner", fixUpTaskOwner);
-		res.addObject("hasAccepted", hasAccepted);
-		res.addObject("fixUpTaskId", fixUpTaskId);
-		return res;
+
 	}
 
-	@RequestMapping(value = "/handy-worker/list-handy-worker")
-	public ModelAndView list() {
-		ModelAndView res;
-		Collection<Application> applications;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-
-		applications = this.applicationService
-				.findAllApplicationsByHandyWorker(principal.getId());
-
-		res = new ModelAndView("application/handy-worker/list-handy-worker");
-		res.addObject("requestURI", "application/handy-worker/list-handy-worker.do");
-		res.addObject("applications", applications);
-		res.addObject("owner", principal);
-		return res;
-	}
+	// @RequestMapping(value = "/customer,handy-worker/list")
+	// public ModelAndView listHandy() {
+	// ModelAndView res;
+	// Collection<Application> applications;
+	// HandyWorker principal;
+	//
+	// principal = this.handyWorkerService.findByPrincipal();
+	//
+	// applications = this.applicationService
+	// .findAllApplicationsByHandyWorker(principal.getId());
+	//
+	// res = new ModelAndView("application/handy-worker/list-handy-worker");
+	// res.addObject("requestURI",
+	// "application/handy-worker/list-handy-worker.do");
+	// res.addObject("applications", applications);
+	// res.addObject("owner", principal);
+	//
+	// return res;
+	// }
 
 	// Accept application
 
@@ -169,7 +191,7 @@ public class ApplicationController extends AbstractController {
 		res.addObject("fixUpTaskId", toReject.getFixUpTask().getId());
 		return res;
 	}
-	
+
 	@RequestMapping(value = "/handy-worker/create", method = RequestMethod.GET, params = "fixUpTaskId")
 	public ModelAndView create(@RequestParam int fixUpTaskId) {
 		ModelAndView result;
@@ -196,8 +218,9 @@ public class ApplicationController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value="/handy-worker/edit", method=RequestMethod.POST, params="save")
-	public ModelAndView saveHW(@Valid Application application, BindingResult binding) {
+	@RequestMapping(value = "/handy-worker/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveHW(@Valid Application application,
+			BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -213,7 +236,7 @@ public class ApplicationController extends AbstractController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
 	public ModelAndView editC(@RequestParam int applicationId) {
 		ModelAndView result;
@@ -226,8 +249,9 @@ public class ApplicationController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value="/customer/edit", method=RequestMethod.POST, params="save")
-	public ModelAndView saveC(@Valid Application application, BindingResult binding) {
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveC(@Valid Application application,
+			BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -258,18 +282,18 @@ public class ApplicationController extends AbstractController {
 	protected ModelAndView createEditModelAndViewHW(Application application,
 			String messageCode) {
 		ModelAndView result;
-		
+
 		result = new ModelAndView("application/handy-worker/edit");
 		result.addObject("application", application);
 		result.addObject("message", messageCode);
-		
+
 		LocalDateTime now = LocalDateTime.now();
 
 		result.addObject("date", now);
-		
+
 		return result;
 	}
-	
+
 	protected ModelAndView createEditModelAndViewC(Application application) {
 		ModelAndView result;
 
@@ -281,7 +305,7 @@ public class ApplicationController extends AbstractController {
 	protected ModelAndView createEditModelAndViewC(Application application,
 			String messageCode) {
 		ModelAndView result;
-		
+
 		result = new ModelAndView("application/customer/edit");
 		result.addObject("application", application);
 		result.addObject("message", messageCode);

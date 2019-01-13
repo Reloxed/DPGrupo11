@@ -121,7 +121,7 @@
 		</display:column>
 		
 		<display:column>
-			<a href="application/customer/list-customer.do?fixUpTaskId=${row.id}"> <spring:message
+			<a href="application/customer,handy-worker/list.do?fixUpTaskId=${row.id}"> <spring:message
 						code="fixUpTask.applications" /></a>
 		</display:column>
 
