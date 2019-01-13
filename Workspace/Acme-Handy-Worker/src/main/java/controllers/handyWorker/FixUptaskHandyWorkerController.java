@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.FixUpTaskService;
+import services.SystemConfigurationService;
 import controllers.AbstractController;
 import domain.Application;
 import domain.FixUpTask;
@@ -27,6 +28,9 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
 
 	// Constructor
 
@@ -91,6 +95,8 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		result.addObject("collFixUpTasks", collFixUpTasks);
 		// result.addObject("principal",principal);
 		result.addObject("requestUri", "fixUpTask/handyWorker/list.do");
+		result.addObject("vat", this.systemConfigurationService.findVAT());
+		
 		return result;
 
 	}
