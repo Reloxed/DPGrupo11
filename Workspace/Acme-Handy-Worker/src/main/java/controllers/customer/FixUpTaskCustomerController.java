@@ -198,6 +198,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 		
 		complaints = this.complaintService.findComplaintsByCustomer();
 		applications = this.applicationService.findAllApplicationsByCustomer();
+		
 		ticker = task.getTicker();
 		
 		result = new ModelAndView("fixUpTask/edit");
