@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CustomerService;
 import services.FixUpTaskService;
 import controllers.AbstractController;
+import domain.Category;
 import domain.FixUpTask;
 
 @Controller
@@ -46,6 +47,8 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		español = "es";
 		english = "en";
 		int customerId;
+		
+		
 
 		fixUpTask = this.fixUpTaskService.findOne(taskId);
 		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
@@ -53,6 +56,10 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("customerId", customerId);
 		result.addObject("fixUpTask", fixUpTask);
+		
+		if(fixUpTask.getCategory()==null){
+			fixUpTask.setCategory(fixUpTask.getCategory().getParentCategory());
+		}
 		result.addObject("language", language);
 		result.addObject("español", español);
 		result.addObject("english", english);

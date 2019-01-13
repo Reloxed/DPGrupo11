@@ -52,16 +52,14 @@
 					code="category.display" />
 			</a>
 	</display:column>
-	
-	<display:column>
+
+		<display:column>
 			<a href="category/administrator/edit.do?categoryId=${row.id}"> <spring:message
 					code="category.edit" />
 			</a>
 	</display:column>
 	
 	
-			
-		
 
 	
 	</display:table>

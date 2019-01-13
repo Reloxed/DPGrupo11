@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -48,11 +49,12 @@ public class CategoryService {
 	public Category create() {
 		Category result;
 		Administrator admin;
-
+		
 		admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
 		result = new Category();
+		
 		result.setChildCategories(new ArrayList<Category>());
 		result.setName(new HashMap<String, String>());
 
@@ -120,7 +122,7 @@ public class CategoryService {
 															// categoría raiz
 
 		childCategories = category.getChildCategories();
-		aux = null;
+		aux = root;//añadir aqui categoria raiz,aux=root
 
 		if (!childCategories.isEmpty())
 			for (final Category cat : childCategories)
