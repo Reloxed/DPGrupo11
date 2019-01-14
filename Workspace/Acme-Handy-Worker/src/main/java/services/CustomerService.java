@@ -156,12 +156,6 @@ public class CustomerService {
 		return res;
 	}
 
-	public Collection<CreditCard> findCreditCardsByCustomerId(final int customerId) {
-		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = this.customerRepository.findCreditCardsByCustomerId(customerId);
-		return collCC;
-	}
-
 	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
 		final List<Customer> collC = this.customerTenPercentMoraThanAverage();
 		if (collC.size() < 3)
