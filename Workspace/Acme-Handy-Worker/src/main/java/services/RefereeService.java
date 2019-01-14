@@ -63,7 +63,6 @@ public class RefereeService {
 		res.setSocialProfiles(Collections.<SocialProfile> emptyList());
 
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.REFEREE);
 		final UserAccount userAccount = new UserAccount();
 		userAccount.addAuthority(authority);
 

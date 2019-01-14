@@ -1,7 +1,9 @@
 
 package controllers.handyWorker;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +13,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomerService;
 import services.FixUpTaskService;
+import services.SystemConfigurationService;
 import controllers.AbstractController;
+import domain.Application;
 import domain.FixUpTask;
 
 @Controller
 @RequestMapping("/fixUpTask/handyWorker")
 public class FixUptaskHandyWorkerController extends AbstractController {
 
+
 	//Services
 
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
-
+	
 	@Autowired
-	private CustomerService		customerService;
+	private SystemConfigurationService	systemConfigurationService;
 
-
-	//Constructor
+	// Constructor
 
 	public FixUptaskHandyWorkerController() {
 		super();
@@ -38,6 +41,7 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int taskId, final Locale locale) {
+
 		final ModelAndView result;
 		FixUpTask fixUpTask;
 		String language;
@@ -48,7 +52,9 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		int customerId;
 
 		fixUpTask = this.fixUpTaskService.findOne(taskId);
+
 		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
+
 		language = locale.getLanguage();
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("customerId", customerId);
@@ -62,20 +68,35 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 	}
 
+
 	//list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
-		final int customerId;
-		//Customer principal;
-		//principal=this.customerService.findByPrincipal();
+
 		fixUpTasks = this.fixUpTaskService.findAll();
+
+		List<FixUpTask> collFixUpTasks = new ArrayList<>();
+		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
+			if (!fix.getApplications().isEmpty()) {
+				for (Application app : fix.getApplications()) {
+					if (app.getStatus().equals("ACCEPTED")) {
+						collFixUpTasks.add(fix);
+					}
+				}
+			}
+		}
+		
+//		System.out.println(collFixUpTasks);
 
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
-		//result.addObject("principal",principal);
+		result.addObject("collFixUpTasks", collFixUpTasks);
+		// result.addObject("principal",principal);
 		result.addObject("requestUri", "fixUpTask/handyWorker/list.do");
+		result.addObject("vat", this.systemConfigurationService.findVAT());
+		
 		return result;
 
 	}

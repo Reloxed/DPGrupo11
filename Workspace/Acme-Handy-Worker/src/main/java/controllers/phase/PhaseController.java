@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,10 +52,17 @@ public class PhaseController extends AbstractController {
 	public ModelAndView list(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		Collection<Phase> phases;
-		HandyWorker creator;
+		HandyWorker creator = null;
+		Collection<Application> applicationsFUT;
 
+		applicationsFUT = this.fixUpTaskService.findOne(fixuptaskID)
+				.getApplications();
 		phases = this.phaseService.findPhasesFixUpTask(fixuptaskID);
-		creator = this.phaseService.creator(phases.iterator().next().getId());
+		for (Application application : applicationsFUT) {
+			if (application.getStatus().equals("ACCEPTED")) {
+				creator = application.getApplicant();
+			}
+		}
 
 		res = new ModelAndView("phase/list");
 		res.addObject("requestURI", "phase/handy-worker/list.do");
@@ -114,6 +122,19 @@ public class PhaseController extends AbstractController {
 		res.addObject("phase", phase);
 		res.addObject("message", messageCode);
 		res.addObject("editable", editable);
+
+		return res;
+	}
+
+	// Edit
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int phaseID) {
+		ModelAndView res;
+		Phase phase;
+
+		phase = this.phaseService.findOne(phaseID);
+		Assert.notNull(phase);
+		res = this.createEditModelAndView(phase);
 
 		return res;
 	}

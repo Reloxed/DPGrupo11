@@ -50,8 +50,6 @@
 				<form:select path="parentCategory" style="width:400px;">
 					<form:options items="${parents}" itemLabel="name" itemValue="id" />
 				</form:select>
-				
-				
 
 			</jstl:when>
 			<jstl:otherwise>

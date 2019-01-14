@@ -15,16 +15,15 @@
 		<put-attribute name="body" value="/views/application/edit.jsp" />
 	</definition>
 
-	<definition name="application/listCustomer" extends="master.page">
-		<put-attribute name="title" value="List of applications" />
-		<put-attribute name="body"
-			value="/views/application/list-customer.jsp" />
+	<definition name="application/accept" extends="master.page">
+		<put-attribute name="title" value="Accept application" />
+		<put-attribute name="body" value="/views/application/accept.jsp" />
 	</definition>
 
-	<definition name="application/handy-worker/list-handy-worker" extends="master.page">
+	<definition name="application/list" extends="master.page">
 		<put-attribute name="title" value="List of applications" />
 		<put-attribute name="body"
-			value="/views/application/list-handy-worker.jsp" />
+			value="/views/application/list.jsp" />
 	</definition>
 	
 </tiles-definitions>

@@ -25,7 +25,7 @@ public class Complaint extends DomainEntity {
 	private String		ticker;
 	private Date		moment;
 	private String		description;
-	private String		attachements;
+	private String		attachments;
 	private FixUpTask	fixUpTask;
 
 
@@ -61,12 +61,12 @@ public class Complaint extends DomainEntity {
 		this.description = description;
 	}
 
-	public String getAttachements() {
-		return this.attachements;
+	public String getAttachments() {
+		return this.attachments;
 	}
 
-	public void setAttachements(final String attachements) {
-		this.attachements = attachements;
+	public void setAttachments(final String attachments) {
+		this.attachments = attachments;
 	}
 
 	@ManyToOne(optional = false)

@@ -18,51 +18,57 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div style="text-align: center;">
-	<h2 style="font-family: sans-serif;">
-		<spring:message code="application.create" />
-	</h2>
-</div>
+<security:authorize access="hasRole('HANDYWORKER')">
 
-<form:form action="application/handy-worker/edit.do" modelAttribute="application"
-	id="form">
-	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
-	<form:hidden path="fixUpTask" />
-	<form:hidden path="applicant"/>
-	<form:hidden path="creditCard"/>
-	<form:hidden path="status" />
-
-	<br />
-
-	<form:label path="offeredPrice">
-		<spring:message code="application.offeredPrice" />
-	</form:label>
-	<spring:message code="application.offeredPricePlaceholder"
-		var="placeholder" />
-	<form:input path="offeredPrice" placeholder="${placeholder}" />
-
-	<br />
-
-	<form:label path="comments">
-		<spring:message code="application.comments" />
-	</form:label>
-	<spring:message code="application.commentsPlaceholder"
-		var="placeholder" />
-	<form:input path="comments" placeholder="${placeholder}" />
-	<form:errors cssClass="error" path="comments"></form:errors>
-
-	<br />
-
-	<br />
+	<div style="text-align: center;">
+		<h2 style="font-family: sans-serif;">
+			<spring:message code="application.create" />
+		</h2>
+	</div>
 	
-	<input type="submit" name="save" id="save"
-		value='<spring:message code="application.save"/>' />
-	<input type="button" name="cancel"
-		value="<spring:message code="application.cancel" />"
-		onclick="javascript: relativeRedir('fixUpTask/handyWorker/list.do');" />
+	<form:form action="application/handy-worker/edit.do" modelAttribute="application"
+		id="form">
+		<form:hidden path="id" />
+		<form:hidden path="version" />
+		<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
+		<form:hidden path="fixUpTask" />
+		<form:hidden path="applicant"/>
+		<form:hidden path="creditCard"/>
+		<form:hidden path="status" />
+		<form:hidden path="customerComment"/>
+	
+		<br />
+	
+		<form:label path="offeredPrice">
+			<spring:message code="application.offeredPrice" />
+		</form:label>
+		<spring:message code="application.offeredPricePlaceholder"
+			var="placeholder" />
+		<form:input path="offeredPrice" placeholder="${placeholder}" />
+	
+		<br />
+		<br />
+	
+		<form:label path="handyWorkerComment">
+			<spring:message code="application.myComment" />
+		</form:label>
+		<spring:message code="application.handyWorkerCommentsPlaceholder"
+			var="placeholder" />
+		<form:input path="handyWorkerComment" placeholder="${placeholder}" />
+		<form:errors cssClass="error" path="handyWorkerComment"></form:errors>
+	
+		<br />
+	
+		<br />
 		
-	<br/>
+		<input type="submit" name="save" id="save"
+			value='<spring:message code="application.save"/>' />
+		<input type="button" name="cancel"
+			value="<spring:message code="application.cancel" />"
+			onclick="javascript: relativeRedir('fixUpTask/handyWorker/list.do');" />
+			
+		<br/>
+	
+	</form:form>
 
-</form:form>
+</security:authorize>

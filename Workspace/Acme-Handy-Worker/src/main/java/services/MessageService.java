@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -38,7 +39,7 @@ public class MessageService {
 	private AdministratorService		administratorService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private UtilityService	utilityService;
 
 
 	// Constructors ------------------------------------
@@ -80,6 +81,7 @@ public class MessageService {
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
+<<<<<<< HEAD
 		
 		//checking spam
 		boolean containsSpam = false;
@@ -124,6 +126,30 @@ public class MessageService {
 						}
 					}
 				}
+=======
+
+		Assert.notNull(message.getSender());
+		Assert.notNull(message.getSendMoment());
+
+		recipients = message.getRecipients();
+		Assert.notNull(recipients);
+
+		result.setSubject(message.getSubject());
+		result.setBody(message.getBody());
+		result.setPriority("NEUTRAL");
+		result.setTags(message.getTags());
+		result.setRecipients(recipients);
+
+		List<String> atributosAComprobar = new ArrayList<>();
+		atributosAComprobar.add(message.getSubject());
+		atributosAComprobar.add(message.getBody());
+		if (message.getTags() != null)
+			atributosAComprobar.add(message.getTags());
+		
+		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if(containsSpam) {
+			principal.setIsSuspicious(true);
+>>>>>>> master
 		}
 
 	

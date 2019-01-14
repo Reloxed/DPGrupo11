@@ -17,6 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <security:authorize access="hasRole('HANDYWORKER')">
@@ -50,8 +51,12 @@
 		<td><strong> <spring:message code="fixUpTask.maxPrice" />
 				:
 		</strong></td>
-		<td><jstl:out value="${fixUpTask.maxPrice}">
-			</jstl:out></td>
+		
+		<jstl:set var="vat" value="${fixUpTask.maxPrice * 0.21}"/>
+		<fmt:formatNumber var="vatv2" maxFractionDigits="2" value="${vat}" />
+		
+		<td><jstl:out value="${fixUpTask.maxPrice} (${vatv2})"></jstl:out>
+	</td>
 	</tr>
 
 
@@ -157,8 +162,13 @@
 		<td><strong> <spring:message code="fixUpTask.maxPrice" />
 				:
 		</strong></td>
-		<td><jstl:out value="${fixUpTask.maxPrice}">
-			</jstl:out></td>
+		
+		<jstl:set var="vat" value="${fixUpTask.maxPrice * 0.21}"/>
+		<fmt:formatNumber var="vatv2" maxFractionDigits="2" value="${vat}" />
+		
+		<td>
+			<jstl:out value="${fixUpTask.maxPrice} (${vatv2})"></jstl:out>	
+		</td>
 	</tr>
 
 

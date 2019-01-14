@@ -129,7 +129,6 @@ public class PhaseService {
 		Collection<Phase> res;
 
 		res = this.phaseRepository.findAllPhasesByFixUpTaskId(fixUpTaskID);
-		Assert.notEmpty(res);
 
 		return res;
 	}

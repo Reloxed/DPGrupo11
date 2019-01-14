@@ -110,11 +110,28 @@ public class SystemConfigurationService {
 
 		return result;
 	}
+	
+	public String findMyBanner() {
+
+		String result;
+
+		result = this.systemConfigurationRepository.findAll().get(0).getBanner();
+
+		return result;
+	}
 
 	public String findSpamWords() {
 		final String result;
 
 		result = this.systemConfigurationRepository.findAll().get(0).getSpamWords();
+
+		return result;
+	}
+	
+	public Double findVAT() {
+		final Double result;
+
+		result = this.systemConfigurationRepository.findAll().get(0).getVAT();
 
 		return result;
 	}

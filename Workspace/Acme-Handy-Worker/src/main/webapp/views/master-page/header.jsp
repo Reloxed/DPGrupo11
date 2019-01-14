@@ -22,10 +22,12 @@
 		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
 
-<div>
+			
+<div>	
 	<a href="#"><img
 		style="height: 200px; width: 500px; padding-bottom: 12px"
-		src="images/Default logo.jpg" alt="Acme Handy Worker Co., Inc." /></a>
+		src="${banner}" alt="Acme Handy Worker Co., Inc." /></a>
+	
 </div>
 
 <div>
@@ -47,7 +49,7 @@
 					<li class="arrow"></li>
 					<li><a href="warranty/administrator/list.do"><spring:message
 								code="master.page.administrator.warranties.show" /></a></li>
-		
+
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.categories" /></a>
@@ -58,14 +60,10 @@
 					<li><a href="category/administrator/create.do"><spring:message
 								code="master.page.administrator.category.new" /></a></li>
 				</ul></li>
-			<li><a class="fNiv"><spring:message
-						code="master.page.administrator.statistics" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="statistics/administrator/display.do"><spring:message
-								code="master.page.administrator.dashboard" /></a></li>
-					
-				</ul></li>
+
+			<li><a class="fNiv" href="statistics/administrator/display.do"><spring:message
+						code="master.page.administrator.dashboard" /></a></li>
+
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator.manage" /></a>
 				<ul>
@@ -84,16 +82,16 @@
 					<li class="arrow"></li>
 					<li><a href="fixUpTask/customer/list.do"><spring:message
 								code="master.page.customer.fixuptasks.show" /></a></li>
-					<li><a href="fixuptask/edit.do"><spring:message
+					<li><a href="fixUpTask/customer/create.do"><spring:message
 								code="master.page.customer.fixuptasks.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.customer.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/list.do"><spring:message
+					<li><a href="complaint/customer/list.do"><spring:message
 								code="master.page.customer.complaints.show" /></a></li>
-					<li><a href="complaint/edit.do"><spring:message
+					<li><a href="complaint/customer/edit.do"><spring:message
 								code="master.page.customer.complaints.create" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
@@ -112,19 +110,18 @@
 						code="master.page.referee.complaints" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="complaint/referee/list2.do"><spring:message
+					<li><a href="complaint/referee/listNotAssigned.do"><spring:message
 								code="master.page.referee.not.assigned.complaints" /></a></li>
-					<li><a href="complaint/referee/list1.do"><spring:message
+					<li><a href="complaint/referee/listAssigned.do"><spring:message
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"></a>
-						
-					<li class="arrow"></li>
-					<li><a href="report/referee/list.do"><spring:message
-								code="master.page.referee.reports" /></a></li>
-					<li><a href="note/referee/list.do"><spring:message
-								code="master.page.referee.notes" /></a></li>
-			</li>
+
+			<li class="arrow"></li>
+			<li><a href="report/referee/list.do"><spring:message
+						code="master.page.referee.reports" /></a></li>
+			<li><a href="note/referee/list.do"><spring:message
+						code="master.page.referee.notes" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">
@@ -134,7 +131,7 @@
 					<li class="arrow"></li>
 					<li><a href="fixUpTask/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
-					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
+					<li><a href="application/customer,handy-worker/list.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
 					<li><a href="finder/handyWorker/search.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>

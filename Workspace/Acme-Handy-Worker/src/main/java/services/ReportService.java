@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -25,16 +24,15 @@ public class ReportService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private ReportRepository			reportRepository;
+	private ReportRepository reportRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private RefereeService				refereeService;
+	private RefereeService refereeService;
 
 	@Autowired
-	private UtilityService	utilityService;
-
+	private UtilityService utilityService;
 
 	// Constructors ------------------------------------
 
@@ -52,7 +50,7 @@ public class ReportService {
 		Assert.notNull(principal);
 
 		result = new Report();
-		
+
 		Collection<Note> notes = new ArrayList<Note>();
 		result.setNotes(notes);
 
@@ -77,10 +75,8 @@ public class ReportService {
 		Referee principal;
 
 		Report res;
-		
 
 		Report result;
-
 
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
@@ -90,34 +86,34 @@ public class ReportService {
 		if (report.getId() == 0) {
 			report.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		} else {
-			
-			Assert.isTrue(report.getComplaint().equals(this.findOne(report.getId()).getComplaint()));
-			Assert.isTrue(report.getPublishedMoment().equals(this.findOne(report.getId()).getPublishedMoment()));
-			
+
+			Assert.isTrue(report.getComplaint().equals(
+					this.findOne(report.getId()).getComplaint()));
+			Assert.isTrue(report.getPublishedMoment().equals(
+					this.findOne(report.getId()).getPublishedMoment()));
+
 			if (this.findOne(report.getId()).getIsFinal()) {
 				Assert.isTrue(report.getIsFinal());
-				Assert.isTrue(report.getAttachments().equals(this.findOne(report.getId()).getAttachments()));
-				Assert.isTrue(report.getDescription().equals(this.findOne(report.getId()).getDescription()));
+				Assert.isTrue(report.getAttachments().equals(
+						this.findOne(report.getId()).getAttachments()));
+				Assert.isTrue(report.getDescription().equals(
+						this.findOne(report.getId()).getDescription()));
 			}
 		}
-		
 
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(report.getDescription());
-		
+
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+		if (containsSpam) {
 			principal.setIsSuspicious(true);
 		}
 
-		
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
 
-
 		result = this.reportRepository.save(report);
 		Assert.notNull(result);
-
 
 		return result;
 	}
@@ -125,7 +121,7 @@ public class ReportService {
 	public void delete(final Report report) {
 		Referee principal;
 		Collection<Report> reports;
-		
+
 		Assert.notNull(report);
 		Assert.isTrue(report.getId() != 0);
 		Assert.isTrue(!report.getIsFinal());
@@ -133,10 +129,10 @@ public class ReportService {
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.isTrue(principal.getComplaints().contains(report.getComplaint()));
-		
+
 		reports = this.findReportByPrincipal();
 		Assert.isTrue(reports.contains(report));
-		
+
 		this.reportRepository.delete(report.getId());
 
 	}
@@ -164,6 +160,11 @@ public class ReportService {
 				if (report.getComplaint() == complaint)
 					res.add(report);
 
+		return res;
+	}
+
+	public Double[] findNotesNumberOperations() {
+		Double[] res = this.reportRepository.findNotesNumberOperations();
 		return res;
 	}
 }
