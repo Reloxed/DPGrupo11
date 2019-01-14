@@ -88,8 +88,6 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 			}
 		}
 		
-//		System.out.println(collFixUpTasks);
-
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
 		result.addObject("collFixUpTasks", collFixUpTasks);

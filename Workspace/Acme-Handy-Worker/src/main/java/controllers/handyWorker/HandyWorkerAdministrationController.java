@@ -90,7 +90,7 @@ public class HandyWorkerAdministrationController extends AbstractController {
 		res.addObject("curriculum", curriculum);
 		return res;
 	}
-
+	
 	// Saving an handyworker
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid HandyWorker handyWorker,
