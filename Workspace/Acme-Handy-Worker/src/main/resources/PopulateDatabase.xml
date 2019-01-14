@@ -1045,7 +1045,7 @@
 	</bean>
 
 	<bean id="trashBoxAdmin1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1078,7 +1078,7 @@
 	</bean>
 
 	<bean id="trashBoxAdmin2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1111,7 +1111,7 @@
 	</bean>
 
 	<bean id="trashBoxCustomer1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1144,7 +1144,7 @@
 	</bean>
 
 	<bean id="trashBoxCustomer2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1177,7 +1177,7 @@
 	</bean>
 
 	<bean id="trashBoxReferee1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1210,7 +1210,7 @@
 	</bean>
 
 	<bean id="trashBoxReferee2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1243,7 +1243,7 @@
 	</bean>
 
 	<bean id="trashBoxSponsor1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1279,7 +1279,7 @@
 	</bean>
 
 	<bean id="trashBoxSponsor2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1313,7 +1313,7 @@
 	</bean>
 
 	<bean id="trashBoxHandyWorker1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1346,7 +1346,7 @@
 	</bean>
 
 	<bean id="trashBoxHandyWorker2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />

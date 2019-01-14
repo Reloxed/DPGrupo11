@@ -79,8 +79,8 @@ public class ComplaintService {
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(complaint.getDescription());
-		if (complaint.getAttachements() != null)
-			atributosAComprobar.add(complaint.getAttachements());
+		if (complaint.getAttachments() != null)
+			atributosAComprobar.add(complaint.getAttachments());
 
 		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if (containsSpam)

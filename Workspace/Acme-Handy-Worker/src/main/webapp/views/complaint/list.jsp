@@ -26,8 +26,8 @@
 				sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 			<display:column property="description"
 				titleKey="complaint.description" />
-			<display:column property="attachements"
-				titleKey="complaint.attachements" />
+			<display:column property="attachments"
+				titleKey="complaint.attachments" />
 			<display:column property="ticker" titleKey="complaint.ticker" />
 			
 			<security:authorize access="hasRole('REFEREE')">
@@ -47,6 +47,22 @@
 					<a href="report/complaint/create.do?complaintId=${row.id}"><spring:message code="complaint.create.report" /></a>
 				</display:column>
 			</jstl:if>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('HANDYWORKER')">
+				<display:column>
+					<a href="complaint/handyWorker/display.do?complaintId=${row.id}">
+						<spring:message code="complaint.display" />
+					</a>
+				</display:column>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('CUSTOMER')">
+				<display:column>
+					<a href="complaint/customer/display.do?complaintId=${row.id}">
+						<spring:message code="complaint.display" />
+					</a>
+				</display:column>
 			</security:authorize>
 
 		</display:table>
