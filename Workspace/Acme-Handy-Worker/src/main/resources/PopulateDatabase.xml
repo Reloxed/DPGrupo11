@@ -1422,8 +1422,8 @@
 
 	<!-- ADMINISTRATORS -->
 	<bean id="userAdmin1" class="security.UserAccount">
-		<property name="username" value="admin1" />
-		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1490,7 +1490,7 @@
 
 	<bean id="userReferee2" class="security.UserAccount">
 		<property name="username" value="referee2" />
-		<property name="password" value="64144697a8b1d0da2eca13eab878f341" />
+		<property name="password" value="4f556d5a66f4fe0d058523a7b8e19d91" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1504,7 +1504,7 @@
 	<!-- SPONSOR -->
 	<bean id="userSponsor1" class="security.UserAccount">
 		<property name="username" value="sponsor1" />
-		<property name="password" value="8b2f8c3d122ea8076feaf1fb6bdaadf0" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1517,7 +1517,7 @@
 
 	<bean id="userSponsor2" class="security.UserAccount">
 		<property name="username" value="sponsor2" />
-		<property name="password" value="45c7f8b7938f2943bd8d4ef2ec4c85c4" />
+		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1532,7 +1532,7 @@
 
 	<bean id="userHandyWorker1" class="security.UserAccount">
 		<property name="username" value="handyWorker1" />
-		<property name="password" value="78da4cd657c85d3cf54ae4497ed223f2" />
+		<property name="password" value="3d0e201c52a6e13f27d22b6777711541" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1545,7 +1545,7 @@
 
 	<bean id="userHandyWorker2" class="security.UserAccount">
 		<property name="username" value="handyWorker2" />
-		<property name="password" value="118ad5acc8ff3ea8006c280b310cd492" />
+		<property name="password" value="549dbd77d30ecab6ca4c047cd795333f" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
