@@ -25,10 +25,8 @@
 	<display:column property="description" title="${descriptionHeader}"
 		sortable="false" />
 	
-	<jstl:if test="${complaint.attachments}">
 	<display:column property="attachments"
 				titleKey="complaint.attachments" />
-	</jstl:if>
 </display:table>
 
 <security:authorize access="hasRole('HANDYWORKER')">

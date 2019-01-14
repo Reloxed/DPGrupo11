@@ -2,11 +2,11 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +87,14 @@ public class FinderService {
 		Date currentMoment;
 
 		Assert.notNull(finder);
-		Assert.isTrue(finder.getId() == 0);
-
+		
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
+		if(principal.getFinder() != null) {
+			Assert.isTrue(finder.getId()!= 0);
+		}
+		
 		currentMoment = new Date(System.currentTimeMillis() - 1);
 
 		finder.setSearchMoment(currentMoment);
@@ -100,9 +103,6 @@ public class FinderService {
 			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
 		else if (finder.getPriceHigh() != null && finder.getPriceLow() != null)
 			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
-
-		if (principal.getFinder() != null)
-			this.delete(principal.getFinder());
 
 		result = this.finderRepository.save(finder);
 		Assert.notNull(result);
@@ -165,14 +165,28 @@ public class FinderService {
 	}
 
 	public Finder resultadosFinder(final Finder finder) {
-		final Set<FixUpTask> setFix = new HashSet<>();
+		final Collection<FixUpTask> setFix = new ArrayList<>();
+		final List<FixUpTask> aux = new ArrayList<>();
 		final Collection<FixUpTask> collFix = this.fixUpTaskService.findAll();
 		final int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
+		int times = 0;
+		
+		if (finder.getPriceLow() != null && finder.getPriceHigh() != null)
+			times++;
+		if (finder.getWarranty() != null)		
+			times++;
+		if (finder.getCategory() != null)
+			times++;
+		if (finder.getStartMoment() != null && finder.getEndMoment() != null)
+			times++;
+		if (finder.getKeyWord() != null)
+			times++;
+			
 
 		for (final FixUpTask fixUpTask : collFix) {
 			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
 				setFix.add(fixUpTask);
-			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))
+			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))		
 				setFix.add(fixUpTask);
 			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
 				setFix.add(fixUpTask);
@@ -183,15 +197,29 @@ public class FinderService {
 					.contains(finder.getKeyWord().toLowerCase())))
 				setFix.add(fixUpTask);
 		}
-
-		final List<FixUpTask> aux = new ArrayList<>();
-		aux.addAll(setFix);
+		
+		for(FixUpTask fixUpTask : collFix) {
+			if(Collections.frequency(setFix, fixUpTask) == times) {
+				aux.add(fixUpTask);
+			}
+		}
+		
 		final List<FixUpTask> result = new ArrayList<>();
 		if (aux.size() > 100) {
 			result.addAll(aux.subList(0, maxResults));
 			finder.setFixuptask(result);
 		} else
-			finder.setFixuptask(setFix);
+			finder.setFixuptask(aux);
+		
+		finder.setKeyWord(null);
+		finder.setPriceHigh(null);
+		finder.setPriceLow(null);
+		finder.setStartMoment(null);
+		finder.setEndMoment(null);
+		finder.setCategory(null);
+		finder.setWarranty(null);
+		
+		this.save(finder);
 
 		return finder;
 	}

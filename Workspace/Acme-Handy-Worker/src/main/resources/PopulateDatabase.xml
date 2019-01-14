@@ -182,7 +182,6 @@
 				<ref bean="application2_2_2" />
 			</list>
 		</property>
-		<property name="finder" ref="finderHW2" />
 		<property name="curriculum" ref="curriculum2" />
 	</bean>
 
@@ -2340,18 +2339,6 @@
 		</property>
 	</bean>
 
-	<bean id="finderHW2" class="domain.Finder">
-		<property name="keyWord" value="replicant" />
-		<property name="searchMoment" value="10/11/2018 10:48" />
-		<property name="category">
-			<ref bean="concreteWork" />
-		</property>
-		<property name="fixuptask">
-			<list>
-				<ref bean="fixUpTask1_2" />
-			</list>
-		</property>
-	</bean>
 	<!-- COMPLAINTs -->
 	<!-- Complaints about customer 1 -->
 	<!-- Complaint 1 about the FUP 1 of this costumer -->

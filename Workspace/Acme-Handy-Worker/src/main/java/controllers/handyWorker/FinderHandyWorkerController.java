@@ -1,6 +1,7 @@
 
 package controllers.handyWorker;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
 import services.FinderService;
+import services.FixUpTaskService;
 import services.HandyWorkerService;
+import services.SystemConfigurationService;
 import services.WarrantyService;
 import controllers.AbstractController;
+import domain.Application;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -40,6 +44,12 @@ public class FinderHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private WarrantyService		warrantyService;
+	
+	@Autowired
+	private SystemConfigurationService	systemConfigurationService;
+	
+	@Autowired
+	private FixUpTaskService	fixUpTaskService;
 
 
 	// Constructors
@@ -54,29 +64,41 @@ public class FinderHandyWorkerController extends AbstractController {
 	public ModelAndView list() {
 		final ModelAndView result;
 		Finder finder;
-		Collection<FixUpTask> results;
-		HandyWorker h;
+		Collection<FixUpTask> fixUpTasks;
+		HandyWorker principal;
 
-		h = this.handyWorkerService.findByPrincipal();
-		finder = h.getFinder();
-		results = finder.getFixuptask();
-
+		principal = this.handyWorkerService.findByPrincipal();
+		finder = principal.getFinder();
+		fixUpTasks = finder.getFixuptask();
+		
+		List<FixUpTask> collFixUpTasks = new ArrayList<>();
+		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
+			if (!fix.getApplications().isEmpty()) {
+				for (Application app : fix.getApplications()) {
+					if (app.getStatus().equals("ACCEPTED")) {
+						collFixUpTasks.add(fix);
+					}
+				}
+			}
+		}
+		
 		result = new ModelAndView("finder/list");
-		result.addObject("results", results);
+		result.addObject("fixUpTasks", fixUpTasks);
+		result.addObject("vat", this.systemConfigurationService.findVAT());
+		result.addObject("collFixUpTasks", collFixUpTasks);
 		result.addObject("requestUri", "finder/handyWorker/list.do");
 
 		return result;
-
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView search() {
 		ModelAndView result;
 		Finder finder;
-		HandyWorker hw;
+		HandyWorker principal;
 
-		hw = this.handyWorkerService.findByPrincipal();
-		finder = hw.getFinder();
+		principal = this.handyWorkerService.findByPrincipal();
+		finder = principal.getFinder();
 		result = this.createEditModelAndView(finder);
 		result.addObject("categories", this.categoryService.findAll());
 		result.addObject("warranties", this.warrantyService.findAll());
@@ -87,6 +109,7 @@ public class FinderHandyWorkerController extends AbstractController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "save")
 	public ModelAndView search(@Valid final Finder finder, final BindingResult binding) {
 		ModelAndView result;
+		Finder res;
 
 		if (binding.hasErrors()) {
 			final List<ObjectError> errors = binding.getAllErrors();
@@ -96,10 +119,11 @@ public class FinderHandyWorkerController extends AbstractController {
 
 		} else
 			try {
-				this.finderService.resultadosFinder(finder);
+				res = this.finderService.resultadosFinder(finder);
+				// this.finderService.save(res);
 				result = new ModelAndView("redirect:/finder/handyWorker/list.do");
 			} catch (final Throwable oops) {
-				System.out.println(finder);
+				System.out.println(finder.getFixuptask());
 				System.out.println(oops.getMessage());
 				System.out.println(oops.getClass());
 				System.out.println(oops.getCause());
@@ -107,6 +131,8 @@ public class FinderHandyWorkerController extends AbstractController {
 			}
 		return result;
 	}
+	
+	
 	protected ModelAndView createEditModelAndView(final Finder finder) {
 		ModelAndView result;
 

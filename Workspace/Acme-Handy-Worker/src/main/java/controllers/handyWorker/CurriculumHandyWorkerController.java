@@ -1,3 +1,4 @@
+
 package controllers.handyWorker;
 
 import javax.validation.Valid;
@@ -13,59 +14,60 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CurriculumService;
 import services.HandyWorkerService;
-
 import controllers.AbstractController;
 import domain.Curriculum;
 import domain.HandyWorker;
 
 @Controller
 @RequestMapping("/curriculum/handyWorker")
-public class CurriculumHandyWorkerController extends AbstractController{
+public class CurriculumHandyWorkerController extends AbstractController {
 
-	
 	@Autowired
-	private CurriculumService curriculumService;
-	
+	private CurriculumService	curriculumService;
+
 	@Autowired
-	private HandyWorkerService handyWorkerService;
-	
-	
-	@RequestMapping(value="/display",method=RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int curriculumID){
+	private HandyWorkerService	handyWorkerService;
+
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display() {
 		ModelAndView result;
 		Curriculum curriculum;
 		HandyWorker principal;
-		//curriculum = this.curriculumService.findCurriculumByPrincipal();
-		curriculum=this.curriculumService.findOne(curriculumID);
-		Assert.notNull(curriculum);
-		principal=this.handyWorkerService.findByPrincipal();
-		
-		
-		result=new ModelAndView("curriculum/display");
-		result.addObject("curriculum",curriculum);
-		result.addObject("principal", principal);
-		result.addObject("requestUri","curriculum/handyWorker/display.do");
-		
+		Boolean isOwn;
+
+		principal = this.handyWorkerService.findByPrincipal();
+		curriculum = principal.getCurriculum();
+		isOwn = true;
+
+		if (curriculum == null) {
+			result = new ModelAndView("curriculum/display");
+			result.addObject("isOwn", isOwn);
+		} else {
+			result = new ModelAndView("curriculum/display");
+			result.addObject("curriculum", curriculum);
+			result.addObject("isOwn", isOwn);
+			result.addObject("principal", principal);
+			result.addObject("requestUri", "curriculum/handyWorker/display.do");
+		}
+
 		return result;
-		
+
 	}
-	
-	
-	@RequestMapping(value="/create",method=RequestMethod.GET)
-	public ModelAndView create(){
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
 		ModelAndView result;
 		Curriculum curriculum;
-		
-		
-		
-		curriculum=this.curriculumService.create();
-		
-		result=this.createEditModelAndView(curriculum);
-		
+
+		curriculum = this.curriculumService.create();
+
+		result = this.createEditModelAndView(curriculum);
+
 		return result;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(final Curriculum curriculum, final BindingResult binding) {
 		ModelAndView result;
@@ -79,8 +81,8 @@ public class CurriculumHandyWorkerController extends AbstractController{
 
 		return result;
 	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST,params="save")
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Curriculum curriculum, final BindingResult binding) {
 		ModelAndView result;
 
@@ -108,9 +110,7 @@ public class CurriculumHandyWorkerController extends AbstractController{
 
 		return result;
 	}
-	
-	 
-	
+
 	protected ModelAndView createEditModelAndView(final Curriculum curriculum) {
 		ModelAndView result;
 
@@ -118,17 +118,16 @@ public class CurriculumHandyWorkerController extends AbstractController{
 
 		return result;
 	}
-	
+
 	protected ModelAndView createEditModelAndView(final Curriculum curriculum, final String messageCode) {
 		final ModelAndView result;
 		HandyWorker principal;
 
 		principal = this.handyWorkerService.findByPrincipal();
-		
 
 		result = new ModelAndView("curriculum/edit");
 		result.addObject("curriculum", curriculum);
-		
+
 		result.addObject("principal", principal);
 
 		result.addObject("message", messageCode);
@@ -136,5 +135,5 @@ public class CurriculumHandyWorkerController extends AbstractController{
 		return result;
 
 	}
-	
+
 }

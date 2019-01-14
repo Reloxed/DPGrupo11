@@ -167,7 +167,7 @@ public class CustomerServiceTest extends AbstractTest {
 		collC = this.customerService.findAll();
 		customer = this.customerService.findOne(collC.iterator().next().getId());
 		Assert.notNull(customer);
-		collCC = this.customerService.findCreditCardsByCustomerId(customer.getId());
+		collCC = customer.getCreditCards();
 		Assert.notEmpty(collCC);
 		creditCard = collCC.iterator().next();
 		Assert.notNull(creditCard);
@@ -183,12 +183,5 @@ public class CustomerServiceTest extends AbstractTest {
 		Assert.notNull(customerByApp);
 		super.unauthenticate();
 	}
-
-//	@Test
-//	public void testTopThreeCustomersTenPercentMoraThanAverage() {
-//		Collection<Customer> collCC;
-//		collCC = this.customerService.topThreeCustomersTenPercentMoraThanAverage();
-//		Assert.notEmpty(collCC);
-//	}
 
 }

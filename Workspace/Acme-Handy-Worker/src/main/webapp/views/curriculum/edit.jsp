@@ -24,17 +24,11 @@
 <form:form action="curriculum/handyWorker/edit.do" modelAttribute="curriculum" id="form">
 
 	<form:hidden path="id" />
-	
 	<form:hidden path="version" />
-	
 	<form:hidden path ="ticker" />
-	
 	<form:hidden path ="professionalRecords" />
-	
 	<form:hidden path ="educationRecords" />
-	
 	<form:hidden path ="endorserRecords" />
-	
 	<form:hidden path ="miscellaneousRecords" />
 	
 	<%--PERSONAL RECORD --%>
@@ -86,14 +80,7 @@
 	<br>
 	<br>
 	
-	
-	
-	
-	
-	
-	
-	
-	<input type="button" name="save" id="save" value="<spring:message code="curriculum.save" />" />&nbsp; 
+	<input type="submit" name="save" id="save" value="<spring:message code="curriculum.save" />" />&nbsp; 
 
 	<jstl:if test="${curriculum.id!=0}">
 	<input type="button" name="cancel" value="<spring:message code="curriculum.cancel" />"
