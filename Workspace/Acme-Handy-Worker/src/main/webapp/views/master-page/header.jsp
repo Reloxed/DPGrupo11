@@ -122,7 +122,6 @@
 						code="master.page.referee.reports" /></a></li>
 			<li><a href="note/referee/list.do"><spring:message
 						code="master.page.referee.notes" /></a></li>
-			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">
@@ -132,7 +131,7 @@
 					<li class="arrow"></li>
 					<li><a href="fixUpTask/handyWorker/list.do"><spring:message
 								code="master.page.handyworker.fixuptasks.show" /></a></li>
-					<li><a href="application/handy-worker/list-handy-worker.do"><spring:message
+					<li><a href="application/customer,handy-worker/list.do"><spring:message
 								code="master.page.handyworker.applications" /></a></li>
 					<li><a href="finder/handyWorker/search.do"><spring:message
 								code="master.page.handyworker.finder" /></a></li>
