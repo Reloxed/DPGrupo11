@@ -86,7 +86,7 @@ public class ComplaintService {
 		if (containsSpam)
 			principal.setIsSuspicious(true);
 
-		result = this.complaintRepository.saveAndFlush(complaint);
+		result = this.complaintRepository.save(complaint);
 		final Collection<Complaint> collCom = principal.getComplaints();
 		collCom.add(result);
 
