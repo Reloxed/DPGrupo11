@@ -157,4 +157,18 @@ public class ActorService {
 		a.getUserAccount().setIsBanned(false);
 		a = this.actorRepository.save(a);
 	}
+	
+	public Collection<Actor> findAllExceptPrincipal(){
+		Collection<Actor> result;
+		Actor principal;
+		
+		result = this.actorRepository.findAll();
+		Assert.notNull(result);
+		
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result.remove(principal);
+		return result;
+	}
 }

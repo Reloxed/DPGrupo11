@@ -66,8 +66,10 @@ public class MessageBoxServiceTest extends AbstractTest{
 		box.setName("Test");
 		saved = this.messageBoxService.save(box);
 		Assert.notNull(saved);
-		this.messageBoxService.findOne(saved.getId());
-		
+		Assert.notNull(this.messageBoxService.findOne(saved.getId()));
+	
+
+
 		super.unauthenticate();
 		
 	}

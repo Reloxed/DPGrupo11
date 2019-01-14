@@ -31,9 +31,9 @@ public class Message extends DomainEntity {
 	private String					priority;
 	private String					tags;
 	private Actor					sender;
-	private Collection<Actor>		recipients;
+	private Actor					recipient;
 	private boolean					isSpam;
-	private Collection<MessageBox>	messageBoxes;
+	private MessageBox				messageBox;
 
 
 	@NotNull
@@ -103,27 +103,27 @@ public class Message extends DomainEntity {
 		this.isSpam = isSpam;
 	}
 	
-	@Cascade(CascadeType.ALL)
+	
 	@Valid
 	@NotNull
-	@ManyToMany
-	public Collection<Actor> getRecipients() {
-		return this.recipients;
+	@ManyToOne(optional = false)
+	public Actor getRecipient() {
+		return this.recipient;
 	}
 
-	public void setRecipients(final Collection<Actor> recipients) {
-		this.recipients = recipients;
+	public void setRecipient(final Actor recipient) {
+		this.recipient = recipient;
 	}
 	
-	@Cascade(CascadeType.ALL)
+	@Valid
 	@NotNull
-	@ManyToMany(mappedBy = "messages")
-	public Collection<MessageBox> getMessageBoxes() {
-		return this.messageBoxes;
+	@ManyToOne(optional = false)
+	public MessageBox getMessageBox() {
+		return this.messageBox;
 	}
 
-	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
-		this.messageBoxes = messageBoxes;
+	public void setMessageBox(final MessageBox messageBox) {
+		this.messageBox = messageBox;
 	}
 
 }

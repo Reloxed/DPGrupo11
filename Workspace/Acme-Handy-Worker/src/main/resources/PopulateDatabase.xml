@@ -1367,22 +1367,14 @@
 		<property name="sender">
 			<ref bean="administrator1" />
 		</property>
-		<property name="recipients">
-			<list>
-				<ref bean="sponsor1" />
-				<ref bean="referee1" />
-				<ref bean="handyWorker1" />
-				<ref bean="customer1" />
-			</list>
+		<property name="recipient">
+			<ref bean="sponsor1" />
+				
 		</property>
-		<property name="messageBoxes">
-			<list>
+		<property name="messageBox">
+			
 				<ref bean="inBoxSponsor1" />
-				<ref bean="inBoxReferee1" />
-				<ref bean="inBoxHandyWorker1" />
-				<ref bean="inBoxCustomer1" />
-				<ref bean="outBoxAdmin1" />
-			</list>
+		
 		</property>
 	</bean>
 
@@ -1395,22 +1387,18 @@
 		<property name="sender">
 			<ref bean="administrator2" />
 		</property>
-		<property name="recipients">
-			<list>
-				<ref bean="sponsor2" />
+		<property name="recipient">
+		
+				
 				<ref bean="referee2" />
-				<ref bean="handyWorker2" />
-				<ref bean="customer2" />
-			</list>
+				
+		
 		</property>
-		<property name="messageBoxes">
-			<list>
+		<property name="messageBox">
+		
 				<ref bean="inBoxSponsor2" />
-				<ref bean="inBoxReferee2" />
-				<ref bean="inBoxHandyWorker2" />
-				<ref bean="inBoxCustomer2" />
-				<ref bean="outBoxAdmin2" />
-			</list>
+				
+		
 		</property>
 	</bean>
 	<!-- User accounts -->

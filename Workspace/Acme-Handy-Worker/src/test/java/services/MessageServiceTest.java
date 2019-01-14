@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import repositories.CustomerRepository;
 import repositories.HandyWorkerRepository;
 import repositories.MessageBoxRepository;
+import repositories.MessageRepository;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.Administrator;
@@ -24,13 +25,16 @@ import domain.MessageBox;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+"classpath:spring/config/packages.xml" })
 @Transactional
 public class MessageServiceTest extends AbstractTest {
 
 	// System under test --------------------------------------------
 	@Autowired
 	private MessageService messageService;
+
+	@Autowired
+	private MessageRepository messageRepository;
 
 	@Autowired
 	private ActorService actorService;
@@ -73,224 +77,151 @@ public class MessageServiceTest extends AbstractTest {
 	@Test
 	public void testSave() {
 		super.authenticate("customer1");
-		Message message, saved;
-		Actor principal;
-		HandyWorker recipient1;
-		Customer recipient2;
+		Message message,saved;
 		Collection<Message> messages;
-		Collection<Actor> recipients;
-		MessageBox outBoxPrincipal;
-		Collection<MessageBox> inBoxRecipients;
+		Actor recipient;
 
-		MessageBox inBoxRecipient1;
-		MessageBox inBoxRecipient2;
+		recipient = this.actorService.findOne(6376); //referee1
+		Assert.notNull(recipient);
 
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
-
-		recipients = new ArrayList<Actor>();
-		inBoxRecipients = new ArrayList<MessageBox>();
-		messages = new ArrayList<Message>();		
-		
-		recipient1 = this.handyWorkerRepository.findAll().iterator().next();
-		//Assert.notNull(recipient1);
-		recipient2 = this.customerRepository.findAll().iterator().next();
-		Assert.notNull(recipient2);
-
-		recipients.add(recipient1);
-		//recipients.add(recipient2);
-		Assert.notNull(recipients);
-
-		message = this.messageService.create();
-		Assert.notNull(message);
-		message.setSubject("sample");
-		message.setBody("My body sample");
+		message= new Message();
+		message.setBody("test");
+		message.setSubject("test");
 		message.setPriority("LOW");
-		message.setTags("no spam");
-		message.setIsSpam(false);
-		inBoxRecipient1 = this.messageBoxService.findInBoxActor(recipient1);
-		inBoxRecipient2 = this.messageBoxService.findInBoxActor(recipient2);
-		inBoxRecipients.add(inBoxRecipient1);
-		inBoxRecipients.add(inBoxRecipient2);
-		Assert.notNull(inBoxRecipients);
-		message.setRecipients(recipients);
-		message.setMessageBoxes(inBoxRecipients);
-		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
+		message.setRecipient(recipient);
 
 		saved = this.messageService.save(message);
-		Assert.notNull(saved);
-		Assert.isTrue(principal.getIsSuspicious() == false);
-		messages = this.messageService.findAll();
 
+		messages = this.messageRepository.findAll();
 		Assert.isTrue(messages.contains(saved));
-		Assert.isTrue(principal.getIsSuspicious() == false);
-		Assert.isTrue(saved.getIsSpam() == false);
+		Assert.isTrue(!this.messageBoxRepository.findOutBoxActorId(6368).getMessages().isEmpty());
+		System.out.println(this.messageBoxRepository.findOutBoxActorId(6386).getMessages());
+		System.out.println(this.messageBoxRepository.findOutBoxActorId(6368));
 
-	
-		outBoxPrincipal = this.messageBoxService.findOutBoxActor(principal);
-		Assert.notNull(outBoxPrincipal);
-
-		
-		System.out.println("============Tests===============");
-		System.out.println("Recipients: \n" + saved.getRecipients());
-		System.out.println("Inboxes recipients: \n" + saved.getMessageBoxes());
-		System.out.println("Messages inBoxR1: \n"
-				+ inBoxRecipient1.getMessages());
-		System.out.println("Messages inBoxR2: \n"
-				+ inBoxRecipient2.getMessages());
-		System.out.println("Messages outBox princial: \n"
-				+ outBoxPrincipal.getMessages());
-		System.out.println(this.messageService.findOne(saved.getId()));
-		//System.out.println(this.messageService.findOne(saved.getId() + 1));
-
-		System.out.println("Message saved: \n" + saved);
-		for (MessageBox mb : inBoxRecipients) {
-			System.out.println("Messages inBox: \n" + mb.getMessages());
-		}
 		super.unauthenticate();
-
 	}
 
 	@Test
 	public void testSaveSpam() {
-		super.authenticate("handyWorker2");
-		Message message, saved;
-		Actor principal;
-		Actor recipient1;
-		Collection<Actor> recipients;
-		MessageBox trashRecipient1;
-		Collection<MessageBox> trashBoxRecipients;
+		super.authenticate("customer1");
+		Message message,saved;
 		Collection<Message> messages;
+		Actor recipient;
 
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
+		recipient = this.actorService.findOne(6376); //referee1
+		Assert.notNull(recipient);
 
-		recipients = new ArrayList<Actor>();
-		messages = new ArrayList<Message>();
-		trashBoxRecipients = new ArrayList<MessageBox>();
-		recipient1 = this.customerRepository.findOne(2335);
-		Assert.notNull(recipient1);
-
-		recipients.add(recipient1);
-		Assert.notNull(recipients);
-
-		message = this.messageService.create();
-		Assert.notNull(message);
-		message.setSubject("sex");
-		message.setBody("My body sample");
+		message= new Message();
+		message.setBody("sex");
+		message.setSubject("test");
 		message.setPriority("LOW");
-		message.setTags("no spam");
-		message.setIsSpam(false);
-
-		trashRecipient1 = this.messageBoxService.findTrashBoxActor(recipient1);
-		Assert.notNull(trashRecipient1);
-		trashBoxRecipients.add(trashRecipient1);
-		message.setRecipients(recipients);
-		message.setMessageBoxes(trashBoxRecipients);
+		message.setRecipient(recipient);
 
 		saved = this.messageService.save(message);
 
-		messages = this.messageService.findAll();
-		Assert.notNull(messages);
+		messages = this.messageRepository.findAll();
 		Assert.isTrue(messages.contains(saved));
-		Assert.isTrue(principal.getIsSuspicious());
-		Assert.isTrue(trashRecipient1.getMessages().contains(saved));
-		Assert.isTrue(trashRecipient1.getMessages().size() == 1);
+		Assert.isTrue(!this.messageBoxRepository.findOutBoxActorId(6368).getMessages().isEmpty());
+		Assert.isTrue(this.messageBoxRepository.findSpamBoxActorId(6376).getMessages().contains(saved));
+		super.unauthenticate();
 	}
 
 	@Test
-	public void move() {
-		super.authenticate("Sponsor2");
-		Message toMove;
-		Actor principal;
+	public void testMove() {
+		super.authenticate("customer2");
+		Message message, saved;
+		Actor recipient;
 		MessageBox destination;
-		Collection<MessageBox> boxes;
-		Collection<MessageBox> boxesAftterMove;
+		Collection<Message> messages;
 
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
+		recipient = this.actorService.findOne(6380); // sponsor1
+		Assert.notNull(recipient);
 
-		boxes = new ArrayList<MessageBox>();
-		boxesAftterMove = new ArrayList<MessageBox>();
-		toMove = this.messageService.findOne(2406);
-		Assert.notNull(toMove);
+		message = new Message();
+		message.setBody("HOALAA");
+		message.setSubject("hadshfskl");
+		message.setPriority("NEUTRAL");
+		message.setRecipient(recipient);
 
-		destination = this.messageBoxService.findTrashBoxActor(principal);
-		boxes = toMove.getMessageBoxes();
+		saved = this.messageService.save(message);
+		destination = this.messageBoxRepository.findSpamBoxActorId(this.actorService.findOne(6380).getId());
+		Assert.notNull(destination);
 
-		System.out.println(boxes);
-		for (MessageBox box : boxes) {
-			System.out.println("Messages before move: \n" + box.getMessages());
-		}
-		this.messageService.move(toMove, destination);
-		boxesAftterMove = toMove.getMessageBoxes();
-		System.out.println("Boxes after move: \n" + boxesAftterMove);
-		for (MessageBox box : boxesAftterMove) {
-			System.out.println("Messages after move: \n" + box.getMessages());
-			Assert.isTrue(box.getMessages().contains(toMove));
-		}
+		messages = this.messageRepository.findAll();
 
-		for (MessageBox box : boxes) {
-			Assert.isTrue(!(box.getMessages().contains(toMove)),
-					"Message was moved");
-		}
+		Assert.isTrue(messages.contains(saved));
 
-		super.unauthenticate();
+		Assert.isTrue(saved.getMessageBox().getId() != destination.getId());
+		Assert.isTrue(!destination.getMessages().contains(saved));
+
+		final MessageBox origin = saved.getMessageBox();
+		Assert.isTrue(origin.getMessages().contains(saved));
+
+		super.authenticate(null);
+
+		super.authenticate("sponsor1");
+
+
+		this.messageService.move(saved, destination);
+
+		System.out.println(saved.getMessageBox().getName());
+		Assert.isTrue(saved.getMessageBox().getId() == destination.getId());
+		Assert.isTrue(destination.getMessages().contains(saved));
+		Assert.isTrue(!origin.getMessages().contains(saved));
+
+		super.authenticate(null);
 
 	}
+
 
 	@Test
 	public void testDelete() {
-		super.authenticate("sponsor2");
-		Collection<Message> collM;
-		Actor principal;
-		MessageBox inBoxPrincipal;
-		MessageBox trashBoxPrincipal;
+		super.authenticate("handyWorker1");
+		Message message,saved;
+		Collection<Message> messages,messagesAfter;
+		Actor recipient;
 
-		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);
+		recipient = this.actorService.findOne(6378);//referee2
+		Assert.notNull(recipient);
 
-		inBoxPrincipal = this.messageBoxService.findInBoxActor(principal);
-		Assert.notNull(inBoxPrincipal);
+		message = new Message();
+		message.setBody("ellele");
+		message.setSubject("ldlldl");
+		message.setPriority("LOW");
+		message.setRecipient(recipient);
 
-		trashBoxPrincipal = this.messageBoxService.findTrashBoxActor(principal);
-		Assert.notNull(trashBoxPrincipal);
-		
-		collM = this.messageService.findAll();
-		for(Message message : collM){
-			if(message.getRecipients().contains(principal)){
-				this.messageService.delete(message);
-				Assert.isTrue(!(inBoxPrincipal.getMessages().contains(message)));
-				Assert.isTrue(trashBoxPrincipal.getMessages().contains(message));
-			}
-		}		
-		super.unauthenticate();
+		saved = this.messageService.save(message);
+
+		super.authenticate(null);
+
+		super.authenticate("referee2");
+
+		messages = this.messageRepository.findAll();
+
+		this.messageService.delete(saved);
+
+		Assert.isTrue(messages.contains(saved));
+		Assert.isTrue(!this.messageBoxRepository.findInBoxActorId(6378).getMessages().contains(saved));
+		Assert.isTrue(this.messageBoxRepository.findTrashBoxActorId(6378).getMessages().contains(saved));
+
+
+		this.messageService.delete(saved);
+
+		Collection<MessageBox> boxes = new ArrayList<MessageBox>();
+
+		boxes = this.messageBoxRepository.findAllByPrincipal(6378);
+
+		messagesAfter = new ArrayList<Message>();
+
+		for(MessageBox mb: boxes){
+			Assert.isTrue(!mb.getMessages().contains(saved));
+		}
+
+
+		super.authenticate(null);
 	}
 
-	@Test
-	public void testBroadcast() {
-		super.authenticate("admin2");
-		Message result;
-		MessageBox inBox1;
-		MessageBox outBoxAdmin;
-		Administrator principal;
-
-		principal = this.administratorService.findByPrincipal();
-		Assert.notNull(principal);
-		result = this.messageService.findOne(2406);
-		Assert.notNull(result);
-
-		this.messageService.broadcast(result);
-
-		outBoxAdmin = this.messageBoxRepository.findOutBoxActorId(2354);
-		System.out.println(outBoxAdmin.getMessages());
-		System.out.println(result);
-		inBox1 = this.messageBoxRepository.findInBoxActorId(2453);
-		System.out.println(inBox1.getMessages());
-
-		Assert.isTrue(inBox1.getMessages().contains(result));
-		super.unauthenticate();
-
-	}
+	
 
 }
+
