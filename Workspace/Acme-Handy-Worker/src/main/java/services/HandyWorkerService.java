@@ -36,6 +36,9 @@ public class HandyWorkerService {
 
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private FinderService finderService;
 
 	// Constructor ----------------------------------------------------
 
@@ -84,6 +87,7 @@ public class HandyWorkerService {
 			result.setMake(result.getName() + result.getMiddleName()
 					+ result.getSurname());
 			result.setIsSuspicious(false);
+			result.setFinder(this.finderService.create());
 			result.setMessageBoxes(this.messageBoxService
 					.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());

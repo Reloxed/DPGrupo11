@@ -130,6 +130,6 @@
 		value='<spring:message code="actor.save"/>' />
 	<input type="button" name="cancel"
 		value="<spring:message code="actor.cancel" />"
-		onclick="javascript: relativeRedir('application/customer/list.do');" />
+		onclick="javascript: relativeRedir('actor/display.do');" />
 	<br />
 </form:form>

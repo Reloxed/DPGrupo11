@@ -10,10 +10,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,6 +43,8 @@ public class Application extends DomainEntity {
 	}
 
 	@Digits(fraction = 2, integer = 10)
+	@Type(type = "double")
+	@Min(value=0)
 	public double getOfferedPrice() {
 		return this.offeredPrice;
 	}

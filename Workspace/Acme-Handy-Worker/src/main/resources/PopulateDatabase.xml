@@ -1045,7 +1045,7 @@
 	</bean>
 
 	<bean id="trashBoxAdmin1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1078,7 +1078,7 @@
 	</bean>
 
 	<bean id="trashBoxAdmin2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1111,7 +1111,7 @@
 	</bean>
 
 	<bean id="trashBoxCustomer1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1144,7 +1144,7 @@
 	</bean>
 
 	<bean id="trashBoxCustomer2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1177,7 +1177,7 @@
 	</bean>
 
 	<bean id="trashBoxReferee1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1210,7 +1210,7 @@
 	</bean>
 
 	<bean id="trashBoxReferee2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1243,7 +1243,7 @@
 	</bean>
 
 	<bean id="trashBoxSponsor1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1279,7 +1279,7 @@
 	</bean>
 
 	<bean id="trashBoxSponsor2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1313,7 +1313,7 @@
 	</bean>
 
 	<bean id="trashBoxHandyWorker1" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1346,7 +1346,7 @@
 	</bean>
 
 	<bean id="trashBoxHandyWorker2" class="domain.MessageBox">
-		<property name="name" value="Trsh box" />
+		<property name="name" value="Trash box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
 			<null />
@@ -1422,8 +1422,8 @@
 
 	<!-- ADMINISTRATORS -->
 	<bean id="userAdmin1" class="security.UserAccount">
-		<property name="username" value="admin1" />
-		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1490,7 +1490,7 @@
 
 	<bean id="userReferee2" class="security.UserAccount">
 		<property name="username" value="referee2" />
-		<property name="password" value="64144697a8b1d0da2eca13eab878f341" />
+		<property name="password" value="4f556d5a66f4fe0d058523a7b8e19d91" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1504,7 +1504,7 @@
 	<!-- SPONSOR -->
 	<bean id="userSponsor1" class="security.UserAccount">
 		<property name="username" value="sponsor1" />
-		<property name="password" value="8b2f8c3d122ea8076feaf1fb6bdaadf0" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1517,7 +1517,7 @@
 
 	<bean id="userSponsor2" class="security.UserAccount">
 		<property name="username" value="sponsor2" />
-		<property name="password" value="45c7f8b7938f2943bd8d4ef2ec4c85c4" />
+		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
 		<property name="isBanned" value="false" />
 		<property name="authorities">
 			<list>
@@ -1825,7 +1825,7 @@
 		<property name="name">
 			<util:map id="utilmap" map-class="java.util.HashMap"
 				key-type="java.lang.String" value-type="java.lang.String">
-				<entry key="Español" value="raíz" />
+				<entry key="Español" value="CATEGORIA" />
 				<entry key="English" value="CATEGORY" />
 			</util:map>
 		</property>
@@ -2328,30 +2328,18 @@
 	<!-- FINDER -->
 
 	<bean id="finderHW1" class="domain.Finder">
-		<property name="keyWord" value="replicant" />
 		<property name="searchMoment" value="01/08/2019 19:48" />
-		<property name="category">
-			<ref bean="concreteWork" />
-		</property>
 		<property name="fixuptask">
 			<list>
 				<ref bean="fixUpTask1_1" />
 			</list>
 		</property>
 	</bean>
-
+	
 	<bean id="finderHW2" class="domain.Finder">
-		<property name="keyWord" value="replicant" />
-		<property name="searchMoment" value="10/11/2018 10:48" />
-		<property name="category">
-			<ref bean="concreteWork" />
-		</property>
-		<property name="fixuptask">
-			<list>
-				<ref bean="fixUpTask1_2" />
-			</list>
-		</property>
+		<property name="searchMoment" value="01/08/2019 19:48" />
 	</bean>
+
 	<!-- COMPLAINTs -->
 	<!-- Complaints about customer 1 -->
 	<!-- Complaint 1 about the FUP 1 of this costumer -->
