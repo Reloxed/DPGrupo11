@@ -52,7 +52,7 @@
 </h3>
 
 <div
-	style="float: left; padding: 10px; height: 150px; width: 150px; overflow: auto;">
+	style="float: left; padding: 10px; height: 150px; width: 150px; padding-bottom: 50px">
 	<img height="100%" width="100%" alt="userPhoto" src="${actor.photo}">
 	<h3>
 		<jstl:out value="${actor.name}" />
@@ -76,6 +76,8 @@
 	<jstl:out value="${actor.address}"></jstl:out>
 </h5>
 
+
+
 <jstl:if test="${type == 'customer' || type == 'handyworker'}">
 	<h5>
 		<strong><spring:message code="actor.score" /></strong>
@@ -83,24 +85,47 @@
 	<h5>
 		<jstl:out value="${handyWorker.score}" />
 		<jstl:out value="${customer.score}" />
-		<br/>
-		<br/>
-		<br/>
-			<spring:message code="customer.fixs"/>
-			<br/>
-			<br/>
-		
-			<jstl:forEach var="fixUpTask" items="${customer.fixUpTasks}">
-				
-				<jstl:out value="${fixUpTask.description}"> </jstl:out>
-				<br/>
-			</jstl:forEach>
-		
+		<br /> <br /> <br />
+		<spring:message code="customer.fixs" />
+		<br /> <br />
+
+		<jstl:forEach var="fixUpTask" items="${customer.fixUpTasks}">
+
+			<jstl:out value="${fixUpTask.description}">
+			</jstl:out>
+			<br />
+		</jstl:forEach>
 
 	</h5>
 </jstl:if>
 
+<jstl:if test="${not empty socialProfiles}">
+	<p>
+		<spring:message code="actor.socialprofiles" />
+	</p>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<td><display:table pagesize="5" class="displaytag"
+					name="socialProfiles"
+					requestURI="actor/display.do?actorID=${actor.id}"
+					id="socialProfiles">
 
+					<display:column titleKey="actor.socialprofile.network"
+						value="${socialProfiles.socialNetwork}" />
+					<display:column titleKey="actor.socialprofile.network"
+						value="${socialProfiles.nick}" />
+					<display:column titleKey="actor.socialprofile.link"
+						value="${socialProfiles.link}" />
+				</display:table></td>
+		</tr>
+	</table>
+	<jstl:if test="${user == actor.userAccount.username}">
+		<input type="button" name="listSocial"
+			value="<spring:message code="actor.list.social" />"
+			onclick="redirect: location.href = 'social-profile/actor/list.do?actorID=${actor.id}';" />
+	</jstl:if>
+
+</jstl:if>
 
 <jstl:if test="${type == 'handyworker'}">
 	<h5>

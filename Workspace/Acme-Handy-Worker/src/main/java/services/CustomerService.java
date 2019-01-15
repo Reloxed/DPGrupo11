@@ -116,14 +116,11 @@ public class CustomerService {
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
 
-			final Collection<CreditCard> collCc = this.customerRepository
-					.findCreditCardsByCustomerId(customer.getId());
-
-			if (collCc.size() > 0)
-				Assert.isTrue(customer.getCreditCards().contains(collCc));
+			if (principalC.getCreditCards().size() > 0)
+				Assert.isTrue(customer.getCreditCards().containsAll(
+						principalC.getCreditCards()));
 		}
 		cus = this.customerRepository.save(customer);
-		this.customerRepository.flush();
 		return cus;
 	}
 
