@@ -52,7 +52,7 @@ public class CategoryAdministratorController extends AbstractController{
 	}
 
 	// listing
-	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(final Locale locale) {
 		ModelAndView result;
 		Collection<Category> categories;

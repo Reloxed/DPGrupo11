@@ -122,7 +122,7 @@ public class CategoryService {
 															// categoría raiz
 
 		childCategories = category.getChildCategories();
-		aux = root;//añadir aqui categoria raiz,aux=root
+		aux = root;
 
 		if (!childCategories.isEmpty())
 			for (final Category cat : childCategories)
