@@ -13,9 +13,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -23,8 +25,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Finder extends DomainEntity {
 
 	private String					keyWord;
-	private Double					priceLow;
-	private Double					priceHigh;
+	private double					priceLow;
+	private double					priceHigh;
 	private Date					startMoment;
 	private Date					endMoment;
 	private Date					searchMoment;
@@ -42,20 +44,24 @@ public class Finder extends DomainEntity {
 	}
 
 	@Digits(fraction = 2, integer = 10)
-	public Double getPriceLow() {
+	@Type(type = "double")
+	@Min(value=0)
+	public double getPriceLow() {
 		return this.priceLow;
 	}
 
-	public void setPriceLow(final Double priceLow) {
+	public void setPriceLow(final double priceLow) {
 		this.priceLow = priceLow;
 	}
 
 	@Digits(fraction = 2, integer = 10)
-	public Double getPriceHigh() {
+	@Type(type = "double")
+	@Min(value=0)
+	public double getPriceHigh() {
 		return this.priceHigh;
 	}
 
-	public void setPriceHigh(final Double priceHigh) {
+	public void setPriceHigh(final double priceHigh) {
 		this.priceHigh = priceHigh;
 	}
 

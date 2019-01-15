@@ -33,9 +33,6 @@ public class FinderServiceTest extends AbstractTest {
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
 
-	@Autowired
-	private WarrantyService		warrantyService;
-
 
 	//Tests ---------------------------------------
 
@@ -50,19 +47,18 @@ public class FinderServiceTest extends AbstractTest {
 		principal = this.handyWorkerService.findByPrincipal();
 		
 		find = principal.getFinder();
-		
-//		System.out.println(find.getFixuptask());
-		
-		find.setPriceHigh(null);
-		find.setPriceLow(null);
+				
+		find.setPriceLow(0.0);
+		find.setPriceHigh(1000.0);
 		final Calendar startMoment = Calendar.getInstance();
 		startMoment.set(2021, 1, 22);
 		final Calendar endMoment = Calendar.getInstance();
 		endMoment.set(2022, 8, 22);
-		find.setStartMoment(null);
-		find.setEndMoment(null);
-		find.setCategory(null);
-		find.setWarranty(null);
+//		find.setStartMoment(null);
+//		find.setEndMoment(null);
+//		find.setCategory(null);
+//		find.setWarranty(null);
+		find.setKeyWord("Fix");
 		
 		result = this.finderService.resultadosFinder(find);
 		
@@ -79,7 +75,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testCreateAndSave() {
+	public void testFindOneAndSave() {
 		Finder result;
 		Finder saved;
 		HandyWorker principal;
@@ -88,7 +84,7 @@ public class FinderServiceTest extends AbstractTest {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		result = this.finderService.create();
+		result = this.finderService.findOne(principal.getFinder().getId());
 
 		result.setSearchMoment(new Date(System.currentTimeMillis() - 1));
 		result.setKeyWord("clave");
@@ -98,46 +94,9 @@ public class FinderServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 	}
-	@Test
-	public void TestCreateAndSaveEmpty() {
-		Finder result;
-		Finder saved;
-		HandyWorker principal;
-		super.authenticate("handyWorker2");
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-		result = this.finderService.create();
-
-		saved = this.finderService.save(result);
-		Assert.notNull(saved);
-		super.unauthenticate();
-	}
-
-	//	@Test
-	//	public void testDelete(){
-	//		Finder toDelete;
-	//		HandyWorker principal;
-	//		int TimeInCache=3600;
-	//		 
-	//		super.authenticate("handyWorker2");
-	//
-	//		principal=this.handyWorkerService.findByPrincipal();
-	//		Assert.notNull(principal);
-	//		
-	//		toDelete=this.finderService.findAll().iterator().next();
-	//		Assert.notNull(toDelete);
-	//		
-	//		this.finderService.deleteExpireFinders(TimeInCache);
-	//		
-	//
-	//		super.unauthenticate();
-	//
-	//
-	//	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void TestFindOne() {
+	public void TestNotFindOne() {
 		Finder result;
 
 		super.authenticate("handyWorker2");

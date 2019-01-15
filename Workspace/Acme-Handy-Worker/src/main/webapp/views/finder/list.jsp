@@ -82,5 +82,10 @@
 		</display:column>
 
 	</display:table>
+	
+	<input type="button" name="back"
+		value="<spring:message code="finder.newSearch" />"
+		onclick="javascript: relativeRedir('finder/handyWorker/search.do');" />
+	<br/>
 
 </security:authorize>
