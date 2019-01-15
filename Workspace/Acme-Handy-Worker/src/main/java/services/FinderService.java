@@ -166,15 +166,17 @@ public class FinderService {
 		int times = 0;		
 		
 		if (finder.getPriceHigh() > 0.0 || finder.getPriceLow() > 0.0) {
-			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
+			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow(), "Paco");
 			times++;
 		}
 		if (finder.getWarranty() != null)
 			times++;
 		if (finder.getCategory() != null)
 			times++;
-		if (finder.getStartMoment() != null && finder.getEndMoment() != null) {
-			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
+		if (finder.getStartMoment() != null || finder.getEndMoment() != null) {
+			Assert.notNull(finder.getStartMoment(), "finder.interval");
+			Assert.notNull(finder.getEndMoment(), "finder.interval");
+			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()), "finder.moment");
 			times++;
 		}
 		if (finder.getKeyWord() != null)

@@ -26,7 +26,7 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="searchMoment" value="01/01/2001 00:00"/>
+		<form:hidden path="searchMoment" value="01/01/2001 00:00" />
 
 		<form:label path="keyWord">
 			<spring:message code="finder.keyWord" />:
@@ -35,11 +35,11 @@
 		<form:errors cssClass="error" path="keyWord" />
 		<br />
 		<br />
-		
+
 		<form:label path="priceLow">
 			<spring:message code="finder.priceLow" />:
 		</form:label>
-		<form:input path="priceLow" placeholder="20.00"/>
+		<form:input path="priceLow" placeholder="20.00" />
 		<form:errors cssClass="error" path="priceLow" />
 
 		&#160;
@@ -47,11 +47,11 @@
 		<form:label path="priceHigh">
 			<spring:message code="finder.priceHigh" />:
 		</form:label>
-		<form:input path="priceHigh" placeholder="200.00"/>
+		<form:input path="priceHigh" placeholder="200.00" />
 		<form:errors cssClass="error" path="priceHigh" />
 		<br />
 		<br />
-		
+
 		<form:label path="startMoment">
 			<spring:message code="finder.startMoment" />:
 		</form:label>
@@ -67,25 +67,27 @@
 		<form:errors cssClass="error" path="endMoment" />
 		<br />
 		<br />
-	
+
 		<spring:message code="finder.category" />:
 		<form:select path="category">
-			<form:option value="0" label="  --  "/>
-			<form:options items="${categories}" itemLabel="name"/>
+			<form:option value="0" label="  --  " />
+			<form:options items="${categories}" itemLabel="name" />
 		</form:select>
 
-		<br><br>
+		<br>
+		<br>
 
 		<spring:message code="finder.warranty" />:
 		<form:select path="warranty">
-			<form:option value="0" label="  --  "/>
+			<form:option value="0" label="  --  " />
 			<form:options items="${warrantiesFinal}" itemLabel="title" />
 		</form:select>
-		<br><br>
-		
-		
+		<br>
+		<br>
+
+
 		<input type="submit" name="save" id="save"
-			value="<spring:message code="finder.showResults" />"/>		
+			value="<spring:message code="finder.showResults" />" />
 		<br />
 
 	</form:form>

@@ -1,11 +1,8 @@
-
 package controllers.handyWorker;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.validation.Valid;
 
@@ -38,23 +35,22 @@ public class FinderHandyWorkerController extends AbstractController {
 	// Services
 
 	@Autowired
-	private FinderService		finderService;
+	private FinderService finderService;
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private CategoryService		categoryService;
+	private CategoryService categoryService;
 
 	@Autowired
-	private WarrantyService		warrantyService;
-	
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
-	
-	@Autowired
-	private FixUpTaskService	fixUpTaskService;
+	private WarrantyService warrantyService;
 
+	@Autowired
+	private SystemConfigurationService systemConfigurationService;
+
+	@Autowired
+	private FixUpTaskService fixUpTaskService;
 
 	// Constructors
 
@@ -74,7 +70,7 @@ public class FinderHandyWorkerController extends AbstractController {
 		principal = this.handyWorkerService.findByPrincipal();
 		finder = principal.getFinder();
 		fixUpTasks = finder.getFixuptask();
-		
+
 		List<FixUpTask> collFixUpTasks = new ArrayList<>();
 		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
 			if (!fix.getApplications().isEmpty()) {
@@ -85,7 +81,7 @@ public class FinderHandyWorkerController extends AbstractController {
 				}
 			}
 		}
-		
+
 		result = new ModelAndView("finder/list");
 		result.addObject("fixUpTasks", fixUpTasks);
 		result.addObject("vat", this.systemConfigurationService.findVAT());
@@ -110,9 +106,9 @@ public class FinderHandyWorkerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "save")
-	public ModelAndView search(@Valid final Finder finder, final BindingResult binding) {
+	public ModelAndView search(@Valid final Finder finder,
+			final BindingResult binding) {
 		ModelAndView result;
-		Finder res;
 
 		if (binding.hasErrors()) {
 			final List<ObjectError> errors = binding.getAllErrors();
@@ -122,20 +118,28 @@ public class FinderHandyWorkerController extends AbstractController {
 
 		} else
 			try {
-				res = this.finderService.resultadosFinder(finder);
-				// this.finderService.save(res);
-				result = new ModelAndView("redirect:/finder/handyWorker/list.do");
+				// try {
+					this.finderService.resultadosFinder(finder);
+					result = new ModelAndView(
+							"redirect:/finder/handyWorker/list.do");
+//				} catch (AssertionError oops) {
+//					System.out.println(finder.getFixuptask());
+//					System.out.println(oops.getMessage());
+//					System.out.println(oops.getClass());
+//					System.out.println(oops.getCause());
+//					result = this.createEditModelAndView(finder);
+//				}
+
 			} catch (final Throwable oops) {
 				System.out.println(finder.getFixuptask());
 				System.out.println(oops.getMessage());
 				System.out.println(oops.getClass());
 				System.out.println(oops.getCause());
-				result = this.createEditModelAndView(finder);
+				result = this.createEditModelAndView(finder, oops.getMessage());
 			}
 		return result;
 	}
-	
-	
+
 	protected ModelAndView createEditModelAndView(final Finder finder) {
 		ModelAndView result;
 
@@ -144,27 +148,28 @@ public class FinderHandyWorkerController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Finder finder, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Finder finder,
+			final String messageCode) {
 		ModelAndView result;
 		final Collection<FixUpTask> results;
 		Collection<Warranty> warranties;
-		Map<String,List<String>> categories = new TreeMap<>();
-		List<String> languajes;
+//		Map<String, List<String>> categories = new TreeMap<>();
+//		List<String> languajes;
 
 		results = finder.getFixuptask();
 		warranties = this.warrantyService.findFinalWarranties();
 		Collection<Category> collCat = this.categoryService.findAll();
-		
-//		languajes = this.systemConfigurationService.findSupportedLanguajes();
-//		for(String languaje : languajes) {
-//			List<String> catNames = new ArrayList<>();
-//			for(Category cat : collCat) {
-//				String name = cat.getName().get(languaje);
-//				catNames.add(name);
-//			}
-//			categories.put(languaje, catNames);
-//		}
-			
+
+		// languajes = this.systemConfigurationService.findSupportedLanguajes();
+		// for(String languaje : languajes) {
+		// List<String> catNames = new ArrayList<>();
+		// for(Category cat : collCat) {
+		// String name = cat.getName().get(languaje);
+		// catNames.add(name);
+		// }
+		// categories.put(languaje, catNames);
+		// }
+
 		result = new ModelAndView("finder/search");
 		result.addObject("message", messageCode);
 		result.addObject("finder", finder);
