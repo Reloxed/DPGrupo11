@@ -1,3 +1,4 @@
+
 package controllers.handyWorker;
 
 import javax.validation.Valid;
@@ -11,106 +12,103 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.EndorserRecordService;
 import controllers.AbstractController;
 import domain.EndorserRecord;
 
-import services.EndorserRecordService;
-
 @Controller
 @RequestMapping("/endorserRecord/handyWorker")
-public class EndorserRecordHandyWorkerController extends AbstractController{
+public class EndorserRecordHandyWorkerController extends AbstractController {
 
 	// Services
-	
+
 	@Autowired
 	private EndorserRecordService	endorserRecordService;
-	
-	
-		// Constructors
 
-		public EndorserRecordHandyWorkerController() {
-			super();
-		}
 
-		// Listing
+	// Constructors
 
-		// Creation 
-		@RequestMapping(value = "/create", method = RequestMethod.GET)
-		public ModelAndView create() {
-			final ModelAndView result;
-			final EndorserRecord er;
+	public EndorserRecordHandyWorkerController() {
+		super();
+	}
 
-			er = this.endorserRecordService.create();
+	// Listing
 
-			result = this.createEditModelAndView(er);
+	// Creation 
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		final ModelAndView result;
+		final EndorserRecord er;
 
-			return result;
+		er = this.endorserRecordService.create();
 
-		}
-		// Edition
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView edit(@RequestParam final int endorserRecordId) {
-			ModelAndView result;
-			EndorserRecord er;
+		result = this.createEditModelAndView(er);
 
-			er = this.endorserRecordService.findOne(endorserRecordId);
-			Assert.notNull(er);
-			result = this.createEditModelAndView(er);
+		return result;
 
-			return result;
-		}
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid final EndorserRecord er, final BindingResult binding) {
-			ModelAndView result;
+	}
+	// Edition
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int endorserRecordId) {
+		ModelAndView result;
+		EndorserRecord er;
 
-			if (binding.hasErrors())
-				result = this.createEditModelAndView(er);
-			else
-				try {
-					this.endorserRecordService.save(er);
-					result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
-				} catch (final Throwable oops) {
-					result = this.createEditModelAndView(er, "er.commit.error");
-				}
+		er = this.endorserRecordService.findOne(endorserRecordId);
+		Assert.notNull(er);
+		result = this.createEditModelAndView(er);
 
-			return result;
-		}
-		
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-		public ModelAndView delete(final EndorserRecord er, final BindingResult binding) {
-			ModelAndView result;
+		return result;
+	}
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final EndorserRecord ed, final BindingResult binding) {
+		ModelAndView result;
 
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(ed);
+		else
 			try {
-				this.endorserRecordService.delete(er);
+				this.endorserRecordService.save(ed);
 				result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(er, "er.commit.error");
+				result = this.createEditModelAndView(ed, "enr.commit.error");
 			}
 
-			return result;
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final EndorserRecord ed, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			this.endorserRecordService.delete(ed);
+			result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(ed, "enr.commit.error");
 		}
-		
-		//Ancillary methods
-		protected ModelAndView createEditModelAndView(final EndorserRecord er) {
-			ModelAndView result;
 
-			result = this.createEditModelAndView(er, null);
+		return result;
+	}
 
-			return result;
-		}
+	//Ancillary methods
+	protected ModelAndView createEditModelAndView(final EndorserRecord er) {
+		ModelAndView result;
 
-		protected ModelAndView createEditModelAndView(final EndorserRecord er, final String messageCode) {
-			final ModelAndView result;
-			
+		result = this.createEditModelAndView(er, null);
 
-			result = new ModelAndView("endorserRecord/edit");
-			result.addObject("endorserRecord", er);
-		
+		return result;
+	}
 
-			result.addObject("message", messageCode);
+	protected ModelAndView createEditModelAndView(final EndorserRecord er, final String messageCode) {
+		final ModelAndView result;
 
-			return result;
+		result = new ModelAndView("endorserRecord/edit");
+		result.addObject("endorserRecord", er);
 
-		}
-	
+		result.addObject("message", messageCode);
+
+		return result;
+
+	}
+
 }

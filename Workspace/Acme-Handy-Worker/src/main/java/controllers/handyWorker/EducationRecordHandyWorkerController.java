@@ -1,3 +1,4 @@
+
 package controllers.handyWorker;
 
 import javax.validation.Valid;
@@ -12,15 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.EducationRecordService;
-
 import controllers.AbstractController;
 import domain.EducationRecord;
 
 @Controller
 @RequestMapping("/educationRecord/handyWorker")
-public class EducationRecordHandyWorkerController extends AbstractController  {
-
-	
+public class EducationRecordHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private EducationRecordService	educationRecordService;
@@ -71,7 +69,7 @@ public class EducationRecordHandyWorkerController extends AbstractController  {
 				this.educationRecordService.save(educationRecord);
 				result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(educationRecord, "educationRecord.commit.error");
+				result = this.createEditModelAndView(educationRecord, "er.commit.error");
 			}
 
 		return result;
@@ -85,7 +83,7 @@ public class EducationRecordHandyWorkerController extends AbstractController  {
 			this.educationRecordService.delete(educationRecord);
 			result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(educationRecord, "educationRecord.commit.error");
+			result = this.createEditModelAndView(educationRecord, "er.commit.error");
 		}
 
 		return result;
@@ -103,10 +101,8 @@ public class EducationRecordHandyWorkerController extends AbstractController  {
 	protected ModelAndView createEditModelAndView(final EducationRecord educationRecord, final String messageCode) {
 		final ModelAndView result;
 
-
 		result = new ModelAndView("educationRecord/edit");
 		result.addObject("educationRecord", educationRecord);
-
 
 		result.addObject("message", messageCode);
 
@@ -114,5 +110,4 @@ public class EducationRecordHandyWorkerController extends AbstractController  {
 
 	}
 
-	
 }
