@@ -195,4 +195,19 @@ public class ReportService {
 		Double[] res = this.reportRepository.findNotesNumberOperations();
 		return res;
 	}
+	
+	public Report findReportByComplaint(int complaintId){
+		Collection<Report> reports;
+		Report result = new Report();
+		
+		reports = this.findAll();
+		
+		for (Report r: reports){
+			if(r.getComplaint().getId() == complaintId){
+				result = r;
+				break;
+			}
+		}
+		return result;
+	}
 }

@@ -81,7 +81,7 @@ table, th, td {
 
 </table>
 
-<security:authorize access="hasRole('REFEREE')"/>
+<security:authorize access="hasRole('REFEREE')">
 
 
 <jstl:if test="${report.isFinal}">
@@ -92,4 +92,4 @@ table, th, td {
 </jstl:if>
 
 
-
+</security:authorize>

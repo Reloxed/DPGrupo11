@@ -100,6 +100,7 @@ public class ReportRefereeController extends AbstractController{
 			result = this.createEditModelAndView(report);
 		else
 			try{
+				report.setIsFinal(true);
 				this.reportService.save(report);
 				result = new ModelAndView("redirect:list.do");
 			}catch (final Throwable oops){
@@ -107,6 +108,24 @@ public class ReportRefereeController extends AbstractController{
 			}
 		return result;
 	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.POST, params="save")
+	public ModelAndView save(@Valid final Report report, final BindingResult binding){
+		ModelAndView result;
+		
+		if(binding.hasErrors())
+			result = this.createEditModelAndView(report);
+		else
+			try{
+				this.reportService.save(report);
+				result = new ModelAndView("redirect:list.do");
+			}catch (final Throwable oops){
+				result = this.createEditModelAndView(report,"report.commit.error");
+			}
+		return result;
+	}
+	
+	
 	
 	//Ancillary methods--------------------------------------------------------------------
 	
