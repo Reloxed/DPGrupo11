@@ -161,6 +161,15 @@
 					<li><a href="endorsement/handyWorker/create.do"><spring:message
 								code="master.page.handyworker.endorsement.create" /></a></li>
 				</ul></li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.handyworker.curriculum" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="curriculum/handyWorker/display.do"><spring:message
+								code="master.page.handyworker.curriculum.show" /></a></li>
+					<li><a href="curriculum/handyWorker/edit.do"><spring:message
+								code="master.page.handyworker.curriculum.edit" /></a></li>
+				</ul></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('SPONSOR')">

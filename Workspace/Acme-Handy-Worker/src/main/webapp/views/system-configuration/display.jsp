@@ -125,7 +125,8 @@
 					</display:table></td>
 		</table>
 	</div>
-	<input type="button" name="edit"
+	
+		<input type="button" name="edit"
 		value='<spring:message code="system.edit"/>'
 		onclick="redirect: location.href = 'system-configuration/administrator/edit.do?systemconfigurationID=${systemConfiguration.id}';" />
 </security:authorize>

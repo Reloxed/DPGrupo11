@@ -162,3 +162,23 @@ span.pagelinks {
 .grandtotal-row {
 	border-top: 2px solid black;
 }
+
+/**** Curriculum styles ****/
+
+.curriculum-display h3 {
+	text-decoration: underline;
+	margin-top: 30px;	
+}
+
+.curriculum-display tr {
+	padding: 10px 0
+}
+
+.curriculum-display td:first-child {
+	width: 20%;
+}
+
+.curriculum-display ul {
+	padding-left: 0 !important;
+	margin: 0
+}

@@ -17,51 +17,70 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-	<display:table name="results" id="row"
-		requestURI="${ requestURI }" pagesize="10" class="displaytag">
-
-		<display:column>
-			<a href="actor/display.do?profileId=${row.id}"> <spring:message
-					code="profile.customer" />
-			</a>
-		</display:column>
-
+	<display:table name="fixUpTasks" id="row"
+		requestURI="fixUpTask/handyWorker/list.do" pagesize="10"
+		class="displaytag">
+		
 		<spring:message code="fixUpTask.description" var="descriptionHeader" />
-
 		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />
 
 		<spring:message code="fixUpTask.address" var="addressHeader" />
-		<display:column property="address" title="${addressHeader}"
-			sortable="true" />
+		<display:column property="address" title="${addressHeader}"/>
 
-		<spring:message code="fixUpTask.maxPrice" var="maxPriceHeader" />
-		<display:column property="maxPrice" title="${maxPriceHeader}"
-			sortable="true" />
 
+		<jstl:set var="vat" value="${row.maxPrice * 0.21}"/>
+		<fmt:formatNumber var="vatv2" maxFractionDigits="2" value="${vat}" />
+
+		<spring:message code="fixUpTask.maxPrice" var="maxPriceHeader"/>
+		<display:column title="${maxPriceHeader}">
+		<jstl:out value="${row.maxPrice} (${vatv2})"></jstl:out>
+		
+		</display:column>
+	
+		
 		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
 		<display:column property="startMoment" title="${startMomentHeader}"
 			sortable="true" />
+
 
 		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" />
 
-		<display:column>
-			<a href="handyWorker/applications.do?fixUpTaskId=${row.id}"> <img
-				style="width: center; height: center" /> <spring:message
-					code="applications.create" />
+		<jstl:set var="contains" value="${false}" />
+		<jstl:forEach items="${fixUpTasks}" var="fix">
+			<jstl:forEach items="${collFixUpTasks}" var="fixaux">
+				<jstl:if test="${fix.ticker} eq ${fixaux.ticker}">
+					<jstl:set var="contains" value="${true}" />
+				</jstl:if>
+			</jstl:forEach>
+		</jstl:forEach>
+
+
+		<jstl:set var="a" value="${row.startMoment}"/>	
+		<jsp:useBean id="now" class="java.util.Date" />
+		
+		<display:column>		
+		<jstl:if test="${a > now}">
+			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
+				<!-- <img
+				style="width: center; height: center" /> --> <spring:message
+					code="fixUpTask.apply" />
 			</a>
+		</jstl:if>
 		</display:column>
 
 		<display:column>
-			<a href="fixUpTask/handyWorker/display.do?fixUpTaskId=${row.id}"> <spring:message
+			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
 		</display:column>
+
 	</display:table>
 
 </security:authorize>

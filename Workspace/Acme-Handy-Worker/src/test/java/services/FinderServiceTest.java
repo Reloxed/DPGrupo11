@@ -42,27 +42,33 @@ public class FinderServiceTest extends AbstractTest {
 	@Test
 	public void testResults() {
 		Finder result;
-		final Finder find = new Finder();
+		Finder find;
+		HandyWorker principal;
 
-		super.authenticate("handyWorker2");
-
-		find.setPriceHigh(100.);
-		find.setPriceLow(25.);
+		super.authenticate("handyWorker1");
+		
+		principal = this.handyWorkerService.findByPrincipal();
+		
+		find = principal.getFinder();
+		
+//		System.out.println(find.getFixuptask());
+		
+		find.setPriceHigh(null);
+		find.setPriceLow(null);
 		final Calendar startMoment = Calendar.getInstance();
 		startMoment.set(2021, 1, 22);
 		final Calendar endMoment = Calendar.getInstance();
 		endMoment.set(2022, 8, 22);
-		find.setStartMoment(startMoment.getTime());
-		find.setEndMoment(endMoment.getTime());
-
-		find.setWarranty(this.warrantyService.findOne(this.warrantyService.findAll().iterator().next().getId()));
-		find.setKeyWord("fix");
-
+		find.setStartMoment(null);
+		find.setEndMoment(null);
+		find.setCategory(null);
+		find.setWarranty(null);
+		
 		result = this.finderService.resultadosFinder(find);
-		System.out.println(result.getFixuptask());
-
+		
+//		System.out.println(result.getFixuptask());
+		
 		super.unauthenticate();
-
 	}
 
 	@Test

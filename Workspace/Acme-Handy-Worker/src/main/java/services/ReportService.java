@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
+import domain.Actor;
 import domain.Complaint;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Note;
 import domain.Referee;
 import domain.Report;
@@ -33,6 +36,18 @@ public class ReportService {
 
 	@Autowired
 	private UtilityService utilityService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private HandyWorkerService handyWorkerService;
+	
+	@Autowired
+	private ComplaintService complaintService;
+	
+	@Autowired
+	private ActorService actorService;
 
 	// Constructors ------------------------------------
 
@@ -140,16 +155,29 @@ public class ReportService {
 	// Other business methods -------------------------------
 
 	public Collection<Report> findReportByPrincipal() {
-		Referee principal;
+		Actor principal;
+		Customer customer = null;
+		HandyWorker handyWorker = null;
+		Referee referee = null;
 		Collection<Report> res;
 		Collection<Report> reports;
-		Collection<Complaint> complaints;
-
-		principal = this.refereeService.findByPrincipal();
-		Assert.notNull(principal);
-
-		complaints = principal.getComplaints();
-		Assert.notNull(complaints);
+		Collection<Complaint> complaints = new ArrayList<>();
+		
+		principal = this.actorService.findByPrincipal();
+		
+		if(principal instanceof Referee){
+			referee = this.refereeService.findByPrincipal();
+			complaints = referee.getComplaints();
+			Assert.notNull(complaints);
+		} else if(principal instanceof Customer){
+			customer = this.customerService.findByPrincipal();
+			complaints = customer.getComplaints();
+			Assert.notNull(complaints);
+		} else if(principal instanceof HandyWorker){
+			handyWorker = this.handyWorkerService.findByPrincipal();
+			complaints = this.complaintService.findComplaintsByHandyWorkerId(handyWorker.getId());
+			Assert.notNull(complaints);
+		}
 
 		reports = this.findAll();
 		Assert.notNull(reports);

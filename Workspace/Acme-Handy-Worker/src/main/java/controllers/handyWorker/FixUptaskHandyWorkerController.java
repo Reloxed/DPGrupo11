@@ -49,9 +49,9 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		final ModelAndView result;
 		FixUpTask fixUpTask;
 		String language;
-		String español;
+		String espaï¿½ol;
 		String english;
-		español = "es";
+		espaï¿½ol = "es";
 		english = "en";
 		int customerId;
 
@@ -70,7 +70,7 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 			fixUpTask.setCategory(fixUpTask.getCategory().getParentCategory());
 		}
 		result.addObject("language", language);
-		result.addObject("español", español);
+		result.addObject("espaï¿½ol", espaï¿½ol);
 		result.addObject("english", english);
 		result.addObject("requestUri", "fixUpTask/handyWorker/display.do");
 
@@ -98,7 +98,11 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 			}
 		}
 
+
 //		System.out.println(collFixUpTasks);
+
+
+
 
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
