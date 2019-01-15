@@ -4,6 +4,8 @@ package controllers.handyWorker;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.validation.Valid;
 
@@ -23,9 +25,11 @@ import services.SystemConfigurationService;
 import services.WarrantyService;
 import controllers.AbstractController;
 import domain.Application;
+import domain.Category;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
+import domain.Warranty;
 
 @Controller
 @RequestMapping("/finder/handyWorker")
@@ -100,7 +104,6 @@ public class FinderHandyWorkerController extends AbstractController {
 		principal = this.handyWorkerService.findByPrincipal();
 		finder = principal.getFinder();
 		result = this.createEditModelAndView(finder);
-		result.addObject("categories", this.categoryService.findAll());
 		result.addObject("warranties", this.warrantyService.findAll());
 
 		return result;
@@ -144,12 +147,29 @@ public class FinderHandyWorkerController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Finder finder, final String messageCode) {
 		ModelAndView result;
 		final Collection<FixUpTask> results;
+		Collection<Warranty> warranties;
+		Map<String,List<String>> categories = new TreeMap<>();
+		List<String> languajes;
 
-		results = this.finderService.resultadosFinder(finder).getFixuptask();
-
+		results = finder.getFixuptask();
+		warranties = this.warrantyService.findFinalWarranties();
+		Collection<Category> collCat = this.categoryService.findAll();
+		
+//		languajes = this.systemConfigurationService.findSupportedLanguajes();
+//		for(String languaje : languajes) {
+//			List<String> catNames = new ArrayList<>();
+//			for(Category cat : collCat) {
+//				String name = cat.getName().get(languaje);
+//				catNames.add(name);
+//			}
+//			categories.put(languaje, catNames);
+//		}
+			
 		result = new ModelAndView("finder/search");
 		result.addObject("message", messageCode);
 		result.addObject("finder", finder);
+		result.addObject("warrantiesFinal", warranties);
+		result.addObject("categories", collCat);
 		result.addObject("results", results);
 
 		return result;
