@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -24,15 +25,31 @@ public class CurriculumService {
 	// Managed Repository
 
 	@Autowired
-	private CurriculumRepository curriculumRepository;
+	private CurriculumRepository		curriculumRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private UtilityService utilityService;
+	private PersonalRecordService		personalRecordService;
+
+	@Autowired
+	private EducationRecordService		educationRecordService;
+
+	@Autowired
+	private EndorserRecordService		endorserRecordService;
+
+	@Autowired
+	private MiscellaneousRecordService	miscellaneousRecordService;
+
+	@Autowired
+	private ProfessionalRecordService	professionalRecordService;
+
+	@Autowired
+	private UtilityService				utilityService;
+
 
 	// Constructors ------------------------------------
 
@@ -93,12 +110,10 @@ public class CurriculumService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (curriculum.getId() == 0) {
+		if (curriculum.getId() == 0)
 			curriculum.setTicker(this.utilityService.generateTicker());
-		} else {
-			Assert.isTrue(curriculum.getTicker().equals(
-					principal.getCurriculum().getTicker()));
-		}
+		else
+			Assert.isTrue(curriculum.getTicker().equals(principal.getCurriculum().getTicker()));
 
 		Assert.notNull(curriculum.getPersonalRecord());
 		result = this.curriculumRepository.saveAndFlush(curriculum);
@@ -108,14 +123,27 @@ public class CurriculumService {
 
 	public void delete(final Curriculum curriculum) {
 		HandyWorker principal;
+		System.out.println("Entra en el servicio de delete");
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(principal.getCurriculum().equals(curriculum));
+		for (final EducationRecord educationRecord : curriculum.getEducationRecords())
+			this.educationRecordService.delete(educationRecord);
+		for (final ProfessionalRecord professionalRecord : curriculum.getProfessionalRecords())
+			this.professionalRecordService.delete(professionalRecord);
+		for (final MiscellaneousRecord miscellaneousRecord : curriculum.getMiscellaneousRecords())
+			this.miscellaneousRecordService.delete(miscellaneousRecord);
+		for (final EndorserRecord endorserRecord : curriculum.getEndorserRecords())
+			this.endorserRecordService.delete(endorserRecord);
+
+		this.personalRecordService.delete(curriculum.getPersonalRecord());
+
+		principal.setCurriculum(null);
 
 		this.curriculumRepository.delete(curriculum);
-		principal.setCurriculum(null);
+
 	}
 
 	// Other business methods

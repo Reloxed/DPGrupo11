@@ -68,7 +68,7 @@ public class ProfessionalRecordHandyWorkerController extends AbstractController 
 				this.professionalRecordService.save(professionalRecord);
 				result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(professionalRecord, "professionalRecord.commit.error");
+				result = this.createEditModelAndView(professionalRecord, "pr.commit.error");
 			}
 
 		return result;

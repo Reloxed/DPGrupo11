@@ -32,8 +32,11 @@
 		<p><spring:message code="curriculum.name" var="name"/></p>
 		<h3> <jstl:out value="${name} ${curriculum.personalRecord.fullName}"> </jstl:out> </h3>
 		
-		<table class="displayStyle">
+		<jstl:if test="${curriculum.id != 0}">
+			<input type="submit" name="delete" value="<spring:message code="curriculum.delete" />"/>&nbsp;
+		</jstl:if>
 		
+		<table class="displayStyle">
 		<tr>
 		<td> <strong> <spring:message code="curriculum.ticker" /> : </strong> </td>
 		<td> <jstl:out value="${ curriculum.ticker}"></jstl:out> </td>
@@ -86,6 +89,7 @@
 		<tr>
 		<td><h3><strong> <spring:message code="curriculum.professionalRecords" /> : </strong></h3></td>
 		<td>
+			<p><a href="professionalRecord/handyWorker/create.do"><spring:message code="curriculum.professionalRecord.create"/></a></p>
 			<jstl:forEach var="pr" items="${curriculum.professionalRecords}">
 			
 			
@@ -126,10 +130,16 @@
 				</ul>
 			</td>
 			</tr>
-			</table>
-			<input type="button" name="edit"
+			
+			<tr>
+			<td><input type="button" name="edit"
 				value="<spring:message code="curriculum.edit" />"
 				onclick="redirect: location.href = 'professionalRecord/handyWorker/edit.do?professionalRecordId=${pr.id}';" />
+			</td>
+			</tr>
+			
+			</table>
+		
 			</jstl:forEach>
 			
 		</td>
@@ -143,6 +153,7 @@
 		<td><h3><strong> <spring:message code="curriculum.educationRecords" /> : </strong></h3></td>
 		<td>
 		
+		<p><a href="educationRecord/handyWorker/create.do"><spring:message code="curriculum.educationRecord.create"/></a></p>
 		<jstl:forEach var="er" items="${curriculum.educationRecords}">
 		
 			<table class="displayStyle">
@@ -185,6 +196,13 @@
 			</td>
 			</tr>
 			
+			<tr>
+			<td><input type="button" name="edit"
+				value="<spring:message code="curriculum.edit" />"
+				onclick="redirect: location.href = 'educationRecord/handyWorker/edit.do?educationRecordId=${er.id}';" />
+			</td>
+			</tr>
+			
 			</table>
 			</jstl:forEach>
 		</td>
@@ -198,7 +216,7 @@
 		<tr>
 		<td><h3><strong> <spring:message code="curriculum.endorserRecords" /> : </strong></h3></td>
 		<td>
-			
+			<p><a href="endorserRecord/handyWorker/create.do"><spring:message code="curriculum.endorserRecord.create"/></a></p>
 			<jstl:forEach var="ed" items="${curriculum.endorserRecords}">
 			
 			<table class="displayStyle">
@@ -234,6 +252,13 @@
 		
 			</tr>
 			
+			<tr>
+			<td><input type="button" name="edit"
+				value="<spring:message code="curriculum.edit" />"
+				onclick="redirect: location.href = 'endorserRecord/handyWorker/edit.do?endorserRecordId=${ed.id}';" />
+			</td>
+			</tr>
+			
 			</table>
 			</jstl:forEach>
 		</td>
@@ -247,6 +272,7 @@
 		<td> <h3><strong> <spring:message code="curriculum.miscellaneousRecords" /> : </strong></h3></td>
 		<td>
 		
+		<p><a href="miscellaneousRecord/handyWorker/create.do"><spring:message code="curriculum.miscellaneousRecord.create"/></a></p>
 		<jstl:forEach var="mr" items="${curriculum.miscellaneousRecords}">
 		
 			<table class="displayStyle">
@@ -269,6 +295,13 @@
 					<jstl:out value="${comment }"/>
 					</jstl:forEach>
 				</ul>
+			</tr>
+			
+			<tr>
+			<td><input type="button" name="edit"
+				value="<spring:message code="curriculum.edit" />"
+				onclick="redirect: location.href = 'miscellaneousRecord/handyWorker/edit.do?miscellaneousRecordId=${mr.id}';" />
+			</td>
 			</tr>
 			
 			</table>
