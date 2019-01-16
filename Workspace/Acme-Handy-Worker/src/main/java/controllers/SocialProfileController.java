@@ -129,4 +129,25 @@ public class SocialProfileController extends AbstractController {
 		}
 		return res;
 	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@Valid SocialProfile socialProfile,
+			BindingResult binding) {
+		ModelAndView res;
+
+		if (binding.hasErrors()) {
+			res = createEditModelAndView(socialProfile);
+		} else {
+			try {
+				Actor actor = this.actorService.findByPrincipal();
+				this.socialProfileService.delete(socialProfile);
+				res = new ModelAndView("redirect:list.do?actorID="
+						+ actor.getId());
+			} catch (Throwable oops) {
+				res = createEditModelAndView(socialProfile,
+						"system.commit.error");
+			}
+		}
+		return res;
+	}
 }

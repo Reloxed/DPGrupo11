@@ -50,6 +50,11 @@
 
 		<input type="submit" name="save" id="save"
 			value='<spring:message code="system.save"/>' />
+		<jstl:if test="${socialProfile.id != 0}">
+			<input type="submit" name="delete" id="delete"
+				value="<spring:message code="actor.delete.social" />"
+				onclick="redirect: location.href = 'social-profile/actor/edit.do?socialprofileID=${socialProfile.id}';" />
+		</jstl:if>
 		<input type="button" name="cancel"
 			value="<spring:message code="actor.cancel" />"
 			onclick="javascript: relativeRedir('/actor/display.do?actorID=${principal.id}');" />

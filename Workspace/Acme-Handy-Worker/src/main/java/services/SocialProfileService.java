@@ -115,13 +115,13 @@ public class SocialProfileService {
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(socialProfile.getNick());
 
+		result = this.socialProfileRepository.save(socialProfile);
+		Assert.notNull(result);
+
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if (containsSpam) {
 			principal.setIsSuspicious(true);
 		}
-
-		result = this.socialProfileRepository.save(socialProfile);
-		Assert.notNull(result);
 
 		if (principal instanceof Customer) {
 			Customer toSave = this.customerService.findOne(principal.getId());
