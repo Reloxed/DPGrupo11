@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -124,17 +125,16 @@ public class SystemConfigurationService {
 
 		return result;
 	}
-	
-	public List<String> findSupportedLanguajes() {
-		final Map<String,String> aux;
-		List<String> result = new ArrayList<>();
+
+	public List<String> findSupportedLanguages() {
+		final Map<String, String> aux;
+		final List<String> result = new ArrayList<>();
 
 		aux = this.systemConfigurationRepository.findAll().get(0).getWelcomeMessage();
 		result.addAll(aux.keySet());
 
 		return result;
 	}
-	
 
 	public Double findVAT() {
 		final Double result;
