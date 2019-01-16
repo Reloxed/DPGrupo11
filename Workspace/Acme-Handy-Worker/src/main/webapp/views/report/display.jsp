@@ -18,8 +18,8 @@ table, th, td {
 <table class="displayStyle">
 
 <tr>
-<th><jstl:out value="${report.description}"></jstl:out></th>
-<th>   </th>
+<td> <strong> <spring:message code="report.description" /></strong></td>
+<td><jstl:out value="${report.description}"></jstl:out></td>
 </tr>
 
 <tr>

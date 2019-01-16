@@ -22,12 +22,12 @@
 		src="images/uk.png" style="width: 50px; height: 25px" /></a>
 </div>
 
-			
-<div>	
+
+<div>
 	<a href="#"><img
 		style="height: 200px; width: 500px; padding-bottom: 12px"
 		src="${banner}" alt="Acme Handy Worker Co., Inc." /></a>
-	
+
 </div>
 
 <div>
@@ -115,13 +115,9 @@
 					<li><a href="complaint/referee/listAssigned.do"><spring:message
 								code="master.page.referee.my.complaints" /></a></li>
 				</ul></li>
-			<li><a class="fNiv"></a>
-
 			<li class="arrow"></li>
 			<li><a href="report/referee/list.do"><spring:message
 						code="master.page.referee.reports" /></a></li>
-			<li><a href="note/referee/list.do"><spring:message
-						code="master.page.referee.notes" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('HANDYWORKER')">

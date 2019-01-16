@@ -41,8 +41,16 @@
 			<spring:message code="complaint.create.report"
 				var="createReportHeader" />
 			<display:column title="${createReportHeader}">
-				<a href="report/complaint/create.do?complaintId=${row.id}"><spring:message
-						code="complaint.create.report" /></a>
+				<jstl:set var="bool" value="${0}" />
+				<jstl:forEach var="x" items="${reports}">
+					<jstl:if test="${x.complaint.id == row.id}">
+						<jstl:set var="bool" value="${1}" />
+					</jstl:if>
+				</jstl:forEach>
+				<jstl:if test="${bool == 0}">
+					<a href="report/referee/create.do?complaintId=${row.id}"><spring:message
+							code="complaint.create.report" /></a>
+				</jstl:if>
 			</display:column>
 		</jstl:if>
 	</security:authorize>

@@ -17,8 +17,15 @@
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 			<form:hidden path="complaint" />
-			<form:hidden path="publishedMoment" />
+			<form:errors cssClass="error" path="complaint" />
+			<jstl:if test="${report.id == 0 }">
+				<form:hidden path="publishedMoment" value="01/01/2001 00:00" />
+			</jstl:if>
+			<jstl:if test="${report.id != 0 }">
+				<form:hidden path="publishedMoment" />
+			</jstl:if>
 			<form:hidden path="notes" />
+			<form:errors cssClass="error" path="notes" />
 
 			<form:label path="description">
 				<spring:message code="report.description" />
@@ -53,7 +60,7 @@
 									<form:input path="attachments" />
 									<a href="#" class="list-remove"
 										onclick="event.preventDefault();"> <spring:message
-											code="report.attachments.remove" /></a>
+											code="report.attachment.remove" /></a>
 
 								</div>
 
@@ -87,8 +94,7 @@
 					value="${saveReportFinal}" />&nbsp;
 	</jstl:if>
 			<jstl:if test="${report.isFinal == false}">
-				<input type="submit" id="submit" name="save"
-					value="${saveReport }" />
+				<input type="submit" id="submit" name="save" value="${saveReport }" />
 			</jstl:if>
 			<jstl:if test="${report.id != 0}">
 
@@ -96,7 +102,7 @@
 					onclick="return confirm('${confirmDeleteReport}')" />&nbsp;
 	</jstl:if>
 			<input type="button" name="cancel" value="${cancelReport}"
-				onclick="javascript: relativeRedir('report/referee/list.do)');" />
+				onclick="javascript: relativeRedir('report/referee/list.do)';" />
 			<br />
 
 
