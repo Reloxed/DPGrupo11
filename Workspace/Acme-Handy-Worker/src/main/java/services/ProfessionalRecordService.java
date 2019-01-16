@@ -31,7 +31,7 @@ public class ProfessionalRecordService {
 	private HandyWorkerService				handyWorkerService;
 
 	@Autowired
-	private UtilityService		utilityService;
+	private UtilityService					utilityService;
 
 
 	// Constructors ------------------------------------
@@ -81,32 +81,31 @@ public class ProfessionalRecordService {
 
 		Assert.notNull(professionalRecord);
 
-		List<String> atributosAComprobar = new ArrayList<>();
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(professionalRecord.getCompanyName());
 		atributosAComprobar.add(professionalRecord.getRole());
 		if (professionalRecord.getComments() != null)
 			atributosAComprobar.add(professionalRecord.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}		
 
-		if (professionalRecord.getEndDate() != null)
+		if (professionalRecord.getEndDate() != null) {
 			Assert.isTrue(professionalRecord.getStartDate().before(professionalRecord.getEndDate()));
-		else
+			Assert.isTrue(professionalRecord.getEndDate().before(new Date(System.currentTimeMillis())));
+		} else
 			Assert.isTrue(professionalRecord.getStartDate().before(new Date(System.currentTimeMillis())));
-
-		res = this.professionalRecordRepository.saveAndFlush(professionalRecord);
+		res = this.professionalRecordRepository.save(professionalRecord);
 		Assert.notNull(res);
 
-		professionalRecords = principal.getCurriculum().getProfessionalRecords();
-		professionalRecords.add(res);
-		principal.getCurriculum().setProfessionalRecords(professionalRecords);
-		
+		if (professionalRecord.getId() == 0) {
+			professionalRecords = principal.getCurriculum().getProfessionalRecords();
+			professionalRecords.add(res);
+			principal.getCurriculum().setProfessionalRecords(professionalRecords);
+		}
 		return res;
 	}
-
 	public void delete(final ProfessionalRecord professionalRecord) {
 		HandyWorker principal;
 		Collection<ProfessionalRecord> professionalRecords;
@@ -116,7 +115,7 @@ public class ProfessionalRecordService {
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		professionalRecords = principal.getCurriculum().getProfessionalRecords();
 		Assert.isTrue(professionalRecords.contains(professionalRecord));
 		professionalRecords.remove(professionalRecord);

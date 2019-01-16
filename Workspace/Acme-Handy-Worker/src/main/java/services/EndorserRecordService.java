@@ -26,9 +26,9 @@ public class EndorserRecordService {
 	//Supporting services ----------
 	@Autowired
 	private HandyWorkerService			handyWorkerService;
-	
+
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService				utilityService;
 
 
 	//Constructor ----------------------------------------------------
@@ -69,7 +69,7 @@ public class EndorserRecordService {
 
 	public EndorserRecord save(final EndorserRecord endorserRecord) {
 		Assert.notNull(endorserRecord);
-		
+
 		EndorserRecord result;
 		HandyWorker principal;
 		Collection<EndorserRecord> endorserRecords;
@@ -82,33 +82,32 @@ public class EndorserRecordService {
 		Assert.notNull(endorserRecord.getEmail());
 		Assert.notNull(endorserRecord.getLinkedinLink());
 
-		Assert.isTrue(endorserRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
+		Assert.isTrue(endorserRecord.getLinkedinLink().toLowerCase().startsWith("https://www.linkedin.com/") || endorserRecord.getLinkedinLink().toLowerCase().startsWith("http://www.linkedin.com"));
 
 		Assert.notNull(endorserRecord.getPhoneNumber());
-		
-		List<String> atributosAComprobar = new ArrayList<>();
+
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(endorserRecord.getFullName());
 		if (endorserRecord.getComments() != null)
 			atributosAComprobar.add(endorserRecord.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
-		result = this.endorserRecordRepository.saveAndFlush(endorserRecord);
+
+		result = this.endorserRecordRepository.save(endorserRecord);
 		Assert.notNull(result);
 
-		endorserRecords = principal.getCurriculum().getEndorserRecords();
-		endorserRecords.add(result);
-		principal.getCurriculum().setEndorserRecords(endorserRecords);
-
+		if (endorserRecord.getId() == 0) {
+			endorserRecords = principal.getCurriculum().getEndorserRecords();
+			endorserRecords.add(result);
+			principal.getCurriculum().setEndorserRecords(endorserRecords);
+		}
 		return result;
 
 	}
 
 	public void delete(final EndorserRecord endorserRecord) {
-
 		HandyWorker principal;
 		Collection<EndorserRecord> collectionEndorserRecords;
 
@@ -119,10 +118,10 @@ public class EndorserRecordService {
 		collectionEndorserRecords = principal.getCurriculum().getEndorserRecords();
 		Assert.isTrue(collectionEndorserRecords.contains(endorserRecord));
 
-		this.endorserRecordRepository.delete(endorserRecord);
-		
 		collectionEndorserRecords.remove(endorserRecord);
 		principal.getCurriculum().setEndorserRecords(collectionEndorserRecords);
+
+		this.endorserRecordRepository.delete(endorserRecord);
 	}
 
 	//Other business methods--------

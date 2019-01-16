@@ -29,9 +29,9 @@ public class MiscellaneousRecordService {
 
 	@Autowired
 	private HandyWorkerService				handyWorkerService;
-	
+
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService					utilityService;
 
 
 	//Constructor
@@ -69,23 +69,23 @@ public class MiscellaneousRecordService {
 		curriculumHW = principal.getCurriculum();
 		Assert.notNull(curriculumHW);
 		miscellaneousRecords = curriculumHW.getMiscellaneousRecords();
-		
-		List<String> atributosAComprobar = new ArrayList<>();
+
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(miscellaneousRecord.getTitle());
 		if (miscellaneousRecord.getComments() != null)
 			atributosAComprobar.add(miscellaneousRecord.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
-		result = this.miscellaneousRecordRepository.saveAndFlush(miscellaneousRecord);
+
+		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
 		Assert.notNull(result);
 
-		miscellaneousRecords.add(result);
-		curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
-
+		if (miscellaneousRecord.getId() == 0) {
+			miscellaneousRecords.add(result);
+			curriculumHW.setMiscellaneousRecords(miscellaneousRecords);
+		}
 		return result;
 
 	}

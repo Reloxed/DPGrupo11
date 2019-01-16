@@ -20,7 +20,7 @@ import domain.HandyWorker;
 public class EducationRecordService {
 
 	// Managed Repository
-	
+
 	@Autowired
 	private EducationRecordRepository	educationRecordRepository;
 
@@ -28,9 +28,10 @@ public class EducationRecordService {
 
 	@Autowired
 	private HandyWorkerService			handyWorkerService;
-	
+
 	@Autowired
-	private UtilityService			utilityService;
+	private UtilityService				utilityService;
+
 
 	// Constructors ------------------------------------
 
@@ -82,21 +83,19 @@ public class EducationRecordService {
 		if (educationRecord.getEndDate() != null)
 			Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()));
 
-		res = this.educationRecordRepository.save(educationRecord);		
+		res = this.educationRecordRepository.save(educationRecord);
 		this.educationRecordRepository.flush();
-		
-		
-		List<String> atributosAComprobar = new ArrayList<>();
+
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(educationRecord.getDiplomaTitle());
 		atributosAComprobar.add(educationRecord.getInstitutionName());
 		if (educationRecord.getComments() != null)
 			atributosAComprobar.add(educationRecord.getComments());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
+
 		educationRecords = principal.getCurriculum().getEducationRecords();
 		if (educationRecord.getId() == 0) {
 			educationRecords.add(res);
@@ -104,7 +103,7 @@ public class EducationRecordService {
 			curriculum = principal.getCurriculum();
 			curriculum.setEducationRecords(educationRecords);
 		}
-		
+
 		return res;
 	}
 
@@ -121,10 +120,10 @@ public class EducationRecordService {
 		educationRecords = principal.getCurriculum().getEducationRecords();
 		Assert.isTrue(educationRecords.contains(educationRecord));
 
-		this.educationRecordRepository.delete(educationRecord);
-
 		educationRecords.remove(educationRecord);
 		principal.getCurriculum().setEducationRecords(educationRecords);
+
+		this.educationRecordRepository.delete(educationRecord);
 
 	}
 	// Other business methods

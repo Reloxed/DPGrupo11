@@ -10,12 +10,11 @@
 <form:form modelAttribute="miscellaneousRecord" action="miscellaneousRecord/handyWorker/edit.do"
 	id="form">
 
-	<form:hidden path="id" />
-		
-		<form:hidden path="version" />
-		
-		
-		<fieldset>
+	<form:hidden path="id" />	
+	<form:hidden path="version" />
+
+
+	<fieldset>
 		<legend> <spring:message code="mr.miscellaneousRecord" />: </legend>
 		
 		<form:label path="title">
@@ -46,10 +45,6 @@
 		<br />
 	
 	</fieldset>
-	
-	
-	
-	
 	
 	<input type="submit" name="save" id="save" value="<spring:message code="mr.save" />" />&nbsp; 
 		<jstl:if test="${miscellaneousRecord.id != 0}">
