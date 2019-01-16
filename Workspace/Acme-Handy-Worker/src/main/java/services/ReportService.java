@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
+import domain.Actor;
 import domain.Complaint;
+import domain.Customer;
+import domain.HandyWorker;
 import domain.Note;
 import domain.Referee;
 import domain.Report;
@@ -33,6 +36,18 @@ public class ReportService {
 
 	@Autowired
 	private UtilityService utilityService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private HandyWorkerService handyWorkerService;
+	
+	@Autowired
+	private ComplaintService complaintService;
+	
+	@Autowired
+	private ActorService actorService;
 
 	// Constructors ------------------------------------
 
@@ -76,8 +91,6 @@ public class ReportService {
 
 		Report res;
 
-		Report result;
-
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.notNull(report);
@@ -89,8 +102,6 @@ public class ReportService {
 
 			Assert.isTrue(report.getComplaint().equals(
 					this.findOne(report.getId()).getComplaint()));
-			Assert.isTrue(report.getPublishedMoment().equals(
-					this.findOne(report.getId()).getPublishedMoment()));
 
 			if (this.findOne(report.getId()).getIsFinal()) {
 				Assert.isTrue(report.getIsFinal());
@@ -112,10 +123,7 @@ public class ReportService {
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
 
-		result = this.reportRepository.save(report);
-		Assert.notNull(result);
-
-		return result;
+		return res;
 	}
 
 	public void delete(final Report report) {
@@ -140,16 +148,29 @@ public class ReportService {
 	// Other business methods -------------------------------
 
 	public Collection<Report> findReportByPrincipal() {
-		Referee principal;
+		Actor principal;
+		Customer customer = null;
+		HandyWorker handyWorker = null;
+		Referee referee = null;
 		Collection<Report> res;
 		Collection<Report> reports;
-		Collection<Complaint> complaints;
-
-		principal = this.refereeService.findByPrincipal();
-		Assert.notNull(principal);
-
-		complaints = principal.getComplaints();
-		Assert.notNull(complaints);
+		Collection<Complaint> complaints = new ArrayList<>();
+		
+		principal = this.actorService.findByPrincipal();
+		
+		if(principal instanceof Referee){
+			referee = this.refereeService.findByPrincipal();
+			complaints = referee.getComplaints();
+			Assert.notNull(complaints);
+		} else if(principal instanceof Customer){
+			customer = this.customerService.findByPrincipal();
+			complaints = customer.getComplaints();
+			Assert.notNull(complaints);
+		} else if(principal instanceof HandyWorker){
+			handyWorker = this.handyWorkerService.findByPrincipal();
+			complaints = this.complaintService.findComplaintsByHandyWorkerId(handyWorker.getId());
+			Assert.notNull(complaints);
+		}
 
 		reports = this.findAll();
 		Assert.notNull(reports);
@@ -166,5 +187,20 @@ public class ReportService {
 	public Double[] findNotesNumberOperations() {
 		Double[] res = this.reportRepository.findNotesNumberOperations();
 		return res;
+	}
+	
+	public Report findReportByComplaint(int complaintId){
+		Collection<Report> reports;
+		Report result = new Report();
+		
+		reports = this.findAll();
+		
+		for (Report r: reports){
+			if(r.getComplaint().getId() == complaintId){
+				result = r;
+				break;
+			}
+		}
+		return result;
 	}
 }

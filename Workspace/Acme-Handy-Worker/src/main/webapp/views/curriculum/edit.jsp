@@ -2,9 +2,9 @@
  * action-1.jsp
  *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
  --%>
 
@@ -24,23 +24,23 @@
 <form:form action="curriculum/handyWorker/edit.do" modelAttribute="curriculum" id="form">
 
 	<form:hidden path="id" />
-	
 	<form:hidden path="version" />
-	
 	<form:hidden path ="ticker" />
-	
 	<form:hidden path ="professionalRecords" />
-	
 	<form:hidden path ="educationRecords" />
-	
 	<form:hidden path ="endorserRecords" />
-	
 	<form:hidden path ="miscellaneousRecords" />
-	
+
+
+	<jstl:if test="${curriculum.id != 0}">
+		<input type="submit" name="delete" value="<spring:message code="curriculum.delete" />" onclick="return confirm('<spring:message code="curriculum.confirm.delete" />')" />&nbsp;
+	</jstl:if>
+
 	<%--PERSONAL RECORD --%>
+	
 	<fieldset>
 	<legend><form:label path="personalRecord"> <spring:message code="curriculum.personalRecord" />: </form:label></legend>
-	
+
 	<form:label path="personalRecord.fullName">
 		<spring:message code="curriculum.personalRecord.fullName" />:
 	</form:label>
@@ -48,7 +48,7 @@
 	<form:errors cssClass="error" path="personalRecord.fullName" />
 	<br />
 	<br />
-	
+
 	<form:label path="personalRecord.photo">
 		<spring:message code="curriculum.personalRecord.photo" />:
 	</form:label>
@@ -57,7 +57,7 @@
 	<form:errors cssClass="error" path="personalRecord.photo" />
 	<br />
 	<br />
-	
+
 	<form:label path="personalRecord.email">
 		<spring:message code="curriculum.personalRecord.email" />:
 	</form:label>
@@ -65,7 +65,7 @@
 	<form:errors cssClass="error" path="personalRecord.email" />
 	<br />
 	<br />
-	
+
 	<spring:message code="curriculum.personalRecord.phoneNumber" var="phoneNumber" />
 	<form:label path="personalRecord.phoneNumber">
 		<spring:message code="curriculum.personalRecord.phoneNumber" />:
@@ -74,7 +74,7 @@
 	<form:errors cssClass="error" path="personalRecord.phoneNumber" />
 	<br />
 	<br />
-	
+
 	<form:label path="personalRecord.linkedinLink">
 		<spring:message code="curriculum.personalRecord.linkedinLink" />:
 	</form:label>
@@ -85,15 +85,8 @@
 	</fieldset>
 	<br>
 	<br>
-	
-	
-	
-	
-	
-	
-	
-	
-	<input type="button" name="save" id="save" value="<spring:message code="curriculum.save" />" />&nbsp; 
+
+	<input type="submit" name="save" id="save" value="<spring:message code="curriculum.save" />" />&nbsp;
 
 	<jstl:if test="${curriculum.id!=0}">
 	<input type="button" name="cancel" value="<spring:message code="curriculum.cancel" />"
@@ -106,5 +99,5 @@
 	<br />
 	</jstl:if>
 	</form:form>
-	
+
 </security:authorize>

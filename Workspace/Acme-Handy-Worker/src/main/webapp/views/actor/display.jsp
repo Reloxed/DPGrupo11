@@ -92,7 +92,7 @@
 		
 			<jstl:forEach var="fixUpTask" items="${customer.fixUpTasks}">
 				
-				<jstl:out value="${fixUpTask.description}"> </jstl:out>
+				<ul><li> <jstl:out value="${fixUpTask.description}"> </jstl:out></li></ul>
 				<br/>
 			</jstl:forEach>
 		

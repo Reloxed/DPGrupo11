@@ -1,6 +1,7 @@
 
 package controllers.referee;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
+import services.ReportService;
 import controllers.AbstractController;
 import domain.Complaint;
+import domain.Report;
 
 @Controller
 @RequestMapping("/complaint/referee")
@@ -23,7 +26,9 @@ public class ComplaintRefereeController extends AbstractController {
 	@Autowired
 	private ComplaintService	complaintService;
 
-
+	@Autowired
+	private ReportService 		reportService;
+	
 	//Constructor
 
 	public ComplaintRefereeController() {
@@ -36,12 +41,18 @@ public class ComplaintRefereeController extends AbstractController {
 	public ModelAndView listAssigned() {
 		ModelAndView result;
 		Collection<Complaint> complaints;
+		Collection<Report> reports = new ArrayList<>();
 
 		complaints = this.complaintService.findComplaintsByReferee();
+		for(Complaint c: complaints){
+			Report r = this.reportService.findReportByComplaint(c.getId());
+			if(r != null) reports.add(r);
+		}
 
 		result = new ModelAndView("complaint/list");
 		result.addObject("requestURI", "complaint/referee/listAssigned.do");
 		result.addObject("complaints", complaints);
+		result.addObject("reports", reports);
 
 		return result;
 

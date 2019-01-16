@@ -39,7 +39,10 @@
 		<security:intercept-url pattern="/complaint/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/complaint/handyWorker/**" access="hasRole('HANDYWORKER')"/>
 		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')"/>
-		
+		<security:intercept-url pattern="/report/referee/**" access="hasRole('REFEREE')"/>
+		<security:intercept-url pattern="/report/customer/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/report/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+				
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 

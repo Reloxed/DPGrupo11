@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 import repositories.CategoryRepository;
 import domain.Administrator;
 import domain.Category;
+import domain.FixUpTask;
 import domain.SystemConfiguration;
 
 @Service
@@ -48,11 +50,12 @@ public class CategoryService {
 	public Category create() {
 		Category result;
 		Administrator admin;
-
+		
 		admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
 		result = new Category();
+		
 		result.setChildCategories(new ArrayList<Category>());
 		result.setName(new HashMap<String, String>());
 
@@ -108,6 +111,7 @@ public class CategoryService {
 		Administrator admin;
 		Category parent, root, aux;
 		Collection<Category> childCategories;
+		Collection<FixUpTask> tasks;
 
 		Assert.notNull(category);
 		Assert.isTrue(category.getId() != 0);
@@ -120,7 +124,7 @@ public class CategoryService {
 															// categoría raiz
 
 		childCategories = category.getChildCategories();
-		aux = null;
+		aux = root;
 
 		if (!childCategories.isEmpty())
 			for (final Category cat : childCategories)
@@ -128,7 +132,15 @@ public class CategoryService {
 
 		parent = category.getParentCategory();
 		this.deleteChild(parent, category);
-
+		
+		tasks=this.categoryRepository.CategoryInFixUpTask(category.getId());
+		if(!tasks.isEmpty()){
+			
+		
+		for(FixUpTask f:tasks){
+			f.setCategory(category.getParentCategory());
+		}
+		}
 		this.categoryRepository.delete(category);
 	}
 

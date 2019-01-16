@@ -1,3 +1,4 @@
+
 package controllers.handyWorker;
 
 import javax.validation.Valid;
@@ -11,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ProfessionalRecordService;
 import controllers.AbstractController;
 import domain.ProfessionalRecord;
 
-import services.ProfessionalRecordService;
-
 @Controller
 @RequestMapping("/professionalRecord/handyWorker")
-public class ProfessionalRecordHandyWorkerController extends AbstractController{
+public class ProfessionalRecordHandyWorkerController extends AbstractController {
 
 	//Services
 	@Autowired
@@ -31,9 +31,7 @@ public class ProfessionalRecordHandyWorkerController extends AbstractController{
 		super();
 	}
 
-
-
-	// Creation 
+	// Creation
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
@@ -70,7 +68,7 @@ public class ProfessionalRecordHandyWorkerController extends AbstractController{
 				this.professionalRecordService.save(professionalRecord);
 				result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(professionalRecord, "professionalRecord.commit.error");
+				result = this.createEditModelAndView(professionalRecord, "pr.commit.error");
 			}
 
 		return result;
@@ -84,7 +82,7 @@ public class ProfessionalRecordHandyWorkerController extends AbstractController{
 			this.professionalRecordService.delete(professionalRecord);
 			result = new ModelAndView("redirect:/curriculum/handyWorker/display.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(professionalRecord, "professionalRecord.commit.error");
+			result = this.createEditModelAndView(professionalRecord, "pr.commit.error");
 		}
 
 		return result;
@@ -104,8 +102,6 @@ public class ProfessionalRecordHandyWorkerController extends AbstractController{
 
 		result = new ModelAndView("professionalRecord/edit");
 		result.addObject("professionalRecord", professionalRecord);
-
-
 		result.addObject("message", messageCode);
 
 		return result;
