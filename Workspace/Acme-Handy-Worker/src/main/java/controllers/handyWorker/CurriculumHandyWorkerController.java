@@ -68,14 +68,16 @@ public class CurriculumHandyWorkerController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(final Curriculum curriculum, final BindingResult binding) {
 		ModelAndView result;
-
+		System.out.println("Llega al controlador");
 		try {
 			this.curriculumService.delete(curriculum);
-			result = new ModelAndView("redirect:/welcome/index.do");//redirijir al perfil no?
+			System.out.println("Pasa el delete");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
+			System.out.println("No entra en el delete");
 			result = this.createEditModelAndView(curriculum, "curriculum.commit.error");
 		}
 

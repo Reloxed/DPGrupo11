@@ -2,7 +2,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -50,11 +49,7 @@ public class FinderService {
 
 	public Finder create() {
 		Finder result;
-		HandyWorker principal;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
+		
 		result = new Finder();
 
 		result.setFixuptask(new ArrayList<FixUpTask>());
@@ -101,11 +96,10 @@ public class FinderService {
 
 		if (finder.getStartMoment() != null && finder.getEndMoment() != null)
 			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()));
-		else if (finder.getPriceHigh() != null && finder.getPriceLow() != null)
+		else if (finder.getPriceHigh() != 0.0)
 			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow());
-
+			
 		result = this.finderRepository.save(finder);
-		Assert.notNull(result);
 
 		return result;
 
@@ -169,23 +163,30 @@ public class FinderService {
 		final List<FixUpTask> aux = new ArrayList<>();
 		final Collection<FixUpTask> collFix = this.fixUpTaskService.findAll();
 		final int maxResults = this.systemConfigurationService.findMySystemConfiguration().getMaxResults();
-		int times = 0;
+		int times = 0;		
 		
-		if (finder.getPriceLow() != null && finder.getPriceHigh() != null)
+		if (finder.getPriceHigh() > 0.0 || finder.getPriceLow() > 0.0) {
+			Assert.isTrue(finder.getPriceHigh() >= finder.getPriceLow(), "Paco");
 			times++;
-		if (finder.getWarranty() != null)		
+		}
+		if (finder.getWarranty() != null)
 			times++;
 		if (finder.getCategory() != null)
 			times++;
-		if (finder.getStartMoment() != null && finder.getEndMoment() != null)
+		if (finder.getStartMoment() != null || finder.getEndMoment() != null) {
+			Assert.notNull(finder.getStartMoment(), "finder.interval");
+			Assert.notNull(finder.getEndMoment(), "finder.interval");
+			Assert.isTrue(finder.getStartMoment().before(finder.getEndMoment()), "finder.moment");
 			times++;
+		}
 		if (finder.getKeyWord() != null)
-			times++;
-			
+			times++;			
+		
 
 		for (final FixUpTask fixUpTask : collFix) {
-			if (finder.getPriceLow() != null && finder.getPriceHigh() != null && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice())
+			if (finder.getPriceHigh() > 0.0 && finder.getPriceLow() <= fixUpTask.getMaxPrice() && finder.getPriceHigh() >= fixUpTask.getMaxPrice()) {
 				setFix.add(fixUpTask);
+			}
 			if (finder.getWarranty() != null && finder.getWarranty().equals(fixUpTask.getWarranty()))		
 				setFix.add(fixUpTask);
 			if (finder.getCategory() != null && finder.getCategory().equals(fixUpTask.getCategory()))
@@ -212,15 +213,15 @@ public class FinderService {
 			finder.setFixuptask(aux);
 		
 		finder.setKeyWord(null);
-		finder.setPriceHigh(null);
-		finder.setPriceLow(null);
+		finder.setPriceHigh(0.0);
+		finder.setPriceLow(0.0);
 		finder.setStartMoment(null);
 		finder.setEndMoment(null);
 		finder.setCategory(null);
 		finder.setWarranty(null);
 		
 		this.save(finder);
-
+		
 		return finder;
 	}
 

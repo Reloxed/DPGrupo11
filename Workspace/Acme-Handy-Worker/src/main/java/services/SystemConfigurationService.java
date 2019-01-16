@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -123,6 +124,17 @@ public class SystemConfigurationService {
 
 		return result;
 	}
+	
+	public List<String> findSupportedLanguajes() {
+		final Map<String,String> aux;
+		List<String> result = new ArrayList<>();
+
+		aux = this.systemConfigurationRepository.findAll().get(0).getWelcomeMessage();
+		result.addAll(aux.keySet());
+
+		return result;
+	}
+	
 
 	public Double findVAT() {
 		final Double result;

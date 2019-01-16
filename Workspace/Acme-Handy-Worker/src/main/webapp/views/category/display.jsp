@@ -85,10 +85,11 @@
 	</tr>
 	
 	</jstl:if>
-	</table>
+	</table>	
 	
+	<input type="button" name="back"
+			value="<spring:message code="category.back" />"
+			onclick="window.history.back()" />
+	<br/>
 	
-	
-	
-
 </security:authorize>
