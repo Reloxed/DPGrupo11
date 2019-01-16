@@ -2,9 +2,9 @@
  * action-1.jsp
  *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
  --%>
 
@@ -21,27 +21,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <script>
-	function checkPhone() {
+	function checkPhone(msg) {
 		var phone = document.getElementById("phoneNumber");
 		var phonePattern = new RegExp(
 				/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/);
-		var phoneOK = phone.value.match(phonePattern);
 
-		if (!phoneOK) {
-			var confirmation = confirm("<spring:message code="phone.confirmation" />");
-			if (!confirmation) {
-				document.getElementById('save').disabled = true;
-			}
+		if (phonePattern.test(phone)) {
+			return true;
+		} else {
+			return confirm(msg);
 		}
 	}
+		
 </script>
 
 <p>
 	<spring:message code="actor.edit" />
 </p>
 
+<spring:message code="phone.confirmation" var="confirmTelephone"/>
+
 <form:form action="handyworker/handyworker/edit.do"
-	modelAttribute="handyWorker" methodParam="post">
+	modelAttribute="handyWorker" methodParam="post" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -122,7 +123,7 @@
 	<form:label path="phoneNumber">
 		<spring:message code="actor.phone" />:
 		</form:label>
-	<form:input path="phoneNumber" value="${handyWorker.phoneNumber}" onblur="checkPhone()"/>
+	<form:input path="phoneNumber" value="${handyWorker.phoneNumber}"/>
 	<form:errors cssClass="error" path="phoneNumber" />
 	<br>
 
@@ -143,6 +144,5 @@
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="actor.save"/>' />
 	<input type="button" name="cancel"
-		value="<spring:message code="actor.cancel" />"
-		onclick="javascript: relativeRedir('actor/display.do');" />
+		value="<spring:message code="actor.cancel" />"	onclick="javascript: relativeRedir('actor/display.do');" />
 </form:form>

@@ -16,7 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.FixUpTaskService;
 import services.SystemConfigurationService;
 import controllers.AbstractController;
+
+import domain.Category;
+
 import domain.Application;
+
 import domain.FixUpTask;
 
 @Controller
@@ -28,7 +32,7 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private FixUpTaskService	fixUpTaskService;
-	
+
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
 
@@ -51,6 +55,8 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		english = "en";
 		int customerId;
 
+
+
 		fixUpTask = this.fixUpTaskService.findOne(taskId);
 
 		customerId = this.fixUpTaskService.creatorFixUpTask(fixUpTask.getId());
@@ -59,6 +65,10 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("customerId", customerId);
 		result.addObject("fixUpTask", fixUpTask);
+
+		if(fixUpTask.getCategory()==null){
+			fixUpTask.setCategory(fixUpTask.getCategory().getParentCategory());
+		}
 		result.addObject("language", language);
 		result.addObject("español", español);
 		result.addObject("english", english);
@@ -87,14 +97,20 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 				}
 			}
 		}
-		
+
+
+//		System.out.println(collFixUpTasks);
+
+
+
+
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
 		result.addObject("collFixUpTasks", collFixUpTasks);
 		// result.addObject("principal",principal);
 		result.addObject("requestUri", "fixUpTask/handyWorker/list.do");
 		result.addObject("vat", this.systemConfigurationService.findVAT());
-		
+
 		return result;
 
 	}
