@@ -17,6 +17,7 @@ import org.springframework.util.Assert;
 import repositories.CategoryRepository;
 import domain.Administrator;
 import domain.Category;
+import domain.FixUpTask;
 import domain.SystemConfiguration;
 
 @Service
@@ -110,6 +111,7 @@ public class CategoryService {
 		Administrator admin;
 		Category parent, root, aux;
 		Collection<Category> childCategories;
+		Collection<FixUpTask> tasks;
 
 		Assert.notNull(category);
 		Assert.isTrue(category.getId() != 0);
@@ -130,7 +132,15 @@ public class CategoryService {
 
 		parent = category.getParentCategory();
 		this.deleteChild(parent, category);
-
+		
+		tasks=this.categoryRepository.CategoryInFixUpTask(category.getId());
+		if(!tasks.isEmpty()){
+			
+		
+		for(FixUpTask f:tasks){
+			f.setCategory(category.getParentCategory());
+		}
+		}
 		this.categoryRepository.delete(category);
 	}
 
