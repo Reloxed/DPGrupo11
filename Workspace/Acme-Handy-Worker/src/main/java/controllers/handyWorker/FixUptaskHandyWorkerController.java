@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CustomerService;
 import services.FixUpTaskService;
 import services.SystemConfigurationService;
 import controllers.AbstractController;
@@ -31,6 +32,9 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 	
 	@Autowired
 	private SystemConfigurationService	systemConfigurationService;
+	
+	@Autowired
+	private CustomerService	customerService;
 
 	// Constructor
 
@@ -77,12 +81,23 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 
 		fixUpTasks = this.fixUpTaskService.findAll();
 
-		List<FixUpTask> collFixUpTasks = new ArrayList<>();
+		List<FixUpTask> collFixUpTasksAccepted = new ArrayList<>();
 		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
 			if (!fix.getApplications().isEmpty()) {
 				for (Application app : fix.getApplications()) {
 					if (app.getStatus().equals("ACCEPTED")) {
-						collFixUpTasks.add(fix);
+						collFixUpTasksAccepted.add(fix);
+					}
+				}
+			}
+		}
+		
+		List<FixUpTask> collFixUpTasksBanned = new ArrayList<>();
+		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
+			if (true) {
+				for (Application app : fix.getApplications()) {
+					if (app.getStatus().equals("ACCEPTED")) {
+						collFixUpTasksBanned.add(fix);
 					}
 				}
 			}
@@ -90,8 +105,8 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);
-		result.addObject("collFixUpTasks", collFixUpTasks);
-		// result.addObject("principal",principal);
+		result.addObject("collFixUpTasksAccepted", collFixUpTasksAccepted);
+		result.addObject("collFixUpTasksBanned", collFixUpTasksBanned);
 		result.addObject("requestUri", "fixUpTask/handyWorker/list.do");
 		result.addObject("vat", this.systemConfigurationService.findVAT());
 		

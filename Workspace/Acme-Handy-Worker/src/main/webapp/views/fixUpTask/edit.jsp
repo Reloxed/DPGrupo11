@@ -13,8 +13,16 @@
 <form:form action="fixUpTask/customer/edit.do"
 	modelAttribute="fixUpTask" id="form">
 
-	<form:hidden path="ticker" value="000000-AAAAAA"/>
-	<form:hidden path="publishedMoment" value="01/01/2001 00:00"/>
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
+	<jstl:if test="${fixUpTasks.id == 0}">
+		<form:hidden path="ticker" value="000000-AAAAAA"/>
+		<form:hidden path="publishedMoment"/>
+	</jstl:if>
+	<jstl:if test="${fixUpTasks.id != 0}">
+		<form:hidden path="ticker"/>
+		<form:hidden path="publishedMoment"/>
+	</jstl:if>
 	<form:hidden path="applications" />
 	<form:hidden path="complaints" />
 
@@ -49,27 +57,29 @@
 	<form:label path="startMoment">
 		<spring:message code="fixuptask.start.moment" />
 	</form:label>
-	<form:input path="startMoment" />
-	<form:errors cssClass="error" path="startMoment" />
+	<form:input path="startMoment" type="date"/>
+	<form:errors cssClass="error" path="startMoment"/>
 	<br />
 
 	<form:label path="endMoment">
 		<spring:message code="fixuptask.end.moment" />
 	</form:label>
-	<form:input path="endMoment" />
+	<form:input path="endMoment" type="date"/>
 	<form:errors cssClass="error" path="endMoment" />
 
 	<br />
 	
-	<spring:message code="fixUpTask.category" />
+	<form:label path="category">	
+		<spring:message code="fixUpTask.category" />
+	</form:label>
 	<form:select path="category" style="width:400px;">
-		<form:options items="${categories}" itemLabel="name"
-			itemValue="id" />
+		<form:options items="${categories}" itemLabel="name" itemValue="id" />
 	</form:select>
 	
 		<br />
-		
+	<form:label path="warranty">	
 		<spring:message code="fixUpTask.warranty" />
+	</form:label>
 	<form:select path="warranty" style="width:400px;">
 		<form:options items="${warranties}" itemLabel="title"
 			itemValue="id" />
@@ -83,6 +93,9 @@
 	
 	<input type="submit" id="save" name="save" 
 		value="<spring:message code="fixuptask.save" />" />
+		
+	<input type="submit" id="delete" name="delete" 
+		value="<spring:message code="fixuptask.delete" />" />
 
 
 <%-- 	<jstl:if test="${fixUpTask.id != 0}">

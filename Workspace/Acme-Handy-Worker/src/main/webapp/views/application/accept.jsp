@@ -24,8 +24,8 @@
 	</h2>
 </div>
 
-<form:form action="application/customer/acceptb.do" modelAttribute="application"
-	id="form">
+<form:form action="application/customer/acceptb.do"
+	modelAttribute="application" id="form">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="registeredMoment" />
@@ -35,22 +35,28 @@
 	<form:hidden path="offeredPrice" />
 	<form:hidden path="handyWorkerComment" />
 
-	<form:select path="creditCard" items="${principal.creditCards}"></form:select>
-	<br />
-	
-	<br />
-	
-		<form:label path="customerComment">
-			<spring:message code="application.myComment" />
-		</form:label>
-		<spring:message code="application.customerCommentsPlaceholder"
-			var="placeholder" />
-		<form:input path="customerComment" placeholder="${placeholder}" />
-		<form:errors cssClass="error" path="customerComment"></form:errors>
-	
+
+	<form:label path="creditCard">
+		<spring:message code="application.creditCardNumber" />
+	</form:label>
+	<form:select path="creditCard">
+		<jstl:forEach var="x" items="${principal.creditCards}">
+			<form:option value="${x}" label="${x.number}"></form:option>
+		</jstl:forEach>
+	</form:select>
 	<br />
 	<br />
-		
+	<form:label path="customerComment">
+		<spring:message code="application.myComment" />
+	</form:label>
+	<spring:message code="application.customerCommentsPlaceholder"
+		var="placeholder" />
+	<form:input path="customerComment" placeholder="${placeholder}" />
+	<form:errors cssClass="error" path="customerComment"></form:errors>
+
+	<br />
+	<br />
+
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="application.save"/>' />
 	<input type="button" name="cancel"

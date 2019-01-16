@@ -117,7 +117,6 @@ public class CustomerService {
 				Assert.isTrue(customer.getCreditCards().equals(principalC.getCreditCards()));
 		}
 		cus = this.customerRepository.save(customer);
-		this.customerRepository.flush();
 		return cus;
 	}
 

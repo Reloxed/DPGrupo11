@@ -51,9 +51,4 @@ public class Category extends DomainEntity {
 		this.childCategories = childCategories;
 	}
 
-	@Override
-	public String toString() {
-		return "mapName: " + this.name + ", parentCategory: " + this.parentCategory + ",[" + super.toString() + "]";
-	}
-
 }
