@@ -49,9 +49,8 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		result = new FixUpTask();
-		
-		result.setPublishedMoment(new Date(
-				System.currentTimeMillis() - 1));
+
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setTicker(this.utilityService.generateTicker());
 
 		result.setApplications(new HashSet<Application>());
@@ -108,13 +107,13 @@ public class FixUpTaskService {
 		atributosAComprobar.add(fixUpTask.getDescription());
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
-		
-		final boolean containsSpam = this.utilityService
-				.isSpam(atributosAComprobar);
-		if (containsSpam)
-			principal.setIsSuspicious(true);
 
 		principal.getFixUpTasks().add(result);
+
+		// final boolean containsSpam = this.utilityService
+		// .isSpam(atributosAComprobar);
+		// if (containsSpam)
+		// principal.setIsSuspicious(true);
 
 		return result;
 
@@ -171,7 +170,6 @@ public class FixUpTaskService {
 				.ratioFixUpTaskWithComplaints();
 		return res;
 	}
-	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository
