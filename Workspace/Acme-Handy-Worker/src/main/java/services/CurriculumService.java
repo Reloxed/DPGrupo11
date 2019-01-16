@@ -66,8 +66,8 @@ public class CurriculumService {
 		author = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(author);
 
+		final String ticker = this.utilityService.generateTicker();
 		final PersonalRecord personalRecord = new PersonalRecord();
-
 		final Collection<EducationRecord> collER = new ArrayList<>();
 		final Collection<ProfessionalRecord> collProR = new ArrayList<>();
 		final Collection<EndorserRecord> collEndR = new ArrayList<>();
@@ -79,6 +79,7 @@ public class CurriculumService {
 		result.setMiscellaneousRecords(collMR);
 		result.setPersonalRecord(personalRecord);
 		result.setProfessionalRecords(collProR);
+		result.setTicker(ticker);
 
 		return result;
 	}
@@ -110,39 +111,28 @@ public class CurriculumService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (curriculum.getId() == 0)
-			curriculum.setTicker(this.utilityService.generateTicker());
-		else
+		if (curriculum.getId() != 0)
 			Assert.isTrue(curriculum.getTicker().equals(principal.getCurriculum().getTicker()));
 
 		Assert.notNull(curriculum.getPersonalRecord());
-		result = this.curriculumRepository.saveAndFlush(curriculum);
+		result = this.curriculumRepository.save(curriculum);
+		principal.setCurriculum(result);
 		return result;
 
 	}
 
 	public void delete(final Curriculum curriculum) {
 		HandyWorker principal;
-		System.out.println("Entra en el servicio de delete");
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(principal.getCurriculum().equals(curriculum));
-		for (final EducationRecord educationRecord : curriculum.getEducationRecords())
-			this.educationRecordService.delete(educationRecord);
-		for (final ProfessionalRecord professionalRecord : curriculum.getProfessionalRecords())
-			this.professionalRecordService.delete(professionalRecord);
-		for (final MiscellaneousRecord miscellaneousRecord : curriculum.getMiscellaneousRecords())
-			this.miscellaneousRecordService.delete(miscellaneousRecord);
-		for (final EndorserRecord endorserRecord : curriculum.getEndorserRecords())
-			this.endorserRecordService.delete(endorserRecord);
-
-		this.personalRecordService.delete(curriculum.getPersonalRecord());
 
 		principal.setCurriculum(null);
 
 		this.curriculumRepository.delete(curriculum);
+		this.personalRecordService.delete(curriculum.getPersonalRecord());
 
 	}
 
