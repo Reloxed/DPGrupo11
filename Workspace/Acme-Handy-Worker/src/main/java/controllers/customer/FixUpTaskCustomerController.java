@@ -1,5 +1,6 @@
 package controllers.customer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -189,18 +190,16 @@ public class FixUpTaskCustomerController extends AbstractController {
 		Collection<Complaint> complaints;
 		Collection<Application> applications;
 		String ticker;
-		Collection<Category> categories;
+		Collection<Category> categories = new ArrayList<>();
 		Collection<Warranty> warranties;
 		
 		categories = this.categoryService.findAll();
 		warranties = this.warrantyService.findFinalWarranties();
 
-		
 		complaints = this.complaintService.findComplaintsByCustomer();
 		applications = this.applicationService.findAllApplicationsByCustomer();
 		
 		ticker = task.getTicker();
-		
 		result = new ModelAndView("fixUpTask/edit");
 		result.addObject("categories", categories);
 		result.addObject("warranties", warranties);

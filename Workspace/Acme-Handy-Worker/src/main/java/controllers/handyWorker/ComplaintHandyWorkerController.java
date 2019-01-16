@@ -1,6 +1,7 @@
 
 package controllers.handyWorker;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
 import services.HandyWorkerService;
+import services.ReportService;
 import controllers.AbstractController;
 import domain.Complaint;
 import domain.HandyWorker;
+import domain.Report;
 
 @Controller
 @RequestMapping("/complaint/handyWorker")
@@ -25,7 +28,9 @@ public class ComplaintHandyWorkerController extends AbstractController {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
-
+	
+	@Autowired
+	private ReportService 		reportService;
 
 	//Constructor
 
@@ -39,12 +44,18 @@ public class ComplaintHandyWorkerController extends AbstractController {
 		final ModelAndView result;
 		final Collection<Complaint> complaints;
 		HandyWorker hw;
+		Collection<Report> reports = new ArrayList<>();
 
 		hw = this.handyWorkerService.findByPrincipal();
 		complaints = this.complaintService.findComplaintsByHandyWorkerId(hw.getId());
+		for(Complaint c: complaints){
+			Report r = this.reportService.findReportByComplaint(c.getId());
+			reports.add(r);
+		}
 
 		result = new ModelAndView("complaint/list");
 		result.addObject("complaints", complaints);
+		result.addObject("reports", reports);
 		result.addObject("requestUri", "complaint/handyWorker/list.do");
 		return result;
 

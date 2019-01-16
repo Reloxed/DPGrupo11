@@ -1,6 +1,7 @@
 
 package controllers.customer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,9 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
 import services.CustomerService;
+import services.ReportService;
 import controllers.AbstractController;
 import domain.Complaint;
 import domain.FixUpTask;
+import domain.Report;
 
 @Controller
 @RequestMapping("/complaint/customer")
@@ -34,17 +37,25 @@ public class ComplaintCustomerController extends AbstractController {
 	@Autowired
 	private CustomerService		customerService;
 
+	@Autowired
+	private ReportService 		reportService;
 
 	// Listing complaints for authenticated customer
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Complaint> complaints;
-
+		Collection<Report> reports = new ArrayList<>();
+		
 		complaints = this.customerService.findByPrincipal().getComplaints();
-
+		for(Complaint c: complaints){
+			Report r = this.reportService.findReportByComplaint(c.getId());
+			if(r != null) reports.add(r);
+		}
+		
 		result = new ModelAndView("complaint/list");
 		result.addObject("complaints", complaints);
+		result.addObject("reports", reports);
 		result.addObject("requestUri", "complaint/customer/list.do");
 
 		return result;

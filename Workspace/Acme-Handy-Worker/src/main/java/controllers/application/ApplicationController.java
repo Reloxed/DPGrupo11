@@ -53,10 +53,11 @@ public class ApplicationController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false) Integer fixUpTaskId) {
 		ModelAndView res;
 		Collection<Application> applications;
+		
 
 		try {
 			HandyWorker principal;
-
+			
 			principal = this.handyWorkerService.findByPrincipal();
 
 			applications = this.applicationService
@@ -113,6 +114,7 @@ public class ApplicationController extends AbstractController {
 		res = new ModelAndView("application/accept");
 		res.addObject("application", toAccept);
 		res.addObject("principal", principal);
+//		res.addObject(attributeValue)
 		return res;
 	}
 

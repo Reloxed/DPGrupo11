@@ -49,10 +49,13 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		result = new FixUpTask();
+		
+		result.setPublishedMoment(new Date(
+				System.currentTimeMillis() - 1));
+		result.setTicker(this.utilityService.generateTicker());
 
 		result.setApplications(new HashSet<Application>());
 		result.setComplaints(new HashSet<Complaint>());
-		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		return result;
 
 	}
@@ -93,15 +96,9 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 
-		// Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
+		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
 
-		if (fixUpTask.getId() == 0) {
-			fixUpTask.setPublishedMoment(new Date(
-					System.currentTimeMillis() - 1));
-			fixUpTask.setTicker(this.utilityService.generateTicker());
-		} else {
-			Assert.isTrue(fixUpTask.getPublishedMoment().equals(
-					this.findOne(fixUpTask.getId()).getPublishedMoment()));
+		if (fixUpTask.getId() != 0) {
 			Assert.isTrue(fixUpTask.getTicker().equals(
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
@@ -110,12 +107,12 @@ public class FixUpTaskService {
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
+		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
+		
 		final boolean containsSpam = this.utilityService
 				.isSpam(atributosAComprobar);
 		if (containsSpam)
 			principal.setIsSuspicious(true);
-
-		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
 		principal.getFixUpTasks().add(result);
 
@@ -132,11 +129,12 @@ public class FixUpTaskService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		// Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
+		Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
 
-		// Assert.isTrue(fixUpTask.getApplications().isEmpty());
+		Assert.isTrue(fixUpTask.getApplications().isEmpty());
 		this.fixUpTaskRepository.delete(fixUpTask);
 		principal.getFixUpTasks().remove(fixUpTask);
+		this.customerService.save(principal);
 	}
 
 	// Other business methods--------

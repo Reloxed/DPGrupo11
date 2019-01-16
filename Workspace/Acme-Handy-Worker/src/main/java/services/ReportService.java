@@ -91,8 +91,6 @@ public class ReportService {
 
 		Report res;
 
-		Report result;
-
 		principal = this.refereeService.findByPrincipal();
 		Assert.notNull(principal);
 		Assert.notNull(report);
@@ -104,8 +102,6 @@ public class ReportService {
 
 			Assert.isTrue(report.getComplaint().equals(
 					this.findOne(report.getId()).getComplaint()));
-			Assert.isTrue(report.getPublishedMoment().equals(
-					this.findOne(report.getId()).getPublishedMoment()));
 
 			if (this.findOne(report.getId()).getIsFinal()) {
 				Assert.isTrue(report.getIsFinal());
@@ -127,10 +123,7 @@ public class ReportService {
 		res = this.reportRepository.save(report);
 		Assert.notNull(res);
 
-		result = this.reportRepository.save(report);
-		Assert.notNull(result);
-
-		return result;
+		return res;
 	}
 
 	public void delete(final Report report) {
@@ -194,5 +187,20 @@ public class ReportService {
 	public Double[] findNotesNumberOperations() {
 		Double[] res = this.reportRepository.findNotesNumberOperations();
 		return res;
+	}
+	
+	public Report findReportByComplaint(int complaintId){
+		Collection<Report> reports;
+		Report result = new Report();
+		
+		reports = this.findAll();
+		
+		for (Report r: reports){
+			if(r.getComplaint().getId() == complaintId){
+				result = r;
+				break;
+			}
+		}
+		return result;
 	}
 }
