@@ -52,7 +52,7 @@ public class CategoryAdministratorController extends AbstractController{
 	}
 
 	// listing
-	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(final Locale locale) {
 		ModelAndView result;
 		Collection<Category> categories;
@@ -62,13 +62,14 @@ public class CategoryAdministratorController extends AbstractController{
 		String english;
 		español = "es";
 		english = "en";
-
+		
 		language = locale.getLanguage();
 		principal = this.administratorService.findByPrincipal();
 
 		categories = this.categoryService.findAll();
-
+		
 		result = new ModelAndView("category/list");
+		
 		result.addObject("language", language);
 		result.addObject("español", español);
 		result.addObject("english", english);
