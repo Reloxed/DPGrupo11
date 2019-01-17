@@ -102,7 +102,7 @@
 					onclick="return confirm('${confirmDeleteReport}')" />&nbsp;
 	</jstl:if>
 			<input type="button" name="cancel" value="${cancelReport}"
-				onclick="javascript: relativeRedir('report/referee/list.do)';" />
+				onclick="window.history.back()" />
 			<br />
 
 

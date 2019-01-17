@@ -70,7 +70,7 @@
 		value='<spring:message code="creditcard.save"/>' />
 	<input type="button" name="cancel"
 		value="<spring:message code="creditcard.cancel" />"
-		onclick="javascript: relativeRedir('actor/display.do?actorID=${principal.id}');" />
+		onclick="window.history.back()" />
 	<br />
 
 </form:form>

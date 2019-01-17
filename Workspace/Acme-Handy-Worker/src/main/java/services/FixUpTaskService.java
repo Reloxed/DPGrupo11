@@ -87,10 +87,10 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		Assert.notNull(fixUpTask);
-		Assert.notNull(fixUpTask.getEndMoment());
-		Assert.notNull(fixUpTask.getStartMoment());
+		Assert.notNull(fixUpTask.getEndMoment(), "fixuptask.interval");
+		Assert.notNull(fixUpTask.getStartMoment(), "fixuptask.interval");
 		Assert.isTrue(fixUpTask.getStartMoment().before(
-				fixUpTask.getEndMoment()));
+				fixUpTask.getEndMoment()), "fixuptask.moment");
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
@@ -101,6 +101,8 @@ public class FixUpTaskService {
 			Assert.isTrue(fixUpTask.getTicker().equals(
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
+		
+		result = this.fixUpTaskRepository.save(fixUpTask);
 
 		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
 
@@ -199,6 +201,13 @@ public class FixUpTaskService {
 
 		return customerId;
 
+	}
+
+	public List<FixUpTask> findBannedCustomers() {
+
+		List<FixUpTask> res = this.fixUpTaskRepository.findBannedCustomers();
+
+		return res;
 	}
 
 }

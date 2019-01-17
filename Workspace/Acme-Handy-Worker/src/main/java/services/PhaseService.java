@@ -75,11 +75,11 @@ public class PhaseService {
 		boolean canBeSaved;
 
 		Assert.notNull(phase);
+		Assert.notNull(phase.getEndMoment());
+		Assert.notNull(phase.getStartMoment());
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
-
-		Assert.isTrue(phase.getStartMoment().before(phase.getEndMoment()));
 
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(phase.getTitle());
@@ -100,9 +100,9 @@ public class PhaseService {
 				break;
 			}
 		Assert.isTrue(canBeSaved);
-		Assert.isTrue(phase.getStartMoment().after(fixUpTask.getStartMoment()));
-		Assert.isTrue(phase.getEndMoment().before(fixUpTask.getEndMoment()));
-		Assert.isTrue(phase.getEndMoment().after(phase.getStartMoment()));
+		Assert.isTrue(phase.getStartMoment().after(fixUpTask.getStartMoment()), "phase.startAfterFix");
+		Assert.isTrue(phase.getEndMoment().before(fixUpTask.getEndMoment()), "phase.endBeforeFix");
+		Assert.isTrue(phase.getEndMoment().after(phase.getStartMoment()), "phase.moment");
 		return this.phaseRepository.saveAndFlush(phase);
 	}
 

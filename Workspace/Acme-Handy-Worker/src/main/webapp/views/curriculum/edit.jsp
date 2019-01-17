@@ -25,7 +25,12 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path ="ticker" />
+			<jstl:if test="${report.id == 0 }">
+				<form:hidden path="ticker" value="000000-AAAAAA" />
+		</jstl:if>
+		<jstl:if test="${report.id != 0 }">
+				<form:hidden path="ticker" />
+		</jstl:if>
 	<form:hidden path ="professionalRecords" />
 	<form:hidden path ="educationRecords" />
 	<form:hidden path ="endorserRecords" />

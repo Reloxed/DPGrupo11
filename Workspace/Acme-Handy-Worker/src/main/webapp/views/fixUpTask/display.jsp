@@ -64,6 +64,7 @@
 			</strong></td>
 			<td><jstl:out value="${fixUpTask.publishedMoment}">
 				</jstl:out></td>
+
 		</tr>
 
 
@@ -127,6 +128,10 @@
 		</tr>
 
 	</table>
+	
+		<input type="button" name="back"
+		value="<spring:message code="fixuptask.back" />"
+		onclick="window.history.back()" />
 
 </security:authorize>
 
@@ -136,6 +141,7 @@
 		<tr>
 
 			<td><a href="actor/display.do?actorID=${customerOwner}"> <spring:message
+
 						code="profile.customer" />
 			</a></td>
 		</tr>
@@ -245,7 +251,8 @@
 
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
-		onclick="javascript: relativeRedir('fixUpTask/customer/list.do');" />
+		onclick="window.history.back()" />
+
 
 	<br />
 

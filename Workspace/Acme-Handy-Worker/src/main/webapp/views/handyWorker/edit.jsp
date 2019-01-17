@@ -150,6 +150,5 @@
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="actor.save"/>' />
 	<input type="button" name="cancel"
-		value="<spring:message code="actor.cancel" />"
-		onclick="javascript: relativeRedir('actor/display.do?actorID=${handyWorker.id}');" />
+		value="<spring:message code="actor.cancel" />"	onclick="window.history.back()" />
 </form:form>

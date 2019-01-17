@@ -62,17 +62,36 @@
 		</jstl:forEach>
 
 
-		<jstl:set var="a" value="${row.startMoment}"/>	
+		<jstl:set var="fixStart" value="${row.startMoment}"/>	
 		<jsp:useBean id="now" class="java.util.Date" />
 		
-		<display:column>		
-		<jstl:if test="${a > now}">
-			<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
-				<!-- <img
+		<display:column>
+		
+			<jstl:set var="containsA" value="${false}" />
+			<jstl:forEach items="${fixUpTasks}" var="fix">
+				<jstl:forEach items="${collFixUpTasksAccepted}" var="fixauxA">
+					<jstl:if test="${row.ticker eq fixauxA.ticker}">
+						<jstl:set var="containsA" value="${true}" />
+					</jstl:if>
+				</jstl:forEach>
+			</jstl:forEach>
+			
+			<jstl:set var="containsB" value="${false}" />
+			<jstl:forEach items="${fixUpTasks}" var="fix">
+				<jstl:forEach items="${collFixUpTasksBanned}" var="fixauxB">
+					<jstl:if test="${row.ticker eq fixauxB.ticker}">
+						<jstl:set var="containsB" value="${true}" />
+					</jstl:if>
+				</jstl:forEach>
+			</jstl:forEach>
+			
+			<jstl:if test="${fixStart > now and containsA == false and containsB == false}">
+				<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
+					<!-- <img
 				style="width: center; height: center" /> --> <spring:message
-					code="fixUpTask.apply" />
-			</a>
-		</jstl:if>
+						code="fixUpTask.apply" />
+				</a>
+			</jstl:if>
 		</display:column>
 
 		<display:column>

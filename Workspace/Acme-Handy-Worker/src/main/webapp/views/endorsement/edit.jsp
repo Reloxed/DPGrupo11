@@ -24,7 +24,13 @@
 		modelAttribute="endorsement" methodParam="post" style="margin-left: 20px">
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="publishedMoment" />
+		
+		<jstl:if test="${report.id == 0 }">
+			<form:hidden path="publishedMoment" value="01/01/2001 00:00" />
+		</jstl:if>
+		<jstl:if test="${report.id != 0 }">
+			<form:hidden path="publishedMoment" />
+		</jstl:if>
 
 		<div>
 			<p><form:label path="comments"><spring:message code="endorsement.comments" />: </form:label></p>
@@ -83,7 +89,7 @@
 
 		<input type="submit" name="save" value="${saveEndorsement}" />&nbsp; 
 	<input type="button" name="cancel" value="${cancelEndorsement}"
-			onclick="javascript: relativeRedir('endorsement/customer/list.do');" />
+			onclick="window.history.back()" />
 		<br />
 	</form:form>
 </security:authorize>

@@ -33,31 +33,41 @@
 			</form:label>
 			<form:input path="title" />
 			<form:errors cssClass="error" path="title" />
-			<br>
+			<br><br>
 
 			<form:label path="description">
 				<spring:message code="phase.description" />
 			</form:label>
 			<form:input path="description" />
 			<form:errors cssClass="error" path="description" />
-			<br>
+			<br><br>
 
+	
 			<form:label path="startMoment">
 				<spring:message code="phase.startmoment" />
 			</form:label>
-			<form:input path="startMoment" placeholder="dd/MM/yyyy hh:mm" />
-			<form:errors cssClass="error" path="startMoment" />
-			<br>
-
+			<spring:message code="phase.startMoment.placeholder" var="placeholder" />
+			<form:input path="startMoment" type="date" placeholder="${placeholder}"/>
+			<form:errors cssClass="error" path="startMoment"/>
+			
+			&#160;
+		
 			<form:label path="endMoment">
 				<spring:message code="phase.endmoment" />
 			</form:label>
-			<form:input path="endMoment" placeholder="dd/MM/yyyy hh:mm" />
+			<spring:message code="phase.startMoment.placeholder" var="placeholder" />
+			<form:input path="endMoment" type="date" placeholder="${placeholder}"/>
 			<form:errors cssClass="error" path="endMoment" />
-			<br>
+			
+			<br><br>
 
 			<input type="submit" name="save" id="save"
 				value='<spring:message code="phase.save"/>' />
+				
+			<input type="button" name="cancel" id="cancel"
+				onclick="window.history.back()"
+				value="<spring:message code="fixuptask.cancel" />" />
+				
 		</form:form>
 
 	</jstl:if>

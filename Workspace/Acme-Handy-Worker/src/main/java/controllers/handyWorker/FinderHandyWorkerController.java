@@ -71,21 +71,24 @@ public class FinderHandyWorkerController extends AbstractController {
 		finder = principal.getFinder();
 		fixUpTasks = finder.getFixuptask();
 
-		List<FixUpTask> collFixUpTasks = new ArrayList<>();
+		List<FixUpTask> collFixUpTasksAccepted = new ArrayList<>();
 		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
 			if (!fix.getApplications().isEmpty()) {
 				for (Application app : fix.getApplications()) {
 					if (app.getStatus().equals("ACCEPTED")) {
-						collFixUpTasks.add(fix);
+						collFixUpTasksAccepted.add(fix);
 					}
 				}
 			}
 		}
 
+		List<FixUpTask> collFixUpTasksBanned = this.fixUpTaskService.findBannedCustomers();
+		
 		result = new ModelAndView("finder/list");
 		result.addObject("fixUpTasks", fixUpTasks);
 		result.addObject("vat", this.systemConfigurationService.findVAT());
-		result.addObject("collFixUpTasks", collFixUpTasks);
+		result.addObject("collFixUpTasksAccepted", collFixUpTasksAccepted);
+		result.addObject("collFixUpTasksBanned", collFixUpTasksBanned);
 		result.addObject("requestUri", "finder/handyWorker/list.do");
 
 		return result;

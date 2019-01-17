@@ -27,7 +27,6 @@
 	
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
-	<form:hidden path="id"/>
 	
 	<form:label path="title">
 		<spring:message code="warranty.title"/>
@@ -71,7 +70,7 @@
 	</jstl:if>
 	<input	type="button" name="cancel"	
 	value="${cancelWarranty}"
-	onclick="javascript: relativeRedir('warranty/administrator/list.do');"/>
+	onclick="window.history.back()"/>
 	<br/>
 	
 </form:form>
