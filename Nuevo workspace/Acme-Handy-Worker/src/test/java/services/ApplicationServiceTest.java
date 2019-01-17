@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Application;
+import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 
@@ -111,14 +111,14 @@ public class ApplicationServiceTest extends AbstractTest {
 
 		a.setFixUpTask(saved);
 		a.setHandyWorkerComment("Hola");
-
+		
 		apSaved = this.applicationService.save(a);
 		applications = this.applicationService.findAll();
 		Assert.isTrue(applications.contains(apSaved));
 
 		super.unauthenticate();
 	}
-
+	
 	@Test
 	public void testFindAll() {
 		super.authenticate("handyWorker1");
@@ -130,124 +130,122 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	/*
-	 * @Test
-	 * public void testAccept() {
-	 * 
-	 * // Creating fixUpTask
-	 * FixUpTask result;
-	 * Customer principal;
-	 * FixUpTask saved;
-	 * Calendar startMoment;
-	 * Calendar endMoment;
-	 * super.authenticate("customer2");
-	 * 
-	 * principal = this.customerService.findByPrincipal();
-	 * Assert.notNull(principal);
-	 * 
-	 * result = this.fixUpTaskService.create();
-	 * result.setTicker(this.utilityService.generateTicker());
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-	 * result.setDescription("descripcion");
-	 * result.setAddress("Mairena");
-	 * 
-	 * startMoment = Calendar.getInstance();
-	 * startMoment.set(2019, 8, 22);
-	 * endMoment = Calendar.getInstance();
-	 * endMoment.set(2020, 8, 22);
-	 * 
-	 * result.setStartMoment(startMoment.getTime());
-	 * result.setEndMoment(endMoment.getTime());
-	 * result.setCategory(this.categoryService.findAll().iterator().next());
-	 * result.setWarranty(this.warrantyService.findAll().iterator().next());
-	 * result.getWarranty().setIsFinal(true);
-	 * saved = this.fixUpTaskService.save(result);
-	 * Assert.notNull(saved);
-	 * 
-	 * super.unauthenticate();
-	 * 
-	 * super.authenticate("customer1");
-	 * CreditCard savedCC;
-	 * final CreditCard creditcard = this.creditCardService.create();
-	 * 
-	 * creditcard.setHolderName("Pedro Picapiedra");
-	 * creditcard.setBrandName("VISA");
-	 * creditcard.setNumber("8731648964261256");
-	 * creditcard.setExpirationMonth(12);
-	 * creditcard.setExpirationYear(21);
-	 * creditcard.setCVV(187);
-	 * savedCC = this.creditCardService.save(creditcard);
-	 * Assert.notNull(savedCC);
-	 * 
-	 * super.authenticate("handyWorker1");
-	 * 
-	 * Application a, apSaved;
-	 * 
-	 * a = this.applicationService.create();
-	 * a.setHandyWorkerComment("Hola");
-	 * a.setFixUpTask(saved);
-	 * apSaved = this.applicationService.save(a);
-	 * Assert.isTrue(apSaved.getStatus() == "PENDING");
-	 * 
-	 * super.unauthenticate();
-	 * 
-	 * super.authenticate("customer1");
-	 * this.applicationService.accept(apSaved, savedCC);
-	 * Assert.isTrue(apSaved.getStatus() == "ACCEPTED");
-	 * 
-	 * super.unauthenticate();
-	 * }
-	 * 
-	 * @Test
-	 * public void testReject() {
-	 * // Creating fixUpTask
-	 * FixUpTask result;
-	 * Customer principal;
-	 * FixUpTask saved;
-	 * Calendar startMoment;
-	 * Calendar endMoment;
-	 * super.authenticate("customer2");
-	 * 
-	 * principal = this.customerService.findByPrincipal();
-	 * Assert.notNull(principal);
-	 * 
-	 * result = this.fixUpTaskService.create();
-	 * result.setTicker(this.utilityService.generateTicker());
-	 * result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-	 * result.setDescription("descripcion");
-	 * result.setAddress("Mairena");
-	 * 
-	 * startMoment = Calendar.getInstance();
-	 * startMoment.set(2019, 8, 22);
-	 * endMoment = Calendar.getInstance();
-	 * endMoment.set(2020, 8, 22);
-	 * 
-	 * result.setStartMoment(startMoment.getTime());
-	 * result.setEndMoment(endMoment.getTime());
-	 * result.setCategory(this.categoryService.findAll().iterator().next());
-	 * result.setWarranty(this.warrantyService.findAll().iterator().next());
-	 * result.getWarranty().setIsFinal(true);
-	 * saved = this.fixUpTaskService.save(result);
-	 * Assert.notNull(saved);
-	 * 
-	 * super.unauthenticate();
-	 * 
-	 * super.authenticate("handyWorker1");
-	 * Application a, apSaved;
-	 * 
-	 * a = this.applicationService.create();
-	 * a.setHandyWorkerComment("Hola");
-	 * a.setFixUpTask(saved);
-	 * apSaved = this.applicationService.save(a);
-	 * Assert.isTrue(apSaved.getStatus() == "PENDING");
-	 * 
-	 * super.unauthenticate();
-	 * 
-	 * super.authenticate("customer2");
-	 * this.applicationService.reject(apSaved);
-	 * Assert.isTrue(apSaved.getStatus() == "REJECTED");
-	 * 
-	 * super.unauthenticate();
-	 * }
-	 */
+	@Test
+	public void testAccept() {
+
+		// Creating fixUpTask 
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+
+		super.unauthenticate();
+
+		super.authenticate("customer1");
+		CreditCard savedCC;
+		final CreditCard creditcard = this.creditCardService.create();
+
+		creditcard.setHolderName("Pedro Picapiedra");
+		creditcard.setBrandName("VISA");
+		creditcard.setNumber("8731648964261256");
+		creditcard.setExpirationMonth(12);
+		creditcard.setExpirationYear(21);
+		creditcard.setCVV(187);
+		savedCC = this.creditCardService.save(creditcard);
+		Assert.notNull(savedCC);
+
+		super.authenticate("handyWorker1");
+
+		Application a, apSaved;
+
+		a = this.applicationService.create();
+		a.setHandyWorkerComment("Hola");
+		a.setFixUpTask(saved);
+		apSaved = this.applicationService.save(a);
+		Assert.isTrue(apSaved.getStatus() == "PENDING");
+
+		super.unauthenticate();
+
+		super.authenticate("customer1");
+		this.applicationService.accept(apSaved, savedCC,"es");
+		Assert.isTrue(apSaved.getStatus() == "ACCEPTED");
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testReject() {
+		// Creating fixUpTask 
+		FixUpTask result;
+		Customer principal;
+		FixUpTask saved;
+		Calendar startMoment;
+		Calendar endMoment;
+		super.authenticate("customer2");
+
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+
+		result = this.fixUpTaskService.create();
+		result.setTicker(this.utilityService.generateTicker());
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setDescription("descripcion");
+		result.setAddress("Mairena");
+
+		startMoment = Calendar.getInstance();
+		startMoment.set(2019, 8, 22);
+		endMoment = Calendar.getInstance();
+		endMoment.set(2020, 8, 22);
+
+		result.setStartMoment(startMoment.getTime());
+		result.setEndMoment(endMoment.getTime());
+		result.setCategory(this.categoryService.findAll().iterator().next());
+		result.setWarranty(this.warrantyService.findAll().iterator().next());
+		result.getWarranty().setIsFinal(true);
+		saved = this.fixUpTaskService.save(result);
+		Assert.notNull(saved);
+
+		super.unauthenticate();
+
+		super.authenticate("handyWorker1");
+		Application a, apSaved;
+
+		a = this.applicationService.create();
+		a.setHandyWorkerComment("Hola");
+		a.setFixUpTask(saved);
+		apSaved = this.applicationService.save(a);
+		Assert.isTrue(apSaved.getStatus() == "PENDING");
+
+		super.unauthenticate();
+
+		super.authenticate("customer2");
+		this.applicationService.reject(apSaved,"en");
+		Assert.isTrue(apSaved.getStatus() == "REJECTED");
+
+		super.unauthenticate();
+	}
 }

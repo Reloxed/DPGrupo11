@@ -340,7 +340,8 @@ public class MessageService {
 
 		subject = m.getSubject();
 		body = m.getBody();
-		priority = m.getPriority();
+		priority = "NEUTRAL";
+		
 		isSpam = false;
 
 		sendMoment = new Date(System.currentTimeMillis()-1);
