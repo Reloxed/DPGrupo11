@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
+import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -37,6 +38,9 @@ public class FinderService {
 
 	@Autowired
 	private FixUpTaskService			fixUpTaskService;
+	
+	@Autowired
+	private AdministratorService		administratorService;
 
 
 	//Constructor -----------------------
@@ -148,6 +152,10 @@ public class FinderService {
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.notNull(principal);
 
 		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
 		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
