@@ -24,6 +24,7 @@
 			<form:hidden path="recipient" />
 			<form:hidden path="priority" />
 			<form:hidden path="messageBoxes" />
+			<form:hidden path="priority"/>
 
 			<form:label path="subject">
 				<spring:message code="message.subject" />:
@@ -42,19 +43,18 @@
 			<br>
 
 
-			<form:label path="priority">
-			<spring:message code="message.priority" />
-		</form:label>
-		<form:radiobutton path="priority" value="HIGH" />
-		<spring:message code="message.priority.high" />
-		<form:radiobutton path="priority" value="NEUTRAL" checked="checked" />
-		<spring:message code="message.priority.neutral" />
-		<form:radiobutton path="priority" value="LOW" />
-		<spring:message code="message.priority.low" />
-		<br />
-		<br />
 
-
+			<%-- <form:label path="priority">
+				<spring:message code="message.priority" />
+			</form:label>
+			<form:radiobutton path="priority" value="HIGH" />
+			<spring:message code="message.priority.high" />
+			<form:radiobutton path="priority" value="NEUTRAL" checked="checked" />
+			<spring:message code="message.priority.neutral" />
+			<form:radiobutton path="priority" value="LOW" />
+			<spring:message code="message.priority.low" />
+			<br />
+			<br /> --%>
 
 			<input type="submit" name="save"
 				value="<spring:message code="message.broadcast"/>" />&nbsp;

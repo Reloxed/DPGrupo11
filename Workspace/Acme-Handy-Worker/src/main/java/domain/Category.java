@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -17,11 +16,10 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Category extends DomainEntity {
 
-	private Map<String,String>		name;
-	private Category				parentCategory;
-	private Collection<Category>	childCategories;
+	private Map<String, String> name;
+	private Category parentCategory;
+	private Collection<Category> childCategories;
 
-	
 	@NotNull
 	@ElementCollection
 	public Map<String, String> getName() {
@@ -49,6 +47,10 @@ public class Category extends DomainEntity {
 
 	public void setChildCategories(final Collection<Category> childCategories) {
 		this.childCategories = childCategories;
+	}
+
+	public String toString() {
+		return this.name.get("Español") + ", " + this.name.get("English");
 	}
 
 }

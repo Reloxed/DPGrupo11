@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.MessageBoxRepository;
 import domain.Actor;
+import domain.Administrator;
 import domain.Message;
 import domain.MessageBox;
 
@@ -255,5 +256,25 @@ public class MessageBoxService {
 				.findAllByPrincipal(principal.getId());
 		Assert.notNull(result);
 		return result;
+	}
+	
+	public Collection<MessageBox> findAllInBoxExceptAdmin(){
+		Actor principal;
+		MessageBox boxPrincipal;
+		Collection<MessageBox>result;
+		
+		
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		boxPrincipal = this.findInBoxActor(principal);
+		Assert.notNull(boxPrincipal);
+		
+		result = this.messageBoxRepository.findAllInBoxExceptAdmin();
+		
+		result.remove(boxPrincipal);
+		
+		return result;
+		
 	}
 }
