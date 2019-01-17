@@ -24,7 +24,7 @@
 			<form:hidden path="recipient" />
 			<form:hidden path="priority" />
 			<form:hidden path="messageBoxes" />
-			<form:hidden path="priority"/>
+			
 
 			<form:label path="subject">
 				<spring:message code="message.subject" />:
