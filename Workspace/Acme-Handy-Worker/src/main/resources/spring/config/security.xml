@@ -41,10 +41,14 @@
 		<security:intercept-url pattern="/report/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/complaint/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/fixUpTask/customer/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/application/customer,handy-worker/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/note/customer/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/creditcard/**" access="hasRole('CUSTOMER')"/>
+		
 		
 		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')"/>
 		<security:intercept-url pattern="/report/referee/**" access="hasRole('REFEREE')"/>
-		
+		<security:intercept-url pattern="/note/referee/**" access="hasRole('REFEREE')"/>
 		
 		<security:intercept-url pattern="/complaint/handyWorker/**" access="hasRole('HANDYWORKER')"/>
 		<security:intercept-url pattern="/report/handyWorker/**" access="hasRole('HANDYWORKER')"/>
@@ -56,6 +60,9 @@
 		<security:intercept-url pattern="/fixUpTask/handyWorker/display.do" access="hasRole('HANDYWORKER')"/>
 		<security:intercept-url pattern="/fixUpTask/handyWorker/list.do" access="hasRole('HANDYWORKER')"/>
 		<security:intercept-url pattern="/finder/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/application/handy-worker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/phase/handy-worker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/note/handyWorker/**" access="hasRole('HANDYWORKER')"/>
 		
 		
 		<security:intercept-url pattern="/category/administrator/**" access="hasRole('ADMINISTRATOR')"/>
@@ -64,12 +71,27 @@
 		<security:intercept-url pattern="/system-configuration/administrator/**" access="hasRole('ADMINISTRATOR')"/>
 		<security:intercept-url pattern="/administrator/administrator/create.do" access="hasRole('ADMINISTRATOR')"/>
 		<security:intercept-url pattern="/referee/referee/create.do" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/actor/administrator/list-suspicious-actors.do" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/message/administrator/broadcast.do" access="hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/actor/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/message-box/**" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/message/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/box/actor/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/message/actor/create.do" access="isAuthenticated()"/>
 		
 		
+		
+		
+		<security:intercept-url pattern="/administrator/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/application/accept" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/actor/display.do" access="isAuthenticated()"/>
+		
+		
+		
+		
+		
+		
+		<security:intercept-url pattern="/customer/customer/create.do" access="isAnonymous()"/>
+		<security:intercept-url pattern="/handyworker/handyworker/create.do" access="isAnonymous()"/>
 		
 		
 				
