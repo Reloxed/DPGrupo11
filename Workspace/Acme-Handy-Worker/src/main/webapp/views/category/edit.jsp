@@ -17,7 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<link href="misc.css" rel="stylesheet" type="text/css"/>
+<link href="styles/misc.css" rel="stylesheet" type="text/css"/>
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
@@ -47,9 +47,26 @@
 
 
 				<spring:message code="category.parentCategory" />
-				<form:select path="parentCategory" style="width:400px;">
-					<form:options items="${parents}" itemLabel="name" itemValue="id" />
-				</form:select>
+				
+	<jstl:if test="${language==español}">
+	
+<form:select path="parentCategory" style="width:400px;">
+		<jstl:forEach var="x" items="${parents}">
+			<form:option value="${x}" label="${x.name.get('Español')}" />
+		</jstl:forEach>
+
+	</form:select>
+	</jstl:if>
+	
+		<jstl:if test="${language==english}">
+	
+<form:select path="parentCategory" style="width:400px;">
+		<jstl:forEach var="x" items="${parents}">
+			<form:option value="${x}" label="${x.name.get('English')}" />
+		</jstl:forEach>
+
+	</form:select>
+	</jstl:if>
 
 			</jstl:when>
 			<jstl:otherwise>

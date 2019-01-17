@@ -63,7 +63,7 @@
 		</display:column>
 		<display:column>
 			<jstl:forEach var="x" items="${reports}">
-				<jstl:if test="${x.complaint.id == row.id}">
+				<jstl:if test="${x.complaint.id == row.id && x.isFinal == true}">
 					<a href="report/handyWorker/display.do?reportId=${x.id}"> <spring:message
 							code="report.display" />
 					</a>
@@ -80,7 +80,7 @@
 		</display:column>
 		<display:column>
 			<jstl:forEach var="x" items="${reports}">
-				<jstl:if test="${x.complaint.id == row.id}">
+				<jstl:if test="${x.complaint.id == row.id && x.isFinal == true}">
 					<a href="report/customer/display.do?reportId=${x.id}"> <spring:message
 							code="report.display" />
 					</a>

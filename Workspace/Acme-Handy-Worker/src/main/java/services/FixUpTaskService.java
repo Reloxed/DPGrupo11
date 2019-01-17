@@ -103,9 +103,7 @@ public class FixUpTaskService {
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
-		// if (fixUpTask.getId() == 0) {
-		// principal.getFixUpTasks().add(fixUpTask);
-		// }
+		result = this.fixUpTaskRepository.save(fixUpTask);
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
