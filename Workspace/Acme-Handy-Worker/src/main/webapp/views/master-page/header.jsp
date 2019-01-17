@@ -131,7 +131,7 @@
 								code="master.page.handyworker.complaints.show" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
-<<<<<<< HEAD
+
 						code="master.page.handyworker.tutorials" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -141,16 +141,7 @@
 								code="master.page.handyworker.tutorial.create" /></a></li>
 				</ul></li>
 			
-=======
-						code="master.page.handyworker.endorsements" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="endorsement/handyWorker/list.do"><spring:message
-								code="master.page.handyworker.endorsements.show" /></a></li>
-					<li><a href="endorsement/handyWorker/create.do"><spring:message
-								code="master.page.handyworker.endorsement.create" /></a></li>
-				</ul></li>
->>>>>>> Fran
+
 			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.curriculum" /></a>
 				<ul>
