@@ -102,18 +102,18 @@ public class FixUpTaskService {
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
 
+		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
+
+//		principal.getFixUpTasks().add(fixUpTask);
+
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
-		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
-
-		principal.getFixUpTasks().add(result);
-
-		// final boolean containsSpam = this.utilityService
-		// .isSpam(atributosAComprobar);
-		// if (containsSpam)
-		// principal.setIsSuspicious(true);
+		final boolean containsSpam = this.utilityService
+				.isSpam(atributosAComprobar);
+		if (containsSpam)
+			principal.setIsSuspicious(true);
 
 		return result;
 

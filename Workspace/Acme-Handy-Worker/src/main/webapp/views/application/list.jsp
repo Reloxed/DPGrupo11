@@ -41,130 +41,139 @@
 <h2 style="font-family: sans-serif;">
 	<spring:message code="applications.list" />
 </h2>
+<jstl:choose>
+	<jstl:when test="${not empty applications}">
+		<security:authorize access="hasRole('HANDYWORKER')">
+			<security:authentication property="principal.username" var="user" />
 
-<security:authorize access="hasRole('HANDYWORKER')">
-	<security:authentication property="principal.username" var="user" />
+			<jstl:if test="${user == owner.userAccount.username}">
 
-	<jstl:if test="${user == owner.userAccount.username}">
+				<display:table name="applications" id="applications"
+					requestURI="application/customer,handy-worker/list.do"
+					pagesize="10" class="displaytag">
 
-		<display:table name="applications" id="applications"
-			requestURI="application/customer,handy-worker/list.do"
-			pagesize="10" class="displaytag">
+					<jstl:catch>
+						<fmt:parseDate value="${applications.fixUpTask.startMoment}"
+							pattern="yyyy-MM-dd HH:mm" var="fixUpTaskStartMoment" />
+					</jstl:catch>
 
-			<jstl:catch>
-				<fmt:parseDate value="${applications.fixUpTask.startMoment}"
-					pattern="yyyy-MM-dd HH:mm" var="fixUpTaskStartMoment" />
-			</jstl:catch>
-			
-			<jstl:set var="a" value="${applications.fixUpTask.startMoment}"/>			
-			<jsp:useBean id="now" class="java.util.Date" />
-			
-			<jstl:choose>
-				<jstl:when test="${applications.status == 'ACCEPTED'}">
-					<jstl:set var="bgcolor" value="tableColorGreen" />
-				</jstl:when>
+					<jstl:set var="a" value="${applications.fixUpTask.startMoment}" />
+					<jsp:useBean id="now" class="java.util.Date" />
 
-				<jstl:when test="${applications.status == 'REJECTED'}">
-					<jstl:set var="bgcolor" value="tableColorOrange" />
-				</jstl:when>
+					<jstl:choose>
+						<jstl:when test="${applications.status == 'ACCEPTED'}">
+							<jstl:set var="bgcolor" value="tableColorGreen" />
+						</jstl:when>
 
-				<jstl:when
-					test="${applications.status == 'PENDING' && a < now}">
-					<jstl:set var="bgcolor" value="tableColorGrey" />
-				</jstl:when>
+						<jstl:when test="${applications.status == 'REJECTED'}">
+							<jstl:set var="bgcolor" value="tableColorOrange" />
+						</jstl:when>
 
-				<jstl:otherwise>
-					<jstl:set var="bgcolor" value="tableColorDefault" />
-				</jstl:otherwise>
-			</jstl:choose>
+						<jstl:when test="${applications.status == 'PENDING' && a < now}">
+							<jstl:set var="bgcolor" value="tableColorGrey" />
+						</jstl:when>
 
-			<display:column property="fixUpTask.description"
-				titleKey="application.fixuptask" />
+						<jstl:otherwise>
+							<jstl:set var="bgcolor" value="tableColorDefault" />
+						</jstl:otherwise>
+					</jstl:choose>
 
-			<display:column titleKey="application.fixuptask.goto">
-				<a
-					href="fixUpTask/handyWorker/display.do?taskId=${applications.fixUpTask.id}"><spring:message
-						code="fixuptask.display" /></a>
-			</display:column>
+					<display:column property="fixUpTask.description"
+						titleKey="application.fixuptask" />
 
-			<display:column property="registeredMoment"
-				titleKey="application.registeredMoment" sortable="true"
-				format="{0,date,dd/MM/yyyy HH:mm}" />
-
-			<display:column property="offeredPrice"
-				titleKey="application.offeredPrice" sortable="true" />
-
-
-			<display:column property="handyWorkerComment"
-				titleKey="application.myComments" />
-
-			<display:column property="customerComment"
-				titleKey="application.customerComment" />
-
-
-			<display:column property="status" titleKey="application.status"
-				sortable="true" class="${bgcolor}" />
-
-			<display:column>
-				<jstl:if test="${applications.status == 'ACCEPTED'}">
-					<a
-						href="phase/handy-worker/list.do?fixuptaskID=${applications.fixUpTask.id}"><spring:message
-							code="application.workplan" /> </a>
-				</jstl:if>
-			</display:column>
-
-		</display:table>
-
-	</jstl:if>
-</security:authorize>
-
-<security:authorize access="hasRole('CUSTOMER')">
-	<security:authentication property="principal.username" var="user" />
-
-	<jstl:if test="${user == owner.userAccount.username}">
-
-		<display:table name="applications" id="applications"
-			requestURI="${requestURI}" pagesize="10" class="displaytag">
-
-			<display:column property="applicant.name"
-				titleKey="application.applicant" />
-
-			<display:column property="registeredMoment"
-				titleKey="application.registeredMoment" sortable="true"
-				format="{0,date,dd/MM/yyyy HH:mm}" />
-
-			<display:column property="offeredPrice"
-				titleKey="application.offeredPrice" sortable="true" />
-
-			<display:column property="handyWorkerComment" titleKey="application.handyWorkerComment" />
-			
-			<display:column property="customerComment" titleKey="application.myComment" />
-
-			<display:column property="status" titleKey="application.status" />
-
-
-			<display:column titleKey="application.buttons">
-				<jstl:choose>
-					<jstl:when test="${hasAccepted}">
-						<spring:message code="application.noaction" />
-					</jstl:when>
-					<jstl:when
-						test="${applications.status == 'PENDING' && hasAccepted == false}">
+					<display:column titleKey="application.fixuptask.goto">
 						<a
-							onclick="redirect: location.href = 'application/customer/acceptv.do?applicationID=${applications.id}';">
-							<img src="images/confirm.png">
-						</a>
+							href="fixUpTask/handyWorker/display.do?taskId=${applications.fixUpTask.id}"><spring:message
+								code="fixuptask.display" /></a>
+					</display:column>
 
-						<a
-							onclick="redirect: location.href = 'application/customer/reject.do?applicationID=${applications.id}';">
-							<img src="images/delete.png">
-						</a>
-					</jstl:when>
-				</jstl:choose>
-			</display:column>
+					<display:column property="registeredMoment"
+						titleKey="application.registeredMoment" sortable="true"
+						format="{0,date,dd/MM/yyyy HH:mm}" />
+
+					<display:column property="offeredPrice"
+						titleKey="application.offeredPrice" sortable="true" />
 
 
-		</display:table>
+					<display:column property="handyWorkerComment"
+						titleKey="application.myComments" />
 
-	</jstl:if>
-</security:authorize>
+					<display:column property="customerComment"
+						titleKey="application.customerComment" />
+
+
+					<display:column property="status" titleKey="application.status"
+						sortable="true" class="${bgcolor}" />
+
+					<display:column>
+						<jstl:if test="${applications.status == 'ACCEPTED'}">
+							<a
+								href="phase/handy-worker/list.do?fixuptaskID=${applications.fixUpTask.id}"><spring:message
+									code="application.workplan" /> </a>
+						</jstl:if>
+					</display:column>
+
+				</display:table>
+
+			</jstl:if>
+		</security:authorize>
+
+		<security:authorize access="hasRole('CUSTOMER')">
+			<security:authentication property="principal.username" var="user" />
+
+			<jstl:if test="${user == owner.userAccount.username}">
+
+				<display:table name="applications" id="applications"
+					requestURI="${requestURI}" pagesize="10" class="displaytag">
+
+					<display:column property="applicant.name"
+						titleKey="application.applicant" />
+
+					<display:column property="registeredMoment"
+						titleKey="application.registeredMoment" sortable="true"
+						format="{0,date,dd/MM/yyyy HH:mm}" />
+
+					<display:column property="offeredPrice"
+						titleKey="application.offeredPrice" sortable="true" />
+
+					<display:column property="handyWorkerComment"
+						titleKey="application.handyWorkerComment" />
+
+					<display:column property="customerComment"
+						titleKey="application.myComment" />
+
+					<display:column property="status" titleKey="application.status" />
+
+
+					<display:column titleKey="application.buttons">
+						<jstl:choose>
+							<jstl:when test="${hasAccepted}">
+								<spring:message code="application.noaction" />
+							</jstl:when>
+							<jstl:when
+								test="${applications.status == 'PENDING' && hasAccepted == false}">
+								<a
+									onclick="redirect: location.href = 'application/customer/acceptv.do?applicationID=${applications.id}';">
+									<img src="images/confirm.png">
+								</a>
+
+								<a
+									onclick="redirect: location.href = 'application/customer/reject.do?applicationID=${applications.id}';">
+									<img src="images/delete.png">
+								</a>
+							</jstl:when>
+						</jstl:choose>
+					</display:column>
+
+
+				</display:table>
+
+			</jstl:if>
+		</security:authorize>
+	</jstl:when>
+	<jstl:otherwise>
+		<p>
+			<spring:message code="empty" />
+		</p>
+	</jstl:otherwise>
+</jstl:choose>

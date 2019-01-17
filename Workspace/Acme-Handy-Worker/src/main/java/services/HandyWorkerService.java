@@ -36,7 +36,7 @@ public class HandyWorkerService {
 
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private FinderService finderService;
 
@@ -111,6 +111,8 @@ public class HandyWorkerService {
 				handyWorker.getUserAccount().setPassword(
 						passwordEncoder.encodePassword(handyWorker
 								.getUserAccount().getPassword(), null));
+				handyWorker.setMake(handyWorker.getName() + " "
+						+ handyWorker.getSurname());
 			}
 		else {
 
@@ -164,7 +166,6 @@ public class HandyWorkerService {
 		return colHandys;
 
 	}
-
 
 	public List<HandyWorker> findTopComplaintsHandyWorkers() {
 		List<HandyWorker> colHandys = this.handyWorkerRepository
