@@ -17,62 +17,165 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
-	<div style="text-align: center;">
-		<h2 style="font-family: sans-serif;">
-			<spring:message code="application.create" />
-		</h2>
-	</div>
+	<table class="displayStyle">
+		<tr>
+			<td><strong> <spring:message
+						code="application.registeredMoment" /> :
+			</strong></td>
+			<td><jstl:out value="${application.registeredMoment}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.status" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.status}">
+				</jstl:out></td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message code="application.offeredPrice" />
+					:
+			</strong></td>
+
+			<jstl:set var="vat" value="${application.offeredPrice * 0.21}" />
+			<fmt:formatNumber var="vatv2" maxFractionDigits="2" value="${vat}" />
+
+			<td><jstl:out value="${application.offeredPrice} (${vatv2})"></jstl:out>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message
+						code="application.customerComment" /> :
+			</strong></td>
+			<td>
+
+			<jstl:out value="${application.customerComment}">
+			</jstl:out>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message
+						code="application.handyWorkerComment" /> :
+			</strong></td>
+			<td><jstl:out value="${application.handyWorkerComment}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.fixuptask" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.fixUpTask.description}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.applicant" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.applicant.name}">
+				</jstl:out></td>
+		</tr>
+
+	</table>
 	
-	<form:form action="application/handy-worker/edit.do" modelAttribute="application"
-		id="form">
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		<jstl:if test="${report.id == 0 }">
-				<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
-		</jstl:if>
-		<jstl:if test="${report.id != 0 }">
-				<form:hidden path="registeredMoment" />
-		</jstl:if>
-		<form:hidden path="fixUpTask" />
-		<form:hidden path="applicant"/>
-		<form:hidden path="creditCard"/>
-		<form:hidden path="status" />
-		<form:hidden path="customerComment"/>
+		<input type="button" name="back"
+		value="<spring:message code="fixuptask.back" />"
+		onclick="window.history.back()" />
+
+</security:authorize>
+
+<security:authorize access="hasRole('CUSTOMER')">
+
+		<table class="displayStyle">
+		<tr>
+			<td><a href="actor/display.do?actorID=${application.applicant.id}"> <spring:message
+						code="profile.handyWorker" />
+			</a></td>
+		</tr>
+		<tr>
+			<td><strong> <spring:message
+						code="application.registeredMoment" /> :
+			</strong></td>
+			<td><jstl:out value="${application.registeredMoment}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.status" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.status}">
+				</jstl:out></td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message code="application.offeredPrice" />
+					:
+			</strong></td>
+
+			<jstl:set var="vat" value="${application.offeredPrice * 0.21}" />
+			<fmt:formatNumber var="vatv2" maxFractionDigits="2" value="${vat}" />
+
+			<td><jstl:out value="${application.offeredPrice} (${vatv2})"></jstl:out>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message
+						code="application.customerComment" /> :
+			</strong></td>
+			<td>
+
+			<jstl:out value="${application.customerComment}">
+			</jstl:out>
+			</td>
+		</tr>
+
+
+		<tr>
+			<td><strong> <spring:message
+						code="application.handyWorkerComment" /> :
+			</strong></td>
+			<td><jstl:out value="${application.handyWorkerComment}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.fixuptask" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.fixUpTask.description}">
+				</jstl:out></td>
+		</tr>
+
+		<tr>
+			<td><strong> <spring:message code="application.applicant" />
+					:
+			</strong></td>
+			<td><jstl:out value="${application.applicant.name}">
+				</jstl:out></td>
+		</tr>
+
+	</table>
 	
-		<br />
-	
-		<form:label path="offeredPrice">
-			<spring:message code="application.offeredPrice" />
-		</form:label>
-		<spring:message code="application.offeredPricePlaceholder"
-			var="placeholder" />
-		<form:input path="offeredPrice" placeholder="${placeholder}" />
-	
-		<br /><br />
-	
-		<form:label path="handyWorkerComment">
-			<spring:message code="application.myComment" />
-		</form:label>
-		<spring:message code="application.handyWorkerCommentsPlaceholder"
-			var="placeholder" />
-		<form:input path="handyWorkerComment" placeholder="${placeholder}" />
-		<form:errors cssClass="error" path="handyWorkerComment"></form:errors>
-	
-		<br />
-	
-		<br />
-		
-		<input type="submit" name="save" id="save"
-			value='<spring:message code="application.save"/>' />
-		<input type="button" name="cancel"
-			value="<spring:message code="application.cancel" />"
-			onclick="window.history.back()" />
-			
-		<br/>
-	
-	</form:form>
+		<input type="button" name="back"
+		value="<spring:message code="fixuptask.back" />"
+		onclick="window.history.back()" />
+
 
 </security:authorize>
