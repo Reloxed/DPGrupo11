@@ -27,7 +27,7 @@
 	<form:label path="startDate">
 		<spring:message code="er.startDate"/>:
 	</form:label>
-	<form:input path="startDate" placeholder="dd/MM/yyyy"/>
+	<form:input path="startDate" placeholder="dd/MM/yyyy HH:mm"/>
 	<form:errors cssClass="error" path="startDate"/>
 	<br />
 	<br />
@@ -35,7 +35,7 @@
 	<form:label path="endDate">
 		<spring:message code="er.endDate"/>:
 	</form:label>
-	<form:input path="endDate" placeholder="dd/MM/yyyy"/>
+	<form:input path="endDate" placeholder="dd/MM/yyyy HH:mm"/>
 	<form:errors cssClass="error" path="endDate"/>
 	<br/>
 	<br/>
@@ -61,7 +61,7 @@
 		<spring:message code="er.comments"/>:
 	</form:label>
 	<form:textarea path="comments"/>
-	<form:errors cssClass="error" path="comments"	/>
+	<form:errors cssClass="error" path="comments"/>
 	<br/>
 	<br/>
 	
@@ -74,6 +74,6 @@
 		</jstl:if>
 	<jstl:if test="${curriculum.id !=0}">
 		<input type="button" name="cancel" value="<spring:message code="er.cancel" /> "
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');"		/>
+			onclick="window.history.back()"		/>
 	</jstl:if>
 </form:form>

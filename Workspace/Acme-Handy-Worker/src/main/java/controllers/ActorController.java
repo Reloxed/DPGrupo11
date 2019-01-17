@@ -21,7 +21,6 @@ import domain.Sponsor;
 
 @Controller
 @RequestMapping("/actor")
-
 public class ActorController extends AbstractController {
 
 	// Services
@@ -74,24 +73,30 @@ public class ActorController extends AbstractController {
 				customer = this.customerService.findOne(actor.getId());
 				res.addObject("customer", customer);
 				res.addObject("creditCards", customer.getCreditCards());
+				res.addObject("socialProfiles", customer.getSocialProfiles());
 			} else if (actor instanceof Referee) {
 				Referee referee;
 				referee = this.refereeService.findOne(actor.getId());
 				res.addObject("referee", referee);
+				res.addObject("socialProfiles", referee.getSocialProfiles());
 			} else if (actor instanceof HandyWorker) {
 				HandyWorker handyWorker;
 				handyWorker = this.handyWorkerService.findOne(actor.getId());
 				res.addObject("handyWorker", handyWorker);
+				res.addObject("socialProfiles", handyWorker.getSocialProfiles());
 			} else if (actor instanceof Sponsor) {
 				Sponsor sponsor;
 				sponsor = this.sponsorService.findOne(actor.getId());
 				res.addObject("sponsor", sponsor);
 				res.addObject("creditCards", sponsor.getCreditCards());
+				res.addObject("socialProfiles", sponsor.getSocialProfiles());
 			} else {
 				Administrator administrator;
 				administrator = this.administratorService
 						.findOne(actor.getId());
 				res.addObject("administrator", administrator);
+				res.addObject("socialProfiles",
+						administrator.getSocialProfiles());
 			}
 
 		}

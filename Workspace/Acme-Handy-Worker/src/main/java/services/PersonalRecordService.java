@@ -30,7 +30,7 @@ public class PersonalRecordService {
 	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService				utilityService;
 
 
 	// Constructors ------------------------------------
@@ -75,35 +75,29 @@ public class PersonalRecordService {
 		Assert.notNull(principal);
 
 		Assert.notNull(personalRecord);
-		Assert.isTrue(personalRecord.getLinkedinLink().startsWith("https://www.linkedin.com/"));
+		Assert.isTrue(personalRecord.getLinkedinLink().toLowerCase().startsWith("https://www.linkedin.com/") || personalRecord.getLinkedinLink().toLowerCase().startsWith("http://www.linkedin.com/"));
 
-		List<String> atributosAComprobar = new ArrayList<>();
+		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(personalRecord.getFullName());
-		
-		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+
+		final boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
+		if (containsSpam)
 			principal.setIsSuspicious(true);
-		}
-		
+
 		res = personalRecord;
 
-		return this.personalRecordRepository.saveAndFlush(res);
+		return this.personalRecordRepository.save(res);
 	}
-	
+
 	public void delete(final PersonalRecord personalRecord) {
 		HandyWorker principal;
 
 		Assert.notNull(personalRecord);
-		Assert.isTrue(personalRecord.getId() != 0);
 
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(principal.getCurriculum().getPersonalRecord().equals(personalRecord));
-
 		this.personalRecordRepository.delete(personalRecord);
-
-		principal.getCurriculum().setPersonalRecord(null);
 	}
 
 }

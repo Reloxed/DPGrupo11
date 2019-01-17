@@ -20,37 +20,40 @@
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
-	<p>
-		<spring:message code="system.configuration.title" />
-	</p>
+	<table class="displayStyle">
 
-	<h5>
-		<strong><spring:message code="system.name" />:</strong>
-		<jstl:out value="${systemConfiguration.systemName}"></jstl:out>
-	</h5>
+		<tr>
+			<td><spring:message code="system.name" />:</td>
+			<td><jstl:out value="${systemConfiguration.systemName}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="system.bannerURL" />:</td>
+			<td><jstl:out value="${systemConfiguration.banner}" /></td>
+		</tr>
 
-	<h5>
-		<strong><spring:message code="system.bannerURL" />:</strong>
-		<jstl:out value="${systemConfiguration.banner}"></jstl:out>
-	</h5>
+		<tr>
+			<td><spring:message code="system.VAT" />:</td>
+			<td><jstl:out value="${systemConfiguration.VAT}" /></td>
+		</tr>
 
-	<h5>
-		<strong><spring:message code="system.VAT" />:</strong>
-		<jstl:out value="${systemConfiguration.VAT}"></jstl:out>
-	</h5>
+		<tr>
+			<td><spring:message code="system.resultscached" />:</td>
+			<td><jstl:out value="${systemConfiguration.timeResultsCached}" /></td>
+		</tr>
 
-	<h5>
-		<strong><spring:message code="system.resultscached" />:</strong>
-		<jstl:out value="${systemConfiguration.timeResultsCached}"></jstl:out>
-	</h5>
+		<tr>
+			<td><spring:message code="system.resultspersearch" />:</td>
+			<td><jstl:out value="${systemConfiguration.maxResults}" /></td>
+		</tr>
 
-	<h5>
-		<strong><spring:message code="system.resultspersearch" />:</strong>
-		<jstl:out value="${systemConfiguration.maxResults}"></jstl:out>
-	</h5>
+		<tr>
+			<td><spring:message code="system.countrycode" />:</td>
+			<td><jstl:out value="${systemConfiguration.countryCode}" /></td>
+		</tr>
 
+	</table>
 	<div style="width: 20%; float: left">
-		<table class="displayStyle">
+		<table class="displayStyle" style="text-align: center;">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
 						name="spamWords"
@@ -125,6 +128,7 @@
 					</display:table></td>
 		</table>
 	</div>
+
 	<input type="button" name="edit"
 		value='<spring:message code="system.edit"/>'
 		onclick="redirect: location.href = 'system-configuration/administrator/edit.do?systemconfigurationID=${systemConfiguration.id}';" />

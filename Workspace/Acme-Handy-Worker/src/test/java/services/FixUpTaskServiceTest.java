@@ -161,15 +161,30 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Test
 	public void testDelete1() {
 		Customer principal;
-		FixUpTask result;
+
+		super.authenticate("customer2");
+		principal = this.customerService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Collection<FixUpTask> collFix = principal.getFixUpTasks();
+		
+		this.fixUpTaskService.delete(collFix.iterator().next());
+
+		super.unauthenticate();
+
+	}
+	
+	@Test
+	public void testDelete10() {
+		Customer principal;
 
 		super.authenticate("customer1");
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
-
-		result = this.fixUpTaskService.findAll().iterator().next();
-		result.setApplications(new ArrayList<Application>());
-		this.fixUpTaskService.delete(result);
+		
+		FixUpTask fix = this.fixUpTaskService.findOne(98304);
+		
+		this.fixUpTaskService.delete(fix);
 
 		super.unauthenticate();
 

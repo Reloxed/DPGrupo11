@@ -36,10 +36,40 @@
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" />
 		<security:intercept-url pattern="/security/login.do" access="permitAll" />
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" />
-		<security:intercept-url pattern="/complaint/customer/**" access="hasRole('CUSTOMER')"/>
-		<security:intercept-url pattern="/complaint/handyWorker/**" access="hasRole('HANDYWORKER')"/>
-		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')"/>
 		
+		
+		<security:intercept-url pattern="/report/customer/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/complaint/customer/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/fixUpTask/customer/**" access="hasRole('CUSTOMER')"/>
+		
+		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')"/>
+		<security:intercept-url pattern="/report/referee/**" access="hasRole('REFEREE')"/>
+		
+		
+		<security:intercept-url pattern="/complaint/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/report/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/curriculum/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/educationRecord/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/endorserRecord/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/miscellaneousRecord/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/professionalRecord/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/fixUpTask/handyWorker/display.do" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/fixUpTask/handyWorker/list.do" access="hasRole('HANDYWORKER')"/>
+		<security:intercept-url pattern="/finder/handyWorker/**" access="hasRole('HANDYWORKER')"/>
+		
+		
+		<security:intercept-url pattern="/category/administrator/**" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/statistics/administrator/display.do" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/warranty/administrator/**" access="hasRole('ADMINISTRATOR')"/>
+		
+		<security:intercept-url pattern="/actor/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/message-box/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/message/**" access="isAuthenticated()"/>
+		
+		
+		
+		
+				
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 

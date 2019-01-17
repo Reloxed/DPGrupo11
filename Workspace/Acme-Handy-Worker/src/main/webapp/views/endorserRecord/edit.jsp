@@ -62,14 +62,14 @@
 		<br />
 		
 	</fieldset>
-	<input type="button" name="save" id="save" value="<spring:message code="enr.save" />" />&nbsp; 
+	<input type="submit" name="save" id="save" value="<spring:message code="enr.save" />" />&nbsp; 
 		<jstl:if test="${endorserRecord.id != 0}">
 			<input type="submit" name="delete" value="<spring:message code="enr.delete" />"
 				onclick="return confirm('<spring:message code="enr.confirm.delete" />')" />&nbsp;
 		</jstl:if>
 		<jstl:if test="${curriculum.id!=0}">
 		<input type="button" name="cancel" value="<spring:message code="enr.cancel" />"
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');" />
+			onclick="window.history.back()" />
 		<br />
 		</jstl:if>
 		

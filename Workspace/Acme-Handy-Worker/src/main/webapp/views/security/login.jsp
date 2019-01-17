@@ -24,13 +24,14 @@
 	<form:input path="username" />	
 	<form:errors class="error" path="username" />
 	<br />
-
+	<br/>
 	<form:label path="password">
 		<spring:message code="security.password" />
 	</form:label>
 	<form:password path="password" />	
 	<form:errors class="error" path="password" />
 	<br />
+	<br/>
 	
 	<jstl:if test="${showError == true}">
 		<div class="error">

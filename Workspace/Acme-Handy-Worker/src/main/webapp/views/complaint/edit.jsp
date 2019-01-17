@@ -35,31 +35,33 @@
 	<form:label path="description">
 		<spring:message code="complaint.description" />
 	</form:label>
+	<br/>
 	<spring:message code="complaint.description.placeholder"
 		var="placeholder" />
-	<form:input path="description" placeholder="${placeholder}" />
+	<form:textarea rows="4" cols="60" path="description" placeholder="${placeholder}" />
 	<form:errors cssClass="error" path="description" />
 	
 	<br />
 	<br />
 
-	<form:label path="attachements">
-		<spring:message code="complaint.attachements" />
+	<form:label path="attachments">
+		<spring:message code="complaint.attachments" />
 	</form:label>
-	<spring:message code="complaint.attachmentPlaceholder"
+	<spring:message code="complaint.attachmentsPlaceholder"
 		var="placeholder" />
-	<form:input path="attachements" placeholder="${placeholder}" />
-	<form:errors cssClass="error" path="attachements" />
+	<form:textarea rows="4" cols="60" path="attachments" placeholder="${placeholder}" />
+	<form:errors cssClass="error" path="attachments" />
 
 	<br />
-
+	<br />
+	
 	<input type="submit" name="save" id="save"
 		value="<spring:message code="complaint.save"/>" />
 	<input type="reset" name="reset" id="reset"
 		value=" <spring:message code="complaint.reset"/>" />
 	<input type="button" name="cancel" id="cancel"
 		value=" <spring:message code="complaint.cancel"/>"
-		onclick="javascript: relativeRedir('complaint/customer/list.do');" />
+		onclick="window.history.back()" />
 
 </form:form>
 

@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
@@ -367,7 +368,8 @@
 		<property name="registeredMoment" value="08/11/2018 17:55" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="40." />
-		<property name="customerComment" value="Okay man" />
+		<property name="customerComment"
+			value="Okay man" />
 		<property name="handyWorkerComment"
 			value="I am experienced in window reparation because..." />
 		<property name="fixUpTask">
@@ -383,7 +385,8 @@
 		<property name="registeredMoment" value="08/11/2018 18:43" />
 		<property name="status" value="ACCEPTED" />
 		<property name="offeredPrice" value="43." />
-		<property name="customerComment" value="Okay bro" />
+		<property name="customerComment"
+			value="Okay bro" />
 		<property name="handyWorkerComment"
 			value="I am experienced in all type of reparations because..." />
 		<property name="creditCard">
@@ -400,7 +403,8 @@
 		<property name="registeredMoment" value="09/11/2018 15:27" />
 		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="80." />
-		<property name="handyWorkerComment" value="I can fix it" />
+		<property name="handyWorkerComment"
+			value="I can fix it" />
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -501,8 +505,7 @@
 					value="Welcome to Acme-HandyWorker! price,quality,and trust in a single place" />
 			</util:map>
 		</property>
-		<property name="banner"
-			value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
+		<property name="banner" value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
 		<property name="VAT" value=".21" />
 		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
 		<property name="countryCode" value="+034" />
@@ -1038,10 +1041,7 @@
 		<property name="name" value="Out box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<list>
-				<ref bean="message1" />
-			</list>
-
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1066,7 +1066,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1099,10 +1099,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<list>
-				<ref bean="message1" />
-			</list>
-
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1135,7 +1132,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message2" />
 		</property>
 	</bean>
 
@@ -1168,7 +1165,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1201,7 +1198,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message2" />
 		</property>
 	</bean>
 
@@ -1234,7 +1231,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1304,7 +1301,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message1" />
 		</property>
 	</bean>
 
@@ -1337,7 +1334,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<null />
+			<ref bean="message2" />
 		</property>
 	</bean>
 
@@ -1376,22 +1373,22 @@
 		<property name="sender">
 			<ref bean="administrator1" />
 		</property>
-		<property name="recipient">
-
-
-			<ref bean="customer1" />
-
+		<property name="recipients">
+			<list>
+				<ref bean="sponsor1" />
+				<ref bean="referee1" />
+				<ref bean="handyWorker1" />
+				<ref bean="customer1" />
+			</list>
 		</property>
 		<property name="messageBoxes">
 			<list>
+				<ref bean="inBoxSponsor1" />
+				<ref bean="inBoxReferee1" />
+				<ref bean="inBoxHandyWorker1" />
 				<ref bean="inBoxCustomer1" />
 				<ref bean="outBoxAdmin1" />
 			</list>
-
-
-
-
-
 		</property>
 	</bean>
 
@@ -1404,16 +1401,22 @@
 		<property name="sender">
 			<ref bean="administrator2" />
 		</property>
-		<property name="recipient">
-			<ref bean="sponsor2" />
+		<property name="recipients">
+			<list>
+				<ref bean="sponsor2" />
+				<ref bean="referee2" />
+				<ref bean="handyWorker2" />
+				<ref bean="customer2" />
+			</list>
 		</property>
 		<property name="messageBoxes">
 			<list>
 				<ref bean="inBoxSponsor2" />
+				<ref bean="inBoxReferee2" />
+				<ref bean="inBoxHandyWorker2" />
+				<ref bean="inBoxCustomer2" />
 				<ref bean="outBoxAdmin2" />
 			</list>
-
-
 		</property>
 	</bean>
 	<!-- User accounts -->
@@ -1823,7 +1826,7 @@
 		<property name="name">
 			<util:map id="utilmap" map-class="java.util.HashMap"
 				key-type="java.lang.String" value-type="java.lang.String">
-				<entry key="Español" value="raíz" />
+				<entry key="Español" value="CATEGORIA" />
 				<entry key="English" value="CATEGORY" />
 			</util:map>
 		</property>
@@ -2326,30 +2329,13 @@
 	<!-- FINDER -->
 
 	<bean id="finderHW1" class="domain.Finder">
-		<property name="keyWord" value="replicant" />
 		<property name="searchMoment" value="01/08/2019 19:48" />
-		<property name="category">
-			<ref bean="concreteWork" />
-		</property>
-		<property name="fixuptask">
-			<list>
-				<ref bean="fixUpTask1_1" />
-			</list>
-		</property>
+	</bean>
+	
+	<bean id="finderHW2" class="domain.Finder">
+		<property name="searchMoment" value="01/08/2019 19:48" />
 	</bean>
 
-	<bean id="finderHW2" class="domain.Finder">
-		<property name="keyWord" value="replicant" />
-		<property name="searchMoment" value="10/11/2018 10:48" />
-		<property name="category">
-			<ref bean="concreteWork" />
-		</property>
-		<property name="fixuptask">
-			<list>
-				<ref bean="fixUpTask1_2" />
-			</list>
-		</property>
-	</bean>
 	<!-- COMPLAINTs -->
 	<!-- Complaints about customer 1 -->
 	<!-- Complaint 1 about the FUP 1 of this costumer -->
@@ -2433,7 +2419,7 @@
 			<ref bean="fixUpTask2_2" />
 		</property>
 	</bean>
-
+	
 	<!-- Complaint non-assigned -->
 	<bean id="complaint_X" class="domain.Complaint">
 		<property name="ticker" value="612456-ASDFGH" />
@@ -2443,7 +2429,7 @@
 			<ref bean="fixUpTask2_2" />
 		</property>
 	</bean>
-
+	
 
 
 	<!-- REPORTs -->
@@ -2696,5 +2682,5 @@
 	</bean>
 
 
-
+>>>>>>> master
 </beans>

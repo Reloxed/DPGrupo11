@@ -30,7 +30,12 @@
 		id="form">
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
+		<jstl:if test="${report.id == 0 }">
+				<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
+		</jstl:if>
+		<jstl:if test="${report.id != 0 }">
+				<form:hidden path="registeredMoment" />
+		</jstl:if>
 		<form:hidden path="fixUpTask" />
 		<form:hidden path="applicant"/>
 		<form:hidden path="creditCard"/>
@@ -46,8 +51,7 @@
 			var="placeholder" />
 		<form:input path="offeredPrice" placeholder="${placeholder}" />
 	
-		<br />
-		<br />
+		<br /><br />
 	
 		<form:label path="handyWorkerComment">
 			<spring:message code="application.myComment" />
@@ -65,7 +69,7 @@
 			value='<spring:message code="application.save"/>' />
 		<input type="button" name="cancel"
 			value="<spring:message code="application.cancel" />"
-			onclick="javascript: relativeRedir('fixUpTask/handyWorker/list.do');" />
+			onclick="window.history.back()" />
 			
 		<br/>
 	

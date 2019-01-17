@@ -1,5 +1,6 @@
 package controllers.customer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -83,6 +84,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("customerOwner",
+				this.fixUpTaskService.creatorFixUpTask(fixUpTaskId));
 		result.addObject("requestURI", "fixUpTask/customer/display.do");
 
 		return result;
@@ -93,7 +96,6 @@ public class FixUpTaskCustomerController extends AbstractController {
 	public ModelAndView edit(@RequestParam int fixUpTaskId) {
 		final ModelAndView result;
 		FixUpTask task;
-		
 
 		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
@@ -165,8 +167,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println(binding.getAllErrors());
-				result = this.createEditModelAndView(task,
-						"fixUpTask.commit.error");
+				result = this.createEditModelAndView(task,oops.getMessage());
 			}
 
 		return result;
@@ -189,18 +190,16 @@ public class FixUpTaskCustomerController extends AbstractController {
 		Collection<Complaint> complaints;
 		Collection<Application> applications;
 		String ticker;
-		Collection<Category> categories;
+		Collection<Category> categories = new ArrayList<>();
 		Collection<Warranty> warranties;
-		
+
 		categories = this.categoryService.findAll();
 		warranties = this.warrantyService.findFinalWarranties();
 
-		
 		complaints = this.complaintService.findComplaintsByCustomer();
 		applications = this.applicationService.findAllApplicationsByCustomer();
-		
+
 		ticker = task.getTicker();
-		
 		result = new ModelAndView("fixUpTask/edit");
 		result.addObject("categories", categories);
 		result.addObject("warranties", warranties);

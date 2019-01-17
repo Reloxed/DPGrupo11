@@ -111,19 +111,17 @@ public class CustomerService {
 			Customer principalC;
 			principalC = this.findByPrincipal();
 			Assert.notNull(principalC);
+
 			Assert.isTrue(principalC.getUserAccount().equals(
 					customer.getUserAccount()));
 			Assert.isTrue(customer.getIsSuspicious() == principalC
 					.getIsSuspicious());
 
-			final Collection<CreditCard> collCc = this.customerRepository
-					.findCreditCardsByCustomerId(customer.getId());
-
-			if (collCc.size() > 0)
-				Assert.isTrue(customer.getCreditCards().contains(collCc));
+			if (customer.getCreditCards().size() > 0)
+				Assert.isTrue(customer.getCreditCards().containsAll(
+						principalC.getCreditCards()));
 		}
 		cus = this.customerRepository.save(customer);
-		this.customerRepository.flush();
 		return cus;
 	}
 
@@ -163,14 +161,6 @@ public class CustomerService {
 		return res;
 	}
 
-	public Collection<CreditCard> findCreditCardsByCustomerId(
-			final int customerId) {
-		Collection<CreditCard> collCC = new ArrayList<>();
-		collCC = this.customerRepository
-				.findCreditCardsByCustomerId(customerId);
-		return collCC;
-	}
-
 	public Collection<Customer> topThreeCustomersTenPercentMoraThanAverage() {
 		final List<Customer> collC = this.customerTenPercentMoraThanAverage();
 		if (collC.size() < 3)
@@ -198,9 +188,8 @@ public class CustomerService {
 		List<Customer> res = this.customerRepository
 				.findCustomersWithMoreComplaints();
 
-		if (res.size() > 3) {
+		if (res.size() > 3)
 			res = res.subList(0, 2);
-		}
 		return res;
 	}
 }

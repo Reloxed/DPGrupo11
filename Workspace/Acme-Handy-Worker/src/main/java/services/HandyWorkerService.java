@@ -37,6 +37,9 @@ public class HandyWorkerService {
 	@Autowired
 	private ActorService actorService;
 
+	@Autowired
+	private FinderService finderService;
+
 	// Constructor ----------------------------------------------------
 
 	public HandyWorkerService() {
@@ -84,6 +87,7 @@ public class HandyWorkerService {
 			result.setMake(result.getName() + result.getMiddleName()
 					+ result.getSurname());
 			result.setIsSuspicious(false);
+			result.setFinder(this.finderService.create());
 			result.setMessageBoxes(this.messageBoxService
 					.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
@@ -107,6 +111,8 @@ public class HandyWorkerService {
 				handyWorker.getUserAccount().setPassword(
 						passwordEncoder.encodePassword(handyWorker
 								.getUserAccount().getPassword(), null));
+				handyWorker.setMake(handyWorker.getName() + " "
+						+ handyWorker.getSurname());
 			}
 		else {
 
@@ -160,7 +166,6 @@ public class HandyWorkerService {
 		return colHandys;
 
 	}
-
 
 	public List<HandyWorker> findTopComplaintsHandyWorkers() {
 		List<HandyWorker> colHandys = this.handyWorkerRepository

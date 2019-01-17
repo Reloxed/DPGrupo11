@@ -10,12 +10,11 @@
 <form:form modelAttribute="miscellaneousRecord" action="miscellaneousRecord/handyWorker/edit.do"
 	id="form">
 
-	<form:hidden path="id" />
-		
-		<form:hidden path="version" />
-		
-		
-		<fieldset>
+	<form:hidden path="id" />	
+	<form:hidden path="version" />
+
+
+	<fieldset>
 		<legend> <spring:message code="mr.miscellaneousRecord" />: </legend>
 		
 		<form:label path="title">
@@ -24,9 +23,7 @@
 		<form:input path="title"  />
 		<form:errors cssClass="error" path="title" />
 		<br />
-		<br />
-		
-		
+		<br />		
 		
 		<form:label path="linkAttachment">
 			<spring:message code="mr.linkAttachment" />:
@@ -47,10 +44,6 @@
 	
 	</fieldset>
 	
-	
-	
-	
-	
 	<input type="submit" name="save" id="save" value="<spring:message code="mr.save" />" />&nbsp; 
 		<jstl:if test="${miscellaneousRecord.id != 0}">
 			<input type="submit" name="delete" value="<spring:message code="mr.delete" />"
@@ -58,7 +51,7 @@
 		</jstl:if>
 		<jstl:if test="${curriculum.id!=0}">
 		<input type="button" name="cancel" value="<spring:message code="mr.cancel" />"
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');" />
+			onclick="window.history.back()" />
 		<br />
 		</jstl:if>
 		

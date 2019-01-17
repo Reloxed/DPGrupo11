@@ -50,9 +50,11 @@ public class FixUpTaskService {
 
 		result = new FixUpTask();
 
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		result.setTicker(this.utilityService.generateTicker());
+
 		result.setApplications(new HashSet<Application>());
 		result.setComplaints(new HashSet<Complaint>());
-		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		return result;
 
 	}
@@ -85,26 +87,26 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		Assert.notNull(fixUpTask);
-		Assert.notNull(fixUpTask.getEndMoment());
-		Assert.notNull(fixUpTask.getStartMoment());
+		Assert.notNull(fixUpTask.getEndMoment(), "fixuptask.interval");
+		Assert.notNull(fixUpTask.getStartMoment(), "fixuptask.interval");
 		Assert.isTrue(fixUpTask.getStartMoment().before(
-				fixUpTask.getEndMoment()));
+				fixUpTask.getEndMoment()), "fixuptask.moment");
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
 
-		// Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
+		Assert.isTrue(fixUpTask.getWarranty().getIsFinal());
 
-		if (fixUpTask.getId() == 0) {
-			fixUpTask.setPublishedMoment(new Date(
-					System.currentTimeMillis() - 1));
-			fixUpTask.setTicker(this.utilityService.generateTicker());
-		} else {
-			Assert.isTrue(fixUpTask.getPublishedMoment().equals(
-					this.findOne(fixUpTask.getId()).getPublishedMoment()));
+		if (fixUpTask.getId() != 0) {
 			Assert.isTrue(fixUpTask.getTicker().equals(
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
+		
+		result = this.fixUpTaskRepository.save(fixUpTask);
+
+		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
+
+//		principal.getFixUpTasks().add(fixUpTask);
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
@@ -114,10 +116,6 @@ public class FixUpTaskService {
 				.isSpam(atributosAComprobar);
 		if (containsSpam)
 			principal.setIsSuspicious(true);
-
-		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
-
-		principal.getFixUpTasks().add(result);
 
 		return result;
 
@@ -132,11 +130,12 @@ public class FixUpTaskService {
 		principal = this.customerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		// Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
+		Assert.isTrue(principal.getFixUpTasks().contains(fixUpTask));
 
-		// Assert.isTrue(fixUpTask.getApplications().isEmpty());
+		Assert.isTrue(fixUpTask.getApplications().isEmpty());
 		this.fixUpTaskRepository.delete(fixUpTask);
 		principal.getFixUpTasks().remove(fixUpTask);
+		this.customerService.save(principal);
 	}
 
 	// Other business methods--------
@@ -173,7 +172,6 @@ public class FixUpTaskService {
 				.ratioFixUpTaskWithComplaints();
 		return res;
 	}
-	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository
@@ -203,6 +201,13 @@ public class FixUpTaskService {
 
 		return customerId;
 
+	}
+
+	public List<FixUpTask> findBannedCustomers() {
+
+		List<FixUpTask> res = this.fixUpTaskRepository.findBannedCustomers();
+
+		return res;
 	}
 
 }

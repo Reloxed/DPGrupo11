@@ -1,6 +1,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,5 +38,8 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 
 	@Query("select f from Customer c join c.fixUpTasks f where c.id=?1")
 	Collection<FixUpTask> FixUpTaskByCustomer(int customerId);
+	
+	@Query("select f from Customer c join c.fixUpTasks f where c.userAccount.isBanned = true group by f.id")
+	List<FixUpTask> findBannedCustomers();
 
 }

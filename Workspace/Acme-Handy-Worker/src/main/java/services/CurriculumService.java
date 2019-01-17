@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -24,15 +25,31 @@ public class CurriculumService {
 	// Managed Repository
 
 	@Autowired
-	private CurriculumRepository curriculumRepository;
+	private CurriculumRepository		curriculumRepository;
 
 	// Supporting Services
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private HandyWorkerService			handyWorkerService;
 
 	@Autowired
-	private UtilityService utilityService;
+	private PersonalRecordService		personalRecordService;
+
+	@Autowired
+	private EducationRecordService		educationRecordService;
+
+	@Autowired
+	private EndorserRecordService		endorserRecordService;
+
+	@Autowired
+	private MiscellaneousRecordService	miscellaneousRecordService;
+
+	@Autowired
+	private ProfessionalRecordService	professionalRecordService;
+
+	@Autowired
+	private UtilityService				utilityService;
+
 
 	// Constructors ------------------------------------
 
@@ -49,8 +66,8 @@ public class CurriculumService {
 		author = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(author);
 
+		final String ticker = this.utilityService.generateTicker();
 		final PersonalRecord personalRecord = new PersonalRecord();
-
 		final Collection<EducationRecord> collER = new ArrayList<>();
 		final Collection<ProfessionalRecord> collProR = new ArrayList<>();
 		final Collection<EndorserRecord> collEndR = new ArrayList<>();
@@ -62,6 +79,7 @@ public class CurriculumService {
 		result.setMiscellaneousRecords(collMR);
 		result.setPersonalRecord(personalRecord);
 		result.setProfessionalRecords(collProR);
+		result.setTicker(ticker);
 
 		return result;
 	}
@@ -93,15 +111,12 @@ public class CurriculumService {
 		principal = this.handyWorkerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		if (curriculum.getId() == 0) {
-			curriculum.setTicker(this.utilityService.generateTicker());
-		} else {
-			Assert.isTrue(curriculum.getTicker().equals(
-					principal.getCurriculum().getTicker()));
-		}
+		if (curriculum.getId() != 0)
+			Assert.isTrue(curriculum.getTicker().equals(principal.getCurriculum().getTicker()));
 
 		Assert.notNull(curriculum.getPersonalRecord());
-		result = this.curriculumRepository.saveAndFlush(curriculum);
+		result = this.curriculumRepository.save(curriculum);
+		principal.setCurriculum(result);
 		return result;
 
 	}
@@ -114,8 +129,11 @@ public class CurriculumService {
 
 		Assert.isTrue(principal.getCurriculum().equals(curriculum));
 
-		this.curriculumRepository.delete(curriculum);
 		principal.setCurriculum(null);
+
+		this.curriculumRepository.delete(curriculum);
+		this.personalRecordService.delete(curriculum.getPersonalRecord());
+
 	}
 
 	// Other business methods

@@ -21,8 +21,6 @@ public class StringToMapConverter implements
 		value = StringUtils.substringBetween(text, "{", "}");
 		String[] keyValuePairs = value.split(", ");
 
-		System.out.println(keyValuePairs);
-
 		map = new HashMap<>();
 
 		for (String pair : keyValuePairs) {
