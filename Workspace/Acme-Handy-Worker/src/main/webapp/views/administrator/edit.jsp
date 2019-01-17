@@ -30,16 +30,16 @@
 			return confirm(msg);
 		}
 	}
-		
 </script>
 
 <p>
 	<spring:message code="actor.edit" />
 </p>
 
-<spring:message code="phone.confirmation" var="confirmTelephone"/>
+<spring:message code="phone.confirmation" var="confirmTelephone" />
 <form:form action="administrator/administrator/edit.do"
-	modelAttribute="administrator" methodParam="post" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
+	modelAttribute="administrator" methodParam="post"
+	onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -100,7 +100,7 @@
 	<form:label path="email">
 		<spring:message code="actor.email" />:
 		</form:label>
-	<form:input path="email" value="${administrator.email}" />
+	<form:input path="email" value="${administrator.email}" id="email" />
 	<form:errors cssClass="error" path="email" />
 	<br>
 
@@ -115,7 +115,7 @@
 		<spring:message code="actor.phone" />:
 		</form:label>
 	<form:input path="phoneNumber" value="${administrator.phoneNumber}"
-		id="phoneNumber"/>
+		id="phoneNumber" />
 	<form:errors cssClass="error" path="phoneNumber" />
 	<br>
 
@@ -127,9 +127,23 @@
 	<br>
 
 	<input type="submit" name="save" id="save"
-		value='<spring:message code="actor.save"/>' />
+		value='<spring:message code="actor.save"/>' onclick="checkPhone()" />
 	<input type="button" name="cancel"
 		value="<spring:message code="actor.cancel" />"
 		onclick="javascript: relativeRedir('actor/display.do');" />
 	<br />
 </form:form>
+<script>
+	function checkEmail() {
+		var email = document.getElementById("email");
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+			return (true);
+		} else if (/^(\w+ ?)*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+				.test(email.value)) {
+			return (true);
+		} else {
+			alert("<spring:message code="alertEmail" />");
+			return (false);
+		}
+	}
+</script>

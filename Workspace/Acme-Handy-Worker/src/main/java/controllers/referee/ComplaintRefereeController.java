@@ -89,6 +89,21 @@ public class ComplaintRefereeController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int complaintId) {
+		final ModelAndView result;
+		Complaint complaint;
+
+		complaint = this.complaintService.findOne(complaintId);
+
+		result = new ModelAndView("complaint/display");
+		result.addObject("complaint", complaint);
+		result.addObject("requestUri", "complaint/customer/display.do");
+
+		return result;
+
+	}
 
 }
 //Ancillary methods

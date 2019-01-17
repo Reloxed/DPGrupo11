@@ -53,9 +53,6 @@
 		<display:column property="endMoment" title="${endMomentHeader}"
 			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
 
-		
-
-
 		<jstl:set var="fixStart" value="${row.startMoment}" />
 		<jsp:useBean id="now" class="java.util.Date" />
 
