@@ -30,7 +30,7 @@
 	<input type="submit" name="save"	
 		value="<spring:message code="messageBox.save"	/>	"	/>&nbsp;
 	
-	<jstl:if test="${messageBox.id != 0}">
+	<jstl:if test="${messageBox.id != 0 and empty messages}">
 		<input type="submit" name="delete"
 			value="<spring:message code="messageBox.delete"/>	"	
 			onclick="return confirm('<spring:message code="messageBox.confirm.delete"/>')" />&nbsp;
