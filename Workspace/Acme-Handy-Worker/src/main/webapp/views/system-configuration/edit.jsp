@@ -25,8 +25,6 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="countryCode"
-			value="${systemConfiguration.countryCode }" />
 
 		<form:label path="systemName">
 			<spring:message code="system.name" />:
@@ -65,6 +63,14 @@
 		<form:input path="maxResults"
 			value="${systemConfiguration.maxResults}" size="5%" />
 		<form:errors cssClass="error" path="maxResults" />
+		<br>
+
+		<form:label path="countryCode">
+			<spring:message code="system.countrycode" />:
+		</form:label>
+		<form:input path="countryCode"
+			value="${systemConfiguration.countryCode}" />
+		<form:errors cssClass="error" path="countryCode" />
 		<br>
 
 		<form:label path="welcomeMessage">
@@ -113,6 +119,9 @@
 
 		<input type="submit" name="save" id="save"
 			value='<spring:message code="system.save"/>' />
+		<input type="button" name="cancel"
+			value="<spring:message code="application.cancel" />"
+			onclick="javascript: relativeRedir('system-configuration/administrator/display.do');" />
 	</form:form>
 
 </security:authorize>
