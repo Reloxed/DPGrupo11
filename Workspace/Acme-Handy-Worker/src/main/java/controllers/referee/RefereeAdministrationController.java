@@ -102,7 +102,7 @@ public class RefereeAdministrationController extends AbstractController {
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(referee,
-						"referee.commit.error");
+						oops.getMessage());
 			}
 		}
 		return res;

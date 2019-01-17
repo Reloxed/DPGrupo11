@@ -21,6 +21,13 @@
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
+	<jstl:choose>
+	<jstl:when test="${not empty applicationsStatistics or not empty pricesStatistics or not empty complaintStatistics
+		 or not empty ratioFixWithComplaints or not empty statusStatistics or not empty notesStatistics 
+		 	or not empty customerStatistics or not empty customerStatistics2 or not empty handyWorkerStatistics
+		 		or not empty handyWorkerStatistics2}">
+		 		
+	<jstl:if test="${not empty applicationsStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -46,6 +53,7 @@
 		</tr>
 	</table>
 
+	<jstl:if test="${not empty pricesStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -74,6 +82,7 @@
 		</tr>
 	</table>
 
+	<jstl:if test="${not empty complaintStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -107,6 +116,7 @@
 		</tr>
 	</table>
 
+	<jstl:if test="${not empty statusStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -135,6 +145,7 @@
 		</tr>
 	</table>
 
+	<jstl:if test="${not empty notesStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -164,6 +175,8 @@
 	</table>
 
 	<div>
+	
+	<jstl:if test="${not empty customerStatistics}"></jstl:if>
 		<table class="displayStyle" style="width: 50%">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -184,6 +197,8 @@
 					</display:table></td>
 			</tr>
 		</table>
+		
+		<jstl:if test="${not empty customerStatistics2}"></jstl:if>
 		<table class="displayStyle" style="width: 50%">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -205,6 +220,8 @@
 			</tr>
 		</table>
 	</div>
+	
+	<jstl:if test="${not empty handyWorkerStatistics }"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
@@ -223,6 +240,8 @@
 				</display:table></td>
 		</tr>
 	</table>
+	
+	<jstl:if test="${not empty handyWorkerStatistics2}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
@@ -243,4 +262,12 @@
 				</display:table></td>
 		</tr>
 	</table>
+	</jstl:if>
+	</jstl:when>
+	<jstl:otherwise>
+		<p> 
+			<spring:message code="dashboard.empty"/>
+		</p>
+	</jstl:otherwise>
+	</jstl:choose>
 </security:authorize>

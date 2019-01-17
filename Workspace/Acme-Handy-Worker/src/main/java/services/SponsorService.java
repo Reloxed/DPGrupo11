@@ -43,6 +43,9 @@ public class SponsorService {
 	@Autowired
 	private SponsorshipService sponsorshipService;
 	
+	@Autowired
+	private UtilityService			utilityService;
+	
 	// Constructors ------------------------------------
 
 	public SponsorService() {
@@ -120,6 +123,8 @@ public class SponsorService {
 	public Sponsor save(Sponsor sponsor) {
 		Sponsor saved;
 		Assert.notNull(sponsor);
+		
+		Assert.isTrue(this.utilityService.validEmail(sponsor.getEmail()), "sponsor.email");
 
 		if (sponsor.getId() == 0) {
 			try {

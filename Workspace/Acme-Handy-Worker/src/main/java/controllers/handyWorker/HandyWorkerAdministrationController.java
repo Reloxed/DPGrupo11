@@ -109,7 +109,7 @@ public class HandyWorkerAdministrationController extends AbstractController {
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(handyWorker,
-						"handyworker.commit.error");
+						oops.getMessage());
 			}
 		}
 		return res;

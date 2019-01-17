@@ -37,7 +37,10 @@ public class CustomerService {
 	private MessageBoxService messageBoxService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+	
+	@Autowired
+	private UtilityService		utilityService;
 
 	// Constructors ------------------------------------
 
@@ -95,6 +98,8 @@ public class CustomerService {
 		Assert.notNull(customer);
 		Customer cus;
 
+		Assert.isTrue(this.utilityService.validEmail(customer.getEmail()), "customer.email");
+		
 		if (customer.getId() == 0)
 			try {
 				Actor principal;

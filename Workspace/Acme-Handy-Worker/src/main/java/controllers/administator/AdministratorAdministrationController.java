@@ -103,7 +103,7 @@ public class AdministratorAdministrationController extends AbstractController {
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(administrator,
-						"administrator.commit.error");
+						oops.getMessage());
 			}
 		}
 		return res;

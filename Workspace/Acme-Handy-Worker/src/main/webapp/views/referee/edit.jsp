@@ -30,12 +30,12 @@
 			return confirm(msg);
 		}
 	}
-		
 </script>
 
-<spring:message code="phone.confirmation" var="confirmTelephone"/>
+<spring:message code="phone.confirmation" var="confirmTelephone" />
 <form:form action="referee/referee/edit.do" modelAttribute="referee"
-	methodParam="post" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
+	methodParam="post"
+	onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -112,7 +112,7 @@
 	<form:label path="phoneNumber">
 		<spring:message code="actor.phone" />:
 		</form:label>
-	<form:input path="phoneNumber" value="${referee.phoneNumber}"/>
+	<form:input path="phoneNumber" value="${referee.phoneNumber}" />
 	<form:errors cssClass="error" path="phoneNumber" />
 	<br>
 

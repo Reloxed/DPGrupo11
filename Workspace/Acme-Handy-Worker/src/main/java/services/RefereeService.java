@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -26,16 +25,18 @@ public class RefereeService {
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private RefereeRepository		refereeRepository;
+	private RefereeRepository refereeRepository;
 
 	// Supporting services -----------------------------------
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService administratorService;
 
 	@Autowired
-	private MessageBoxService		messageBoxService;
+	private MessageBoxService messageBoxService;
 
+	@Autowired
+	private UtilityService utilityService;
 
 	// Constructors ------------------------------------
 
@@ -64,6 +65,7 @@ public class RefereeService {
 
 		final Authority authority = new Authority();
 		final UserAccount userAccount = new UserAccount();
+		authority.setAuthority(Authority.REFEREE);
 		userAccount.addAuthority(authority);
 
 		res.setUserAccount(userAccount);
@@ -92,12 +94,17 @@ public class RefereeService {
 
 		Assert.notNull(referee);
 
+		Assert.isTrue(this.utilityService.validEmail(referee.getEmail()),
+				"referee.email");
+
 		if (referee.getId() == 0) {
 			Administrator principal;
 			principal = this.administratorService.findByPrincipal();
 			Assert.notNull(principal);
 			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-			referee.getUserAccount().setPassword(passwordEncoder.encodePassword(referee.getUserAccount().getPassword(), null));
+			referee.getUserAccount().setPassword(
+					passwordEncoder.encodePassword(referee.getUserAccount()
+							.getPassword(), null));
 		} else {
 			Referee principal;
 			principal = this.findByPrincipal();

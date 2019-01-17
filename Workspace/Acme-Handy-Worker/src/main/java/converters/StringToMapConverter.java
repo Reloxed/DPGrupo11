@@ -17,16 +17,23 @@ public class StringToMapConverter implements
 	public Map<String, String> convert(final String text) {
 		Map<String, String> map;
 		String value;
+		try {
+			value = StringUtils.substringBetween(text, "{", "}");
+			String[] keyValuePairs = value.split(", ");
 
-		value = StringUtils.substringBetween(text, "{", "}");
-		String[] keyValuePairs = value.split(", ");
+			map = new HashMap<>();
 
-		map = new HashMap<>();
-
-		for (String pair : keyValuePairs) {
-			String[] entry = pair.split("=");
-			map.put(entry[0].trim(), entry[1].trim());
+			for (String pair : keyValuePairs) {
+				String[] entry = pair.split("=");
+				map.put(entry[0].trim(), entry[1].trim());
+			}
+			
+		} catch (Throwable oops){
+			
+			throw new IllegalArgumentException("category.wrongName",oops);
 		}
+		
 		return map;
+
 	}
 }
