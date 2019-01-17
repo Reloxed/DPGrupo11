@@ -8,169 +8,174 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<%-- <jstl:choose> --%>
-<jstl:if test="${m.id==0}">
-
-	<form:form action="message/create.do" modelAttribute="m" id="form">
+<jstl:if test="${(mensaje.id == 0) && (!broadcast)}">
+	<form:form action="message/actor/edit.do" modelAttribute="mensaje">
+		<!-- Se ponen estos atributos en hidden ya que en el servicio de mensaje al crearlo obtienen unos valores -->
 		<form:hidden path="id" />
 		<form:hidden path="version" />
+		<form:hidden path="isSpam" />
+		<form:hidden path="sender" />
+		<form:hidden path="sendMoment" />
+		<form:hidden path="messageBoxes" />
 
-		<form:hidden path="sendMoment" value="01/01/2001 00:00"/>
+
+		<form:label path="recipient">
+			<spring:message code="message.recipient.userAccount" />:
+	</form:label>
+		<form:select path="recipient">
+			<form:option label="-----" value="0" />
+			<form:options items="${recipients}" itemLabel="userAccount.username"
+				itemValue="id" />
+		</form:select>
+		<form:errors cssClass="error" path="recipient" />
+		<br />
+		<br />
+
 
 		<form:label path="subject">
 			<spring:message code="message.subject" />
 		</form:label>
-		<spring:message code="message.subject.placeholder" var="placeholder" />
-		<form:input placeholder="${placeholder}" path="subject"/>
+		<form:input path="subject" />
 		<form:errors cssClass="error" path="subject" />
+		<br />
 		<br />
 
 		<form:label path="body">
 			<spring:message code="message.body" />
 		</form:label>
-		<spring:message code="message.body.placeholder" var="placeholder" />
-		<form:textarea placeholder="${placeholder}" path="body" />
+		<form:textarea path="body" />
 		<form:errors cssClass="error" path="body" />
+		<br />
 		<br />
 
 		<form:label path="priority">
 			<spring:message code="message.priority" />
 		</form:label>
-		<form:radiobutton path="priority" value="LOW" />
-		<spring:message code="message.priority.low" />
-		<form:radiobutton path="priority" value="NEUTRAL" checked="checked" />
-		<spring:message code="message.priority.neutral" />
 		<form:radiobutton path="priority" value="HIGH" />
 		<spring:message code="message.priority.high" />
-		<form:errors cssClass="error" path="priority" />
+		<form:radiobutton path="priority" value="NEUTRAL" checked="checked" />
+		<spring:message code="message.priority.neutral" />
+		<form:radiobutton path="priority" value="LOW" />
+		<spring:message code="message.priority.low" />
+		<br />
 		<br />
 
-		<form:label path="tags">
-			<spring:message code="message.tags" />
-		</form:label>
-		<spring:message code="message.tags.placeholder" var="placeholder" />
-		<form:input placeholder="${placeholder}" path="tags" />
-		<form:errors cssClass="error" path="tags" />
+		<jstl:if test="${mensaje.id == 0}">
+			<input type="submit" name="save"
+				value="<spring:message code="message.send"/>" />&nbsp;
+  	</jstl:if>
+
+		<jstl:if test="${(mensaje.id == 0) && (broadcast)}">
+			<input type="submit" name="save"
+				value="<spring:message code="message.broadcast"/>" />
+
+		</jstl:if>
+
+		<input type="button" name="cancel"
+			value="<spring:message code="message.cancel"/>"
+			onclick="javascript: relativeRedir('/box/actor/list.do');" />
 		<br />
 
-		<form:hidden path="sender" />
-		<form:errors cssClass="error" path="sender" />
 
-		<jstl:choose>
-			<jstl:when test="${broadcast}">
-				<!-- Aqui van los recipients si es broadcast -->
-				<form:hidden path="recipients" />
-			</jstl:when>
-			<jstl:otherwise>
-				<form:label path="recipients">
-					<spring:message code="message.recipients" />
-				</form:label>
-				<form:select path="recipients" multiple="true" itemValue="id">
-					<form:options items="${actors }" itemLabel="userAccount.username"/>
-				</form:select>
-				<form:errors cssClass="error" path="recipients" />
-				<br />
-			</jstl:otherwise>
-		</jstl:choose>
-
-		<form:hidden path="isSpam" />
-		<form:errors cssClass="error" path="isSpam" />
-		<form:hidden path="messageBoxes" />
-		<form:errors cssClass="error" path="messageBoxes" />
-
-		<input type="submit" name="save" id="save" onclick="checkPhone()"
-			value="<spring:message code="message.save" />" />
-		<input type="button" name="cancel" id="cancel"
-			onclick="javascript: relativeRedir('message/list.do');"
-			value="<spring:message code="message.cancel" />" />
 	</form:form>
+
+
 
 </jstl:if>
 
- 	<jstl:if test="${m.id!=0}">
-		<form:hidden path="sendMoment" />
-		<form:hidden path="subject" />
-		<form:hidden path="body" />
-		<form:hidden path="priority" />
-		<form:hidden path="tags" />
-		<form:hidden path="sender" />
-		<form:hidden path="recipients" />
-		<form:hidden path="isSpam" />
+<jstl:if test="${possible}">
 
-		<jstl:if test="${move}">
+	<jstl:if test="${mensaje.id != 0 && !(broadcast)}">
+		<form:form action="message/actor/edit.do" modelAttribute="mensaje">
 
-			<form:label path="messageBoxes">
-				<spring:message code="message.boxes.move" />
-			</form:label>
-			<form:select path="messageBoxes">
-				<jstl:forEach var="x" items="${listMessageBoxes}">
-					<form:option value="${x.name}" />
-					<jstl:out value="${x.name }" />
-				</jstl:forEach>
-			</form:select>
-			<form:errors cssClass="error" path="messageBoxes" />
-			<br />
-		</jstl:if>
-
-		<jstl:if test="${copy}">
-			<form:label path="messageBoxes">
-				<spring:message code="message.boxes.copy" />
-			</form:label>
-			<form:select path="messageBoxes">
-				<jstl:forEach var="x" items="${listMessageBoxes}">
-					<form:option value="${x.name}" />
-					<jstl:out value="${x.name }" />
-				</jstl:forEach>
-			</form:select>
-			<form:errors cssClass="error" path="messageBoxes" />
-			<br />
-		</jstl:if>
-
-	</jstl:if>
-
-	<jstl:if test="${(m.id !=0) && (display)}">
-
-		<form:form action="message/edit.do" modelAttribute="message" id="form"
-			readonly="true">
 			<form:hidden path="id" />
 			<form:hidden path="version" />
-
-			<spring:message code="message.display.sendMoment" />
-			<form:input path="sendMoment" value="" />
-			<br />
-
-			<spring:message code="message.display.subject" />
-			<form:input path="subject" value="" />
-			<br />
-
-			<spring:message code="message.display.body" />
-			<form:textarea path="body" value="" />
-			<br />
-
-			<spring:message code="message.display.priority" />
-			<form:input path="priority" value="" />
-			<br />
-
-			<spring:message code="message.display.tags" />
-			<form:input path="tags" value="" />
-			<br />
-
-			<form:hidden path="sender" />
-
-			<spring:message code="message.display.recipients" />
-			<form:input path="recipients" value="" />
-			<br />
-
 			<form:hidden path="isSpam" />
-			<form:hidden path="messageBoxes" />
+			<form:hidden path="sender" />
+			<form:hidden path="sendMoment" />
+			<form:hidden path="recipient" />
+			<form:hidden path="priority" />
+			<form:hidden path="subject" />
+			<form:hidden path="body" />
 
-			<input type="submit" name="save" id="save" />
+			<fieldset>
+				<legend>
+					<spring:message code="message.legend" />
+				</legend>
 
-			<input type="button" name="cancel" id="cancel"
-				onclick="window.history.back()"
-				value="<spring:message code="message.display.back" />" />
+				<form:label path="sender">
+					<spring:message code="message.sender.userAccount" />:
+	</form:label>
+				<input type="text" value="${mensaje.sender.userAccount.username}"
+					disabled /> <br /> <br />
+
+
+				<form:label path="recipient">
+					<spring:message code="message.recipient.userAccount" />:
+	
+	</form:label>
+				<input type="text" value="${mensaje.recipient.userAccount.username}"
+					disabled />
+			</fieldset>
+			<br />
+			<br />
+
+
+			<form:label path="sendMoment">
+				<spring:message code="message.sendMoment" />
+			</form:label>
+			<input type="text" value="${mensaje.sendMoment}" disabled />
+			<br />
+			<br />
+
+			<form:label path="subject">
+				<spring:message code="message.subject" />
+			</form:label>
+			<input type="text" value="${mensaje.subject}" disabled />
+			<br />
+			<br />
+
+			<form:label path="body">
+				<spring:message code="message.body" />
+			</form:label>
+			<input type="text" value="${mensaje.body}" disabled />
+			<br />
+			<br />
+
+			<form:label path="messageBoxes">
+				<spring:message code="message.box" />:
+		
+			</form:label>
+			<form:select path="messageBoxes"  itemValue="id">
+				<form:options items="${boxes}" itemLabel="name" itemValue="id" />
+			</form:select>
+			<form:errors cssClass="error" path="messageBoxes" />
+			<br />
+			<br />
+
+			<input type="submit" name="move"
+				value="<spring:message code="message.move"/>" />&nbsp;
+		
+	<input type="submit" name="delete"
+				value="<spring:message code="message.delete"/>"
+				onclick="return confirm('<spring:message code="message.confirm.delete"/>') " />&nbsp;
+		
+	<input type="button" name="cancel"
+				value="<spring:message code="message.cancel" />"
+				onclick="javascript: relativeRedir('/box/actor/list.do');" />
+
 			<br />
 		</form:form>
 
-
 	</jstl:if>
+
+
+</jstl:if>
+
+
+
+<jstl:if test="${!possible}">
+	<h3>
+		<spring:message code="message.nopermission" />
+	</h3>
+</jstl:if>

@@ -41,18 +41,30 @@
 
 		<spring:message code="report.complaint" var="complaintHeader" />
 		<spring:message code="report.complaint.show" var="showComplaint" />
-		<display:column title="${complaintHeader}">
+		<security:authorize access="hasRole('CUSTOMER')">
+			<display:column title="${complaintHeader}">
 
-			<div>
-				<jstl:out value="${row.complaint.description}" />
-				&nbsp; (<a
-					href="complaint/display.do?complaintId=${row.complaint.id}">
-					${showComplaint}</a>)
-			</div>
+				<div>
+					<jstl:out value="${row.complaint.description}" />
+					&nbsp; (<a
+						href="complaint/customer/display.do?complaintId=${row.complaint.id}">
+						${showComplaint}</a>)
+				</div>
 
-		</display:column>
+			</display:column>
+		</security:authorize>
 
 		<security:authorize access="hasRole('REFEREE')">
+			<display:column title="${complaintHeader}">
+
+				<div>
+					<jstl:out value="${row.complaint.description}" />
+					&nbsp; (<a
+						href="complaint/referee/display.do?complaintId=${row.complaint.id}">
+						${showComplaint}</a>)
+				</div>
+
+			</display:column>
 			<display:column>
 				<a href="report/referee/display.do?reportId=${row.id}"> <spring:message
 						code="report.display" />

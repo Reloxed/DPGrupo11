@@ -90,7 +90,7 @@ public class MessageBoxService {
 					"In Box")
 					|| messageBox.getName().equals("Out box")
 					|| messageBox.getName().equals("Spam box") || messageBox
-					.getName().equals("Trash box")))) {
+					.getName().equals("Trsh box")))) {
 			} else {
 				Assert.isTrue(this.findOne(messageBox.getId())
 						.getIsPredefined());

@@ -1065,7 +1065,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message1" />
+			<null />
 		</property>
 	</bean>
 
@@ -1098,7 +1098,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message1" />
+			<null />
 		</property>
 	</bean>
 
@@ -1131,7 +1131,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message2" />
+			<null />
 		</property>
 	</bean>
 
@@ -1164,7 +1164,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message1" />
+			<null />
 		</property>
 	</bean>
 
@@ -1197,7 +1197,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message2" />
+			<null />
 		</property>
 	</bean>
 
@@ -1300,7 +1300,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message1" />
+			<null />
 		</property>
 	</bean>
 
@@ -1333,7 +1333,7 @@
 		<property name="name" value="In box" />
 		<property name="isPredefined" value="true" />
 		<property name="messages">
-			<ref bean="message2" />
+			<null />
 		</property>
 	</bean>
 
@@ -1372,20 +1372,15 @@
 		<property name="sender">
 			<ref bean="administrator1" />
 		</property>
-		<property name="recipients">
-			<list>
+		<property name="recipient">
+			
 				<ref bean="sponsor1" />
-				<ref bean="referee1" />
-				<ref bean="handyWorker1" />
-				<ref bean="customer1" />
-			</list>
+			
 		</property>
 		<property name="messageBoxes">
 			<list>
 				<ref bean="inBoxSponsor1" />
-				<ref bean="inBoxReferee1" />
-				<ref bean="inBoxHandyWorker1" />
-				<ref bean="inBoxCustomer1" />
+
 				<ref bean="outBoxAdmin1" />
 			</list>
 		</property>
@@ -1400,20 +1395,14 @@
 		<property name="sender">
 			<ref bean="administrator2" />
 		</property>
-		<property name="recipients">
-			<list>
+		<property name="recipient">
+			
 				<ref bean="sponsor2" />
-				<ref bean="referee2" />
-				<ref bean="handyWorker2" />
-				<ref bean="customer2" />
-			</list>
+			
 		</property>
 		<property name="messageBoxes">
 			<list>
 				<ref bean="inBoxSponsor2" />
-				<ref bean="inBoxReferee2" />
-				<ref bean="inBoxHandyWorker2" />
-				<ref bean="inBoxCustomer2" />
 				<ref bean="outBoxAdmin2" />
 			</list>
 		</property>
@@ -2679,6 +2668,7 @@
 		<property name="creditCard" ref="creditCard6" />
 		<property name="sponsor" ref="sponsor2" />
 	</bean>
+
 
 
 </beans>

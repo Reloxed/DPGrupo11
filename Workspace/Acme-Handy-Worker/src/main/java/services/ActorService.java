@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -21,25 +22,24 @@ public class ActorService {
 	// Managed repository -----------------
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository actorRepository;
 
 	// Supporting services ----------------
 
 	@Autowired
-	private HandyWorkerService		handyWorkerService;
+	private HandyWorkerService handyWorkerService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService administratorService;
 
 	@Autowired
-	private CustomerService			customerService;
+	private CustomerService customerService;
 
 	@Autowired
-	private SponsorService			sponsorService;
+	private SponsorService sponsorService;
 
 	@Autowired
-	private RefereeService			refereeService;
-
+	private RefereeService refereeService;
 
 	// Constructors ------------------------------------
 
@@ -116,7 +116,6 @@ public class ActorService {
 		Assert.notNull(userAccount);
 
 		res = this.actorRepository.findActorsBySuspicious();
-		Assert.notEmpty(res);
 
 		return res;
 	}
@@ -157,4 +156,20 @@ public class ActorService {
 		a.getUserAccount().setIsBanned(false);
 		a = this.actorRepository.save(a);
 	}
+	
+	public Collection<Actor> findAllExceptPrincipal(){
+		Collection<Actor> result;
+		Actor principal;
+		
+		result = this.actorRepository.findAll();
+		Assert.notNull(result);
+		
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		
+		result.remove(principal);
+		return result;
+	}
+
 }
+

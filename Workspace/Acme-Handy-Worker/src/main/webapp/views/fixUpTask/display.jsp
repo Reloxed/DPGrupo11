@@ -62,11 +62,9 @@
 			<td><strong> <spring:message
 						code="fixUpTask.publishedMoment" /> :
 			</strong></td>
-			<td>
+			<td><jstl:out value="${fixUpTask.publishedMoment}">
+				</jstl:out></td>
 
-			<jstl:out value="${fixUpTask.publishedMoment}">
-			</jstl:out>
-			</td>
 		</tr>
 
 
@@ -142,7 +140,8 @@
 	<table class="displayStyle">
 		<tr>
 
-			<td><a href="actor/display.do?actorID=${customerId}"> <spring:message
+			<td><a href="actor/display.do?actorID=${customerOwner}"> <spring:message
+
 						code="profile.customer" />
 			</a></td>
 		</tr>
@@ -253,6 +252,7 @@
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
 		onclick="window.history.back()" />
+
 
 	<br />
 

@@ -19,167 +19,206 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('ADMIN')" />
+<security:authorize access="hasRole('ADMINISTRATOR')">
 
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<th colspan="2"><spring:message
-				code="administrator.application.statistics" /></th>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.maxapplperfut" /></td>
-		<td style="text-align: right">${applicationsStatistics[0]}</td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.minapplperfut" /></td>
-		<td style="text-align: right">${applicationsStatistics[1]}</td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.avgapplperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${applicationsStatistics[2]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.devapplperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${applicationsStatistics[3]}" /></td>
-	</tr>
-</table>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.application.statistics" /></th>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.maxapplperfut" /></td>
+			<td style="text-align: right">${applicationsStatistics[0]}</td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.minapplperfut" /></td>
+			<td style="text-align: right">${applicationsStatistics[1]}</td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.avgapplperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${applicationsStatistics[2]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.devapplperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${applicationsStatistics[3]}" /></td>
+		</tr>
+	</table>
 
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<th colspan="2"><spring:message
-				code="administrator.price.statistics" /></th>
-	</tr>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.price.statistics" /></th>
+		</tr>
 
-	<tr>
-		<td><spring:message code="administrator.maxpriceperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="2" value="${pricesStatistics[0]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.minpriceperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="2" value="${pricesStatistics[1]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.avgpriceperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="2" value="${pricesStatistics[2]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.devpriceperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${pricesStatistics[3]}" /></td>
-	</tr>
-</table>
+		<tr>
+			<td><spring:message code="administrator.maxpriceperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="2" value="${pricesStatistics[0]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.minpriceperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="2" value="${pricesStatistics[1]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.avgpriceperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="2" value="${pricesStatistics[2]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.devpriceperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${pricesStatistics[3]}" /></td>
+		</tr>
+	</table>
 
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<th colspan="2"><spring:message
-				code="administrator.complaints.statistics" /></th>
-	</tr>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.complaints.statistics" /></th>
+		</tr>
 
-	<tr>
-		<td><spring:message code="administrator.maxcompperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${complaintStatistics[0]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.mincompperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${complaintStatistics[1]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.avgcompperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${complaintStatistics[2]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.devcompperfut" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${complaintStatistics[3]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.ratiofutwithcomplaints" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${ratioFixWithComplaints}" /></td>
-	</tr>
-</table>
+		<tr>
+			<td><spring:message code="administrator.maxcompperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${complaintStatistics[0]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.mincompperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${complaintStatistics[1]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.avgcompperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${complaintStatistics[2]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.devcompperfut" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${complaintStatistics[3]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.ratiofutwithcomplaints" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${ratioFixWithComplaints}" /></td>
+		</tr>
+	</table>
 
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<th colspan="2"><spring:message
-				code="administrator.application.status.statistics" /></th>
-	</tr>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.application.status.statistics" /></th>
+		</tr>
 
-	<tr>
-		<td><spring:message code="administrator.ratiopending" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${statusStatistics[0]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.ratioaccepted" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${statusStatistics[1]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.ratiorejected" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${statusStatistics[2]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.ratiopendingexpired" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${pendingExpired}" /></td>
-	</tr>
-</table>
+		<tr>
+			<td><spring:message code="administrator.ratiopending" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${statusStatistics[0]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.ratioaccepted" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${statusStatistics[1]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.ratiorejected" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${statusStatistics[2]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.ratiopendingexpired" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${pendingExpired}" /></td>
+		</tr>
+	</table>
 
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<th colspan="2"><spring:message
-				code="administrator.notes.statistics" /></th>
-	</tr>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.notes.statistics" /></th>
+		</tr>
 
-	<tr>
-		<td><spring:message code="administrator.maxnotesperrep" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${notesStatistics[0]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.minnotesperrep" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${notesStatistics[1]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.avgnotesperrep" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${notesStatistics[2]}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="administrator.devnotesperrep" /></td>
-		<td style="text-align: right"><fmt:formatNumber
-				maxFractionDigits="4" value="${notesStatistics[3]}" /></td>
-	</tr>
-</table>
+		<tr>
+			<td><spring:message code="administrator.maxnotesperrep" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${notesStatistics[0]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.minnotesperrep" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${notesStatistics[1]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.avgnotesperrep" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${notesStatistics[2]}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.devnotesperrep" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${notesStatistics[3]}" /></td>
+		</tr>
+	</table>
 
-<div>
+	<div>
+		<table class="displayStyle" style="width: 50%">
+			<tr>
+				<td><display:table pagesize="5" class="displaytag"
+						name="customerStatistics"
+						requestURI="administrator/dashboard/display.do"
+						id="customerStatistics">
+
+						<display:column titleKey="administrator.topthreecust"
+							value="${customerStatistics.surname}, ${customerStatistics.name}"
+							sortable="true" />
+
+						<display:column titleKey="actor.profile">
+
+							<a href="actor/display.do?actorID=${customerStatistics.id}"><spring:message
+									code="actor.profile" /></a>
+
+						</display:column>
+					</display:table></td>
+			</tr>
+		</table>
+		<table class="displayStyle" style="width: 50%">
+			<tr>
+				<td><display:table pagesize="5" class="displaytag"
+						name="customerStatistics2"
+						requestURI="administrator/dashboard/display.do"
+						id="customerStatistics2">
+
+						<display:column titleKey="administrator.topthreecustcomp"
+							value="${customerStatistics2.surname}, ${customerStatistics2.name}"
+							sortable="true" />
+
+						<display:column titleKey="actor.profile">
+
+							<a href="actor/display.do?actorID=${customerStatistics2.id}"><spring:message
+									code="actor.profile" /></a>
+
+						</display:column>
+					</display:table></td>
+			</tr>
+		</table>
+	</div>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
-					name="customerStatistics"
+					name="handyWorkerStatistics"
 					requestURI="administrator/dashboard/display.do"
-					id="customerStatistics">
+					id="handyWorkerStatistics">
 
-					<display:column titleKey="administrator.topthreecust"
-						value="${customerStatistics.surname}, ${customerStatistics.name}"
+					<display:column titleKey="administrator.topthreehw"
+						value="${handyWorkerStatistics.surname}, ${handyWorkerStatistics.name}"
 						sortable="true" />
 
 					<display:column titleKey="actor.profile">
-
-						<a href="actor/display.do?actorID=${customerStatistics.id}"><spring:message
+						<a href="actor/display.do?actorID=${handyWorkerStatistics.id}"><spring:message
 								code="actor.profile" /></a>
-
 					</display:column>
 				</display:table></td>
 		</tr>
@@ -187,58 +226,21 @@
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
-					name="customerStatistics2"
+					name="handyWorkerStatistics2"
 					requestURI="administrator/dashboard/display.do"
-					id="customerStatistics2">
+					id="handyWorkerStatistics2">
 
-					<display:column titleKey="administrator.topthreecustcomp"
-						value="${customerStatistics2.surname}, ${customerStatistics2.name}"
+					<display:column titleKey="administrator.topthreehwcomp"
+						value="${handyWorkerStatistics2.surname}, ${handyWorkerStatistics2.name}"
 						sortable="true" />
 
 					<display:column titleKey="actor.profile">
 
-						<a href="actor/display.do?actorID=${customerStatistics2.id}"><spring:message
+						<a href="actor/display.do?actorID=${handyWorkerStatistics2.id}"><spring:message
 								code="actor.profile" /></a>
 
 					</display:column>
 				</display:table></td>
 		</tr>
 	</table>
-</div>
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<td><display:table pagesize="5" class="displaytag"
-				name="handyWorkerStatistics"
-				requestURI="administrator/dashboard/display.do"
-				id="handyWorkerStatistics">
-
-				<display:column titleKey="administrator.topthreehw"
-					value="${handyWorkerStatistics}" sortable="true" />
-
-				<display:column titleKey="actor.profile">
-					<a href="actor/display.do?actorID=${handyWorkerStatistics.id}"><spring:message
-							code="actor.profile" /></a>
-				</display:column>
-			</display:table></td>
-	</tr>
-</table>
-<table class="displayStyle" style="width: 50%">
-	<tr>
-		<td><display:table pagesize="5" class="displaytag"
-				name="handyWorkerStatistics2"
-				requestURI="administrator/dashboard/display.do"
-				id="handyWorkerStatistics2">
-
-				<display:column titleKey="administrator.topthreehwcomp"
-					value="${handyWorkerStatistics2.surname}, ${handyWorkerStatistics2.name}"
-					sortable="true" />
-
-				<display:column titleKey="actor.profile">
-
-					<a href="actor/display.do?actorID=${handyWorkerStatistics2.id}"><spring:message
-							code="actor.profile" /></a>
-
-				</display:column>
-			</display:table></td>
-	</tr>
-</table>
+</security:authorize>

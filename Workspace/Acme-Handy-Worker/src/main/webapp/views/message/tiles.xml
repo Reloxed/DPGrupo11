@@ -36,4 +36,8 @@
 		<put-attribute name="body" value="/views/register/edit.jsp" />
 	</definition>
 	
+	<definition name="message/broadcast" extends="master.page">
+		<put-attribute name="title" value="Broadcast message" />
+		<put-attribute name="body" value="/views/message/broadcast.jsp" />
+	</definition>
 </tiles-definitions>

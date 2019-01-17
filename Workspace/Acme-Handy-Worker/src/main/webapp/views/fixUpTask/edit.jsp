@@ -13,10 +13,10 @@
 <form:form action="fixUpTask/customer/edit.do"
 	modelAttribute="fixUpTask" id="form">
 
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-	<form:hidden path="ticker"/>
-	<form:hidden path="publishedMoment"/>
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="ticker" />
+	<form:hidden path="publishedMoment" />
 	<form:hidden path="applications" />
 	<form:hidden path="complaints" />
 
@@ -51,6 +51,7 @@
 	<form:label path="startMoment">
 		<spring:message code="fixuptask.start.moment" />
 	</form:label>
+
 	<spring:message code="fixuptask.startMoment.placeholder" var="placeholder" />
 	<form:input path="startMoment" type="date" placeholder="${placeholder}"/>
 	<form:errors cssClass="error" path="startMoment"/>
@@ -60,6 +61,7 @@
 	<form:label path="endMoment">
 		<spring:message code="fixuptask.end.moment" />
 	</form:label>
+
 	<spring:message code="fixuptask.startMoment.placeholder" var="placeholder" />
 	<form:input path="endMoment" type="date" placeholder="${placeholder}"/>
 	<form:errors cssClass="error" path="endMoment" />
@@ -67,6 +69,7 @@
 	<br /><br />
 	
 	<form:label path="category">	
+
 		<spring:message code="fixUpTask.category" />
 	</form:label>
 	<form:select path="category" style="width:400px;">
@@ -75,25 +78,21 @@
 	
 		<br /><br />
 	<form:label path="warranty">	
+
 		<spring:message code="fixUpTask.warranty" />
 	</form:label>
 	<form:select path="warranty" style="width:400px;">
-		<form:options items="${warranties}" itemLabel="title"
-			itemValue="id" />
+		<form:options items="${warranties}" itemLabel="title" itemValue="id" />
 	</form:select>
 
 	<br /><br />
 
-	
-	<input type="submit" id="save" name="save" 
-		value="<spring:message code="fixuptask.save" />" />
-		
-<%-- 	<input type="submit" id="delete" name="delete" 
-		value="<spring:message code="fixuptask.delete" />" /> --%>
 
+
+	<input type="submit" id="save" name="save"
+		value="<spring:message code="fixuptask.save" />" />
 
 	<jstl:if test="${empty fixUpTask.applications}">
-
 		<input type="submit" id="delete" name="delete"
 			value="<spring:message code="fixuptask.delete" />" />
 

@@ -84,6 +84,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 		result = new ModelAndView("fixUpTask/display");
 		result.addObject("fixUpTask", fixUpTask);
+		result.addObject("customerOwner",
+				this.fixUpTaskService.creatorFixUpTask(fixUpTaskId));
 		result.addObject("requestURI", "fixUpTask/customer/display.do");
 
 		return result;
@@ -94,7 +96,6 @@ public class FixUpTaskCustomerController extends AbstractController {
 	public ModelAndView edit(@RequestParam int fixUpTaskId) {
 		final ModelAndView result;
 		FixUpTask task;
-		
 
 		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
@@ -191,13 +192,13 @@ public class FixUpTaskCustomerController extends AbstractController {
 		String ticker;
 		Collection<Category> categories = new ArrayList<>();
 		Collection<Warranty> warranties;
-		
+
 		categories = this.categoryService.findAll();
 		warranties = this.warrantyService.findFinalWarranties();
 
 		complaints = this.complaintService.findComplaintsByCustomer();
 		applications = this.applicationService.findAllApplicationsByCustomer();
-		
+
 		ticker = task.getTicker();
 		result = new ModelAndView("fixUpTask/edit");
 		result.addObject("categories", categories);

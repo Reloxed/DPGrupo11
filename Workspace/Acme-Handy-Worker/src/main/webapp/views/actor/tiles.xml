@@ -21,4 +21,16 @@
 			value="/views/actor/list-suspicious-actors.jsp" />
 	</definition>
 
+	<definition name="socialProfile/list" extends="master.page">
+		<put-attribute name="title" value="List of social networks" />
+		<put-attribute name="body"
+			value="/views/actor/list-social-profile.jsp" />
+	</definition>
+	
+	<definition name="socialProfile/edit" extends="master.page">
+		<put-attribute name="title" value="Edit social networks" />
+		<put-attribute name="body"
+			value="/views/actor/edit-social-profile.jsp" />
+	</definition>
+
 </tiles-definitions>

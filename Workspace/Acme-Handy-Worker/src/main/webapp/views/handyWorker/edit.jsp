@@ -32,17 +32,17 @@
 			return confirm(msg);
 		}
 	}
-		
 </script>
 
 <p>
 	<spring:message code="actor.edit" />
 </p>
 
-<spring:message code="phone.confirmation" var="confirmTelephone"/>
+<spring:message code="phone.confirmation" var="confirmTelephone" />
 
 <form:form action="handyworker/handyworker/edit.do"
-	modelAttribute="handyWorker" methodParam="post" onsubmit="javascript: return checkPhone('${confirmTelephone}');">
+	modelAttribute="handyWorker" methodParam="post"
+	onsubmit="javascript: return checkPhone('${confirmTelephone}');">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -123,7 +123,7 @@
 	<form:label path="phoneNumber">
 		<spring:message code="actor.phone" />:
 		</form:label>
-	<form:input path="phoneNumber" value="${handyWorker.phoneNumber}"/>
+	<form:input path="phoneNumber" value="${handyWorker.phoneNumber}" />
 	<form:errors cssClass="error" path="phoneNumber" />
 	<br>
 
@@ -134,13 +134,19 @@
 	<form:errors cssClass="error" path="address" />
 	<br>
 
-	<form:label path="make">
-		<spring:message code="actor.handyworker.make" />:
+	<jstl:choose>
+		<jstl:when test="${handyWorker.id != 0}">
+			<form:label path="make">
+				<spring:message code="actor.handyworker.make" />:
 		</form:label>
-	<form:input path="make" value="${handyWorker.make}" />
-	<form:errors cssClass="error" path="make" />
-	<br>
-
+			<form:input path="make" value="${handyWorker.make}" />
+			<form:errors cssClass="error" path="make" />
+			<br>
+		</jstl:when>
+		<jstl:otherwise>
+			<form:hidden path="make" value="lore ipsum" />
+		</jstl:otherwise>
+	</jstl:choose>
 	<input type="submit" name="save" id="save"
 		value='<spring:message code="actor.save"/>' />
 	<input type="button" name="cancel"

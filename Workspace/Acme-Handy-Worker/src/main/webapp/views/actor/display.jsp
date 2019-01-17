@@ -46,61 +46,89 @@
 	</jstl:when>
 </jstl:choose>
 
-<h3>
-	<spring:message code="actor.userAccount.username" />
-	<jstl:out value="${actor.userAccount.username}" />
-</h3>
+<img height="150px" width="150px" alt="userPhoto" src="${actor.photo}">
 
-<div
-	style="float: left; padding: 10px; height: 150px; width: 150px; overflow: auto;">
-	<img height="100%" width="100%" alt="userPhoto" src="${actor.photo}">
-	<h3>
-		<jstl:out value="${actor.name}" />
-		<jstl:out value="${actor.middleName}" />
-		<jstl:out value="${actor.surname}" />
-	</h3>
-</div>
+<table class="displayStyle" style="width: 50%">
+	<tr>
+		<td><strong> <spring:message
+					code="actor.userAccount.username" /></strong></td>
+		<td><jstl:out value="${actor.userAccount.username}" /></td>
+	</tr>
 
-<h5>
-	<strong><spring:message code="actor.email" />:</strong>
-	<jstl:out value="${actor.email}"></jstl:out>
-</h5>
+	<tr>
+		<td><strong><spring:message code="actor.fullname" /></strong></td>
+		<td><jstl:out value="${actor.name}" /> <jstl:out
+				value="${actor.middleName}" /> <jstl:out value="${actor.surname}" /></td>
+	</tr>
 
-<h5>
-	<strong><spring:message code="actor.phone" />:</strong>
-	<jstl:out value="${actor.phoneNumber}"></jstl:out>
-</h5>
+	<tr>
+		<td><strong><spring:message code="actor.email" />:</strong></td>
+		<td><jstl:out value="${actor.email}" /></td>
+	</tr>
 
-<h5>
-	<strong><spring:message code="actor.address" />:</strong>
-	<jstl:out value="${actor.address}"></jstl:out>
-</h5>
+	<tr>
+		<td><strong><spring:message code="actor.phone" />:</strong></td>
+		<td><jstl:out value="${actor.phoneNumber}" /></td>
+	</tr>
 
-<jstl:if test="${type == 'customer' || type == 'handyworker'}">
-	<h5>
-		<strong><spring:message code="actor.score" /></strong>
-	</h5>
-	<h5>
-		<jstl:out value="${handyWorker.score}" />
-		<jstl:out value="${customer.score}" />
-		<br/>
-		<br/>
-		<br/>
-			<spring:message code="customer.fixs"/>
-			<br/>
-			<br/>
-		
+	<tr>
+		<td><strong><spring:message code="actor.address" />:</strong></td>
+		<td><jstl:out value="${actor.address}" /></td>
+	</tr>
+
+
+
+	<%-- <jstl:if test="${type == 'customer' || type == 'handyworker'}">
+		<h5>
+			<strong><spring:message code="actor.score" /></strong>
+		</h5>
+		<h5>
+			<jstl:out value="${handyWorker.score}" />
+			<jstl:out value="${customer.score}" />
+			<br /> <br /> <br />
+			<spring:message code="customer.fixs" />
+			<br /> <br />
+
 			<jstl:forEach var="fixUpTask" items="${customer.fixUpTasks}">
-				
-				<ul><li> <jstl:out value="${fixUpTask.description}"> </jstl:out></li></ul>
-				<br/>
+
+				<ul>
+					<li><jstl:out value="${fixUpTask.description}">
+						</jstl:out></li>
+				</ul>
+				<br />
 			</jstl:forEach>
-		
 
-	</h5>
+		</h5>
+	</jstl:if> --%>
+</table>
+
+<jstl:if test="${not empty socialProfiles}">
+	<p>
+		<spring:message code="actor.socialprofiles" />
+	</p>
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<td><display:table pagesize="5" class="displaytag"
+					name="socialProfiles"
+					requestURI="actor/display.do?actorID=${actor.id}"
+					id="socialProfiles">
+
+					<display:column titleKey="actor.socialprofile.network"
+						value="${socialProfiles.socialNetwork}" />
+					<display:column titleKey="actor.socialprofile.network"
+						value="${socialProfiles.nick}" />
+					<display:column titleKey="actor.socialprofile.link"
+						value="${socialProfiles.link}" />
+				</display:table></td>
+		</tr>
+	</table>
+	<jstl:if test="${user == actor.userAccount.username}">
+		<input type="button" name="listSocial"
+			value="<spring:message code="actor.list.social" />"
+			onclick="redirect: location.href = 'social-profile/actor/list.do?actorID=${actor.id}';" />
+	</jstl:if>
+
 </jstl:if>
-
-
 
 <jstl:if test="${type == 'handyworker'}">
 	<h5>
@@ -112,12 +140,6 @@
 		value="<spring:message code="handyWorker.cv" />"
 		onclick="redirect: location.href = 'curriculum/handyWorker/display.do?curriculumID=${handyWorker.curriculum.id}';" />
 
-</jstl:if>
-
-<jstl:if test="${user == actor.userAccount.username}">
-	<input type="button" name="editActor"
-		value="<spring:message code="actor.edit" />"
-		onclick="redirect: location.href = '${type}/${type}/edit.do?${type}ID=${actor.id}';" />
 </jstl:if>
 
 <jstl:if test="${user == actor.userAccount.username}">
@@ -144,4 +166,10 @@
 			value="<spring:message code="actor.add.creditcard" />"
 			onclick="redirect: location.href = 'creditcard/create.do?';" />
 	</jstl:if>
+</jstl:if>
+
+<jstl:if test="${user == actor.userAccount.username}">
+	<input style="float: right; margin-right: 50%" type="button"
+		name="editActor" value="<spring:message code="actor.edit" />"
+		onclick="redirect: location.href = '${type}/${type}/edit.do?${type}ID=${actor.id}';" />
 </jstl:if>
