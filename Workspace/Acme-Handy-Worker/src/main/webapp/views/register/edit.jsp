@@ -18,7 +18,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
-	<form:hidden path="userAccount.authorities[0]" />
+	<form:hidden path="userAccount.authorities[0]" id="autho" />
 
 	<form:label path="name">
 		<spring:message code="register.name" />
@@ -55,7 +55,7 @@
 		<spring:message code="register.email" />
 	</form:label>
 	<spring:message code="register.email.placeholder" var="placeholder" />
-	<form:input path="email" placeholder="${placeholder }" />
+	<form:input path="email" placeholder="${placeholder }" id="email" />
 	<form:errors cssClass="error" path="email" />
 	<br />
 
@@ -93,16 +93,16 @@
 		<form:hidden path="finder" />
 		<form:hidden path="curriculum" />
 	</security:authorize>
-	
+
 	<security:authorize access="hasRole('CUSTOMER')">
 		<form:hidden path="fixUpTasks" />
 		<form:hidden path="complaints" />
 	</security:authorize>
-	
+
 	<security:authorize access="hasRole('REFEREE')">
 		<form:hidden path="complaints" />
 	</security:authorize>
-	
+
 	<security:authorize access="hasRole('SPONSOR')">
 		<form:hidden path="sponsorships" />
 	</security:authorize>
@@ -124,7 +124,8 @@
 	<form:errors cssClass="error" path="userAccount.password" />
 	<br />
 
-	<input type="submit" name="save" id="save" onclick="checkPhone()"
+	<input type="submit" name="save" id="save"
+		onclick="javascript:checkEmail(); checkPhone();"
 		value="<spring:message code="register.save" />" />
 	<input type="button" name="cancel" id="cancel"
 		onclick="window.history.back()"
@@ -136,6 +137,19 @@
 		var phone = document.getElementById("phone");
 		if (/^(+[0-9]{3}[0-9]{9})$/.test(phone) == false) {
 			return confirm("<spring:message code="register.phone.confirmation" />");
+		}
+	}
+
+	function checkEmail() {
+		var email = document.getElementById("email").value;
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+			return (true);
+		} else if (/^(\w+ ?)*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+				.test(email)) {
+			return (true);
+		} else {
+			alert("<spring:message code="alertEmail" />");
+			return (false);
 		}
 	}
 </script>
