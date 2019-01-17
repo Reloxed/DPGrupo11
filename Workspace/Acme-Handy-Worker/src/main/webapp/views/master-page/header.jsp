@@ -203,7 +203,7 @@
 					<li class="arrow"></li>
 					<li><a href="actor/display.do"><spring:message
 								code="master.page.profile.view" /></a></li>
-					<li><a href="message-box/list.do"><spring:message
+					<li><a href="box/actor/list.do"><spring:message
 								code="master.page.profile.message.boxes" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>

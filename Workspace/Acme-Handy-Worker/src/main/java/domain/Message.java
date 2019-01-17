@@ -16,8 +16,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,7 +31,7 @@ public class Message extends DomainEntity {
 	private Actor					sender;
 	private Actor					recipient;
 	private boolean					isSpam;
-	private MessageBox				messageBox;
+	private Collection<MessageBox>	messageBoxes;
 
 
 	@NotNull
@@ -117,13 +115,13 @@ public class Message extends DomainEntity {
 	
 	@Valid
 	@NotNull
-	@ManyToOne(optional = false)
-	public MessageBox getMessageBox() {
-		return this.messageBox;
+	@ManyToMany
+	public Collection<MessageBox> getMessageBoxes() {
+		return this.messageBoxes;
 	}
 
-	public void setMessageBox(final MessageBox messageBox) {
-		this.messageBox = messageBox;
+	public void setMessageBoxes(final Collection<MessageBox> messageBoxes) {
+		this.messageBoxes = messageBoxes;
 	}
 
 }
