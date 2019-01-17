@@ -106,12 +106,10 @@
 				sortable="true" class="${bgcolor}" />
 
 			<display:column>
-				<jstl:if test="${applications.status == 'ACCEPTED'}">
-					<a
-						href="phase/handy-worker/list.do?fixuptaskID=${applications.fixUpTask.id}"><spring:message
-							code="application.workplan" /> </a>
-				</jstl:if>
+				<a href="application/display.do?applicationId=${applications.id}"> <spring:message
+					code="application.display" /></a>
 			</display:column>
+
 
 		</display:table>
 
@@ -141,7 +139,11 @@
 			<display:column property="customerComment" titleKey="application.myComment" />
 
 			<display:column property="status" titleKey="application.status" />
-
+			
+			<display:column>
+			<a href="application/display.do?applicationId=${applications.id}"> <spring:message
+					code="application.display" /></a>
+		</display:column>
 
 			<display:column titleKey="application.buttons">
 				<jstl:choose>
