@@ -20,7 +20,8 @@
 	<form:hidden path="applications" />
 	<form:hidden path="complaints" />
 
-	<br /><br />
+	<br />
+	<br />
 
 	<form:label path="description">
 		<spring:message code="fixUpTask.description" />
@@ -29,7 +30,8 @@
 		var="placeholder" />
 	<form:input placeholder="${placeholder}" path="description" />
 	<form:errors cssClass="error" path="description" />
-	<br /><br />
+	<br />
+	<br />
 
 	<form:label path="address">
 		<spring:message code="fixUpTask.address" />
@@ -37,7 +39,8 @@
 	<spring:message code="fixuptask.address.placeholder" var="placeholder" />
 	<form:input placeholder="${placeholder}" path="address" />
 	<form:errors cssClass="error" path="address" />
-	<br /><br />
+	<br />
+	<br />
 
 	<form:label path="maxPrice">
 		<spring:message code="fixuptask.max.price" />
@@ -46,15 +49,17 @@
 		var="placeholder" />
 	<form:input placeholder="${placeholder}" path="maxPrice" />
 	<form:errors cssClass="error" path="maxPrice" />
-	<br /><br />
-	
+	<br />
+	<br />
+
 	<form:label path="startMoment">
 		<spring:message code="fixuptask.start.moment" />
 	</form:label>
 
-	<spring:message code="fixuptask.startMoment.placeholder" var="placeholder" />
-	<form:input path="startMoment" type="date" placeholder="${placeholder}"/>
-	<form:errors cssClass="error" path="startMoment"/>
+	<spring:message code="fixuptask.startMoment.placeholder"
+		var="placeholder" />
+	<form:input path="startMoment" type="date" placeholder="${placeholder}" />
+	<form:errors cssClass="error" path="startMoment" />
 	
 	&#160;
 
@@ -62,22 +67,25 @@
 		<spring:message code="fixuptask.end.moment" />
 	</form:label>
 
-	<spring:message code="fixuptask.startMoment.placeholder" var="placeholder" />
-	<form:input path="endMoment" type="date" placeholder="${placeholder}"/>
+	<spring:message code="fixuptask.startMoment.placeholder"
+		var="placeholder" />
+	<form:input path="endMoment" type="date" placeholder="${placeholder}" />
 	<form:errors cssClass="error" path="endMoment" />
 
-	<br /><br />
-	
-	<form:label path="category">	
+	<br />
+	<br />
+
+	<form:label path="category">
 
 		<spring:message code="fixUpTask.category" />
 	</form:label>
 	<form:select path="category" style="width:400px;">
 		<form:options items="${categories}" itemLabel="name" itemValue="id" />
 	</form:select>
-	
-		<br /><br />
-	<form:label path="warranty">	
+
+	<br />
+	<br />
+	<form:label path="warranty">
 
 		<spring:message code="fixUpTask.warranty" />
 	</form:label>
@@ -85,14 +93,15 @@
 		<form:options items="${warranties}" itemLabel="title" itemValue="id" />
 	</form:select>
 
-	<br /><br />
+	<br />
+	<br />
 
 
 
 	<input type="submit" id="save" name="save"
 		value="<spring:message code="fixuptask.save" />" />
 
-	<jstl:if test="${empty fixUpTask.applications}">
+	<jstl:if test="${empty fixUpTask.applications or fixUpTask.id == 0}">
 		<input type="submit" id="delete" name="delete"
 			value="<spring:message code="fixuptask.delete" />" />
 

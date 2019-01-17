@@ -150,8 +150,9 @@
 				<tr>
 					<td><display:table pagesize="5" class="displaytag"
 							name="creditCards"
-							requestURI="actor/display.do?actorID=${actor.id}" id="creditCards">
-	
+							requestURI="actor/display.do?actorID=${actor.id}"
+							id="creditCards">
+
 							<display:column titleKey="actor.creditcard.holdername"
 								value="${creditCards.holderName}" sortable="true" />
 							<display:column titleKey="actor.creditcard.brand"
@@ -159,13 +160,19 @@
 						</display:table></td>
 				</tr>
 			</table>
-			
+
 		</jstl:if>
 
 		<input type="button" name="addCredCard"
 			value="<spring:message code="actor.add.creditcard" />"
 			onclick="redirect: location.href = 'creditcard/create.do?';" />
 	</jstl:if>
+</jstl:if>
+
+<jstl:if test="${type == 'administrator'}">
+	<input type="button" name="deleteExpired"
+		value="<spring:message code="admin.delete.expired" />"
+		onclick="redirect: location.href = 'actor/administrator/delete-expired-finders.do?';" />
 </jstl:if>
 
 <jstl:if test="${user == actor.userAccount.username}">
