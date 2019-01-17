@@ -113,6 +113,8 @@ public class FixUpTaskService {
 		if (containsSpam)
 			principal.setIsSuspicious(true);
 
+		result = this.fixUpTaskRepository.save(fixUpTask);
+
 		return result;
 
 	}

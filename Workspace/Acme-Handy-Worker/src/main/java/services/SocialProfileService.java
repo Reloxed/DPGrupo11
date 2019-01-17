@@ -103,7 +103,6 @@ public class SocialProfileService {
 	public SocialProfile save(final SocialProfile socialProfile) {
 		Actor principal;
 		SocialProfile result;
-		Collection<SocialProfile> socialProfilesUpdated;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
@@ -115,53 +114,13 @@ public class SocialProfileService {
 		List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(socialProfile.getNick());
 
-		result = this.socialProfileRepository.save(socialProfile);
-		Assert.notNull(result);
-
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if (containsSpam) {
 			principal.setIsSuspicious(true);
 		}
 
-		if (principal instanceof Customer) {
-			Customer toSave = this.customerService.findOne(principal.getId());
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(toSave.getSocialProfiles());
-			socialProfilesUpdated.add(result);
-			toSave.setSocialProfiles(socialProfilesUpdated);
-			this.customerService.save(toSave);
-		} else if (principal instanceof HandyWorker) {
-			HandyWorker toSave = this.handyWorkerService.findOne(principal
-					.getId());
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(toSave.getSocialProfiles());
-			socialProfilesUpdated.add(result);
-			toSave.setSocialProfiles(socialProfilesUpdated);
-			this.handyWorkerService.save(toSave);
-		} else if (principal instanceof Sponsor) {
-			Sponsor toSave = this.sponsorService.findOne(principal.getId());
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(toSave.getSocialProfiles());
-			socialProfilesUpdated.add(result);
-			toSave.setSocialProfiles(socialProfilesUpdated);
-			this.sponsorService.save(toSave);
-		} else if (principal instanceof Referee) {
-			Referee toSave = this.refereeService.findOne(principal.getId());
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(toSave.getSocialProfiles());
-			socialProfilesUpdated.add(result);
-			toSave.setSocialProfiles(socialProfilesUpdated);
-			this.refereeService.save(toSave);
-		} else {
-			Administrator toSave = this.administratorService.findOne(principal
-					.getId());
-			socialProfilesUpdated = new ArrayList<SocialProfile>();
-			socialProfilesUpdated.addAll(toSave.getSocialProfiles());
-			socialProfilesUpdated.add(result);
-			toSave.setSocialProfiles(socialProfilesUpdated);
-			this.administratorService.save(toSave);
-		}
-
+		result = this.socialProfileRepository.save(socialProfile);
+		Assert.notNull(result);
 		return result;
 	}
 

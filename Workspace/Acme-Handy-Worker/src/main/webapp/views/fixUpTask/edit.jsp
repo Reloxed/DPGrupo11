@@ -122,7 +122,7 @@
 	<input type="submit" id="save" name="save"
 		value="<spring:message code="fixuptask.save" />" />
 
-	<jstl:if test="${empty fixUpTask.applications}">
+	<jstl:if test="${empty fixUpTask.applications or fixUpTask.id == 0}">
 		<input type="submit" id="delete" name="delete"
 			value="<spring:message code="fixuptask.delete" />" />
 

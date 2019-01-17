@@ -194,14 +194,20 @@ public class FixUpTaskCustomerController extends AbstractController {
 				FixUpTask saved;
 				principal = this.customerService.findByPrincipal();
 				saved = this.fixUpTaskService.save(task);
+<<<<<<< HEAD
 				if(!principal.getFixUpTasks().contains(task)){
 					principal.getFixUpTasks().add(this.fixUpTaskService.findOne(saved.getId()));
+=======
+				if (!principal.getFixUpTasks().contains(task)) {
+					principal.getFixUpTasks().add(
+							this.fixUpTaskService.findOne(saved.getId()));
+>>>>>>> Figueroa
 					this.customerService.save(principal);
 				}
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println(binding.getAllErrors());
-				result = this.createEditModelAndView(task,oops.getMessage());
+				result = this.createEditModelAndView(task, oops.getMessage());
 			}
 
 		return result;
