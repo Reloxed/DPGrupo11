@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- ACTORS -->
+	<!-- Administrator -->
+
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Lucía" />
+		<property name="surname" value="Aparicio Bataller" />
+		<property name="email" value="lucapabat@mail.com" />
+		<property name="isSuspicious" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="inBoxAdmin1" />
+				<ref bean="outBoxAdmin1" />
+				<ref bean="spamBoxAdmin1" />
+				<ref bean="trashBoxAdmin1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAdmin1" />
+	</bean>
+
+	<!-- USER ACCOUNTS -->
+
+	<!-- ADMINISTRATORS -->
+
+	<bean id="userAdmin1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="isBanned" value="false" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SYSTEM CONFIGURATION -->
+
+	<bean id="sysConf" class="domain.SystemConfiguration">
+		<property name="systemName" value="Acme Handy Worker" />
+		<property name="welcomeMessage">
+			<util:map id="utilmap0" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español"
+					value="¡Bienvenidos a Acme-HandyWorker! precio,calidad y confianza en el mismo sitio" />
+				<entry key="English"
+					value="Welcome to Acme-HandyWorker! price,quality,and trust in a single place" />
+			</util:map>
+		</property>
+		<property name="banner"
+			value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
+		<property name="VAT" value=".21" />
+		<property name="listCreditCardMakes" value="VISA,MASTER,DINNERS,AMEX" />
+		<property name="countryCode" value="+034" />
+		<property name="timeResultsCached" value="1" />
+		<property name="maxResults" value="10" />
+		<property name="spamWords"
+			value="sex,viagra,cialis,one million,you've been selected,nigeria,sexo,un millón,un millon,has sido seleccionado" />
+		<property name="positiveWords"
+			value="fantastic,awesome,good,amusing,amazing,fantastico,fantástico,genial,bueno,increible,increíble,divertido" />
+		<property name="negativeWords"
+			value="bad,horrendous,horrible,disgusting,malo,horrendo,horroroso" />
+
+	</bean>
+
+	<!-- MESSAGE BOXes -->
+
+	<!-- Administrator 1 -->
+	<bean id="inBoxAdmin1" class="domain.MessageBox">
+		<property name="name" value="In box" />
+		<property name="isPredefined" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="outBoxAdmin1" class="domain.MessageBox">
+		<property name="name" value="Out box" />
+		<property name="isPredefined" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="trashBoxAdmin1" class="domain.MessageBox">
+		<property name="name" value="Trash box" />
+		<property name="isPredefined" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="spamBoxAdmin1" class="domain.MessageBox">
+		<property name="name" value="Spam box" />
+		<property name="isPredefined" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<!-- CATEGORIES -->
+
+	<!-- CATEGORY -->
+	<bean id="CATEGORY" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="CATEGORIA" />
+				<entry key="English" value="CATEGORY" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<null />
+		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="repairs" />
+				<ref bean="housing" />
+				<ref bean="carpentry" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- REPAIRS -->
+	<bean id="repairs" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap1" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparaciones" />
+				<entry key="English" value="Repairs" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="ceilingRepair" />
+				<ref bean="fenceFixing" />
+				<ref bean="lampRepairs" />
+				<ref bean="plumbingRepairs" />
+				<ref bean="sprinklerRepair" />
+				<ref bean="windowRepair" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- HOUSING -->
+	<bean id="housing" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap2" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Hogar" />
+				<entry key="English" value="Housing" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+		<property name="childCategories">
+			<list>
+				<ref bean="cleaning" />
+				<ref bean="concreteWork" />
+				<ref bean="doors" />
+				<ref bean="electricalWiring" />
+				<ref bean="fanInstallation" />
+				<ref bean="homeSecuritySystem" />
+				<ref bean="insulationInstallation" />
+				<ref bean="moving" />
+				<ref bean="painting" />
+				<ref bean="pestControl" />
+				<ref bean="plumbingRepairs" />
+				<ref bean="shelfInstallation" />
+				<ref bean="solarPanels" />
+				<ref bean="soundProofing" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Carpentry -->
+	<bean id="carpentry" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap3" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Carpintería" />
+				<entry key="English" value="Carpentry" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="CATEGORY" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Ceiling Repair -->
+	<bean id="ceilingRepair" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap4" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de techo" />
+				<entry key="English" value="Ceiling repair" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Cleaning -->
+	<bean id="cleaning" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap5" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Limpieza" />
+				<entry key="English" value="Cleaning" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Concrete work -->
+	<bean id="concreteWork" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap6" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Trabajos especiales" />
+				<entry key="English" value="Repairs" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Doors -->
+	<bean id="doors" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap7" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Puertas" />
+				<entry key="English" value="Doors" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Electrical Wiring -->
+	<bean id="electricalWiring" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap8" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Cableado eléctrico" />
+				<entry key="English" value="Electrical wiring" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Fan installation -->
+	<bean id="fanInstallation" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap9" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Instalación de aire acondicionado" />
+				<entry key="English" value="Fan installation" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Fence fixing -->
+	<bean id="fenceFixing" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap10" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de vallas" />
+				<entry key="English" value="Fence fixing" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Home Security Systems -->
+	<bean id="homeSecuritySystem" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap11" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Equipo de seguridad en casas" />
+				<entry key="English" value="Home security systems" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Insulation Installation -->
+	<bean id="insulationInstallation" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap12" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Aislamiento térmico" />
+				<entry key="English" value="Insulation installation" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Lamp Repairs -->
+	<bean id="lampRepairs" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap13" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de lámparas" />
+				<entry key="English" value="Lamp repairs" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Moving -->
+	<bean id="moving" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap14" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Mudanzas" />
+				<entry key="English" value="Moving" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Painting -->
+	<bean id="painting" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap15" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Pintura" />
+				<entry key="English" value="Painting" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Pest Control -->
+	<bean id="pestControl" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap16" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Control de plagas" />
+				<entry key="English" value="Pest control" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Plumbing Repairs -->
+	<bean id="plumbingRepairs" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap17" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Fontanería" />
+				<entry key="English" value="Plumbing repairs" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Roofing -->
+	<bean id="roofing" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap18" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Tejados" />
+				<entry key="English" value="Roofing" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Shelf Installation -->
+	<bean id="shelfInstallation" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap19" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Instalación de estanterías" />
+				<entry key="English" value="Shelf installation" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Solar Panels -->
+	<bean id="solarPanels" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap20" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Paneles solares" />
+				<entry key="English" value="Solar panels" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Soundproofing -->
+	<bean id="soundProofing" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap21" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Insonorización" />
+				<entry key="English" value="Soundproofing" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="housing" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Sprinkler Repair -->
+	<bean id="sprinklerRepair" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap22" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de riego" />
+				<entry key="English" value="Sprinkler repair" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Window Repair -->
+	<bean id="windowRepair" class="domain.Category">
+		<property name="name">
+			<util:map id="utilmap23" map-class="java.util.HashMap"
+				key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Español" value="Reparación de ventanas" />
+				<entry key="English" value="Window repair" />
+			</util:map>
+		</property>
+		<property name="parentCategory">
+			<ref bean="repairs" />
+		</property>
+		<property name="childCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+</beans>
