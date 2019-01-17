@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ComplaintService;
-import services.NoteService;
-import services.RefereeService;
 import services.ReportService;
 import controllers.AbstractController;
 import domain.Complaint;
@@ -31,13 +29,7 @@ public class ReportRefereeController extends AbstractController {
 	private ReportService reportService;
 
 	@Autowired
-	private RefereeService refereeService;
-
-	@Autowired
 	private ComplaintService complaintService;
-
-	@Autowired
-	private NoteService noteService;
 
 	// Constructors
 

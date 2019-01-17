@@ -85,8 +85,8 @@
 				<a href="report/handyWorker/display.do?reportId=${row.id}"> <spring:message
 						code="report.display" />
 				</a>
-
 			</display:column>
+
 		</security:authorize>
 
 	</display:table>
