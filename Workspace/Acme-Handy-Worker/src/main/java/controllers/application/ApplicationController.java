@@ -1,6 +1,7 @@
 package controllers.application;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -53,11 +54,10 @@ public class ApplicationController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false) Integer fixUpTaskId) {
 		ModelAndView res;
 		Collection<Application> applications;
-		
 
 		try {
 			HandyWorker principal;
-			
+
 			principal = this.handyWorkerService.findByPrincipal();
 
 			applications = this.applicationService
@@ -114,18 +114,21 @@ public class ApplicationController extends AbstractController {
 		res = new ModelAndView("application/accept");
 		res.addObject("application", toAccept);
 		res.addObject("principal", principal);
-//		res.addObject(attributeValue)
+		// res.addObject(attributeValue)
 		return res;
 	}
 
 	@RequestMapping(value = "/customer/acceptb", method = RequestMethod.POST, params = "save")
-	public ModelAndView acceptButton(@Valid Application application) {
+	public ModelAndView acceptButton(@Valid Application application,
+			Locale locale) {
 		ModelAndView res;
+		String language;
 
 		try {
 			Application accepted;
+			language = locale.getLanguage();
 			this.applicationService.accept(application,
-					application.getCreditCard());
+					application.getCreditCard(), language);
 			accepted = this.applicationService.findOne(application.getId());
 			res = new ModelAndView(
 					"redirect:/application/customer,handy-worker/list.do?fixUpTaskId="
@@ -140,16 +143,19 @@ public class ApplicationController extends AbstractController {
 	// Reject
 
 	@RequestMapping(value = "/customer/reject")
-	public ModelAndView reject(@RequestParam int applicationID) {
+	public ModelAndView reject(@RequestParam int applicationID, Locale locale) {
 		ModelAndView res;
 		Application toReject;
 		Collection<Application> applications;
 		Customer fixUpTaskOwner;
 		boolean hasAccepted = false;
-
+		String language;
+		
+		language = locale.getLanguage();
+		
 		toReject = this.applicationService.findOne(applicationID);
 
-		this.applicationService.reject(toReject);
+		this.applicationService.reject(toReject, language);
 
 		applications = this.applicationService
 				.findAllApplicationsByFixUpTask(toReject.getFixUpTask().getId());

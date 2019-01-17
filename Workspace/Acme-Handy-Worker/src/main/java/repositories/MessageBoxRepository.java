@@ -26,4 +26,7 @@ public interface MessageBoxRepository extends JpaRepository<MessageBox, Integer>
 
 	@Query("select m from MessageBox m, Actor a where (m member of a.messageBoxes and a.id=?1))")
 	Collection<MessageBox> findAllByPrincipal(int actorId);
+	
+	@Query("select m from MessageBox m where m.name='In box'")
+	Collection<MessageBox> findAllInBoxExceptAdmin();
 }

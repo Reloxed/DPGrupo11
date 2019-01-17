@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.transaction.Transactional;
 
@@ -76,7 +77,7 @@ public class ApplicationService {
 		Date registeredMoment;
 		FixUpTask fixUpTask;
 		Collection<Application> applications, updated;
-		final String bodyHW, bodyHWSpa, bodyCustomer, bodyCustomerSpa;
+		
 
 		Assert.notNull(application);
 		Assert.notNull(application.getOfferedPrice());
@@ -86,7 +87,7 @@ public class ApplicationService {
 
 		actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		
+
 		if (application.getStatus().equals("ACCEPTED"))
 			Assert.notNull(application.getCreditCard());
 
@@ -115,9 +116,9 @@ public class ApplicationService {
 						this.findOne(application.getId()).getStatus()));
 				Assert.isTrue(application.getOfferedPrice() == this.findOne(
 						application.getId()).getOfferedPrice());
-				if(application.getCustomerComment() != null) {
-					Assert.isTrue(application.getCustomerComment()
-							.equals(this.findOne(application.getId())
+				if (application.getCustomerComment() != null) {
+					Assert.isTrue(application.getCustomerComment().equals(
+							this.findOne(application.getId())
 									.getCustomerComment()));
 				}
 			}
@@ -127,12 +128,12 @@ public class ApplicationService {
 
 			final boolean containsSpamHW = this.utilityService
 					.isSpam(atributosAComprobarHW);
-			
+
 			if (containsSpamHW)
 				applicant.setIsSuspicious(true);
 
 		} else if (actor instanceof Customer) {
-			
+
 			customer = this.customerService.findByPrincipal();
 			Assert.notNull(customer);
 
@@ -147,14 +148,14 @@ public class ApplicationService {
 			Assert.isTrue(application.getHandyWorkerComment() == this.findOne(
 					application.getId()).getHandyWorkerComment());
 
-			if(application.getCustomerComment() != null) {
+			if (application.getCustomerComment() != null) {
 				final List<String> atributosAComprobarC = new ArrayList<>();
 				atributosAComprobarC.add(application.getCustomerComment());
 
 				containsSpamC = this.utilityService
 						.isSpam(atributosAComprobarC);
 			}
-			
+
 			if (containsSpamC)
 				customer.setIsSuspicious(true);
 		}
@@ -176,32 +177,7 @@ public class ApplicationService {
 
 		// Check contain of strings searching spamWords
 
-		bodyHW = "The status of your application of the fix up task which ticker is"
-				+ result.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ result.getStatus();
-		bodyCustomer = "The status of application of the fix up task which ticker is"
-				+ result.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ result.getStatus();
-		bodyHWSpa = "El estado de su solicitud de la chapuza cuyo ticker es "
-				+ result.getFixUpTask().getTicker() + "ha sido cambiado a "
-				+ result.getStatus();
-		bodyCustomerSpa = "El estado de la solicitud de la chapuza cuyo ticker es "
-				+ result.getFixUpTask().getTicker()
-				+ "ha sido cambiado a "
-				+ result.getStatus();
-
-		this.messageService.createAndSaveStatus(applicant, bodyHW,
-				result.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(applicant, bodyHWSpa,
-				result.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService
-				.findCustomerByApplicationId(result.getId()), bodyCustomer,
-				result.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(this.customerService
-				.findCustomerByApplicationId(result.getId()), bodyCustomerSpa,
-				result.getRegisteredMoment());
+		
 		return result;
 	}
 
@@ -225,9 +201,11 @@ public class ApplicationService {
 
 	// Other business methods --------------------------
 
-	public void accept(final Application a, final CreditCard creditCard) {
+	public void accept(final Application a, final CreditCard creditCard,
+			String locale) {
+		
 		final Customer customer;
-		final String bodyCustomer, bodyHandyWorker;
+		final String body;
 
 		Assert.notNull(a);
 		Assert.isTrue(a.getId() != 0);
@@ -237,31 +215,35 @@ public class ApplicationService {
 
 		Assert.isTrue(a.getFixUpTask().getApplications().contains(a));
 		Assert.isTrue(a.getStatus().equals("PENDING"));
-		a.setStatus("ACCEPTED");
+		a.setStatus("ACCEPTERD");
+		
 		this.applicationRepository.saveAndFlush(a);
 
-		bodyHandyWorker = "The status of your application of the fix up task whose ticker is"
-				+ a.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ a.getStatus();
-		bodyCustomer = "The status of application of the fix up task whose ticker is"
-				+ a.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ a.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(),
-				bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(
-				this.customerService.findCustomerByApplicationId(a.getId()),
-				bodyCustomer, a.getRegisteredMoment());
+		if (locale.equals("en")) {
+			body = "The status of the application of the fix up task whose ticker is "
+					+ a.getFixUpTask().getTicker()
+					+ " has been changed to "
+					+ a.getStatus();
+			this.messageService.createAndSaveStatus(a.getApplicant(), body,
+					a.getRegisteredMoment());
+		} else {
+			body = "El estado de solicitud de la chapuza cuyo identificador es "
+					+ a.getFixUpTask().getTicker()
+					+ ", se ha cambiado a "
+					+ a.getStatus();
+			this.messageService.createAndSaveStatus(a.getApplicant(), body,
+					a.getRegisteredMoment());
+		}
 
 		if (a.getStatus() == "ACCEPTED")
 			a.setCreditCard(creditCard);
 
 	}
 
-	public void reject(final Application a) {
+	public void reject(final Application a, String locale) {
+		
 		final Customer customer;
-		final String bodyCustomer, bodyHandyWorker;
+		final String body;
 		Application saved;
 
 		Assert.notNull(a);
@@ -274,20 +256,28 @@ public class ApplicationService {
 		Assert.isTrue(a.getStatus().equals("PENDING"));
 		a.setStatus("REJECTED");
 		saved = this.applicationRepository.saveAndFlush(a);
+		
+		if(locale.equals("en")){
+			
+			body = "The status of your application of the fix up task with ticker number "
+					+ saved.getFixUpTask().getTicker()
+					+ " has been changed to "
+					+ saved.getStatus();
 
-		bodyHandyWorker = "The status of your application of the fix up task with ticker number"
-				+ saved.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ saved.getStatus();
-		bodyCustomer = "The status of application of the fix up task with ticker number"
-				+ saved.getFixUpTask().getTicker()
-				+ "has been changed to "
-				+ saved.getStatus();
-		this.messageService.createAndSaveStatus(a.getApplicant(),
-				bodyHandyWorker, a.getRegisteredMoment());
-		this.messageService.createAndSaveStatus(
-				this.customerService.findCustomerByApplicationId(a.getId()),
-				bodyCustomer, a.getRegisteredMoment());
+			this.messageService.createAndSaveStatus(a.getApplicant(),
+					body, a.getRegisteredMoment());
+		}else{
+			
+			body = "El estado de solicitud de la chapuza cuyo identificador es  "
+					+ saved.getFixUpTask().getTicker()
+					+ " ha sido cambiado a "
+					+ saved.getStatus();
+
+			this.messageService.createAndSaveStatus(a.getApplicant(),
+					body, a.getRegisteredMoment());
+		}
+		
+		
 	}
 
 	public Collection<Application> findAllApplicationsByHandyWorker(
