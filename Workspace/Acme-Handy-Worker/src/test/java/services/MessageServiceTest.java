@@ -1,6 +1,6 @@
 package services;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
 
 import org.junit.Test;
@@ -242,7 +242,54 @@ public class MessageServiceTest extends AbstractTest {
 		Assert.isTrue(!(messages.contains(saved)));
 	}
 
-	
+	@Test
+	public void testBroadcast(){
+		super.authenticate("admin");
+		Actor recipient1 = this.actorService.findOne(6618);
+		Actor recipient2 = this.actorService.findOne(6619);
+		Actor principal;
+		
+		principal = this.actorService.findByPrincipal();
+		Collection<MessageBox>boxes;
+		Message m;
+		
+		
+		m = new Message();
+		m.setSubject("holi");
+		m.setBody("hole");
+		m.setPriority("LOW");
+		
+		
+		this.messageService.broadcast(m);
+		
+		for(MessageBox mb : recipient1.getMessageBoxes()){
+			if(mb.getName().equals("In box")){
+				Assert.isTrue(mb.getMessages().contains(m));
+			}else{
+				Assert.isTrue(!(mb.getMessages().contains(m)));
+			}
+			
+		}
+		
+		for(MessageBox mb : recipient2.getMessageBoxes()){
+			if(mb.getName().equals("In box")){
+				Assert.isTrue(mb.getMessages().contains(m));
+			}else{
+				Assert.isTrue(!(mb.getMessages().contains(m)));
+			}
+			
+		}
+		
+		for(MessageBox mb : principal.getMessageBoxes()){
+			if(mb.getName().equals("Out box")){
+				Assert.isTrue(mb.getMessages().contains(m));
+			}else{
+				Assert.isTrue(!(mb.getMessages().contains(m)));
+			}
+		}
+		
+		super.authenticate(null);
+	}
 
 }
 

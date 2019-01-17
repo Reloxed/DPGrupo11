@@ -207,20 +207,32 @@ public class MessageService {
 
 	public boolean findMessage(final Message message){
 		boolean result = false;
-		Collection<MessageBox>allBoxes;
+		Actor sender;
+		Actor recipient;
 
-		allBoxes = this.messageBoxService.findAll();
-		Assert.notNull(allBoxes);
-		int count = 0;
-		for(MessageBox mb: allBoxes){
-			if(mb.getMessages().contains(message)){
-				count++;
+		sender = message.getRecipient();
+		recipient = message.getSender();
 
+		Assert.notNull(sender);
+		Assert.notNull(recipient);
+
+		for(MessageBox mb : sender.getMessageBoxes()){
+			if(!mb.getName().equals("Trash Box")){
+				if(mb.getMessages().contains(message)){
+					result = true;
+				}
 			}
-
 		}
 
+		for(MessageBox mb : recipient.getMessageBoxes()){
+			if(!mb.getName().equals("Trash Box")){
+				if(mb.getMessages().contains(message)){
+					result = true;
+				}
+			}
+		}
 		return result;
+
 	}
 
 	public Message findOne(final int messageId) {
@@ -317,8 +329,8 @@ public class MessageService {
 		Collection<Actor> recipients;
 		boolean isSpam;
 		Date sendMoment;
-		Message outBoxAdmin;
-		Collection<MessageBox>boxes,boxesAdmin;
+		Message saved,savedAdmin,outBoxAdmin;
+		Collection<MessageBox>boxes,boxesAdmin,inBoxes;
 		MessageBox outBox,inBox,adminBox;
 
 		Assert.notNull(m);
@@ -328,41 +340,49 @@ public class MessageService {
 
 		subject = m.getSubject();
 		body = m.getBody();
-		priority = m.getPriority();
+		priority = "NEUTRAL";
+		
 		isSpam = false;
 
 		sendMoment = new Date(System.currentTimeMillis()-1);
 
 		recipients = this.actorService.findAllExceptPrincipal();
 		Assert.notNull(recipients);
+		outBox = this.messageBoxService.findOutBoxActor(principal);
+		inBoxes = this.messageBoxService.findAllInBoxExceptAdmin();
 
-		for(final Actor recipient: recipients){
-			boxes = new ArrayList<MessageBox>();
-			outBox = this.messageBoxService.findOutBoxActor(principal);
-			inBox = this.messageBoxService.findInBoxActor(recipient);
+		boxes = new ArrayList<MessageBox>();
 
-			boxes.add(outBox);
-			boxes.add(inBox);
-			final Message message = new Message();
-			message.setSubject(subject);
-			message.setBody(body);
-			message.setPriority(priority);
-			message.setSender(principal);
-			message.setRecipient(recipient);
-			message.setIsSpam(isSpam);
-			message.setSendMoment(sendMoment);
-			message.setMessageBoxes(boxes);
 
-			this.messageRepository.save(message);
 
-			inBox.getMessages().add(message);
+		final Message message = new Message();
+		message.setSubject(subject);
+		message.setBody(body);
+		message.setPriority(priority);
+		message.setSender(principal);
+
+		message.setIsSpam(isSpam);
+		message.setSendMoment(sendMoment);
+
+		message.setRecipient(principal);
+
+		boxes.add(outBox);
+		boxes.addAll(inBoxes);
+
+
+		message.setMessageBoxes(boxes);
+
+		saved = this.messageRepository.save(message);
+
+
+		for(MessageBox mb: inBoxes){
+			mb.getMessages().add(saved);
 		}
 
-
 		boxesAdmin = new ArrayList<MessageBox>();
-		adminBox = this.messageBoxService.findOutBoxActor(principal);
 
-		boxesAdmin.add(adminBox);
+
+		boxesAdmin.add(outBox);
 
 		outBoxAdmin = new Message();
 		outBoxAdmin.setSubject(subject);
@@ -373,26 +393,37 @@ public class MessageService {
 		outBoxAdmin.setSendMoment(sendMoment);
 		outBoxAdmin.setMessageBoxes(boxesAdmin);
 		outBoxAdmin.setRecipient(principal);
-		this.messageRepository.save(outBoxAdmin);
+		
+		savedAdmin = this.messageRepository.save(outBoxAdmin);
 
-		adminBox.getMessages().add(outBoxAdmin);
+		outBox.getMessages().add(savedAdmin);
 
 	}
 
 	public Message createAndSaveStatus(final Actor actor, final String body, final Date moment) {
+
 		Message result;
 		Collection<MessageBox> boxes;
-		MessageBox inBox;
+		MessageBox inBox,outBox;
+		Actor principal;
+		Message saved;
+
+		principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
 
 		boxes = new ArrayList<MessageBox>();
 
 		inBox = this.messageBoxService.findInBoxActor(actor);
 		Assert.notNull(inBox);
 
+		outBox = this.messageBoxService.findOutBoxActor(principal);
+		Assert.notNull(outBox);
+
 		boxes.add(inBox);
+		boxes.add(outBox);
 
 		result = new Message();
-		result.setSender(actor);
+		result.setSender(principal);
 		result.setRecipient(actor);
 		result.setPriority("NORMAL");
 		result.setSendMoment(moment);
@@ -401,8 +432,19 @@ public class MessageService {
 		result.setBody(body);
 		result.setSubject("New status update");
 
-		this.messageRepository.save(result);
+		saved = this.messageRepository.save(result);
 
+		for(MessageBox mb : principal.getMessageBoxes()){
+			if(mb.getName().equals("Out box")){
+				mb.getMessages().add(saved);
+			}
+		}
+
+		for(MessageBox mb : actor.getMessageBoxes()){
+			if(mb.getName().equals("In box")){
+				mb.getMessages().add(saved);
+			}
+		}
 		return result;
 	}
 

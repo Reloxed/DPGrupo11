@@ -191,7 +191,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 		super.authenticate("customer1");
-		this.applicationService.accept(apSaved, savedCC);
+		this.applicationService.accept(apSaved, savedCC,"es");
 		Assert.isTrue(apSaved.getStatus() == "ACCEPTED");
 
 		super.unauthenticate();
@@ -243,7 +243,7 @@ public class ApplicationServiceTest extends AbstractTest {
 		super.unauthenticate();
 
 		super.authenticate("customer2");
-		this.applicationService.reject(apSaved);
+		this.applicationService.reject(apSaved,"en");
 		Assert.isTrue(apSaved.getStatus() == "REJECTED");
 
 		super.unauthenticate();
