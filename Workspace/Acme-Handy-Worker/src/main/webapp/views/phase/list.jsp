@@ -42,10 +42,10 @@
 						sortable="true" />
 
 					<display:column property="startMoment" titleKey="phase.startmoment"
-						sortable="true" />
+						sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
 
 					<display:column property="endMoment" titleKey="phase.endmoment"
-						sortable="true" />
+						sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
 
 					<jstl:if test="${user == creator.userAccount.username}">
 						<display:column>

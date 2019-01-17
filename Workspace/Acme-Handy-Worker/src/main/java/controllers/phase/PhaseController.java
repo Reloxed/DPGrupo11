@@ -153,7 +153,7 @@ public class PhaseController extends AbstractController {
 				res = new ModelAndView("redirect:list.do?fixuptaskID="
 						+ phase.getFixUpTask().getId());
 			} catch (Throwable oops) {
-				res = createEditModelAndView(phase, "phase.commit.error");
+				res = createEditModelAndView(phase, oops.getMessage());
 			}
 		}
 		return res;

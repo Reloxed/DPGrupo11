@@ -59,6 +59,6 @@
 	
 	<input	type="button" name="cancel"
 		value="${cancelSponsorship}"
-		onclick="javascript: relativeRedir('sponsorship/sponsor/list.do');"	/>
+		onclick="window.history.back()"	/>
 	<br/>
 </form:form>

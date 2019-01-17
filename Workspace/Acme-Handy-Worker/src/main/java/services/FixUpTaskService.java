@@ -49,9 +49,8 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		result = new FixUpTask();
-		
-		result.setPublishedMoment(new Date(
-				System.currentTimeMillis() - 1));
+
+		result.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		result.setTicker(this.utilityService.generateTicker());
 
 		result.setApplications(new HashSet<Application>());
@@ -88,10 +87,10 @@ public class FixUpTaskService {
 		Assert.notNull(principal);
 
 		Assert.notNull(fixUpTask);
-		Assert.notNull(fixUpTask.getEndMoment());
-		Assert.notNull(fixUpTask.getStartMoment());
+		Assert.notNull(fixUpTask.getEndMoment(), "fixuptask.interval");
+		Assert.notNull(fixUpTask.getStartMoment(), "fixuptask.interval");
 		Assert.isTrue(fixUpTask.getStartMoment().before(
-				fixUpTask.getEndMoment()));
+				fixUpTask.getEndMoment()), "fixuptask.moment");
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
@@ -102,19 +101,17 @@ public class FixUpTaskService {
 			Assert.isTrue(fixUpTask.getTicker().equals(
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
+		
+		result = this.fixUpTaskRepository.save(fixUpTask);
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());
 
-		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
-		
 		final boolean containsSpam = this.utilityService
 				.isSpam(atributosAComprobar);
 		if (containsSpam)
 			principal.setIsSuspicious(true);
-
-		principal.getFixUpTasks().add(result);
 
 		return result;
 
@@ -171,7 +168,6 @@ public class FixUpTaskService {
 				.ratioFixUpTaskWithComplaints();
 		return res;
 	}
-	
 
 	public Collection<FixUpTask> FixUpTaskByCustomer(final int customerId) {
 		final Collection<FixUpTask> res = this.fixUpTaskRepository
@@ -201,6 +197,13 @@ public class FixUpTaskService {
 
 		return customerId;
 
+	}
+
+	public List<FixUpTask> findBannedCustomers() {
+
+		List<FixUpTask> res = this.fixUpTaskRepository.findBannedCustomers();
+
+		return res;
 	}
 
 }

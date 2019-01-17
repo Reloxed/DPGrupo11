@@ -28,4 +28,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	@Query("select c from Customer c order by c.complaints.size desc")
 	List<Customer> findCustomersWithMoreComplaints();
+	
+
+	
 }

@@ -136,5 +136,5 @@
 		value='<spring:message code="actor.save"/>' />
 	<input type="button" name="cancel"
 		value="<spring:message code="actor.cancel" />"
-		onclick="javascript: relativeRedir('actor/display.do');" />
+		onclick="window.history.back()" />
 </form:form>

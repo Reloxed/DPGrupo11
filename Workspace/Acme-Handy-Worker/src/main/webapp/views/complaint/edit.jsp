@@ -61,7 +61,7 @@
 		value=" <spring:message code="complaint.reset"/>" />
 	<input type="button" name="cancel" id="cancel"
 		value=" <spring:message code="complaint.cancel"/>"
-		onclick="javascript: relativeRedir('complaint/customer/list.do');" />
+		onclick="window.history.back()" />
 
 </form:form>
 

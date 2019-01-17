@@ -17,11 +17,7 @@ import services.CustomerService;
 import services.FixUpTaskService;
 import services.SystemConfigurationService;
 import controllers.AbstractController;
-
-import domain.Category;
-
 import domain.Application;
-
 import domain.FixUpTask;
 
 @Controller
@@ -102,22 +98,7 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 			}
 		}
 		
-		List<FixUpTask> collFixUpTasksBanned = new ArrayList<>();
-		for (FixUpTask fix : this.fixUpTaskService.findAll()) {
-			if (true) {
-				for (Application app : fix.getApplications()) {
-					if (app.getStatus().equals("ACCEPTED")) {
-						collFixUpTasksBanned.add(fix);
-					}
-				}
-			}
-		}
-
-
-//		System.out.println(collFixUpTasks);
-
-
-
+		List<FixUpTask> collFixUpTasksBanned = this.fixUpTaskService.findBannedCustomers();
 
 		result = new ModelAndView("fixUpTask/list");
 		result.addObject("fixUpTasks", fixUpTasks);

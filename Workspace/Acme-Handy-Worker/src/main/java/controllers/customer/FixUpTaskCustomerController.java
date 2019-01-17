@@ -166,8 +166,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println(binding.getAllErrors());
-				result = this.createEditModelAndView(task,
-						"fixUpTask.commit.error");
+				result = this.createEditModelAndView(task,oops.getMessage());
 			}
 
 		return result;

@@ -69,7 +69,7 @@
 		</jstl:if>
 		<jstl:if test="${curriculum.id!=0}">
 		<input type="button" name="cancel" value="<spring:message code="enr.cancel" />"
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');" />
+			onclick="window.history.back()" />
 		<br />
 		</jstl:if>
 		

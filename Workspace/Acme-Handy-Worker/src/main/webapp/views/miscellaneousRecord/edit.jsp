@@ -23,9 +23,7 @@
 		<form:input path="title"  />
 		<form:errors cssClass="error" path="title" />
 		<br />
-		<br />
-		
-		
+		<br />		
 		
 		<form:label path="linkAttachment">
 			<spring:message code="mr.linkAttachment" />:
@@ -53,7 +51,7 @@
 		</jstl:if>
 		<jstl:if test="${curriculum.id!=0}">
 		<input type="button" name="cancel" value="<spring:message code="mr.cancel" />"
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');" />
+			onclick="window.history.back()" />
 		<br />
 		</jstl:if>
 		

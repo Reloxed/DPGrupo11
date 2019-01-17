@@ -10,7 +10,6 @@
 <form:form action="professionalRecord/handyWorker/edit.do" modelAttribute="professionalRecord" id="form">
 	
 		<form:hidden path="id" />
-		
 		<form:hidden path="version" />
 		
 		
@@ -28,7 +27,7 @@
 		<form:label path="startDate">
 			<spring:message code="pr.startDate" />:
 		</form:label>
-		<form:input path="startDate" placeholder="dd/MM/yyyy" />
+		<form:input path="startDate" placeholder="dd/MM/yyyy HH:mm" />
 		<form:errors cssClass="error" path="startDate" />
 		<br />
 		<br />
@@ -36,7 +35,7 @@
 		<form:label path="endDate">
 			<spring:message code="pr.endDate" />:
 		</form:label>
-		<form:input path="endDate"  placeholder="dd/MM/yyyy"/>
+		<form:input path="endDate"  placeholder="dd/MM/yyyy HH:mm"/>
 		<form:errors cssClass="error" path="endDate" />
 		<br />
 		<br />
@@ -76,7 +75,7 @@
 		</jstl:if>
 		<jstl:if test="${curriculum.id!=0}">
 		<input type="button" name="cancel" value="<spring:message code="pr.cancel" />"
-			onclick="javascript: relativeRedir('/curriculum/handyWorker/display.do');" />
+			onclick="window.history.back()" />
 		<br />
 		</jstl:if>
 		

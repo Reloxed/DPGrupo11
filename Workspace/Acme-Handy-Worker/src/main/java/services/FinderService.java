@@ -244,4 +244,6 @@ public class FinderService {
 		finder.setSearchMoment(new Date(System.currentTimeMillis() - 1));
 
 	}
+	
+
 }
