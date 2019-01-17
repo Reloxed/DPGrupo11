@@ -35,18 +35,16 @@ public class FinderService {
 	@Autowired
 	private SystemConfigurationService systemConfigurationService;
 
-	@Autowired
-<<<<<<< HEAD
-	private FixUpTaskService			fixUpTaskService;
+
 	
 	@Autowired
-	private AdministratorService		administratorService;
-=======
-	private FixUpTaskService fixUpTaskService;
->>>>>>> Figueroa
-
+	private AdministratorService	administratorService;
+	
 	@Autowired
-	private AdministratorService administratorService;
+	private FixUpTaskService fixUpTaskService;
+
+
+
 
 	// Constructor -----------------------
 
@@ -160,23 +158,14 @@ public class FinderService {
 		return finder;
 	}
 
-<<<<<<< HEAD
+
 	//expiración de la busqueda cuando termina tiempo caché
-	public void deleteExpireFinders() {
+	public void deleteExpiredFinders() {
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
 		Administrator principal;
 		
-=======
-	// expiración de la busqueda cuando termina tiempo caché
-	public void deleteExpiredFinders() {
-		Administrator principal;
-		Collection<Finder> collFind;
-		Date maxLivedMoment = new Date();
-		int timeChachedFind;
-
->>>>>>> Figueroa
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
@@ -269,18 +258,11 @@ public class FinderService {
 		finder.setEndMoment(null);
 		finder.setCategory(null);
 		finder.setWarranty(null);
-<<<<<<< HEAD
 		
 		this.save(finder);
 		
 		return finder;
 	}
 
-=======
 
-		this.save(finder);
-
-		return finder;
-	}
->>>>>>> Figueroa
 }

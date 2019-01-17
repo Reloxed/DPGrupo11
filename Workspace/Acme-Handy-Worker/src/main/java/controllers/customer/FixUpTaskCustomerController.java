@@ -84,7 +84,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 	// Display-----------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int fixUpTaskId,final Locale locale) {
+	public ModelAndView display(@RequestParam int fixUpTaskId,
+			final Locale locale) {
 
 		ModelAndView result;
 		FixUpTask fixUpTask;
@@ -93,7 +94,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 		String english;
 		español = "es";
 		english = "en";
-		
+
 		language = locale.getLanguage();
 		fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
 
@@ -111,7 +112,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	// edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int fixUpTaskId,final Locale locale) {
+	public ModelAndView edit(@RequestParam int fixUpTaskId, final Locale locale) {
 		final ModelAndView result;
 		FixUpTask task;
 		String language;
@@ -119,7 +120,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 		String english;
 		español = "es";
 		english = "en";
-		
+
 		language = locale.getLanguage();
 		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
@@ -194,14 +195,9 @@ public class FixUpTaskCustomerController extends AbstractController {
 				FixUpTask saved;
 				principal = this.customerService.findByPrincipal();
 				saved = this.fixUpTaskService.save(task);
-<<<<<<< HEAD
-				if(!principal.getFixUpTasks().contains(task)){
-					principal.getFixUpTasks().add(this.fixUpTaskService.findOne(saved.getId()));
-=======
 				if (!principal.getFixUpTasks().contains(task)) {
 					principal.getFixUpTasks().add(
 							this.fixUpTaskService.findOne(saved.getId()));
->>>>>>> Figueroa
 					this.customerService.save(principal);
 				}
 				result = new ModelAndView("redirect:list.do");
@@ -232,8 +228,7 @@ public class FixUpTaskCustomerController extends AbstractController {
 		String ticker;
 		Collection<Category> categories = new ArrayList<>();
 		Collection<Warranty> warranties;
-		
-		
+
 		categories = this.categoryService.findAll();
 		warranties = this.warrantyService.findFinalWarranties();
 
