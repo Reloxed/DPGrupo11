@@ -89,9 +89,8 @@ public class FixUpTaskService {
 		Assert.notNull(fixUpTask);
 		Assert.notNull(fixUpTask.getEndMoment(), "fixuptask.interval");
 		Assert.notNull(fixUpTask.getStartMoment(), "fixuptask.interval");
-		Assert.isTrue(
-				fixUpTask.getStartMoment().before(fixUpTask.getEndMoment()),
-				"fixuptask.moment");
+		Assert.isTrue(fixUpTask.getStartMoment().before(
+				fixUpTask.getEndMoment()), "fixuptask.moment");
 		Assert.notNull(fixUpTask.getDescription());
 		Assert.notNull(fixUpTask.getAddress());
 		Assert.notNull(fixUpTask.getCategory());
@@ -102,10 +101,8 @@ public class FixUpTaskService {
 			Assert.isTrue(fixUpTask.getTicker().equals(
 					this.findOne(fixUpTask.getId()).getTicker()));
 		}
-
+		
 		result = this.fixUpTaskRepository.save(fixUpTask);
-
-		// principal.getFixUpTasks().add(fixUpTask);
 
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());

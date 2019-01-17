@@ -30,7 +30,7 @@ public class StringToCategoryConverter implements Converter<String, Category> {
 				result = this.categoryRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			throw new IllegalArgumentException(oops);
+			throw new IllegalArgumentException("category.wrongName",oops);
 		}
 		return result;
 	}

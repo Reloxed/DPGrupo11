@@ -184,7 +184,7 @@
 	</jstl:when>
 	<jstl:otherwise>
 		<p>
-			<spring:message code="empty" />
+			<spring:message code="application.empty" />
 		</p>
 	</jstl:otherwise>
 </jstl:choose>

@@ -83,6 +83,8 @@ public class AdministratorService {
 	public Administrator save(final Administrator admin) {
 		Administrator result, principal;
 		Assert.notNull(admin);
+		
+		Assert.isTrue(this.utilityService.validEmail(admin.getEmail()), "administrator.email");
 
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);

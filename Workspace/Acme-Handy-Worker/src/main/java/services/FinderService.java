@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
+import domain.Administrator;
 import domain.Finder;
 import domain.FixUpTask;
 import domain.HandyWorker;
@@ -37,6 +38,9 @@ public class FinderService {
 
 	@Autowired
 	private FixUpTaskService			fixUpTaskService;
+	
+	@Autowired
+	private AdministratorService		administratorService;
 
 
 	//Constructor -----------------------
@@ -83,13 +87,11 @@ public class FinderService {
 
 		Assert.notNull(finder);
 		
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		if(principal.getFinder() != null) {
-			Assert.isTrue(finder.getId()!= 0);
+		if(finder.getId() != 0) {
+			principal = this.handyWorkerService.findByPrincipal();
+			Assert.notNull(principal);
 		}
-		
+
 		currentMoment = new Date(System.currentTimeMillis() - 1);
 
 		finder.setSearchMoment(currentMoment);
@@ -135,15 +137,24 @@ public class FinderService {
 
 		return finder;
 	}
+	
+	public Finder createAndInit() {
+		Finder finder;
+		
+		finder = this.create();
+		finder = this.save(finder);
+		
+		return finder;
+	}
 
 	//expiración de la busqueda cuando termina tiempo caché
 	public void deleteExpireFinders() {
-		HandyWorker principal;
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
-
-		principal = this.handyWorkerService.findByPrincipal();
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
 		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
@@ -224,26 +235,5 @@ public class FinderService {
 		
 		return finder;
 	}
-
-	public void update(final int finderId, final String keyWord, final Double startPrice, final Double endPrice, final Date startDate, final Date endDate) {
-
-		Assert.isTrue(this.finderRepository.exists(finderId));
-		Finder finder;
-		Collection<FixUpTask> results;
-
-		finder = this.finderRepository.findOne(finderId);
-
-		results = this.resultadosFinder(finder).getFixuptask();
-
-		finder.setEndMoment(endDate);
-		finder.setPriceHigh(endPrice);
-		finder.setKeyWord(keyWord);
-		finder.setStartMoment(startDate);
-		finder.setPriceLow(startPrice);
-		finder.setFixuptask(results);
-		finder.setSearchMoment(new Date(System.currentTimeMillis() - 1));
-
-	}
-	
 
 }
