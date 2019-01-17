@@ -52,10 +52,7 @@
 
 		<value>/views/message/tiles.xml</value>
 		<value>/views/box/tiles.xml</value>
-		
-
-
-
+		<value>/views/note/tiles.xml</value>
 	</util:list>
 </beans>
 

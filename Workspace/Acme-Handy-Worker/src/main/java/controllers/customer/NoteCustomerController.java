@@ -1,4 +1,4 @@
-package controllers.handyWorker;
+package controllers.customer;
 
 import java.util.Collection;
 
@@ -20,8 +20,8 @@ import domain.Note;
 import domain.Report;
 
 @Controller
-@RequestMapping("/note/handyWorker")
-public class NoteHandyWorkerController extends AbstractController{
+@RequestMapping("/note/customer")
+public class NoteCustomerController extends AbstractController{
 
 	// Services
 
@@ -115,7 +115,7 @@ public class NoteHandyWorkerController extends AbstractController{
 		result = new ModelAndView("note/edit");
 		result.addObject("note", note);
 		result.addObject("message", message);
-		result.addObject("requestUri", "note/handyWorker/edit.do");
+		result.addObject("requestUri", "note/customer/edit.do");
 
 		return result;
 	}
