@@ -17,7 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<link href="misc.css" rel="stylesheet" type="text/css"/>
+<link href="styles/misc.css" rel="stylesheet" type="text/css"/>
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
