@@ -42,12 +42,21 @@ public class CategoryAdministratorController extends AbstractController{
 
 	// Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(final Locale locale) {
 		ModelAndView result;
 		Category category;
-
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		
+		language = locale.getLanguage();
 		category = this.categoryService.create();
 		result = this.createEditModelAndView(category);
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
 		return result;
 	}
 
@@ -108,10 +117,16 @@ public class CategoryAdministratorController extends AbstractController{
 
 	// Edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int categoryId) {
+	public ModelAndView edit(@RequestParam final int categoryId,final Locale locale) {
 		final ModelAndView result;
 		Category category;
-
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		
+		language = locale.getLanguage();
 		category = this.categoryService.findOne(categoryId);
 		Assert.notNull(category);
 
@@ -121,6 +136,9 @@ public class CategoryAdministratorController extends AbstractController{
 		result = this.createEditModelAndView(category);
 		result.addObject("category", category);
 		result.addObject("parentCategory", parentCategory);
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
 		return result;
 
 	}

@@ -2,6 +2,7 @@ package controllers.customer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -62,12 +63,20 @@ public class FixUpTaskCustomerController extends AbstractController {
 
 	// Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(final Locale locale) {
 		ModelAndView result;
 		FixUpTask task;
-
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		language = locale.getLanguage();
 		task = this.fixUpTaskService.create();
 		result = this.createEditModelAndView(task);
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
 		return result;
 
 	}
@@ -75,11 +84,17 @@ public class FixUpTaskCustomerController extends AbstractController {
 	// Display-----------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int fixUpTaskId) {
+	public ModelAndView display(@RequestParam int fixUpTaskId,final Locale locale) {
 
 		ModelAndView result;
 		FixUpTask fixUpTask;
-
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		
+		language = locale.getLanguage();
 		fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
 
 		result = new ModelAndView("fixUpTask/display");
@@ -87,20 +102,32 @@ public class FixUpTaskCustomerController extends AbstractController {
 		result.addObject("customerOwner",
 				this.fixUpTaskService.creatorFixUpTask(fixUpTaskId));
 		result.addObject("requestURI", "fixUpTask/customer/display.do");
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
 
 		return result;
 	}
 
 	// edit
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int fixUpTaskId) {
+	public ModelAndView edit(@RequestParam int fixUpTaskId,final Locale locale) {
 		final ModelAndView result;
 		FixUpTask task;
-
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		
+		language = locale.getLanguage();
 		task = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(task);
 
 		result = this.createEditModelAndView(task);
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
 
 		return result;
 
@@ -192,7 +219,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 		String ticker;
 		Collection<Category> categories = new ArrayList<>();
 		Collection<Warranty> warranties;
-
+		
+		
 		categories = this.categoryService.findAll();
 		warranties = this.warrantyService.findFinalWarranties();
 
