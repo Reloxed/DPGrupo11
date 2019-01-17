@@ -146,8 +146,7 @@
 				<spring:message code="message.box" />:
 		
 			</form:label>
-			<form:select path="messageBoxes">
-				<form:option label="----" value="0" />
+			<form:select path="messageBoxes"  itemValue="id">
 				<form:options items="${boxes}" itemLabel="name" itemValue="id" />
 			</form:select>
 			<form:errors cssClass="error" path="messageBoxes" />

@@ -267,7 +267,7 @@ public class MessageService {
 		Assert.notNull(principal);
 
 
-		for(MessageBox box: messageBoxes){
+		for(MessageBox box: principal.getMessageBoxes()){
 			messages.addAll(box.getMessages());
 		}
 

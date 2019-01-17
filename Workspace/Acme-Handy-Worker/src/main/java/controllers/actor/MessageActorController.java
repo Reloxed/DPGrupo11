@@ -100,26 +100,28 @@ public class MessageActorController extends AbstractController{
 
 	}
 
-//	@RequestMapping(value="/edit",method = RequestMethod.POST, params="move")
-//	public ModelAndView move(@Valid final Message mensaje, final BindingResult binding){
-//		ModelAndView result;
-//
-//		if(binding.hasErrors())
-//			result = this.createEditModelAndView(mensaje);
-//		else
-//			try{
-//				this.messageService.move(mensaje, mensaje.getMessageBoxes());
-//				result = new ModelAndView("redirect:/messageBox/actor/list.do");
-//			}catch (final Throwable oops){
-//				result = this.createEditModelAndView(mensaje, "message.commit.error");
-//
-//			}
-//
-//		return result;
-//
-//
-//
-//	}
+	@RequestMapping(value="/edit",method = RequestMethod.POST, params="move")
+	public ModelAndView move(@Valid final Message mensaje, final BindingResult binding){
+		ModelAndView result;
+		MessageBox destination;
+		if(binding.hasErrors())
+			result = this.createEditModelAndView(mensaje);
+		else
+			try{
+				
+				destination = mensaje.getMessageBoxes().iterator().next();
+				this.messageService.move(mensaje, destination);
+				result = new ModelAndView("redirect:/box/actor/list.do");
+			}catch (final Throwable oops){
+				result = this.createEditModelAndView(mensaje, "message.commit.error");
+
+			}
+
+		return result;
+
+
+
+	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.POST, params="delete")
 	public ModelAndView delete(final Message mensaje, final BindingResult binding){
