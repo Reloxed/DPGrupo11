@@ -35,16 +35,16 @@ public class NoteService {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private HandyWorkerService handyWorkerService;
-	
+
 	@Autowired
 	private RefereeService refereeService;
-	
+
 	@Autowired
 	private ComplaintService complaintService;
-	
+
 	@Autowired
 	private UtilityService utilityService;
 
@@ -62,13 +62,14 @@ public class NoteService {
 		boolean validCommenter = false;
 
 		principal = this.actorService.findByPrincipal();
-		Assert.notNull(principal);		
+		Assert.notNull(principal);
 
-		if (principal instanceof Customer || principal instanceof Referee || principal instanceof HandyWorker) {
+		if (principal instanceof Customer || principal instanceof Referee
+				|| principal instanceof HandyWorker) {
 			validCommenter = true;
-		} 
-		
-		Assert.isTrue(validCommenter);		
+		}
+
+		Assert.isTrue(validCommenter);
 		result = new Note();
 		return result;
 	}
@@ -83,65 +84,77 @@ public class NoteService {
 		HandyWorker handyWorker = null;
 
 		Assert.notNull(note);
-		Assert.isTrue(note.getId() == 0);
-		
+
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		report = note.getReport();
-		Assert.isTrue(report.getIsFinal());		
-		
-		if(note.getId() != 0) {
-			Assert.isTrue(note.getPublishedMoment().equals(this.findOne(note.getId()).getPublishedMoment()));
-			Assert.isTrue(note.getReport().equals(this.findOne(note.getId()).getReport()));
+		Assert.isTrue(report.getIsFinal());
+
+		if (note.getId() != 0) {
+			Assert.isTrue(note.getReport().equals(
+					this.findOne(note.getId()).getReport()));
 		}
-		
+
 		if (principal instanceof Customer) {
 			customer = this.customerService.findByPrincipal();
 			Assert.notNull(note.getCustomerComment());
 			if (note.getId() != 0) {
 				if (note.getHandyWorkerComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getHandyWorkerComment().equals(note.getHandyWorkerComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getHandyWorkerComment()
+							.equals(note.getHandyWorkerComment()));
 				}
 				if (note.getRefereeComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getRefereeComment().equals(note.getRefereeComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getRefereeComment()
+							.equals(note.getRefereeComment()));
 				}
 			}
-			Assert.isTrue(customer.getComplaints().contains(report.getComplaint()));
-			
+			Assert.isTrue(customer.getComplaints().contains(
+					report.getComplaint()));
+
 		} else if (principal instanceof Referee) {
 			referee = this.refereeService.findByPrincipal();
 			Assert.notNull(note.getRefereeComment());
 			if (note.getId() != 0) {
 				if (note.getHandyWorkerComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getHandyWorkerComment().equals(note.getHandyWorkerComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getHandyWorkerComment()
+							.equals(note.getHandyWorkerComment()));
 				}
 				if (note.getCustomerComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getCustomerComment().equals(note.getCustomerComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getCustomerComment()
+							.equals(note.getCustomerComment()));
 				}
 			}
-			Assert.isTrue(referee.getComplaints().contains(report.getComplaint()));
+			Assert.isTrue(referee.getComplaints().contains(
+					report.getComplaint()));
 
 		} else if (principal instanceof HandyWorker) {
 			handyWorker = this.handyWorkerService.findByPrincipal();
 			Assert.notNull(note.getHandyWorkerComment());
 			if (note.getId() != 0) {
 				if (note.getCustomerComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getCustomerComment().equals(note.getCustomerComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getCustomerComment()
+							.equals(note.getCustomerComment()));
 				}
 				if (note.getRefereeComment() != null) {
-					Assert.isTrue(this.findOne(note.getId()).getRefereeComment().equals(note.getRefereeComment()));
+					Assert.isTrue(this.findOne(note.getId())
+							.getRefereeComment()
+							.equals(note.getRefereeComment()));
 				}
 			}
-			Assert.isTrue(this.complaintService.findComplaintsByHandyWorkerId(handyWorker.getId()).contains(report.getComplaint()));
+			Assert.isTrue(this.complaintService.findComplaintsByHandyWorkerId(
+					handyWorker.getId()).contains(report.getComplaint()));
 		}
-			
+
 		if (customer == null && handyWorker == null && referee == null) {
 			Assert.notNull(customer);
 		}
-		
-		note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
-		
+
 		List<String> atributosAComprobar = new ArrayList<>();
 		if (note.getCustomerComment() != null)
 			atributosAComprobar.add(note.getCustomerComment());
@@ -149,19 +162,22 @@ public class NoteService {
 			atributosAComprobar.add(note.getRefereeComment());
 		if (note.getHandyWorkerComment() != null)
 			atributosAComprobar.add(note.getHandyWorkerComment());
-		
+
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
-		if(containsSpam) {
+		if (containsSpam) {
 			principal.setIsSuspicious(true);
 		}
 
+		if (note.getId() == 0) {
+			note.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+		}
 		result = this.noteRepository.saveAndFlush(note);
 		Assert.notNull(result);
 
-		notes = new ArrayList<Note>();
-		notes = report.getNotes();
-		notes.add(result);
-		report.setNotes(notes);
+		// notes = new ArrayList<Note>();
+		// notes = report.getNotes();
+		// notes.add(result);
+		// report.setNotes(notes);
 
 		return result;
 	}
