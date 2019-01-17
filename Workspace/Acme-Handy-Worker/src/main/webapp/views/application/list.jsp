@@ -101,7 +101,6 @@
 					<display:column property="customerComment"
 						titleKey="application.customerComment" />
 
-
 					<display:column property="status" titleKey="application.status"
 						sortable="true" class="${bgcolor}" />
 
@@ -112,6 +111,11 @@
 									code="application.workplan" /> </a>
 						</jstl:if>
 					</display:column>
+
+			<display:column>
+				<a href="application/display.do?applicationId=${applications.id}"> <spring:message
+					code="application.display" /></a>
+			</display:column>
 
 				</display:table>
 
@@ -141,6 +145,13 @@
 
 					<display:column property="customerComment"
 						titleKey="application.myComment" />
+
+			<display:column property="status" titleKey="application.status" />
+			
+			<display:column>
+			<a href="application/display.do?applicationId=${applications.id}"> <spring:message
+					code="application.display" /></a>
+		</display:column>
 
 					<display:column property="status" titleKey="application.status" />
 
