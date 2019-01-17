@@ -163,7 +163,14 @@ public class FixUpTaskCustomerController extends AbstractController {
 			result = this.createEditModelAndView(task);
 		else
 			try {
-				this.fixUpTaskService.save(task);
+				Customer principal;
+				FixUpTask saved;
+				principal = this.customerService.findByPrincipal();
+				saved = this.fixUpTaskService.save(task);
+				if(!principal.getFixUpTasks().contains(task)){
+					principal.getFixUpTasks().add(this.fixUpTaskService.findOne(saved.getId()));
+					this.customerService.save(principal);
+				}
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println(binding.getAllErrors());

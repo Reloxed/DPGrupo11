@@ -140,15 +140,6 @@
 								code="master.page.handyworker.complaints.show" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
-						code="master.page.handyworker.tutorials" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="tutorial/list.do"><spring:message
-								code="master.page.handyworker.tutorials.show" /></a></li>
-					<li><a href="tutorial/edit.do"><spring:message
-								code="master.page.handyworker.tutorial.create" /></a></li>
-				</ul></li>
-			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.endorsements" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -169,15 +160,7 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('SPONSOR')">
-			<li><a class="fNiv"><spring:message
-						code="master.page.sponsor.sponsorship" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="sponsor/sponsorship-create.do"><spring:message
-								code="master.page.sponsor.sponsorship.create" /></a></li>
-					<li><a href="sponsor/sponsorship-show.do"><spring:message
-								code="master.page.sponsor.sponsorship.show" /></a></li>
-				</ul></li>
+
 		</security:authorize>
 
 		<security:authorize access="isAnonymous()">
@@ -195,8 +178,6 @@
 								code="master.page.register.sponsor" /></a></li>
 				</ul></li>
 
-			<li><a class="fNiv" href="tutorial/list.do"><spring:message
-						code="master.page.see.all.tutorials" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="isAuthenticated()">

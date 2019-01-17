@@ -104,10 +104,6 @@ public class FixUpTaskService {
 		
 		result = this.fixUpTaskRepository.save(fixUpTask);
 
-		result = this.fixUpTaskRepository.saveAndFlush(fixUpTask);
-
-//		principal.getFixUpTasks().add(fixUpTask);
-
 		final List<String> atributosAComprobar = new ArrayList<>();
 		atributosAComprobar.add(fixUpTask.getAddress());
 		atributosAComprobar.add(fixUpTask.getDescription());

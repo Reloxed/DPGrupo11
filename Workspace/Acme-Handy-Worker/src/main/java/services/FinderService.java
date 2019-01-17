@@ -145,13 +145,9 @@ public class FinderService {
 
 	//expiración de la busqueda cuando termina tiempo caché
 	public void deleteExpireFinders() {
-		HandyWorker principal;
 		Collection<Finder> collFind;
 		Date maxLivedMoment = new Date();
 		int timeChachedFind;
-
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
 
 		timeChachedFind = this.systemConfigurationService.findMySystemConfiguration().getTimeResultsCached();
 		maxLivedMoment = DateUtils.addHours(maxLivedMoment, -timeChachedFind);
@@ -231,26 +227,5 @@ public class FinderService {
 		
 		return finder;
 	}
-
-	public void update(final int finderId, final String keyWord, final Double startPrice, final Double endPrice, final Date startDate, final Date endDate) {
-
-		Assert.isTrue(this.finderRepository.exists(finderId));
-		Finder finder;
-		Collection<FixUpTask> results;
-
-		finder = this.finderRepository.findOne(finderId);
-
-		results = this.resultadosFinder(finder).getFixuptask();
-
-		finder.setEndMoment(endDate);
-		finder.setPriceHigh(endPrice);
-		finder.setKeyWord(keyWord);
-		finder.setStartMoment(startDate);
-		finder.setPriceLow(startPrice);
-		finder.setFixuptask(results);
-		finder.setSearchMoment(new Date(System.currentTimeMillis() - 1));
-
-	}
-	
 
 }
