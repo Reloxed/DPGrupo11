@@ -83,13 +83,11 @@ public class FinderService {
 
 		Assert.notNull(finder);
 		
-		principal = this.handyWorkerService.findByPrincipal();
-		Assert.notNull(principal);
-
-		if(principal.getFinder() != null) {
-			Assert.isTrue(finder.getId()!= 0);
+		if(finder.getId() != 0) {
+			principal = this.handyWorkerService.findByPrincipal();
+			Assert.notNull(principal);
 		}
-		
+
 		currentMoment = new Date(System.currentTimeMillis() - 1);
 
 		finder.setSearchMoment(currentMoment);
@@ -133,6 +131,15 @@ public class FinderService {
 
 		finder = principal.getFinder();
 
+		return finder;
+	}
+	
+	public Finder createAndInit() {
+		Finder finder;
+		
+		finder = this.create();
+		finder = this.save(finder);
+		
 		return finder;
 	}
 

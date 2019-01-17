@@ -102,7 +102,7 @@ public class SponsorAdministrationController extends AbstractController {
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(sponsor,
-						"sponsor.commit.error");
+						oops.getMessage());
 			}
 		}
 		return res;

@@ -1,4 +1,3 @@
-
 package services;
 
 import java.security.SecureRandom;
@@ -6,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,16 @@ public class UtilityService {
 	// Supporting Services ------------------------------------
 
 	@Autowired
-	private FixUpTaskService			fixUpTaskService;
+	private FixUpTaskService fixUpTaskService;
 
 	@Autowired
-	private CurriculumService			curriculumService;
+	private CurriculumService curriculumService;
 
 	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private SystemConfigurationService systemConfigurationService;
 
 	@Autowired
-	private AdministratorService		administratorService;
-
+	private AdministratorService administratorService;
 
 	// Constructors ------------------------------------
 
@@ -55,11 +55,11 @@ public class UtilityService {
 		year = String.valueOf(date.get(Calendar.YEAR));
 		year = year.substring(year.length() - 2, year.length());
 		month = String.valueOf(date.get(Calendar.MONTH) + 1);
-		if (month.length()== 1){
+		if (month.length() == 1) {
 			month = "0" + month;
 		}
 		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
-		if (day.length()== 1){
+		if (day.length() == 1) {
 			day = "0" + day;
 		}
 
@@ -87,15 +87,18 @@ public class UtilityService {
 		final StringBuilder stringBuilder = new StringBuilder(length);
 
 		for (int i = 0; i < length; i++)
-			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars.length())));
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars
+					.length())));
 		return stringBuilder.toString();
 
 	}
 
 	public List<String> getCreditCardMakes() {
 
-		final String makes = this.systemConfigurationService.findMySystemConfiguration().getListCreditCardMakes();
-		final List<String> listCCMakes = new ArrayList<String>(Arrays.asList(makes.split(",")));
+		final String makes = this.systemConfigurationService
+				.findMySystemConfiguration().getListCreditCardMakes();
+		final List<String> listCCMakes = new ArrayList<String>(
+				Arrays.asList(makes.split(",")));
 		return listCCMakes;
 	}
 
@@ -105,8 +108,10 @@ public class UtilityService {
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		final String makes = this.systemConfigurationService.findMySystemConfiguration().getNegativeWords();
-		final List<String> listNegWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
+		final String makes = this.systemConfigurationService
+				.findMySystemConfiguration().getNegativeWords();
+		final List<String> listNegWords = new ArrayList<String>(
+				Arrays.asList(makes.split(",")));
 		return listNegWords;
 	}
 
@@ -126,8 +131,10 @@ public class UtilityService {
 		principal = this.administratorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		final String makes = this.systemConfigurationService.findMySystemConfiguration().getPositiveWords();
-		final List<String> listPosWords = new ArrayList<String>(Arrays.asList(makes.split(",")));
+		final String makes = this.systemConfigurationService
+				.findMySystemConfiguration().getPositiveWords();
+		final List<String> listPosWords = new ArrayList<String>(
+				Arrays.asList(makes.split(",")));
 		return listPosWords;
 	}
 
@@ -143,18 +150,31 @@ public class UtilityService {
 
 	public List<String> getSpamWords() {
 
-		final String makes = this.systemConfigurationService.findMySystemConfiguration().getSpamWords();
-		final List<String> listSpamWords = new ArrayList<String>(Arrays.asList(makes.split(" , ")));
+		final String makes = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords();
+		final List<String> listSpamWords = new ArrayList<String>(
+				Arrays.asList(makes.split(" , ")));
 		return listSpamWords;
 	}
-	
-	public boolean isSpam (List<String> atributosAComprobar) {
+
+	public boolean validEmail(String email) {
+		
+		String toValidate = email.replace(" ","");
+		Pattern pattern = Pattern.compile("([0-9a-z ]+((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|())|((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|()))");
+		Matcher match = pattern.matcher(toValidate);
+
+		return match.matches();
+	}
+
+	public boolean isSpam(List<String> atributosAComprobar) {
 		boolean containsSpam = false;
-		String[] spamWords = this.systemConfigurationService.findMySystemConfiguration().getSpamWords().split(",");
-		for(int i=0; i<atributosAComprobar.size(); i++) {
-			if(containsSpam == false) {
-				for(String spamWord : spamWords) {
-					if(atributosAComprobar.get(i).toLowerCase().contains(spamWord.toLowerCase())){
+		String[] spamWords = this.systemConfigurationService
+				.findMySystemConfiguration().getSpamWords().split(",");
+		for (int i = 0; i < atributosAComprobar.size(); i++) {
+			if (containsSpam == false) {
+				for (String spamWord : spamWords) {
+					if (atributosAComprobar.get(i).toLowerCase()
+							.contains(spamWord.toLowerCase())) {
 						containsSpam = true;
 						break;
 					}

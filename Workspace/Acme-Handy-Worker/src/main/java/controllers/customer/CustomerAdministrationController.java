@@ -102,7 +102,7 @@ public class CustomerAdministrationController extends AbstractController {
 
 			} catch (Throwable oops) {
 				res = this.createEditModelAndView(customer,
-						"customer.commit.error");
+						oops.getMessage());
 			}
 		}
 		return res;

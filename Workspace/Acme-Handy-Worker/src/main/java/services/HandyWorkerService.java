@@ -39,6 +39,9 @@ public class HandyWorkerService {
 	
 	@Autowired
 	private FinderService finderService;
+	
+	@Autowired
+	private UtilityService		utilityService;
 
 	// Constructor ----------------------------------------------------
 
@@ -87,7 +90,7 @@ public class HandyWorkerService {
 			result.setMake(result.getName() + result.getMiddleName()
 					+ result.getSurname());
 			result.setIsSuspicious(false);
-			result.setFinder(this.finderService.create());
+			result.setFinder(this.finderService.createAndInit());
 			result.setMessageBoxes(this.messageBoxService
 					.createSystemMessageBoxes());
 			result.setApplications(new HashSet<Application>());
@@ -100,6 +103,8 @@ public class HandyWorkerService {
 	public HandyWorker save(final HandyWorker handyWorker) {
 		HandyWorker saved;
 		Assert.notNull(handyWorker);
+		
+		Assert.isTrue(this.utilityService.validEmail(handyWorker.getEmail()), "handyworker.email");
 
 		if (handyWorker.getId() == 0)
 			try {

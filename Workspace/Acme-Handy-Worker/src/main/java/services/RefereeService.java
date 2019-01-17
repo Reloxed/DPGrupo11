@@ -36,7 +36,9 @@ public class RefereeService {
 	@Autowired
 	private MessageBoxService		messageBoxService;
 
-
+	@Autowired
+	private UtilityService		utilityService;
+	
 	// Constructors ------------------------------------
 
 	public RefereeService() {
@@ -91,6 +93,8 @@ public class RefereeService {
 		Referee res;
 
 		Assert.notNull(referee);
+		
+		Assert.isTrue(this.utilityService.validEmail(referee.getEmail()), "referee.email");
 
 		if (referee.getId() == 0) {
 			Administrator principal;
