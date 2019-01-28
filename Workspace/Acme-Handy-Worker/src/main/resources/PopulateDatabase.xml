@@ -10,10 +10,46 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
+	
+	
+	<!-- Observations -->
+	<bean id="observation1" class="domain.Observation">
+		<property	name="ticker" value="159023-9A2J3C"	/>
+		<property 	name="publishedMoment" value="27/01/2019 17:14" />
+		<property name="body" value="Esta chapuza no me gusta como ha quedado. Vamos A APROBAR EL TEST DE DP EJEJ"		/>
+		<property name="picture" value="https://www.hofdhasldsfadsf.com"		/>
+		<property name="isFinal" value="false"		/>		
+	</bean>
+	
+	<bean id="observation2" class="domain.Observation">
+		<property	name="ticker" value="159023-7A2J3C"	/>
+		<property 	name="publishedMoment" value="15/12/2018 12:14" />
+		<property name="body" value="ESATA ES LA OBSERVACION NUMERO 2 TEST"		/>
+		<property name="picture" value="https://www.dfjlhaldskfjalskfnlakdsf.com"		/>
+		<property name="isFinal" value="false"		/>		
+	</bean>
+	
+	<bean id="observation3" class="domain.Observation">
+		<property	name="ticker" value="159023-7A2J3K"	/>
+		<property 	name="publishedMoment" value="15/09/2018 12:14" />
+		<property name="body" value="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "		/>
+		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
+		<property name="isFinal" value="false"		/>		
+	</bean>
+	
+	
+		<bean id="observation4" class="domain.Observation">
+		<property	name="ticker" value="159023-7A2J4H"	/>
+		<property 	name="publishedMoment" value="15/07/2018 12:14" />
+		<property name="body" value="LOLOL JEJE TEST A TOPEG FAASF AFASDF"		/>
+		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
+		<property name="isFinal" value="false"		/>		
+	</bean>
+	
 	<!-- ACTORS -->
 
 	<!-- Customers -->
+	
 
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="Francisco" />
@@ -1656,6 +1692,12 @@
 				<ref bean="complaint2_1_1" />
 			</list>
 		</property>
+		<property name="observations">
+			<list>
+				<ref bean="observation1" />
+				<ref bean="observation2" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- FixUpTask 2 del customer1 -->
@@ -1771,6 +1813,12 @@
 			<list>
 				<ref bean="complaint1_1_2" />
 				<ref bean="complaint2_1_2" />
+			</list>
+		</property>
+		<property name="observations">
+			<list>
+				<ref bean="observation3" />
+				<ref bean="observation4" />
 			</list>
 		</property>
 	</bean>

@@ -27,9 +27,7 @@ public class Observation extends DomainEntity{
 	private String picture;
 	private boolean isFinal;
 	
-	public Observation(){
-		super();
-	}
+	
 	
 	@NotBlank
 	@Column(unique = true)
@@ -57,7 +55,7 @@ public class Observation extends DomainEntity{
 	}
 	
 	@NotBlank
-	@Length(max = 15)
+	@Length(min=0,max = 15)
 	
 	public String getBody() {
 		return body;
@@ -77,11 +75,11 @@ public class Observation extends DomainEntity{
 		this.picture = picture;
 	}
 
-	public boolean isFinal() {
-		return isFinal;
+	public boolean getIsFinal() {
+		return this.isFinal;
 	}
 
-	public void setFinal(boolean isFinal) {
+	public void setFinal(final boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 	
