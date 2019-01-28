@@ -15,35 +15,48 @@
 	<!-- Observations -->
 	<bean id="observation1" class="domain.Observation">
 		<property	name="ticker" value="159023-9A2J3C"	/>
-		<property 	name="publishedMoment" value="27/01/2019 17:14" />
+		<property 	name="publishedMoment" value="20/01/2015 17:14" />
 		<property name="body" value="Esta chapuza no me gusta como ha quedado. Vamos A APROBAR EL TEST DE DP EJEJ"		/>
 		<property name="picture" value="https://www.hofdhasldsfadsf.com"		/>
 		<property name="isFinal" value="false"		/>		
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_1" />
+		</property>	
 	</bean>
 	
 	<bean id="observation2" class="domain.Observation">
 		<property	name="ticker" value="159023-7A2J3C"	/>
-		<property 	name="publishedMoment" value="15/12/2018 12:14" />
+		<property 	name="publishedMoment" value="15/12/2015 12:14" />
 		<property name="body" value="ESATA ES LA OBSERVACION NUMERO 2 TEST"		/>
 		<property name="picture" value="https://www.dfjlhaldskfjalskfnlakdsf.com"		/>
-		<property name="isFinal" value="false"		/>		
+		<property name="isFinal" value="false"		/>	
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_1" />
+		</property>		
 	</bean>
 	
 	<bean id="observation3" class="domain.Observation">
 		<property	name="ticker" value="159023-7A2J3K"	/>
-		<property 	name="publishedMoment" value="15/09/2018 12:14" />
+		<property 	name="publishedMoment" value="15/09/2015 12:14" />
 		<property name="body" value="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "		/>
 		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
-		<property name="isFinal" value="false"		/>		
+		<property name="isFinal" value="false"		/>
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_2" />
+		</property>		
+				
 	</bean>
 	
 	
 		<bean id="observation4" class="domain.Observation">
 		<property	name="ticker" value="159023-7A2J4H"	/>
-		<property 	name="publishedMoment" value="15/07/2018 12:14" />
+		<property 	name="publishedMoment" value="15/07/2015 12:14" />
 		<property name="body" value="LOLOL JEJE TEST A TOPEG FAASF AFASDF"		/>
 		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
-		<property name="isFinal" value="false"		/>		
+		<property name="isFinal" value="false"		/>	
+		<property name="fixUpTask">
+			<ref bean="fixUpTask1_2" />
+		</property>		
 	</bean>
 	
 	<!-- ACTORS -->

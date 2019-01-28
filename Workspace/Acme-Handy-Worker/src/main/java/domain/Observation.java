@@ -6,8 +6,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -26,7 +28,7 @@ public class Observation extends DomainEntity{
 	private String body;
 	private String picture;
 	private boolean isFinal;
-	
+	private FixUpTask fixUpTask;
 	
 	
 	@NotBlank
@@ -55,7 +57,7 @@ public class Observation extends DomainEntity{
 	}
 	
 	@NotBlank
-	@Length(min=0,max = 15)
+	@Length(min=0,max = 100)
 	
 	public String getBody() {
 		return body;
@@ -79,8 +81,18 @@ public class Observation extends DomainEntity{
 		return this.isFinal;
 	}
 
-	public void setFinal(final boolean isFinal) {
+	public void setIsFinal(boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public FixUpTask getFixUpTask() {
+		return fixUpTask;
+	}
+
+	public void setFixUpTask(FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
 	}
 	
 	
