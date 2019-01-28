@@ -38,6 +38,7 @@ public class FixUpTask extends DomainEntity {
 	private Category category;
 	private Warranty warranty;
 	private Collection<Complaint> complaints;
+	private Collection<Observation> observations;
 
 	@NotBlank
 	@Column(unique = true)
@@ -155,5 +156,17 @@ public class FixUpTask extends DomainEntity {
 	public void setComplaints(Collection<Complaint> complaints) {
 		this.complaints = complaints;
 	}
+	
+	@Valid
+	@OneToMany
+	public Collection<Observation> getObservations() {
+		return observations;
+	}
+
+	public void setObservations(Collection<Observation> observations) {
+		this.observations = observations;
+	}
+	
+	
 
 }

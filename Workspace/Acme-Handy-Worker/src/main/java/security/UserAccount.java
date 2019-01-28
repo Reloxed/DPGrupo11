@@ -56,7 +56,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private Collection<Authority>	authorities;
 
 
-	@Length(min = 5, max = 32)
+	@Length(min=5,max = 32)
 	@Column(unique = true)
 	@Override
 	@NotBlank
