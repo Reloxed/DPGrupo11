@@ -58,6 +58,42 @@ public class ObservationCustomerController {
 		
 	}
 	
+	//List ---------------------------------------------------------
+	
+	@RequestMapping(value="list", method=RequestMethod.GET)
+	public ModelAndView list(){
+		final ModelAndView result;
+		final Collection<Observation> observations;
+		
+		observations = this.observationService.findAll();
+		Assert.notNull(observations);
+		
+		result = new ModelAndView("observation/list");
+		result.addObject("observations", observations);
+		result.addObject("requestURI", "observation/customer/list.do");
+		
+		return result;
+	}
+	
+	//Display --------------------------------------------------------
+	
+	@RequestMapping(value="/display", method= RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int observationId){
+		final ModelAndView result;
+		final Observation observation;
+		
+		observation = this.observationService.findOne(observationId);
+		Assert.notNull(observation);
+		
+		result = new ModelAndView("observation/display");
+		result.addObject("observation", observation);
+		result.addObject("requestURI", "observation/customer/display.do");
+		
+		return result;
+	}
+	
+	
+	//Edition ----------------------------------------------------
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int observationId){
 		ModelAndView result;
