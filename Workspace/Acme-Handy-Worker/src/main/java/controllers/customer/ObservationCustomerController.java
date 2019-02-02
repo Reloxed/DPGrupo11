@@ -1,6 +1,7 @@
 package controllers.customer;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.FixUpTaskService;
 import services.ObservationService;
+import controllers.AbstractController;
 import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
@@ -24,7 +26,7 @@ import domain.Observation;
 
 @Controller
 @RequestMapping("/observation/customer")
-public class ObservationCustomerController {
+public class ObservationCustomerController extends AbstractController{
 
 	//Services --------------------------------------------
 	
@@ -36,63 +38,64 @@ public class ObservationCustomerController {
 	
 	@Autowired
 	private FixUpTaskService fixService;
-	//Constructor -----------------------------------
+	//Constructor -----------------------------------------
 	
 	public ObservationCustomerController(){
 		
 		super();
 	}
 	
-	//Create --------------------------------------------------
-	@RequestMapping(value="/create", method = RequestMethod.GET)
-	public ModelAndView create(){
-		final ModelAndView result;
-		Observation observation;
-		
-		observation = this.observationService.create();
-		
-		result = this.createEditModelAndView(observation);
-		
-		return result;
-		
-		
-	}
+
+	//List --------------------------------------------------------
 	
-	//List ---------------------------------------------------------
-	
-	@RequestMapping(value="list", method=RequestMethod.GET)
-	public ModelAndView list(){
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public ModelAndView listCustomer(final Locale locale){
 		final ModelAndView result;
-		final Collection<Observation> observations;
+		Collection<Observation> observations;
+		String language;
+		String español;
+		String english;
+		español = "es";
+		english = "en";
+		
+		language = locale.getLanguage();
 		
 		observations = this.observationService.findAll();
 		Assert.notNull(observations);
 		
 		result = new ModelAndView("observation/list");
 		result.addObject("observations", observations);
-		result.addObject("requestURI", "observation/customer/list.do");
+		result.addObject("language", language);
+		result.addObject("español", español);
+		result.addObject("english", english);
+		
 		
 		return result;
 	}
 	
-	//Display --------------------------------------------------------
 	
-	@RequestMapping(value="/display", method= RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int observationId){
+	//Create --------------------------------------------------
+	@RequestMapping(value="/create", method = RequestMethod.GET)
+	public ModelAndView create(@RequestParam final int fixUpTaskId){
 		final ModelAndView result;
-		final Observation observation;
+		Observation observation;
+		FixUpTask fixUpTask;
 		
-		observation = this.observationService.findOne(observationId);
-		Assert.notNull(observation);
 		
-		result = new ModelAndView("observation/display");
-		result.addObject("observation", observation);
-		result.addObject("requestURI", "observation/customer/display.do");
+		observation = this.observationService.create();
+		fixUpTask = this.fixService.findOne(fixUpTaskId);
+		
+		observation.setFixUpTask(fixUpTask);
+		
+		result = this.createEditModelAndView(observation);
+		
+		
 		
 		return result;
+		
+		
 	}
-	
-	
+		
 	//Edition ----------------------------------------------------
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int observationId){
@@ -181,9 +184,13 @@ public class ObservationCustomerController {
 		Actor principal;
 		boolean possible = false;
 		boolean isFinal = false;
+		FixUpTask fixUpTask;
 		
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
+		
+		fixUpTask = observation.getFixUpTask();
+		Assert.notNull(fixUpTask);
 		
 		if(principal instanceof Customer){
 			possible = true;
@@ -201,6 +208,8 @@ public class ObservationCustomerController {
 		result.addObject("fixs", fixs);
 		result.addObject("possible", possible);
 		result.addObject("isFinal", isFinal);
+		result.addObject("observation", observation);
+		result.addObject("fixUpTask", fixUpTask);
 		
 		return result;
 		

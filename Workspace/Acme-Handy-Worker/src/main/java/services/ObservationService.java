@@ -104,18 +104,13 @@ public class ObservationService {
 		
 		isFinal = finalMode;
 		
-		result = new Observation();
+		observation.setPublishedMoment(publishedMoment);
+		observation.setIsFinal(isFinal);
 		
-		result.setTicker(ticker);
-		result.setBody(body);
-		result.setPublishedMoment(publishedMoment);
-		result.setPicture(picture);
-		result.setIsFinal(isFinal);
-		result.setFixUpTask(fixUpTask);
 		
-		Assert.notNull(result);
+		Assert.notNull(observation);
 		
-		saved = this.observationRepository.save(result);
+		saved = this.observationRepository.save(observation);
 		
 		fixUpTask.getObservations().add(saved);
 		
@@ -182,6 +177,15 @@ public class ObservationService {
 		Double result;
 		
 		result = this.observationRepository.ratioObservationsDraftMode();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Observation> getFinalObservations(){
+		Collection<Observation> result;
+		
+		result = this.observationRepository.findFinalObservations();
 		Assert.notNull(result);
 		
 		return result;

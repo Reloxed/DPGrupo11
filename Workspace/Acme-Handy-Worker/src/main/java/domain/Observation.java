@@ -68,7 +68,6 @@ public class Observation extends DomainEntity{
 	}
 
 	@URL
-	@NotBlank
 	public String getPicture() {
 		return picture;
 	}

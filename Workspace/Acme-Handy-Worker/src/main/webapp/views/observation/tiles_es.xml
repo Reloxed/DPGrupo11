@@ -16,29 +16,19 @@
       
 <tiles-definitions>
 	
-	<definition name="message/edit" extends="master.page">
-		<put-attribute name="title" value="Nuevo mensaje" />
-		<put-attribute name="body" value="/views/message/edit.jsp" />
+	<definition name="observation/list" extends="master.page">
+		<put-attribute name="title" value="Lista de observaciones" />
+		<put-attribute name="body" value="/views/observation/list.jsp" />
 	</definition>
 	
-	<definition name="message/move" extends="master.page">
-		<put-attribute name="title" value="Mover mensaje" />
-		<put-attribute name="body" value="/views/register/edit.jsp" />
+	<definition name="observation/display" extends="master.page">
+		<put-attribute name="title" value="Mostrar observacion" />
+		<put-attribute name="body" value="/views/observation/display.jsp" />
 	</definition>
 	
-	<definition name="message/copy" extends="master.page">
-		<put-attribute name="title" value="Copiar mensaje" />
-		<put-attribute name="body" value="/views/register/edit.jsp" />
-	</definition>
-	
-	<definition name="message/show" extends="master.page">
-		<put-attribute name="title" value="Mostrar mensaje" />
-		<put-attribute name="body" value="/views/register/edit.jsp" />
-	</definition>
-	
-	<definition name="message/broadcast" extends="master.page">
-		<put-attribute name="title" value="Mensaje de broadcast" />
-		<put-attribute name="body" value="/views/message/broadcast.jsp" />
+	<definition name="observation/edit" extends="master.page">
+		<put-attribute name="title" value="Editar observacion" />
+		<put-attribute name="body" value="/views/observation/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

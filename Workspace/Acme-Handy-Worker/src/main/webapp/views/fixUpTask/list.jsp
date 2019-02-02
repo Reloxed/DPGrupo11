@@ -140,7 +140,14 @@
 			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
 					code="fixUpTask.display" /></a>
 		</display:column>
-
+		
+		<display:column>
+				<a
+					href="observation/customer/create.do?fixUpTaskId=${row.id}">
+					<spring:message code="fixUpTask.observation.create" />
+				</a>
+			
+		</display:column>
 		<display:column>
 			<jstl:if test="${not empty row.applications}">
 				<a
@@ -149,7 +156,8 @@
 				</a>
 			</jstl:if>
 		</display:column>
-
+		
+		
 
 	</display:table>
 

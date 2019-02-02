@@ -1,5 +1,7 @@
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,7 @@ public interface ObservationRepository extends JpaRepository<Observation, Intege
 
 	@Query("select (sum(case when o.isFinal='0' then 1.0 else 0 end)/count(*)) from Observation o")
 	Double ratioObservationsDraftMode();
+	
+	@Query("select o from Observation o where o.isFinal = true")
+	Collection<Observation> findFinalObservations();
 }

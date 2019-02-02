@@ -131,7 +131,6 @@
 								code="master.page.handyworker.complaints.show" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message
-
 						code="master.page.handyworker.tutorials" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -140,7 +139,7 @@
 					<li><a href="tutorial/edit.do"><spring:message
 								code="master.page.handyworker.tutorial.create" /></a></li>
 				</ul></li>
-			
+
 
 			<li><a class="fNiv"><spring:message
 						code="master.page.handyworker.curriculum" /></a>
@@ -173,8 +172,24 @@
 				</ul></li>
 
 		</security:authorize>
-
+		
+		<security:authorize access="hasAnyRole('HANDYWORKER','ADMINISTRATOR')">
+			
+			<li><a href="observation/actor/list.do" class="fNiv"> <spring:message
+						code="master.page.observations" />
+			</a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasAnyRole('CUSTOMER')">
+			
+			<li><a href="observation/customer/list.do" class="fNiv"> <spring:message
+						code="master.page.observations" />
+			</a></li>
+		</security:authorize>
+		
 		<security:authorize access="isAuthenticated()">
+
+	
 			<li><a class="fNiv"> <spring:message
 						code="master.page.profile" /> (<security:authentication
 						property="principal.username" />)
@@ -188,6 +203,10 @@
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>
 				</ul></li>
+
+			
 		</security:authorize>
+		
+		
 	</ul>
 </div>

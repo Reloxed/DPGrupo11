@@ -18,7 +18,7 @@
 		<property 	name="publishedMoment" value="20/01/2015 17:14" />
 		<property name="body" value="Esta chapuza no me gusta como ha quedado. Vamos A APROBAR EL TEST DE DP EJEJ"		/>
 		<property name="picture" value="https://www.hofdhasldsfadsf.com"		/>
-		<property name="isFinal" value="false"		/>		
+		<property name="isFinal" value="true"		/>		
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>	

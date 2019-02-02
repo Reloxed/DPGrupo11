@@ -127,9 +127,22 @@
 				</jstl:out></td>
 		</tr>
 
+		<tr>
+
+			<td><strong> <spring:message
+						code="fixUpTask.observations" /> :
+			</strong></td>
+			<td><jstl:forEach items="${fixUpTask.observations}" var="i">
+					<ul>
+						<li><jstl:out value="${i.body}"></jstl:out></li>
+					</ul>
+				</jstl:forEach></td>
+		</tr>
+
+
 	</table>
-	
-		<input type="button" name="back"
+
+	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
 		onclick="window.history.back()" />
 
@@ -141,7 +154,6 @@
 		<tr>
 
 			<td><a href="actor/display.do?actorID=${customerOwner}"> <spring:message
-
 						code="profile.customer" />
 			</a></td>
 		</tr>
@@ -245,6 +257,17 @@
 				</jstl:out></td>
 		</tr>
 
+		<tr>
+
+			<td><strong> <spring:message
+						code="fixUpTask.observations" /> :
+			</strong></td>
+			<td><jstl:forEach items="${fixUpTask.observations}" var="i">
+					<ul>
+						<li><jstl:out value="${i.body}"></jstl:out></li>
+					</ul>
+				</jstl:forEach></td>
+		</tr>
 	</table>
 
 

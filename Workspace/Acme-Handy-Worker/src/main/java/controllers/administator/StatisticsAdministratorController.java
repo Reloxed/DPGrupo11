@@ -14,6 +14,7 @@ import services.ApplicationService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
+import services.ObservationService;
 import services.ReportService;
 import controllers.AbstractController;
 import domain.Customer;
@@ -36,6 +37,9 @@ public class StatisticsAdministratorController extends AbstractController {
 
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private ObservationService observationService;
 
 	@Autowired
 	private ReportService reportService;
@@ -64,7 +68,13 @@ public class StatisticsAdministratorController extends AbstractController {
 		Double ratioFixWithComplaints;
 		List<Customer> customerStatistics2;
 		List<HandyWorker> handyWorkerStatistics2;
+		Double ratioObservationsFinalMode;
+		Double ratioObservationsDraftMode;
 
+		
+		ratioObservationsDraftMode = this.observationService.ratioObservationsDraftMode();
+		ratioObservationsFinalMode = this.observationService.ratioObservationsFinalMode();
+		
 		// The average, the minimum, the maximum, and the standard deviation of
 		// the number of fix-up tasks per user
 		fixuptasksStatistics = this.fixUpTaskService
@@ -139,7 +149,8 @@ public class StatisticsAdministratorController extends AbstractController {
 		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
 		res.addObject("customerStatistics2", customerStatistics2);
 		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
-
+		res.addObject("ratioObservationsFinalMode", ratioObservationsFinalMode);
+		res.addObject("ratioObservationsDraftMode", ratioObservationsDraftMode);
 		res.addObject("requestURI", "statistics/administrator/display.do");
 
 		return res;

@@ -26,7 +26,25 @@
 		 or not empty ratioFixWithComplaints or not empty statusStatistics or not empty notesStatistics 
 		 	or not empty customerStatistics or not empty customerStatistics2 or not empty handyWorkerStatistics
 		 		or not empty handyWorkerStatistics2}">
-		 		
+	
+	
+	<table class="displayStyle" style="width: 50%">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.observation.statistics" /></th>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.observations.final" /></td>
+			<td style="text-align: right">${ratioObservationsFinalMode}</td>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.observations.draft" /></td>
+			<td style="text-align: right">${ratioObservationsDraftMode}</td>
+		</tr>
+		
+	</table>
+	
+		
 	<jstl:if test="${not empty applicationsStatistics}"></jstl:if>
 	<table class="displayStyle" style="width: 50%">
 		<tr>
@@ -221,7 +239,7 @@
 		</table>
 	</div>
 	
-	<jstl:if test="${not empty handyWorkerStatistics }"></jstl:if>
+	<jstl:if test="${not empty handyWorkerStatistics }">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
@@ -240,7 +258,7 @@
 				</display:table></td>
 		</tr>
 	</table>
-	
+	</jstl:if>
 	<jstl:if test="${not empty handyWorkerStatistics2}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
