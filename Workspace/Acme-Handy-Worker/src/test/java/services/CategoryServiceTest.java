@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -18,26 +17,25 @@ import utilities.AbstractTest;
 import domain.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
-})
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
+		"classpath:spring/config/packages.xml" })
 @Transactional
 public class CategoryServiceTest extends AbstractTest {
 
 	// Service under test ---------------------------------------------
 
 	@Autowired
-	private CategoryService	categoryService;
-
+	private CategoryService categoryService;
 
 	// Tests ------------------------------------------------------------------
 
 	@Test
 	public void testFindAll() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		Collection<Category> categories = null;
 
 		categories = this.categoryService.findAll();
+		System.out.println(categories.iterator().next().toString());
 
 		Assert.notNull(categories);
 
@@ -46,7 +44,7 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		Category category;
 
 		category = this.categoryService.create();
@@ -61,10 +59,10 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		Category category, saved;
 		Collection<Category> categories, categoriesUpdated;
-		Map<String,String> idiomasName = new HashMap<>();
+		Map<String, String> idiomasName = new HashMap<>();
 
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
@@ -83,10 +81,10 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testUpdateExistingCategory() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		Category category, saved;
 		Collection<Category> categories, categoriesUpdated;
-		Map<String,String> idiomasName = new HashMap<>();
+		Map<String, String> idiomasName = new HashMap<>();
 
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
@@ -105,11 +103,11 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testRemoveCategory() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		Category category;
 		Collection<Category> collCat;
-		
-		collCat =  this.categoryService.findAll();
+
+		collCat = this.categoryService.findAll();
 		Iterator<Category> i = collCat.iterator();
 		i.next();
 		category = this.categoryService.findOne(i.next().getId());
@@ -119,12 +117,12 @@ public class CategoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-		super.authenticate("admin1");
+		super.authenticate("admin");
 
 		Category category, saved, found;
 		Collection<Category> categories, categoriesUpdated;
-		Map<String,String> idiomasName = new HashMap<>();
-		
+		Map<String, String> idiomasName = new HashMap<>();
+
 		categories = this.categoryService.findAll();
 		category = this.categoryService.create();
 		idiomasName.put("Español", "Hola Paco");

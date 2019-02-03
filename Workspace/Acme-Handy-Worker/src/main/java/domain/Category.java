@@ -52,5 +52,4 @@ public class Category extends DomainEntity {
 	public String toString() {
 		return this.name.get("Español") + ", " + this.name.get("English");
 	}
-
 }

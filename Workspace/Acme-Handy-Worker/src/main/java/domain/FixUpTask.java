@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -38,6 +39,7 @@ public class FixUpTask extends DomainEntity {
 	private Category category;
 	private Warranty warranty;
 	private Collection<Complaint> complaints;
+	private Collection<XXXX> XXXXs;
 
 	@NotBlank
 	@Column(unique = true)
@@ -82,7 +84,7 @@ public class FixUpTask extends DomainEntity {
 
 	@Digits(fraction = 2, integer = 10)
 	@Type(type = "double")
-	@Min(value=0)
+	@Min(value = 0)
 	public double getMaxPrice() {
 		return this.maxPrice;
 	}
@@ -126,7 +128,7 @@ public class FixUpTask extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	public Category getCategory() {
 		return this.category;
 	}
@@ -154,6 +156,16 @@ public class FixUpTask extends DomainEntity {
 
 	public void setComplaints(Collection<Complaint> complaints) {
 		this.complaints = complaints;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "fixUpTask")
+	public Collection<XXXX> getXXXXs() {
+		return this.XXXXs;
+	}
+
+	public void setXXXXs(Collection<XXXX> XXXXs) {
+		this.XXXXs = XXXXs;
 	}
 
 }

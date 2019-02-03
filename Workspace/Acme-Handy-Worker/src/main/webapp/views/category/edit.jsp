@@ -17,7 +17,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<link href="styles/misc.css" rel="stylesheet" type="text/css"/>
+<link href="styles/misc.css" rel="stylesheet" type="text/css" />
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
@@ -29,16 +29,17 @@
 		<form:hidden path="childCategories" />
 
 
-<div class="tooltip"><spring:message code="category.name" />
-  <span class="tooltiptext"><spring:message code="category.info" /></span>
-	</div>
+		<div class="tooltip">
+			<spring:message code="category.name" />
+			<span class="tooltiptext"><spring:message code="category.info" /></span>
+		</div>
 		<form:label path="name" value="${category.name.get('Español')}">
-			
+
 		</form:label>
 		<form:input path="name" value="${category.name}" style="width:400px;" />
 		<form:errors cssClass="error" path="name"
 			value="${category.name.get('Español')}" />
-			
+
 		<br />
 		<br />
 
@@ -47,26 +48,26 @@
 
 
 				<spring:message code="category.parentCategory" />
-				
-	<jstl:if test="${language==español}">
-	
-<form:select path="parentCategory" style="width:400px;">
-		<jstl:forEach var="x" items="${parents}">
-			<form:option value="${x}" label="${x.name.get('Español')}" />
-		</jstl:forEach>
 
-	</form:select>
-	</jstl:if>
-	
-		<jstl:if test="${language==english}">
-	
-<form:select path="parentCategory" style="width:400px;">
-		<jstl:forEach var="x" items="${parents}">
-			<form:option value="${x}" label="${x.name.get('English')}" />
-		</jstl:forEach>
+				<jstl:if test="${language==español}">
 
-	</form:select>
-	</jstl:if>
+					<form:select path="parentCategory" style="width:400px;">
+						<jstl:forEach var="x" items="${parents}">
+							<form:option value="${x}" label="${x.name.get('Español')}" />
+						</jstl:forEach>
+
+					</form:select>
+				</jstl:if>
+
+				<jstl:if test="${language==english}">
+
+					<form:select path="parentCategory" style="width:400px;">
+						<jstl:forEach var="x" items="${parents}">
+							<form:option value="${x}" label="${x.name.get('English')}" />
+						</jstl:forEach>
+
+					</form:select>
+				</jstl:if>
 
 			</jstl:when>
 			<jstl:otherwise>
@@ -79,8 +80,8 @@
 		<input type="submit" name="save" id="save"
 			value='<spring:message code="category.save"/>' />
 		<jstl:if test="${category.id!=0}">
-		<input type="submit" name="delete" id="delete"
-			value='<spring:message code="category.delete"/>' />
+			<input type="submit" name="delete" id="delete"
+				value='<spring:message code="category.delete"/>' />
 		</jstl:if>
 	</form:form>
 	<br />

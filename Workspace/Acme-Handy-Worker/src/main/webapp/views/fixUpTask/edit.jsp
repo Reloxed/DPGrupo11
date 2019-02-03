@@ -81,30 +81,31 @@
 
 
 	</form:label>
-	
+
 	<jstl:if test="${language==español}">
-	
-	<form:select path="category" style="width:400px;">
-		<jstl:forEach var="x" items="${categories}">
-			<form:option value="${x}" label="${x.name.get('Español')}" />
-		</jstl:forEach>
 
-	</form:select>
-	<br />
-	<br />
-	</jstl:if>
-		<jstl:if test="${language==english}">
-	
-	<form:select path="category" style="width:400px;">
-		<jstl:forEach var="x" items="${categories}">
-			<form:option value="${x}" label="${x.name.get('English')}" />
-		</jstl:forEach>
+		<form:select path="category" style="width:400px;">
+			<jstl:forEach var="x" items="${categories}">
+				<form:option value="${x}" label="${x.name.get('Español')}" />
+			</jstl:forEach>
+		</form:select>
 
-	</form:select>
-	<br />
-	<br />
+		<br />
+		<br />
 	</jstl:if>
-	
+
+	<jstl:if test="${language==english}">
+
+		<form:select path="category" style="width:400px;">
+			<jstl:forEach var="x" items="${categories}">
+				<form:option value="${x}" label="${x.name.get('English')}" />
+			</jstl:forEach>
+		</form:select>
+
+		<br />
+		<br />
+	</jstl:if>
+
 
 	<form:label path="warranty">
 
