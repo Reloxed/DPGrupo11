@@ -11,7 +11,7 @@ import domain.XXXX;
 
 @Component
 @Transactional
-public class StringToXXXX implements Converter<String, XXXX> {
+public class StringToXXXXConverter implements Converter<String, XXXX> {
 
 	@Autowired
 	XXXXRepository xxxxRepository;

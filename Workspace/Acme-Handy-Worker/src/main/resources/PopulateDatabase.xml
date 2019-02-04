@@ -1666,10 +1666,10 @@
 
 	<bean id="XXXX1_TEST" class="domain.XXXX">
 		<property name="ticker" value="012349-ASDFGH" />
-		<property name="publishedMoment" value="29/01/2019 11:30" />
+		<property name="publishedMoment" value="07/01/2019 11:30" />
 		<property name="body"
 			value="Hey brother, there's an endless road to re-discover" />
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>
@@ -1677,10 +1677,10 @@
 
 	<bean id="XXXX2_TEST" class="domain.XXXX">
 		<property name="ticker" value="017349-ASDFGH" />
-		<property name="publishedMoment" value="25/12/2018 17:30" />
+		<property name="publishedMoment" value="01/01/2019 17:30" />
 		<property name="body"
 			value="Hey sister, know the water's sweet but blood is thicker" />
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 		<property name="fixUpTask">
 			<ref bean="fixUpTask1_1" />
 		</property>
@@ -1688,7 +1688,7 @@
 
 	<bean id="XXXX3_TEST" class="domain.XXXX">
 		<property name="ticker" value="017389-ASDFGH" />
-		<property name="publishedMoment" value="27/11/2018 20:50" />
+		<property name="publishedMoment" value="11/11/2018 20:50" />
 		<property name="body"
 			value="I'm passing over you like a satellite so catch me if I fall" />
 		<property name="isFinal" value="true" />
@@ -1699,7 +1699,7 @@
 
 	<bean id="XXXX4_TEST" class="domain.XXXX">
 		<property name="ticker" value="817389-ASDFGH" />
-		<property name="publishedMoment" value="27/11/2014 20:50" />
+		<property name="publishedMoment" value="09/11/2014 20:50" />
 		<property name="body"
 			value="Puedo balancearme sobre un hilo cargando más de quinientos kilos" />
 		<property name="isFinal" value="true" />

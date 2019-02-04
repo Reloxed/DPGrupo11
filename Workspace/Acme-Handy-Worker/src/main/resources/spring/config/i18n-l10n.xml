@@ -22,7 +22,7 @@
 		<value>/views/system-configuration/messages</value>
 		<value>/views/phase/messages</value>
 		<value>/views/application/messages</value>
-
+		<value>/views/xxxx/messages</value>
 
 		<value>/views/complaint/messages</value>
 
@@ -32,7 +32,7 @@
 		<value>/views/handyWorker/messages</value>
 		<value>/views/sponsor/messages</value>
 		<value>/views/creditcard/messages</value>
-		
+
 		<value>/views/category/messages</value>
 
 
@@ -49,7 +49,7 @@
 		<value>/views/professionalRecord/messages</value>
 		<value>/views/endorserRecord/messages</value>
 		<value>/views/miscellaneousRecord/messages</value>
-		
+
 		<value>/views/sponsorship/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/box/messages</value>

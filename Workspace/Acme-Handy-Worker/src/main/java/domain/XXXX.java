@@ -39,9 +39,8 @@ public class XXXX extends DomainEntity {
 		this.ticker = ticker;
 	}
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPublishedMoment() {
 		return this.publishedMoment;
 	}
@@ -76,8 +75,9 @@ public class XXXX extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	@Valid
 	@ManyToOne(optional = false)
+	@Valid
+	@NotNull
 	public FixUpTask getFixUpTask() {
 		return this.fixUpTask;
 	}

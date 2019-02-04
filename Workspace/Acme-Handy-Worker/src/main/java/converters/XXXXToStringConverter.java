@@ -8,7 +8,7 @@ import domain.XXXX;
 
 @Component
 @Transactional
-public class XXXXToString implements Converter<XXXX, String> {
+public class XXXXToStringConverter implements Converter<XXXX, String> {
 
 	@Override
 	public String convert(final XXXX xxxx) {

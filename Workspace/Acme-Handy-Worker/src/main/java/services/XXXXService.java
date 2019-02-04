@@ -13,8 +13,8 @@ import org.springframework.util.Assert;
 
 import repositories.XXXXRepository;
 import domain.Actor;
+import domain.Customer;
 import domain.FixUpTask;
-import domain.HandyWorker;
 import domain.XXXX;
 
 @Service
@@ -54,9 +54,10 @@ public class XXXXService {
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal, "not.registered");
-		Assert.isTrue(principal instanceof HandyWorker, "not.allowed");
+		Assert.isTrue(principal instanceof Customer, "not.allowed");
 
 		res = new XXXX();
+		res.setTicker("000000-QWERTY");
 		return res;
 	}
 
@@ -83,26 +84,22 @@ public class XXXXService {
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal, "not.registered");
-		Assert.isTrue(principal instanceof HandyWorker, "not.allowed");
+		Assert.isTrue(principal instanceof Customer, "not.allowed");
 
 		fixUpTask = xxxx.getFixUpTask();
 		Assert.notNull(fixUpTask);
 
 		if (xxxx.getId() == 0) {
 			xxxx.setTicker(this.utilityService.generateTicker());
-			xxxx.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 		} else {
 			Assert.isTrue(xxxx.getFixUpTask().equals(
 					this.findOne(xxxx.getId()).getFixUpTask()));
-			if (this.findOne(xxxx.getId()).getIsFinal()) {
-				Assert.isTrue(xxxx.getIsFinal());
+			Assert.isTrue(xxxx.getTicker().equals(
+					this.findOne(xxxx.getId()).getTicker()));
+			if (xxxx.getIsFinal()) {
 				Assert.isTrue(xxxx.getTicker().equals(
 						this.findOne(xxxx.getId()).getTicker()));
-				Assert.isTrue(xxxx.getBody().equals(
-						this.findOne(xxxx.getId()).getBody()));
-				Assert.isTrue(xxxx.getPhotoLink().equals(
-						this.findOne(xxxx.getId()).getPhotoLink()));
-
+				xxxx.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 			}
 		}
 
@@ -147,4 +144,34 @@ public class XXXXService {
 
 		return res;
 	}
+
+	// Other business methods
+
+	public Double[] operationsXXXX() {
+		Double[] result;
+
+		result = this.XXXXRepository.operationsXXXXs();
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Double ratioFinalXXXXs() {
+		Double result;
+
+		result = this.XXXXRepository.ratioXXXXsFinalMode();
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Double ratioXXXXsDraftMode() {
+		Double result;
+
+		result = this.XXXXRepository.ratioXXXXsDraftMode();
+		Assert.notNull(result);
+
+		return result;
+	}
+
 }

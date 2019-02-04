@@ -110,6 +110,9 @@
 
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
+
+		<bean class="converters.XXXXToStringConverter" />
+		<bean class="converters.StringToXXXXConverter" />
 	</util:list>
 
 </beans>

@@ -15,6 +15,7 @@ import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
 import services.ReportService;
+import services.XXXXService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.HandyWorker;
@@ -40,6 +41,9 @@ public class StatisticsAdministratorController extends AbstractController {
 	@Autowired
 	private ReportService reportService;
 
+	@Autowired
+	private XXXXService xxxxService;
+
 	// Constructor
 
 	public StatisticsAdministratorController() {
@@ -64,6 +68,19 @@ public class StatisticsAdministratorController extends AbstractController {
 		Double ratioFixWithComplaints;
 		List<Customer> customerStatistics2;
 		List<HandyWorker> handyWorkerStatistics2;
+		Double[] XXXXsStatistics;
+		Double ratioXXXXsFinalMode;
+		Double ratioXXXXsDraftMode;
+
+		// The average and standard deviation of the number of published XXXX
+		// per XXXX
+		XXXXsStatistics = this.xxxxService.operationsXXXX();
+
+		// The ratio of published XXXX versus total number of XXXX
+		ratioXXXXsDraftMode = this.xxxxService.ratioXXXXsDraftMode();
+
+		// The ratio of unpublished XXXX versus total number of XXXX
+		ratioXXXXsFinalMode = this.xxxxService.ratioFinalXXXXs();
 
 		// The average, the minimum, the maximum, and the standard deviation of
 		// the number of fix-up tasks per user
@@ -139,10 +156,12 @@ public class StatisticsAdministratorController extends AbstractController {
 		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
 		res.addObject("customerStatistics2", customerStatistics2);
 		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
+		res.addObject("XXXXsStatistics", XXXXsStatistics);
+		res.addObject("ratioXXXXsDraftMode", ratioXXXXsDraftMode);
+		res.addObject("ratioXXXXsFinalMode", ratioXXXXsFinalMode);
 
 		res.addObject("requestURI", "statistics/administrator/display.do");
 
 		return res;
 	}
-
 }

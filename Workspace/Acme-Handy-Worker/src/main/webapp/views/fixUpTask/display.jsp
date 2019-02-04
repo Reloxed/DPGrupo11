@@ -128,8 +128,38 @@
 		</tr>
 
 	</table>
+
+	<jstl:if test="${not empty fixUpTask.XXXXs}">
+		<spring:message code="xxxxs"></spring:message>
+		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.XXXXs}"
+			var="xxxx">
+			<table class="displayStyle">
+				<tr>
+					<td><strong> <spring:message code="xxxx.ticker" /> :
+					</strong></td>
+					<td><jstl:out value="${xxxx.ticker}">
+						</jstl:out></td>
+				</tr>
+				<tr>
+					<td><strong> <spring:message code="xxxx.body" /> :
+					</strong></td>
+					<td><jstl:out value="${xxxx.body}">
+						</jstl:out></td>
+				</tr>
+			</table>
+
+			<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"><spring:message
+					code="xxxx.display" /></a>
+		</jstl:forEach>
+
+		<br>
+		<br>
+
+		<a href="xxxx/handy-worker/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+				code="full.list" /></a>
+	</jstl:if>
 	
-		<input type="button" name="back"
+	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
 		onclick="window.history.back()" />
 
@@ -141,7 +171,6 @@
 		<tr>
 
 			<td><a href="actor/display.do?actorID=${customerOwner}"> <spring:message
-
 						code="profile.customer" />
 			</a></td>
 		</tr>
@@ -247,7 +276,38 @@
 
 	</table>
 
+	<jstl:if test="${not empty fixUpTask.XXXXs}">
+		<spring:message code="xxxxs"></spring:message>
+		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.XXXXs}"
+			var="xxxx">
+			<table class="displayStyle">
+				<tr>
+					<td><strong> <spring:message code="xxxx.ticker" /> :
+					</strong></td>
+					<td><jstl:out value="${xxxx.ticker}">
+						</jstl:out></td>
+				</tr>
+				<tr>
+					<td><strong> <spring:message code="xxxx.body" /> :
+					</strong></td>
+					<td><jstl:out value="${xxxx.body}">
+						</jstl:out></td>
+				</tr>
+			</table>
 
+			<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"><spring:message
+					code="xxxx.display" /></a>
+		</jstl:forEach>
+
+		<br>
+		<br>
+
+		<a href="xxxx/handy-worker/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+				code="full.list" /></a>
+	</jstl:if>
+
+	<br>
+	<br>
 
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
