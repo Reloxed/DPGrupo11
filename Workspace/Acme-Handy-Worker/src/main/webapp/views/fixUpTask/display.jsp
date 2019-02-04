@@ -148,17 +148,17 @@
 				</tr>
 			</table>
 
-			<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"><spring:message
+			<a href="xxxx/display.do?xxxxID=${xxxx.id}"><spring:message
 					code="xxxx.display" /></a>
 		</jstl:forEach>
 
 		<br>
 		<br>
 
-		<a href="xxxx/handy-worker/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+		<a href="xxxx/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
 				code="full.list" /></a>
 	</jstl:if>
-	
+
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
 		onclick="window.history.back()" />
@@ -295,14 +295,14 @@
 				</tr>
 			</table>
 
-			<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"><spring:message
+			<a href="xxxx/display.do?xxxxID=${xxxx.id}"><spring:message
 					code="xxxx.display" /></a>
 		</jstl:forEach>
 
 		<br>
 		<br>
 
-		<a href="xxxx/handy-worker/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+		<a href="xxxx/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
 				code="full.list" /></a>
 	</jstl:if>
 

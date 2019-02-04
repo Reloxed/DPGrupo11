@@ -142,15 +142,8 @@ public class FixUpTaskCustomerController extends AbstractController {
 		ModelAndView result;
 		Collection<FixUpTask> fixUpTasks;
 		Customer principal;
-
-		principal = this.customerService.findByPrincipal();
-		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal
-				.getId());
-
-		result = new ModelAndView("fixUpTask/list");
-		result.addObject("fixUpTasks", fixUpTasks);
-		result.addObject("principal", principal);
-		result.addObject("requestUri", "fixUpTask/customer/list.do");
+		int ownerID;
+		Customer owner;
 
 		principal = this.customerService.findByPrincipal();
 		fixUpTasks = this.fixUpTaskService.FixUpTaskByCustomer(principal

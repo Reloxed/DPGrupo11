@@ -19,6 +19,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<security:authorize access="isAuthenticated()" var="authenticated" />
+
+<jstl:if test="${authenticated}">
+	<security:authentication property="principal.username" var="user" />
+</jstl:if>
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
@@ -46,18 +51,18 @@
 
 		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
 		<display:column property="startMoment" title="${startMomentHeader}"
-			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
+			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 
 
 		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
 		<display:column property="endMoment" title="${endMomentHeader}"
-			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
+			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 
 		<jstl:set var="fixStart" value="${row.startMoment}" />
 		<jsp:useBean id="now" class="java.util.Date" />
 
 		<display:column>
-		
+
 			<jstl:set var="containsA" value="${false}" />
 			<jstl:forEach items="${fixUpTasks}" var="fix">
 				<jstl:forEach items="${collFixUpTasksAccepted}" var="fixauxA">
@@ -66,7 +71,7 @@
 					</jstl:if>
 				</jstl:forEach>
 			</jstl:forEach>
-			
+
 			<jstl:set var="containsB" value="${false}" />
 			<jstl:forEach items="${fixUpTasks}" var="fix">
 				<jstl:forEach items="${collFixUpTasksBanned}" var="fixauxB">
@@ -75,9 +80,10 @@
 					</jstl:if>
 				</jstl:forEach>
 			</jstl:forEach>
-			
-			<jstl:if test="${fixStart > now and containsA == false and containsB == false}">
-				<a href="application/handy-worker/create.do?fixUpTaskId=${row.id}">
+
+			<jstl:if
+				test="${fixStart > now and containsA == false and containsB == false}">
+				<a href="application/create.do?fixUpTaskId=${row.id}">
 					<!-- <img
 				style="width: center; height: center" /> --> <spring:message
 						code="fixUpTask.apply" />
@@ -91,6 +97,11 @@
 			</a>
 		</display:column>
 
+		<display:column titleKey="xxxxs">
+			<a href="xxxx/list.do?fixuptaskID=${row.id}"> <spring:message
+					code="xxxx.display.fut" />
+			</a>
+		</display:column>
 	</display:table>
 
 </security:authorize>
@@ -102,7 +113,7 @@
 		class="displaytag">
 
 		<display:column>
-			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> <spring:message
+			<a href="fixUpTask/customer/edit.do?fixuptaskID=${row.id}"> <spring:message
 					code="fixUpTask.edit" />
 			</a>
 		</display:column>
@@ -129,12 +140,12 @@
 
 		<spring:message code="fixUpTask.startMoment" var="startMomentHeader" />
 		<display:column property="startMoment" title="${startMomentHeader}"
-			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
+			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 
 
 		<spring:message code="fixUpTask.endMoment" var="endMomentHeader" />
 		<display:column property="endMoment" title="${endMomentHeader}"
-			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}"/>
+			sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
 
 		<display:column>
 			<a href="fixUpTask/customer/display.do?fixUpTaskId=${row.id}"> <spring:message
@@ -150,7 +161,21 @@
 			</jstl:if>
 		</display:column>
 
+		<display:column titleKey="xxxxs">
+			<a href="xxxx/list.do?fixuptaskID=${row.id}"> <spring:message
+					code="xxxx.display.fut" />
+			</a>
+		</display:column>
 
+		<display:column>
+			<jstl:if test="${user == principal.userAccount.username}">
+
+				<input type="button" name="create"
+					value='<spring:message code="xxxx.create"/>'
+					onclick="redirect: location.href = 'xxxx/create.do?fixuptaskID=${row.id}';" />
+
+			</jstl:if>
+		</display:column>
 	</display:table>
 
 

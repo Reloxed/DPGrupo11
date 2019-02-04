@@ -21,11 +21,10 @@ import services.XXXXService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.Report;
 import domain.XXXX;
 
 @Controller
-@RequestMapping("/xxxx/handy-worker")
+@RequestMapping("/xxxx")
 public class XXXXAdministrationController extends AbstractController {
 
 	// Services ###############################################################
@@ -46,13 +45,17 @@ public class XXXXAdministrationController extends AbstractController {
 		ModelAndView res;
 		Collection<XXXX> allxxxxs;
 		Collection<XXXX> publishedxxxxs;
+		int ownerID;
+		Customer owner;
 		String language;
 		String espanyol;
 		espanyol = "es";
 
 		allxxxxs = this.xxxxService.findByFixUpTaskId(fixuptaskID);
-		publishedxxxxs = new ArrayList<>();
+		ownerID = this.fixUpTaskService.creatorFixUpTask(fixuptaskID);
+		owner = this.customerService.findOne(ownerID);
 
+		publishedxxxxs = new ArrayList<>();
 		for (XXXX xxxx : allxxxxs) {
 			if (xxxx.getIsFinal()) {
 				publishedxxxxs.add(xxxx);
@@ -65,6 +68,7 @@ public class XXXXAdministrationController extends AbstractController {
 		res.addObject("publishedxxxxs", publishedxxxxs);
 		res.addObject("language", language);
 		res.addObject("espanyol", espanyol);
+		res.addObject("owner", owner);
 
 		return res;
 	}

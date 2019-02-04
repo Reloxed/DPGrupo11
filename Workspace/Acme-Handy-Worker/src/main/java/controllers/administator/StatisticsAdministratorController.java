@@ -144,6 +144,9 @@ public class StatisticsAdministratorController extends AbstractController {
 				.findTopComplaintsHandyWorkers();
 
 		res = new ModelAndView("administrator/dashboard");
+		res.addObject("XXXXsStatistics", XXXXsStatistics);
+		res.addObject("ratioXXXXsDraftMode", ratioXXXXsDraftMode);
+		res.addObject("ratioXXXXsFinalMode", ratioXXXXsFinalMode);
 		res.addObject("fixupstatistics", fixuptasksStatistics);
 		res.addObject("applicationsStatistics", applicationsStatistics);
 		res.addObject("pricesStatistics", pricesStatistics);
@@ -156,9 +159,6 @@ public class StatisticsAdministratorController extends AbstractController {
 		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
 		res.addObject("customerStatistics2", customerStatistics2);
 		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
-		res.addObject("XXXXsStatistics", XXXXsStatistics);
-		res.addObject("ratioXXXXsDraftMode", ratioXXXXsDraftMode);
-		res.addObject("ratioXXXXsFinalMode", ratioXXXXsFinalMode);
 
 		res.addObject("requestURI", "statistics/administrator/display.do");
 

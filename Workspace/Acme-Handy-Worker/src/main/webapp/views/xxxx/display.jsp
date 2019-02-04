@@ -69,7 +69,7 @@ table,th,td {
 
 	<jstl:if test="${user == author.userAccount.username}">
 		<jstl:if test="${!xxxx.isFinal}">
-			<a href="xxxx/handy-worker/edit.do?xxxxID=${xxxx.id}"> <spring:message
+			<a href="xxxx/edit.do?xxxxID=${xxxx.id}"> <spring:message
 					code="xxxx.edit" />
 			</a>
 		</jstl:if>

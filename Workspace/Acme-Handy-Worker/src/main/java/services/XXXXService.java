@@ -140,7 +140,6 @@ public class XXXXService {
 		Assert.notNull(fixUpTask);
 
 		res = fixUpTask.getXXXXs();
-		Assert.notEmpty(res);
 
 		return res;
 	}

@@ -41,7 +41,7 @@
 	<jstl:choose>
 		<jstl:when test="${not empty publishedxxxxs}">
 			<display:table pagesize="5" class="displaytag" name="publishedxxxxs"
-				requestURI="xxxx/handy-worker/list.do" id="xxxx">
+				requestURI="xxxx/list.do" id="xxxx">
 
 				<!-- Colors & Dates -->
 
@@ -65,7 +65,7 @@
 				<!-- Action links -->
 
 				<display:column class="${bgcolor}">
-					<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"> <spring:message
+					<a href="xxxx/display.do?xxxxID=${xxxx.id}"> <spring:message
 							code="xxxx.display" />
 					</a>
 				</display:column>
@@ -105,7 +105,7 @@
 	<jstl:choose>
 		<jstl:when test="${not empty xxxxs}">
 			<display:table pagesize="5" class="displaytag" name="xxxxs"
-				requestURI="xxxx/handy-worker/list.do" id="xxxx">
+				requestURI="xxxx/list.do" id="xxxx">
 
 				<!-- Colors & Dates -->
 
@@ -129,12 +129,15 @@
 				<!-- Action links -->
 
 				<display:column class="${bgcolor}">
-					<a href="xxxx/handy-worker/display.do?xxxxID=${xxxx.id}"> <spring:message
+					<a href="xxxx/display.do?xxxxID=${xxxx.id}"> <spring:message
 							code="xxxx.display" />
 					</a>
 				</display:column>
 
 				<!-- Attributes-->
+
+				<display:column property="ticker" titleKey="xxxx.ticker"
+					sortable="true" class="${bgcolor}" />
 
 				<display:column property="body" titleKey="xxxx.body" sortable="true"
 					class="${bgcolor}" />
@@ -165,10 +168,13 @@
 				</display:column>
 			</display:table>
 
-			<input type="button" name="create"
-				value='<spring:message code="xxxx.create"/>'
-				onclick="redirect: location.href = 'xxxx/handy-worker/create.do?fixuptaskID=${xxxx.fixUpTask.id}';" />
+			<jstl:if test="${user == owner.userAccount.username}">
 
+				<input type="button" name="create"
+					value='<spring:message code="xxxx.create"/>'
+					onclick="redirect: location.href = 'xxxx/create.do?fixuptaskID=${xxxx.fixUpTask.id}';" />
+
+			</jstl:if>
 		</jstl:when>
 
 		<jstl:otherwise>
