@@ -19,73 +19,69 @@
 
 <style>
 <!--
-.tableColorGreen {
-	background-color: chartreuse;
+.tableColorLime {
+	background-color: Lime;
 }
 
-.tableColorOrange {
-	background-color: orange;
+.tableColorGreenYellow {
+	background-color: GreenYellow;
 }
 
-.tableColorGrey {
-	background-color: grey;
-}
-
-.tableColorDefault {
-	background-color: white;
+.tableColorSkyBlue {
+	background-color: SkyBlue;
 }
 -->
 </style>
 
 <security:authorize access="hasRole('HANDYWORKER')">
 	<jstl:choose>
-		<jstl:when test="${not empty publishedxxxxs}">
-			<display:table pagesize="5" class="displaytag" name="publishedxxxxs"
-				requestURI="xxxx/list.do" id="xxxx">
+		<jstl:when test="${not empty publishedtapus}">
+			<display:table pagesize="10" class="displaytag" name="publishedtapus"
+				requestURI="tapu/list.do" id="tapu">
 
 				<!-- Colors & Dates -->
 
-				<jstl:set var="pm" value="${xxxx.publishedMoment}" />
+				<jstl:set var="pm" value="${tapu.publishedMoment}" />
 
 				<jstl:choose>
 					<jstl:when test="${(now.time - pm.time) le 2629800000}">
-						<jstl:set var="bgcolor" value="tableColorGreen" />
+						<jstl:set var="bgcolor" value="tableColorLime" />
 					</jstl:when>
 
 					<jstl:when
 						test="${(now.time - pm.time) gt 2629800000 and ((now.time - pm.time) le 5259600000)}">
-						<jstl:set var="bgcolor" value="tableColorOrange" />
+						<jstl:set var="bgcolor" value="tableColorGreenYellow" />
 					</jstl:when>
 
 					<jstl:otherwise>
-						<jstl:set var="bgcolor" value="tableColorGrey" />
+						<jstl:set var="bgcolor" value="tableColorSkyBlue" />
 					</jstl:otherwise>
 				</jstl:choose>
 
 				<!-- Action links -->
 
 				<display:column class="${bgcolor}">
-					<a href="xxxx/display.do?xxxxID=${xxxx.id}"> <spring:message
-							code="xxxx.display" />
+					<a href="tapu/display.do?tapuID=${tapu.id}"> <spring:message
+							code="tapu.display" />
 					</a>
 				</display:column>
 
 				<!-- Attributes-->
 
-				<display:column property="ticker" titleKey="xxxx.ticker"
+				<display:column property="ticker" titleKey="tapu.ticker"
 					sortable="true" class="${bgcolor}" />
 
-				<display:column property="body" titleKey="xxxx.body" sortable="true"
+				<display:column property="body" titleKey="tapu.body" sortable="true"
 					class="${bgcolor}" />
 
 				<jstl:choose>
 					<jstl:when test="${language == espanyol}">
-						<display:column property="publishedMoment" title="xxxx.moment"
+						<display:column property="publishedMoment" title="tapu.moment"
 							sortable="true" format="{0,date,dd/MM/yy HH:mm}"
 							class="${bgcolor}" />
 					</jstl:when>
 					<jstl:otherwise>
-						<display:column property="publishedMoment" titleKey="xxxx.moment"
+						<display:column property="publishedMoment" titleKey="tapu.moment"
 							sortable="true" format="{0,date,yy-MM-dd HH:mm}"
 							class="${bgcolor}" />
 					</jstl:otherwise>
@@ -103,66 +99,66 @@
 
 <security:authorize access="hasRole('CUSTOMER')">
 	<jstl:choose>
-		<jstl:when test="${not empty xxxxs}">
-			<display:table pagesize="5" class="displaytag" name="xxxxs"
-				requestURI="xxxx/list.do" id="xxxx">
+		<jstl:when test="${not empty tapus}">
+			<display:table pagesize="10" class="displaytag" name="tapus"
+				requestURI="tapu/list.do" id="tapu">
 
 				<!-- Colors & Dates -->
 
-				<jstl:set var="pm" value="${xxxx.publishedMoment}" />
+				<jstl:set var="pm" value="${tapu.publishedMoment}" />
 
 				<jstl:choose>
 					<jstl:when test="${(now.time - pm.time) le 2629800000}">
-						<jstl:set var="bgcolor" value="tableColorGreen" />
+						<jstl:set var="bgcolor" value="tableColorLime" />
 					</jstl:when>
 
 					<jstl:when
 						test="${(now.time - pm.time) gt 2629800000 and ((now.time - pm.time) le 5259600000)}">
-						<jstl:set var="bgcolor" value="tableColorOrange" />
+						<jstl:set var="bgcolor" value="tableColorGreenYellow" />
 					</jstl:when>
 
 					<jstl:otherwise>
-						<jstl:set var="bgcolor" value="tableColorGrey" />
+						<jstl:set var="bgcolor" value="tableColorSkyBlue" />
 					</jstl:otherwise>
 				</jstl:choose>
 
 				<!-- Action links -->
 
 				<display:column class="${bgcolor}">
-					<a href="xxxx/display.do?xxxxID=${xxxx.id}"> <spring:message
-							code="xxxx.display" />
+					<a href="tapu/display.do?tapuID=${tapu.id}"> <spring:message
+							code="tapu.display" />
 					</a>
 				</display:column>
 
 				<!-- Attributes-->
 
-				<display:column property="ticker" titleKey="xxxx.ticker"
+				<display:column property="ticker" titleKey="tapu.ticker"
 					sortable="true" class="${bgcolor}" />
 
-				<display:column property="body" titleKey="xxxx.body" sortable="true"
+				<display:column property="body" titleKey="tapu.body" sortable="true"
 					class="${bgcolor}" />
 
 				<jstl:choose>
 					<jstl:when test="${language == espanyol}">
-						<display:column property="publishedMoment" title="xxxx.moment"
+						<display:column property="publishedMoment" title="tapu.moment"
 							sortable="true" format="{0,date,dd-MM-yy HH:mm}"
 							class="${bgcolor}" />
 					</jstl:when>
 					<jstl:otherwise>
-						<display:column property="publishedMoment" titleKey="xxxx.moment"
+						<display:column property="publishedMoment" titleKey="tapu.moment"
 							sortable="true" format="{0,date,yy/MM/dd HH:mm}"
 							class="${bgcolor}" />
 					</jstl:otherwise>
 				</jstl:choose>
 
-				<display:column titleKey="xxxx.is.final" sortable="true"
+				<display:column titleKey="tapu.is.final" sortable="true"
 					class="${bgcolor}">
 					<jstl:choose>
-						<jstl:when test="${xxxx.isFinal}">
-							<spring:message code="xxxx.final" />
+						<jstl:when test="${tapu.isFinal}">
+							<spring:message code="tapu.final" />
 						</jstl:when>
 						<jstl:otherwise>
-							<spring:message code="xxxx.no.final" />
+							<spring:message code="tapu.no.final" />
 						</jstl:otherwise>
 					</jstl:choose>
 				</display:column>
@@ -171,8 +167,8 @@
 			<jstl:if test="${user == owner.userAccount.username}">
 
 				<input type="button" name="create"
-					value='<spring:message code="xxxx.create"/>'
-					onclick="redirect: location.href = 'xxxx/create.do?fixuptaskID=${xxxx.fixUpTask.id}';" />
+					value='<spring:message code="tapu.create"/>'
+					onclick="redirect: location.href = 'tapu/create.do?fixuptaskID=${tapu.fixUpTask.id}';" />
 
 			</jstl:if>
 		</jstl:when>

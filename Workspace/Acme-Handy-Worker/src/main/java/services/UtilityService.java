@@ -93,6 +93,72 @@ public class UtilityService {
 
 	}
 
+	public String generateTickerTapu() {
+		String uniqueTicker = null;
+		Calendar date;
+		String year, month, day, twodigits, alphaNum, todayDate;
+		boolean unique = false;
+
+		date = Calendar.getInstance();
+		date.setTime(LocalDate.now().toDate());
+		year = String.valueOf(date.get(Calendar.YEAR));
+		year = year.substring(year.length() - 2, year.length());
+		month = String.valueOf(date.get(Calendar.MONTH) + 1);
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
+		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+		if (day.length() == 1) {
+			day = "0" + day;
+		}
+
+		twodigits = this.randomTwoDigitsStringTapu();
+
+		while (unique == false) {
+			alphaNum = this.randomStringTapu();
+			todayDate = year + month + day;
+			uniqueTicker = todayDate + "/" + twodigits + "/" + alphaNum;
+			for (final FixUpTask fixUpTask : this.fixUpTaskService.findAll())
+				if (fixUpTask.getTicker().equals(uniqueTicker))
+					continue;
+			for (final Curriculum curriculum : this.curriculumService.findAll())
+				if (curriculum.getTicker().equals(uniqueTicker))
+					continue;
+			unique = true;
+		}
+		return uniqueTicker;
+	}
+
+	public String randomTwoDigitsStringTapu() {
+
+		final String possibleChars = "0123456789";
+		final SecureRandom rnd = new SecureRandom();
+		final int length = 2;
+
+		final StringBuilder stringBuilder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++)
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars
+					.length())));
+		return stringBuilder.toString();
+
+	}
+
+	public String randomStringTapu() {
+
+		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		final SecureRandom rnd = new SecureRandom();
+		final int length = 2;
+
+		final StringBuilder stringBuilder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++)
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars
+					.length())));
+		return stringBuilder.toString();
+
+	}
+
 	public List<String> getCreditCardMakes() {
 
 		final String makes = this.systemConfigurationService
@@ -158,9 +224,10 @@ public class UtilityService {
 	}
 
 	public boolean validEmail(String email) {
-		
-		String toValidate = email.replace(" ","");
-		Pattern pattern = Pattern.compile("([0-9a-z ]+((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|())|((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|()))");
+
+		String toValidate = email.replace(" ", "");
+		Pattern pattern = Pattern
+				.compile("([0-9a-z ]+((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|())|((<)|())+([0-9a-z])+@+(()|([0-9a-z.]))+((>)|()))");
 		Matcher match = pattern.matcher(toValidate);
 
 		return match.matches();

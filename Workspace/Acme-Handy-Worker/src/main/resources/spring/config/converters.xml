@@ -111,8 +111,8 @@
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
 
-		<bean class="converters.XXXXToStringConverter" />
-		<bean class="converters.StringToXXXXConverter" />
+		<bean class="converters.TapuToStringConverter" />
+		<bean class="converters.StringToTapuConverter" />
 	</util:list>
 
 </beans>

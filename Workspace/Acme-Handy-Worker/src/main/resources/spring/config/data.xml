@@ -20,14 +20,16 @@
 	<jpa:repositories base-package="security" />
 
 	<!-- Data source -->
-	
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
-		<property name="driverClass" value="com.mysql.jdbc.Driver" /> 
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Handy-Worker" /> 
-		<property name="user" value="acme-user" /> 
-		<property name="password" value="ACME-Us3r-P@ssw0rd" /> 
-		<property name="minPoolSize" value="1" /> 
-		<property name="maxPoolSize" value="5" /> 
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl"
+			value="jdbc:mysql://bn3gijnsdpnbw8zotovf-mysql.services.clever-cloud.com:3306/bn3gijnsdpnbw8zotovf" />
+		<property name="user" value="umqojs8drfskvnqavnst" />
+		<property name="password" value="cq8g0fzbFDdR3lvfZNWn" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="5" />
 	</bean>
 
 
@@ -46,7 +48,7 @@
 		<prop key="hibernate.format_sql">true</prop>
 		<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
 		<prop key="hibernate.ejb.entitymanager_factory_name">entity-manager</prop>
-		<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>-->
+	<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> -->
 	</util:properties>
 
 </beans>

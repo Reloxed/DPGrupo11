@@ -19,6 +19,7 @@
 	<form:hidden path="publishedMoment" />
 	<form:hidden path="applications" />
 	<form:hidden path="complaints" />
+	<form:hidden path="tapus" />
 
 	<br />
 	<br />

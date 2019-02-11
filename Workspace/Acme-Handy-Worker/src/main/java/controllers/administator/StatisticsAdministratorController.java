@@ -15,7 +15,7 @@ import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
 import services.ReportService;
-import services.XXXXService;
+import services.TapuService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.HandyWorker;
@@ -42,7 +42,7 @@ public class StatisticsAdministratorController extends AbstractController {
 	private ReportService reportService;
 
 	@Autowired
-	private XXXXService xxxxService;
+	private TapuService xxxxService;
 
 	// Constructor
 
@@ -68,19 +68,19 @@ public class StatisticsAdministratorController extends AbstractController {
 		Double ratioFixWithComplaints;
 		List<Customer> customerStatistics2;
 		List<HandyWorker> handyWorkerStatistics2;
-		Double[] XXXXsStatistics;
-		Double ratioXXXXsFinalMode;
-		Double ratioXXXXsDraftMode;
+		Double[] tapusStatistics;
+		Double ratioTapusFinalMode;
+		Double ratioTapusDraftMode;
 
 		// The average and standard deviation of the number of published XXXX
 		// per XXXX
-		XXXXsStatistics = this.xxxxService.operationsXXXX();
+		tapusStatistics = this.xxxxService.operationsTapu();
 
 		// The ratio of published XXXX versus total number of XXXX
-		ratioXXXXsDraftMode = this.xxxxService.ratioXXXXsDraftMode();
+		ratioTapusDraftMode = this.xxxxService.ratioTapusDraftMode();
 
 		// The ratio of unpublished XXXX versus total number of XXXX
-		ratioXXXXsFinalMode = this.xxxxService.ratioFinalXXXXs();
+		ratioTapusFinalMode = this.xxxxService.ratioFinalTapus();
 
 		// The average, the minimum, the maximum, and the standard deviation of
 		// the number of fix-up tasks per user
@@ -144,9 +144,9 @@ public class StatisticsAdministratorController extends AbstractController {
 				.findTopComplaintsHandyWorkers();
 
 		res = new ModelAndView("administrator/dashboard");
-		res.addObject("XXXXsStatistics", XXXXsStatistics);
-		res.addObject("ratioXXXXsDraftMode", ratioXXXXsDraftMode);
-		res.addObject("ratioXXXXsFinalMode", ratioXXXXsFinalMode);
+		res.addObject("tapusStatistics", tapusStatistics);
+		res.addObject("ratioTapusDraftMode", ratioTapusDraftMode);
+		res.addObject("ratioTapusFinalMode", ratioTapusFinalMode);
 		res.addObject("fixupstatistics", fixuptasksStatistics);
 		res.addObject("applicationsStatistics", applicationsStatistics);
 		res.addObject("pricesStatistics", pricesStatistics);

@@ -97,9 +97,9 @@
 			</a>
 		</display:column>
 
-		<display:column titleKey="xxxxs">
-			<a href="xxxx/list.do?fixuptaskID=${row.id}"> <spring:message
-					code="xxxx.display.fut" />
+		<display:column titleKey="tapus">
+			<a href="tapu/list.do?fixuptaskID=${row.id}"> <spring:message
+					code="tapu.display.fut" />
 			</a>
 		</display:column>
 	</display:table>
@@ -161,9 +161,9 @@
 			</jstl:if>
 		</display:column>
 
-		<display:column titleKey="xxxxs">
-			<a href="xxxx/list.do?fixuptaskID=${row.id}"> <spring:message
-					code="xxxx.display.fut" />
+		<display:column titleKey="tapus">
+			<a href="tapu/list.do?fixuptaskID=${row.id}"> <spring:message
+					code="tapu.display.fut" />
 			</a>
 		</display:column>
 
@@ -171,8 +171,8 @@
 			<jstl:if test="${user == principal.userAccount.username}">
 
 				<input type="button" name="create"
-					value='<spring:message code="xxxx.create"/>'
-					onclick="redirect: location.href = 'xxxx/create.do?fixuptaskID=${row.id}';" />
+					value='<spring:message code="tapu.create"/>'
+					onclick="redirect: location.href = 'tapu/create.do?fixuptaskID=${row.id}';" />
 
 			</jstl:if>
 		</display:column>

@@ -4,20 +4,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.XXXX;
+import domain.Tapu;
 
 @Component
 @Transactional
-public class XXXXToStringConverter implements Converter<XXXX, String> {
+public class TapuToStringConverter implements Converter<Tapu, String> {
 
 	@Override
-	public String convert(final XXXX xxxx) {
+	public String convert(final Tapu tapu) {
 		String result;
 
-		if (xxxx == null)
+		if (tapu == null)
 			result = null;
 		else
-			result = String.valueOf(xxxx.getId());
+			result = String.valueOf(tapu.getId());
 		return result;
 	}
 }

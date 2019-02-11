@@ -11,20 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.XXXXRepository;
+import repositories.TapuRepository;
 import domain.Actor;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.XXXX;
+import domain.Tapu;
 
 @Service
 @Transactional
-public class XXXXService {
+public class TapuService {
 
 	// Managed repository ------------------------------------
 
 	@Autowired
-	private XXXXRepository XXXXRepository;
+	private TapuRepository TapuRepository;
 
 	// Supporting services -----------------------------------
 
@@ -42,72 +42,74 @@ public class XXXXService {
 
 	// Constructors ------------------------------------
 
-	public XXXXService() {
+	public TapuService() {
 		super();
 	}
 
 	// Simple CRUD methods -----------------------------------
 
-	public XXXX create() {
+	public Tapu create() {
 		Actor principal;
-		XXXX res;
+		Tapu res;
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal, "not.registered");
 		Assert.isTrue(principal instanceof Customer, "not.allowed");
 
-		res = new XXXX();
-		res.setTicker("000000-QWERTY");
+		res = new Tapu();
+		res.setTicker("000000/00/aa");
 		return res;
 	}
 
-	public Collection<XXXX> findAll() {
-		Collection<XXXX> res;
-		res = this.XXXXRepository.findAll();
+	public Collection<Tapu> findAll() {
+		Collection<Tapu> res;
+		res = this.TapuRepository.findAll();
 		Assert.notNull(res);
 		return res;
 	}
 
-	public XXXX findOne(int xxxxId) {
-		XXXX result;
-		result = this.XXXXRepository.findOne(xxxxId);
+	public Tapu findOne(int tapuId) {
+		Tapu result;
+		result = this.TapuRepository.findOne(tapuId);
 		Assert.notNull(result);
 		return result;
 	}
 
-	public XXXX save(XXXX xxxx) {
-		XXXX res;
+	public Tapu save(Tapu tapu) {
+		Tapu res;
 		FixUpTask fixUpTask;
 		Actor principal;
 
-		Assert.notNull(xxxx);
+		Assert.notNull(tapu);
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal, "not.registered");
 		Assert.isTrue(principal instanceof Customer, "not.allowed");
 
-		fixUpTask = xxxx.getFixUpTask();
+		fixUpTask = tapu.getFixUpTask();
 		Assert.notNull(fixUpTask);
 
-		if (xxxx.getId() == 0) {
-			xxxx.setTicker(this.utilityService.generateTicker());
+		if (tapu.getId() == 0) {
+			tapu.setTicker(this.utilityService.generateTickerTapu());
 		} else {
-			Assert.isTrue(xxxx.getFixUpTask().equals(
-					this.findOne(xxxx.getId()).getFixUpTask()));
-			Assert.isTrue(xxxx.getTicker().equals(
-					this.findOne(xxxx.getId()).getTicker()));
-			if (xxxx.getIsFinal()) {
-				Assert.isTrue(xxxx.getTicker().equals(
-						this.findOne(xxxx.getId()).getTicker()));
-				xxxx.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
+			Assert.isTrue(tapu.getFixUpTask().equals(
+					this.findOne(tapu.getId()).getFixUpTask()));
+			Assert.isTrue(tapu.getTicker().equals(
+					this.findOne(tapu.getId()).getTicker()));
+			if (tapu.getIsFinal()) {
+				Assert.isTrue(tapu.getTicker().equals(
+						this.findOne(tapu.getId()).getTicker()));
+				tapu.setPublishedMoment(new Date(System.currentTimeMillis() - 1));
 			}
 		}
 
-		res = this.XXXXRepository.save(xxxx);
+		Assert.isTrue(tapu.getBody().length() < 252);
+
+		res = this.TapuRepository.save(tapu);
 		Assert.notNull(res);
 
 		List<String> atributosAComprobar = new ArrayList<>();
-		atributosAComprobar.add(xxxx.getBody());
+		atributosAComprobar.add(tapu.getBody());
 
 		boolean containsSpam = this.utilityService.isSpam(atributosAComprobar);
 		if (containsSpam) {
@@ -118,57 +120,54 @@ public class XXXXService {
 	}
 
 	// Completar cuando se tenga el enunciado
-	public void delete(XXXX xxxx) {
+	public void delete(Tapu tapu) {
 		Actor principal;
 
-		Assert.notNull(xxxx);
-		Assert.isTrue(xxxx.getId() != 0);
-		Assert.isTrue(!xxxx.getIsFinal());
+		Assert.notNull(tapu);
+		Assert.isTrue(tapu.getId() != 0);
+		Assert.isTrue(!tapu.getIsFinal());
 
 		principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 
-		this.XXXXRepository.delete(xxxx.getId());
+		this.TapuRepository.delete(tapu.getId());
 
 	}
 
-	public Collection<XXXX> findByFixUpTaskId(int fixuptaskID) {
-		Collection<XXXX> res;
+	public Collection<Tapu> findByFixUpTaskId(int fixuptaskID) {
+		Collection<Tapu> res;
 		FixUpTask fixUpTask;
 
 		fixUpTask = this.fixUpTaskService.findOne(fixuptaskID);
 		Assert.notNull(fixUpTask);
 
-		res = fixUpTask.getXXXXs();
+		res = fixUpTask.getTapus();
 
 		return res;
 	}
 
 	// Other business methods
 
-	public Double[] operationsXXXX() {
+	public Double[] operationsTapu() {
 		Double[] result;
 
-		result = this.XXXXRepository.operationsXXXXs();
-		Assert.notNull(result);
+		result = this.TapuRepository.operationsTapus();
 
 		return result;
 	}
 
-	public Double ratioFinalXXXXs() {
+	public Double ratioFinalTapus() {
 		Double result;
 
-		result = this.XXXXRepository.ratioXXXXsFinalMode();
-		Assert.notNull(result);
+		result = this.TapuRepository.ratioTapusFinalMode();
 
 		return result;
 	}
 
-	public Double ratioXXXXsDraftMode() {
+	public Double ratioTapusDraftMode() {
 		Double result;
 
-		result = this.XXXXRepository.ratioXXXXsDraftMode();
-		Assert.notNull(result);
+		result = this.TapuRepository.ratioTapusDraftMode();
 
 		return result;
 	}

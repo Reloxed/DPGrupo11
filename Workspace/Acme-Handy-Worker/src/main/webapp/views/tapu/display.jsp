@@ -23,42 +23,42 @@ table,th,td {
 <table class="displayStyle">
 
 	<tr>
-		<td><strong> <spring:message code="xxxx.ticker" /></strong></td>
-		<td><jstl:out value="${xxxx.ticker}"></jstl:out></td>
+		<td><strong> <spring:message code="tapu.ticker" /></strong></td>
+		<td><jstl:out value="${tapu.ticker}"></jstl:out></td>
 	</tr>
 
 	<tr>
-		<td><strong> <spring:message code="xxxx.body" /></strong></td>
-		<td><jstl:out value="${xxxx.body}"></jstl:out></td>
+		<td><strong> <spring:message code="tapu.body" /></strong></td>
+		<td><jstl:out value="${tapu.body}"></jstl:out></td>
 	</tr>
 
 	<tr>
-		<td><strong> <spring:message code="xxxx.moment" /> :
+		<td><strong> <spring:message code="tapu.moment" /> :
 		</strong></td>
 		<jstl:choose>
 			<jstl:when test="${language == espanyol}">
-				<td><fmt:formatDate value="${xxxx.publishedMoment}"
+				<td><fmt:formatDate value="${tapu.publishedMoment}"
 						pattern="dd-MM-YY HH:mm" /></td>
 			</jstl:when>
 			<jstl:otherwise>
-				<td><fmt:formatDate value="${xxxx.publishedMoment}"
+				<td><fmt:formatDate value="${tapu.publishedMoment}"
 						pattern="YY/MM/dd HH:mm" /></td>
 			</jstl:otherwise>
 		</jstl:choose>
 	</tr>
 
 	<tr>
-		<td><strong> <spring:message code="xxxx.fix" /></strong></td>
+		<td><strong> <spring:message code="tapu.fix" /></strong></td>
 		<security:authorize access="hasRole('CUSTOMER')">
 			<td><a
-				href="fixUpTask/customer/display.do?fixUpTaskId=${xxxx.fixUpTask.id}">
-					<jstl:out value="${xxxx.fixUpTask.ticker}" />
+				href="fixUpTask/customer/display.do?fixUpTaskId=${tapu.fixUpTask.id}">
+					<jstl:out value="${tapu.fixUpTask.ticker}" />
 			</a></td>
 		</security:authorize>
 		<security:authorize access="hasRole('HANDYWORKER')">
 			<td><a
-				href="fixUpTask/handyWorker/display.do?taskId=${xxxx.fixUpTask.id}">
-					<jstl:out value="${xxxx.fixUpTask.ticker}" />
+				href="fixUpTask/handyWorker/display.do?taskId=${tapu.fixUpTask.id}">
+					<jstl:out value="${tapu.fixUpTask.ticker}" />
 			</a></td>
 		</security:authorize>
 	</tr>
@@ -68,9 +68,9 @@ table,th,td {
 <security:authorize access="hasRole('CUSTOMER')">
 
 	<jstl:if test="${user == author.userAccount.username}">
-		<jstl:if test="${!xxxx.isFinal}">
-			<a href="xxxx/edit.do?xxxxID=${xxxx.id}"> <spring:message
-					code="xxxx.edit" />
+		<jstl:if test="${!tapu.isFinal}">
+			<a href="tapu/edit.do?tapuID=${tapu.id}"> <spring:message
+					code="tapu.edit" />
 			</a>
 		</jstl:if>
 	</jstl:if>

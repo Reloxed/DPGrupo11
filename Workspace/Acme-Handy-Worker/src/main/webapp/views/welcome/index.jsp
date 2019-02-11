@@ -22,12 +22,13 @@
 <jstl:choose>
 	<jstl:when test="${language==español}">
 		<h3>
-			<jstl:out value="${welcomeMessage.get('Español')}" />
-		</h3>
+<%-- 			<jstl:out value="${welcomeMessage.get('Español')}" />
+ --%>		</h3>
 	</jstl:when>
 	<jstl:otherwise>
 		<h3>
-			<jstl:out value="${welcomeMessage.get('English')}" />
+			<%-- 			<jstl:out value="${welcomeMessage.get('English')}" />
+ --%>
 		</h3>
 	</jstl:otherwise>
 </jstl:choose>

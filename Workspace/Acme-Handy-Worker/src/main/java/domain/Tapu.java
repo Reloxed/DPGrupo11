@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class XXXX extends DomainEntity {
+public class Tapu extends DomainEntity {
 
 	private String ticker;
 	private Date publishedMoment;
@@ -30,7 +30,7 @@ public class XXXX extends DomainEntity {
 
 	@NotBlank
 	@Column(unique = true)
-	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
+	@Pattern(regexp = "^(\\d{6})[/](\\d{2})[/](\\w{2})$")
 	public String getTicker() {
 		return this.ticker;
 	}

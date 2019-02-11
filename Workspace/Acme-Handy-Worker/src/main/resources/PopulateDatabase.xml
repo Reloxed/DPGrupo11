@@ -1654,18 +1654,16 @@
 				<ref bean="complaint2_1_1" />
 			</list>
 		</property>
-		<property name="XXXXs">
+		<property name="tapus">
 			<list>
-				<ref bean="XXXX1_TEST" />
-				<ref bean="XXXX2_TEST" />
-				<ref bean="XXXX3_TEST" />
-				<ref bean="XXXX4_TEST" />
+				<ref bean="tapu1_TEST" />
+				<ref bean="tapu2_TEST" />
 			</list>
 		</property>
 	</bean>
 
-	<bean id="XXXX1_TEST" class="domain.XXXX">
-		<property name="ticker" value="012349-ASDFGH" />
+	<bean id="tapu1_TEST" class="domain.Tapu">
+		<property name="ticker" value="000000/00/aa" />
 		<property name="publishedMoment" value="07/01/2019 11:30" />
 		<property name="body"
 			value="Hey brother, there's an endless road to re-discover" />
@@ -1675,8 +1673,8 @@
 		</property>
 	</bean>
 
-	<bean id="XXXX2_TEST" class="domain.XXXX">
-		<property name="ticker" value="017349-ASDFGH" />
+	<bean id="tapu2_TEST" class="domain.Tapu">
+		<property name="ticker" value="000001/00/aa" />
 		<property name="publishedMoment" value="01/01/2019 17:30" />
 		<property name="body"
 			value="Hey sister, know the water's sweet but blood is thicker" />
@@ -1686,8 +1684,8 @@
 		</property>
 	</bean>
 
-	<bean id="XXXX3_TEST" class="domain.XXXX">
-		<property name="ticker" value="017389-ASDFGH" />
+	<bean id="tapu3_TEST" class="domain.Tapu">
+		<property name="ticker" value="000002/00/aa" />
 		<property name="publishedMoment" value="11/11/2018 20:50" />
 		<property name="body"
 			value="I'm passing over you like a satellite so catch me if I fall" />
@@ -1697,8 +1695,8 @@
 		</property>
 	</bean>
 
-	<bean id="XXXX4_TEST" class="domain.XXXX">
-		<property name="ticker" value="817389-ASDFGH" />
+	<bean id="tapu4_TEST" class="domain.Tapu">
+		<property name="ticker" value="000003/00/aa" />
 		<property name="publishedMoment" value="09/11/2014 20:50" />
 		<property name="body"
 			value="Puedo balancearme sobre un hilo cargando más de quinientos kilos" />
@@ -1821,6 +1819,12 @@
 			<list>
 				<ref bean="complaint1_1_2" />
 				<ref bean="complaint2_1_2" />
+			</list>
+		</property>
+		<property name="tapus">
+			<list>
+				<ref bean="tapu3_TEST" />
+				<ref bean="tapu4_TEST" />
 			</list>
 		</property>
 	</bean>

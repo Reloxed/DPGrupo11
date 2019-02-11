@@ -17,20 +17,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CustomerService;
 import services.FixUpTaskService;
-import services.XXXXService;
+import services.TapuService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.FixUpTask;
-import domain.XXXX;
+import domain.Tapu;
 
 @Controller
-@RequestMapping("/xxxx")
-public class XXXXAdministrationController extends AbstractController {
+@RequestMapping("/tapu")
+public class TapuAdministrationController extends AbstractController {
 
 	// Services ###############################################################
 
 	@Autowired
-	private XXXXService xxxxService;
+	private TapuService tapuService;
 
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
@@ -38,34 +38,34 @@ public class XXXXAdministrationController extends AbstractController {
 	@Autowired
 	private CustomerService customerService;
 
-	// Listing the xxxxs of a fix up task #####################################
+	// Listing the tapus of a fix up task #####################################
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam int fixuptaskID, Locale locale) {
 		ModelAndView res;
-		Collection<XXXX> allxxxxs;
-		Collection<XXXX> publishedxxxxs;
+		Collection<Tapu> alltapus;
+		Collection<Tapu> publishedtapus;
 		int ownerID;
 		Customer owner;
 		String language;
 		String espanyol;
 		espanyol = "es";
 
-		allxxxxs = this.xxxxService.findByFixUpTaskId(fixuptaskID);
+		alltapus = this.tapuService.findByFixUpTaskId(fixuptaskID);
 		ownerID = this.fixUpTaskService.creatorFixUpTask(fixuptaskID);
 		owner = this.customerService.findOne(ownerID);
 
-		publishedxxxxs = new ArrayList<>();
-		for (XXXX xxxx : allxxxxs) {
-			if (xxxx.getIsFinal()) {
-				publishedxxxxs.add(xxxx);
+		publishedtapus = new ArrayList<>();
+		for (Tapu tapu : alltapus) {
+			if (tapu.getIsFinal()) {
+				publishedtapus.add(tapu);
 			}
 		}
 		language = locale.getLanguage();
 
-		res = new ModelAndView("xxxx/list");
-		res.addObject("xxxxs", allxxxxs);
-		res.addObject("publishedxxxxs", publishedxxxxs);
+		res = new ModelAndView("tapu/list");
+		res.addObject("tapus", alltapus);
+		res.addObject("publishedtapus", publishedtapus);
 		res.addObject("language", language);
 		res.addObject("espanyol", espanyol);
 		res.addObject("owner", owner);
@@ -73,26 +73,26 @@ public class XXXXAdministrationController extends AbstractController {
 		return res;
 	}
 
-	// Displaying a xxxx ######################################################
+	// Displaying a tapu ######################################################
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int xxxxID, Locale locale) {
+	public ModelAndView display(@RequestParam int tapuID, Locale locale) {
 		ModelAndView res;
-		XXXX xxxx;
+		Tapu tapu;
 		int authorID;
 		Customer author;
 		String language;
 		String espanyol;
 		espanyol = "es";
 
-		xxxx = this.xxxxService.findOne(xxxxID);
-		authorID = this.fixUpTaskService.creatorFixUpTask(xxxx.getFixUpTask()
+		tapu = this.tapuService.findOne(tapuID);
+		authorID = this.fixUpTaskService.creatorFixUpTask(tapu.getFixUpTask()
 				.getId());
 		author = this.customerService.findOne(authorID);
 		language = locale.getLanguage();
 
-		res = new ModelAndView("xxxx/display");
-		res.addObject("xxxx", xxxx);
+		res = new ModelAndView("tapu/display");
+		res.addObject("tapu", tapu);
 		res.addObject("author", author);
 		res.addObject("language", language);
 		res.addObject("espanyol", espanyol);
@@ -100,55 +100,55 @@ public class XXXXAdministrationController extends AbstractController {
 		return res;
 	}
 
-	// Creating a xxxx for a fix up task ######################################
+	// Creating a tapu for a fix up task ######################################
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int fixuptaskID) {
 		ModelAndView res;
 		FixUpTask fixUpTask;
-		XXXX xxxx;
+		Tapu tapu;
 
 		fixUpTask = this.fixUpTaskService.findOne(fixuptaskID);
 		Assert.notNull(fixUpTask, "fut.not.found");
 
-		xxxx = this.xxxxService.create();
-		xxxx.setFixUpTask(fixUpTask);
-		fixUpTask.getXXXXs().add(xxxx);
+		tapu = this.tapuService.create();
+		tapu.setFixUpTask(fixUpTask);
+		fixUpTask.getTapus().add(tapu);
 
-		res = this.createEditModelAndView(xxxx);
+		res = this.createEditModelAndView(tapu);
 		return res;
 	}
 
-	// Editing a xxxx #########################################################
+	// Editing a tapu #########################################################
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int xxxxID) {
+	public ModelAndView edit(@RequestParam int tapuID) {
 		ModelAndView result;
-		XXXX xxxx;
+		Tapu tapu;
 
-		xxxx = this.xxxxService.findOne(xxxxID);
-		Assert.notNull(xxxx);
-		Assert.isTrue(!xxxx.getIsFinal(), "xxxx.final");
+		tapu = this.tapuService.findOne(tapuID);
+		Assert.notNull(tapu);
+		Assert.isTrue(!tapu.getIsFinal(), "tapu.final");
 
-		result = this.createEditModelAndView(xxxx);
+		result = this.createEditModelAndView(tapu);
 		return result;
 	}
 
 	// Saving as final ########################################################
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveFinal")
-	public ModelAndView saveFinal(@Valid XXXX xxxx, BindingResult binding) {
+	public ModelAndView saveFinal(@Valid Tapu tapu, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(xxxx);
+			res = this.createEditModelAndView(tapu);
 		else
 			try {
-				xxxx.setIsFinal(true);
-				this.xxxxService.save(xxxx);
+				tapu.setIsFinal(true);
+				this.tapuService.save(tapu);
 				res = new ModelAndView("redirect:list.do?fixuptaskID="
-						+ xxxx.getFixUpTask().getId());
+						+ tapu.getFixUpTask().getId());
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(xxxx, "xxxx.commit.error");
+				res = this.createEditModelAndView(tapu, "tapu.commit.error");
 			}
 		return res;
 	}
@@ -156,18 +156,18 @@ public class XXXXAdministrationController extends AbstractController {
 	// Saving as draft ########################################################
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveDraft")
-	public ModelAndView saveDraft(@Valid XXXX xxxx, BindingResult binding) {
+	public ModelAndView saveDraft(@Valid Tapu tapu, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(xxxx);
+			res = this.createEditModelAndView(tapu);
 		else
 			try {
-				this.xxxxService.save(xxxx);
+				this.tapuService.save(tapu);
 				res = new ModelAndView("redirect:list.do?fixuptaskID="
-						+ xxxx.getFixUpTask().getId());
+						+ tapu.getFixUpTask().getId());
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(xxxx, "xxxx.commit.error");
+				res = this.createEditModelAndView(tapu, "tapu.commit.error");
 			}
 		return res;
 	}
@@ -175,33 +175,33 @@ public class XXXXAdministrationController extends AbstractController {
 	// Deleting a draft #######################################################
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid XXXX xxxx) {
+	public ModelAndView delete(@Valid Tapu tapu) {
 		ModelAndView result;
 		try {
-			this.xxxxService.delete(xxxx);
+			this.tapuService.delete(tapu);
 			result = new ModelAndView("redirect:list.do?fixuptaskID="
-					+ xxxx.getFixUpTask().getId());
+					+ tapu.getFixUpTask().getId());
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(xxxx, "xxxx.commit.error");
+			result = this.createEditModelAndView(tapu, "tapu.commit.error");
 		}
 		return result;
 	}
 
 	// Other methods ##########################################################
 
-	private ModelAndView createEditModelAndView(XXXX xxxx) {
+	private ModelAndView createEditModelAndView(Tapu tapu) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(xxxx, null);
+		result = this.createEditModelAndView(tapu, null);
 
 		return result;
 	}
 
-	private ModelAndView createEditModelAndView(XXXX xxxx, String message) {
+	private ModelAndView createEditModelAndView(Tapu tapu, String message) {
 		ModelAndView res;
 
-		res = new ModelAndView("xxxx/edit");
-		res.addObject("xxxx", xxxx);
+		res = new ModelAndView("tapu/edit");
+		res.addObject("tapu", tapu);
 		res.addObject("message", message);
 
 		return res;

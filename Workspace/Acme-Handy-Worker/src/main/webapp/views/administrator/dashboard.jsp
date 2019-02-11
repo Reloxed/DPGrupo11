@@ -26,7 +26,7 @@
 			test="${not empty applicationsStatistics or not empty pricesStatistics or not empty complaintStatistics
 		 or not empty ratioFixWithComplaints or not empty statusStatistics or not empty notesStatistics 
 		 	or not empty customerStatistics or not empty customerStatistics2 or not empty handyWorkerStatistics
-		 		or not empty handyWorkerStatistics2 or not empty XXXXsStatistics or not empty ratioXXXXsDraftMode or not empty ratioXXXXsFinalMode}">
+		 		or not empty handyWorkerStatistics2 or not empty tapusStatistics or not empty ratioTapusDraftMode or not empty ratioTapusFinalMode}">
 
 			<jstl:if test="${not empty applicationsStatistics}">
 				<table class="displayStyle" style="width: 50%">
@@ -176,31 +176,31 @@
 					</tr>
 				</table>
 			</jstl:if>
-			<jstl:if test="${not empty XXXXsStatistics}">
+			<jstl:if test="${not empty tapusStatistics}">
 				<table class="displayStyle" style="width: 50%">
 					<tr>
 						<th colspan="2"><spring:message
-								code="administrator.xxxx.statistics" /></th>
+								code="administrator.tapu.statistics" /></th>
 					</tr>
 					<tr>
-						<td><spring:message code="administrator.xxxxfinalperxxxx" /></td>
+						<td><spring:message code="administrator.tapufinalpertapu" /></td>
 						<td style="text-align: right"><fmt:formatNumber
-								maxFractionDigits="4" value="${XXXXsStatistics[0]}" /></td>
+								maxFractionDigits="4" value="${tapusStatistics[0]}" /></td>
 					</tr>
 					<tr>
-						<td><spring:message code="administrator.devxxxx" /></td>
+						<td><spring:message code="administrator.devtapu" /></td>
 						<td style="text-align: right"><fmt:formatNumber
-								maxFractionDigits="4" value="${XXXXsStatistics[1]}" /></td>
+								maxFractionDigits="4" value="${tapusStatistics[1]}" /></td>
 					</tr>
 					<tr>
-						<td><spring:message code="administrator.xxxxdraft" /></td>
+						<td><spring:message code="administrator.tapudraft" /></td>
 						<td style="text-align: right"><fmt:formatNumber
-								maxFractionDigits="4" value="${ratioXXXXsDraftMode}" /></td>
+								maxFractionDigits="4" value="${ratioTapusDraftMode}" /></td>
 					</tr>
 					<tr>
-						<td><spring:message code="administrator.xxxxfinal" /></td>
+						<td><spring:message code="administrator.tapufinal" /></td>
 						<td style="text-align: right"><fmt:formatNumber
-								maxFractionDigits="4" value="${ratioXXXXsFinalMode}" /></td>
+								maxFractionDigits="4" value="${ratioTapusFinalMode}" /></td>
 					</tr>
 				</table>
 			</jstl:if>

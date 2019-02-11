@@ -51,7 +51,7 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/creditcard/**"
 			access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/xxxx/edit.do"
+		<security:intercept-url pattern="/tapu/edit.do"
 			access="hasRole('CUSTOMER')" />
 
 		<security:intercept-url pattern="/complaint/referee/**"
@@ -106,10 +106,10 @@
 		<security:intercept-url pattern="/message/administrator/broadcast.do"
 			access="hasRole('ADMINISTRATOR')" />
 
-		<security:intercept-url pattern="/xxxx/list.do"
+		<security:intercept-url pattern="/tapu/list.do"
 			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
-		<security:intercept-url pattern="/xxxx/display.do"
-			access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
+		<security:intercept-url pattern="/tapu/display.do"
+	access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 
 		<security:intercept-url pattern="/actor/**"
 			access="isAuthenticated()" />

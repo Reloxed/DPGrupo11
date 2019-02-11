@@ -10,19 +10,19 @@
 
 <tiles-definitions>
 
-	<definition name="xxxx/edit" extends="master.page">
-		<put-attribute name="title" value="Edit xxxx" />
-		<put-attribute name="body" value="/views/xxxx/edit.jsp" />
+	<definition name="tapu/edit" extends="master.page">
+		<put-attribute name="title" value="Edit tapu" />
+		<put-attribute name="body" value="/views/tapu/edit.jsp" />
 	</definition>
 
-	<definition name="xxxx/list" extends="master.page">
-		<put-attribute name="title" value="List of xxxx" />
-		<put-attribute name="body" value="/views/xxxx/list.jsp" />
+	<definition name="tapu/list" extends="master.page">
+		<put-attribute name="title" value="List of tapus" />
+		<put-attribute name="body" value="/views/tapu/list.jsp" />
 	</definition>
 
-	<definition name="xxxx/display" extends="master.page">
-		<put-attribute name="title" value="XXXX" />
-		<put-attribute name="body" value="/views/xxxx/display.jsp" />
+	<definition name="tapu/display" extends="master.page">
+		<put-attribute name="title" value="Show tapu" />
+		<put-attribute name="body" value="/views/tapu/display.jsp" />
 	</definition>
 
 </tiles-definitions>

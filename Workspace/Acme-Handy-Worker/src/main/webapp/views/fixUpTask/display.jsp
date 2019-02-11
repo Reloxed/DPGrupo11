@@ -19,6 +19,23 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<jsp:useBean id="now" class="java.util.Date" />
+
+<style>
+<!--
+.tableColorLime {
+	background-color: Lime;
+}
+
+.tableColorGreenYellow {
+	background-color: GreenYellow;
+}
+
+.tableColorSkyBlue {
+	background-color: SkyBlue;
+}
+-->
+</style>
 
 <security:authorize access="hasRole('HANDYWORKER')">
 
@@ -129,33 +146,51 @@
 
 	</table>
 
-	<jstl:if test="${not empty fixUpTask.XXXXs}">
-		<spring:message code="xxxxs"></spring:message>
-		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.XXXXs}"
-			var="xxxx">
-			<table class="displayStyle">
+	<jstl:if test="${not empty fixUpTask.tapus}">
+		<spring:message code="tapus"></spring:message>
+		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.tapus}"
+			var="tapu">
+
+			<jstl:set var="pm" value="${tapu.publishedMoment}" />
+
+			<jstl:choose>
+				<jstl:when test="${(now.time - pm.time) le 2629800000}">
+					<jstl:set var="bgcolor" value="tableColorLime" />
+				</jstl:when>
+
+				<jstl:when
+					test="${(now.time - pm.time) gt 2629800000 and ((now.time - pm.time) le 5259600000)}">
+					<jstl:set var="bgcolor" value="tableColorGreenYellow" />
+				</jstl:when>
+
+				<jstl:otherwise>
+					<jstl:set var="bgcolor" value="tableColorSkyBlue" />
+				</jstl:otherwise>
+			</jstl:choose>
+
+			<table class="${bgcolor}">
 				<tr>
-					<td><strong> <spring:message code="xxxx.ticker" /> :
+					<td><strong> <spring:message code="tapu.ticker" /> :
 					</strong></td>
-					<td><jstl:out value="${xxxx.ticker}">
+					<td><jstl:out value="${tapu.ticker}">
 						</jstl:out></td>
 				</tr>
 				<tr>
-					<td><strong> <spring:message code="xxxx.body" /> :
+					<td><strong> <spring:message code="tapu.body" /> :
 					</strong></td>
-					<td><jstl:out value="${xxxx.body}">
+					<td><jstl:out value="${tapu.body}">
 						</jstl:out></td>
 				</tr>
 			</table>
 
-			<a href="xxxx/display.do?xxxxID=${xxxx.id}"><spring:message
-					code="xxxx.display" /></a>
+			<a href="tapu/display.do?tapuID=${tapu.id}"><spring:message
+					code="tapu.display" /></a>
 		</jstl:forEach>
 
 		<br>
 		<br>
 
-		<a href="xxxx/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+		<a href="tapu/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
 				code="full.list" /></a>
 	</jstl:if>
 
@@ -276,33 +311,51 @@
 
 	</table>
 
-	<jstl:if test="${not empty fixUpTask.XXXXs}">
-		<spring:message code="xxxxs"></spring:message>
-		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.XXXXs}"
-			var="xxxx">
-			<table class="displayStyle">
+	<jstl:if test="${not empty fixUpTask.tapus}">
+		<spring:message code="tapus"></spring:message>
+		<jstl:forEach begin="0" end="1" step="1" items="${fixUpTask.tapus}"
+			var="tapu">
+
+			<jstl:set var="pm" value="${tapu.publishedMoment}" />
+
+			<jstl:choose>
+				<jstl:when test="${(now.time - pm.time) le 2629800000}">
+					<jstl:set var="bgcolor" value="tableColorLime" />
+				</jstl:when>
+
+				<jstl:when
+					test="${(now.time - pm.time) gt 2629800000 and ((now.time - pm.time) le 5259600000)}">
+					<jstl:set var="bgcolor" value="tableColorGreenYellow" />
+				</jstl:when>
+
+				<jstl:otherwise>
+					<jstl:set var="bgcolor" value="tableColorSkyBlue" />
+				</jstl:otherwise>
+			</jstl:choose>
+
+			<table class="${bgcolor}">
 				<tr>
-					<td><strong> <spring:message code="xxxx.ticker" /> :
+					<td><strong> <spring:message code="tapu.ticker" /> :
 					</strong></td>
-					<td><jstl:out value="${xxxx.ticker}">
+					<td><jstl:out value="${tapu.ticker}">
 						</jstl:out></td>
 				</tr>
 				<tr>
-					<td><strong> <spring:message code="xxxx.body" /> :
+					<td><strong> <spring:message code="tapu.body" /> :
 					</strong></td>
-					<td><jstl:out value="${xxxx.body}">
+					<td><jstl:out value="${tapu.body}">
 						</jstl:out></td>
 				</tr>
 			</table>
 
-			<a href="xxxx/display.do?xxxxID=${xxxx.id}"><spring:message
-					code="xxxx.display" /></a>
+			<a href="tapu/display.do?tapuID=${tapu.id}"><spring:message
+					code="tapu.display" /></a>
 		</jstl:forEach>
 
 		<br>
 		<br>
 
-		<a href="xxxx/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
+		<a href="tapu/list.do?fixuptaskID=${fixUpTask.id}"><spring:message
 				code="full.list" /></a>
 	</jstl:if>
 

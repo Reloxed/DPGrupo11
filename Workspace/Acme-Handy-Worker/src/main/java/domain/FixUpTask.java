@@ -39,7 +39,7 @@ public class FixUpTask extends DomainEntity {
 	private Category category;
 	private Warranty warranty;
 	private Collection<Complaint> complaints;
-	private Collection<XXXX> XXXXs;
+	private Collection<Tapu> tapus;
 
 	@NotBlank
 	@Column(unique = true)
@@ -160,12 +160,12 @@ public class FixUpTask extends DomainEntity {
 
 	@Valid
 	@OneToMany(mappedBy = "fixUpTask")
-	public Collection<XXXX> getXXXXs() {
-		return this.XXXXs;
+	public Collection<Tapu> getTapus() {
+		return this.tapus;
 	}
 
-	public void setXXXXs(Collection<XXXX> XXXXs) {
-		this.XXXXs = XXXXs;
+	public void setTapus(Collection<Tapu> tapus) {
+		this.tapus = tapus;
 	}
 
 }

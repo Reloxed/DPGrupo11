@@ -22,7 +22,9 @@
 		<value>/views/system-configuration/messages</value>
 		<value>/views/phase/messages</value>
 		<value>/views/application/messages</value>
-		<value>/views/xxxx/messages</value>
+		<value>
+			/views/tapu/messages
+		</value>
 
 		<value>/views/complaint/messages</value>
 

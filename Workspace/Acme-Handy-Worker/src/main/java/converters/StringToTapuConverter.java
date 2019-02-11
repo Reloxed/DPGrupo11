@@ -6,19 +6,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import repositories.XXXXRepository;
-import domain.XXXX;
+import repositories.TapuRepository;
+import domain.Tapu;
 
 @Component
 @Transactional
-public class StringToXXXXConverter implements Converter<String, XXXX> {
+public class StringToTapuConverter implements Converter<String, Tapu> {
 
 	@Autowired
-	XXXXRepository xxxxRepository;
+	TapuRepository tapuRepository;
 
 	@Override
-	public XXXX convert(final String text) {
-		XXXX res;
+	public Tapu convert(final String text) {
+		Tapu res;
 		int id;
 
 		try {
@@ -26,7 +26,7 @@ public class StringToXXXXConverter implements Converter<String, XXXX> {
 				res = null;
 			else {
 				id = Integer.valueOf(text);
-				res = this.xxxxRepository.findOne(id);
+				res = this.tapuRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
