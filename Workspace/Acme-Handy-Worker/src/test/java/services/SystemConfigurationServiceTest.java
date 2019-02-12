@@ -34,7 +34,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test
 	public void testCreate1() {
 		SystemConfiguration res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.create();
 		Assert.notNull(res);
 		super.unauthenticate();
@@ -54,7 +54,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test
 	public void testFindAll1() {
 		Collection<SystemConfiguration> res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.findAll();
 		Assert.notNull(res);
 		Assert.isTrue(res.size() == 1);
@@ -76,7 +76,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFindOneFail() {
 		SystemConfiguration res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.findOne(-2);
 		Assert.notNull(res);
 		super.unauthenticate();
@@ -86,7 +86,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test
 	public void testSaveAndFindOne() {
 		SystemConfiguration res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.create();
 		res = this.systemConfigurationService.save(res);
 		Assert.notNull(res);
@@ -113,7 +113,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test
 	public void testSave3() {
 		SystemConfiguration res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.create();
 		res.setMaxResults(24);
 		res.setVAT(0.1);
@@ -128,7 +128,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void testSave4() {
 		SystemConfiguration res;
-		super.authenticate("admin1");
+		super.authenticate("admin");
 		res = this.systemConfigurationService.create();
 		res.setMaxResults(-20);
 		res = this.systemConfigurationService.save(res);
@@ -146,14 +146,6 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 		res = this.systemConfigurationService.findMySystemConfiguration();
 		Assert.notNull(res);
 		super.unauthenticate();
-	}
-
-	// FindMySystemConfiguration sin nadie logueado
-	@Test(expected = IllegalArgumentException.class)
-	public void testFindMySystemConfiguration2() {
-		SystemConfiguration res;
-		res = this.systemConfigurationService.findMySystemConfiguration();
-		Assert.notNull(res);
 	}
 
 	// SpamWords correcto

@@ -30,9 +30,6 @@ public class SystemConfigurationService {
 	@Autowired
 	private AdministratorService administratorService;
 
-	@Autowired
-	private ActorService actorService;
-
 	// Constructors ------------------------------------
 
 	public SystemConfigurationService() {
@@ -113,7 +110,7 @@ public class SystemConfigurationService {
 	public SystemConfiguration findMySystemConfiguration() {
 		final SystemConfiguration result;
 
-		result = this.systemConfigurationRepository.findAll().get(0);
+		result = this.systemConfigurationRepository.findSystemConf();
 
 		return result;
 	}
@@ -122,8 +119,7 @@ public class SystemConfigurationService {
 
 		String result;
 
-		result = this.systemConfigurationRepository.findAll().get(0)
-				.getBanner();
+		result = this.findMySystemConfiguration().getBanner();
 
 		return result;
 	}
@@ -131,8 +127,7 @@ public class SystemConfigurationService {
 	public String findSpamWords() {
 		final String result;
 
-		result = this.systemConfigurationRepository.findAll().get(0)
-				.getSpamWords();
+		result = this.findMySystemConfiguration().getSpamWords();
 
 		return result;
 	}
@@ -141,8 +136,7 @@ public class SystemConfigurationService {
 		final Map<String, String> aux;
 		final List<String> result = new ArrayList<>();
 
-		aux = this.systemConfigurationRepository.findAll().get(0)
-				.getWelcomeMessage();
+		aux = this.findMySystemConfiguration().getWelcomeMessage();
 		result.addAll(aux.keySet());
 
 		return result;
@@ -151,7 +145,15 @@ public class SystemConfigurationService {
 	public Double findVAT() {
 		final Double result;
 
-		result = this.systemConfigurationRepository.findAll().get(0).getVAT();
+		result = this.findMySystemConfiguration().getVAT();
+
+		return result;
+	}
+	
+	public Map<String, String> findWelcomeMessage() {
+		final Map<String, String> result;
+
+		result = this.findMySystemConfiguration().getWelcomeMessage();
 
 		return result;
 	}

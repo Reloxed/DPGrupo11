@@ -12,12 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.SocialProfileRepository;
 import domain.Actor;
-import domain.Administrator;
-import domain.Customer;
-import domain.HandyWorker;
-import domain.Referee;
 import domain.SocialProfile;
-import domain.Sponsor;
 
 @Service
 @Transactional
@@ -35,21 +30,6 @@ public class SocialProfileService {
 
 	@Autowired
 	private UtilityService utilityService;
-
-	@Autowired
-	private HandyWorkerService handyWorkerService;
-
-	@Autowired
-	private AdministratorService administratorService;
-
-	@Autowired
-	private CustomerService customerService;
-
-	@Autowired
-	private SponsorService sponsorService;
-
-	@Autowired
-	private RefereeService refereeService;
 
 	// Constructors ------------------------------------
 

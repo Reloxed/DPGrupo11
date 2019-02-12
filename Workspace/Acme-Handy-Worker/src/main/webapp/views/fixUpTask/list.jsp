@@ -84,11 +84,28 @@
 				</a>
 			</jstl:if>
 		</display:column>
-
+		
 		<display:column>
 			<a href="fixUpTask/handyWorker/display.do?taskId=${row.id}"> <spring:message
 					code="fixUpTask.display" />
 			</a>
+		</display:column>
+		
+		<display:column>
+		<jstl:choose>
+			<jstl:when test="${not empty row.tonemas}">
+				<a
+					href="tonema/list.do?fixUpTaskId=${row.id}">
+					<spring:message code="fixUpTask.tonemas" />
+				</a>
+			</jstl:when>
+			<jstl:otherwise>
+			<a>
+				<spring:message code="fixUpTask.notonemas" />
+			</a>
+			</jstl:otherwise>
+			
+		</jstl:choose>	
 		</display:column>
 
 	</display:table>
@@ -142,6 +159,21 @@
 		</display:column>
 
 		<display:column>
+			<a href="tonema/create.do?fixUpTaskId=${row.id}"> <spring:message
+					code="fixUpTask.tonema" />
+			</a>
+		</display:column>
+		
+		<display:column>
+			<jstl:if test="${not empty row.tonemas}">
+				<a
+					href="tonema/list.do?fixUpTaskId=${row.id}">
+					<spring:message code="fixUpTask.tonemas" />
+				</a>
+			</jstl:if>
+		</display:column>
+		
+		<display:column>
 			<jstl:if test="${not empty row.applications}">
 				<a
 					href="application/customer,handy-worker/list.do?fixUpTaskId=${row.id}">
@@ -149,7 +181,6 @@
 				</a>
 			</jstl:if>
 		</display:column>
-
 
 	</display:table>
 

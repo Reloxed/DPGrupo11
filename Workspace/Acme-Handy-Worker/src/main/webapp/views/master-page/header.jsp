@@ -94,6 +94,14 @@
 					<li><a href="complaint/customer/create.do"><spring:message
 								code="master.page.customer.complaints.create" /></a></li>
 				</ul></li>
+				
+			<li><a class="fNiv"><spring:message
+						code="master.page.customer.tonema" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="tonema/list.do"><spring:message
+								code="master.page.customer.tonema.show" /></a></li>
+				</ul></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('REFEREE')">

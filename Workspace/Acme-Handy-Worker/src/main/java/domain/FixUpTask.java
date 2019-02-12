@@ -38,6 +38,8 @@ public class FixUpTask extends DomainEntity {
 	private Category category;
 	private Warranty warranty;
 	private Collection<Complaint> complaints;
+	private Collection<Tonema> tonemas;
+	
 
 	@NotBlank
 	@Column(unique = true)
@@ -154,6 +156,16 @@ public class FixUpTask extends DomainEntity {
 
 	public void setComplaints(Collection<Complaint> complaints) {
 		this.complaints = complaints;
+	}
+	
+	@Valid
+	@OneToMany(mappedBy = "fixUpTask")
+	public Collection<Tonema> getTonemas() {
+		return tonemas;
+	}
+
+	public void setTonemas(Collection<Tonema> tonemas) {
+		this.tonemas = tonemas;
 	}
 
 }

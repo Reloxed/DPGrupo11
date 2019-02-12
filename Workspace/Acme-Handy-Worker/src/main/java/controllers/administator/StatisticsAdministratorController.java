@@ -15,6 +15,7 @@ import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
 import services.ReportService;
+import services.TonemaService;
 import controllers.AbstractController;
 import domain.Customer;
 import domain.HandyWorker;
@@ -39,7 +40,10 @@ public class StatisticsAdministratorController extends AbstractController {
 
 	@Autowired
 	private ReportService reportService;
-
+	
+	@Autowired
+	private TonemaService tonemaService;
+	
 	// Constructor
 
 	public StatisticsAdministratorController() {
@@ -64,6 +68,16 @@ public class StatisticsAdministratorController extends AbstractController {
 		Double ratioFixWithComplaints;
 		List<Customer> customerStatistics2;
 		List<HandyWorker> handyWorkerStatistics2;
+		Double[] avgstdStatistics;
+		Double publishedTonema;
+		Double unpublishedTonema;
+				
+		// The average and the standard deviation of the number of Tonema tasks per fixUptasks
+		avgstdStatistics = this.tonemaService.avgstdOfTonema();
+		
+		// The ratio of published and unpublished Tonema
+		publishedTonema = this.tonemaService.ratioOfPublishedTonema();
+		unpublishedTonema = this.tonemaService.ratioOfUnpublishedTonema();
 
 		// The average, the minimum, the maximum, and the standard deviation of
 		// the number of fix-up tasks per user
@@ -139,6 +153,10 @@ public class StatisticsAdministratorController extends AbstractController {
 		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
 		res.addObject("customerStatistics2", customerStatistics2);
 		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
+		
+		res.addObject("avgstdStatistics", avgstdStatistics);
+		res.addObject("publishedTonema", publishedTonema);
+		res.addObject("unpublishedTonema", unpublishedTonema);
 
 		res.addObject("requestURI", "statistics/administrator/display.do");
 

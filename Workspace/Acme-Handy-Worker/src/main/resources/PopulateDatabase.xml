@@ -1656,6 +1656,11 @@
 				<ref bean="complaint2_1_1" />
 			</list>
 		</property>
+		<property name="tonemas">
+			<list>
+				
+			</list>
+		</property>
 	</bean>
 
 	<!-- FixUpTask 2 del customer1 -->
@@ -1686,6 +1691,11 @@
 				<ref bean="complaint2_2_1" />
 			</list>
 		</property>
+		<property name="tonemas">
+			<list>
+				
+			</list>
+		</property>
 	</bean>
 
 	<!-- FixUpTask 3 del customer1 -->
@@ -1714,6 +1724,11 @@
 
 			</list>
 		</property>
+		<property name="tonemas">
+			<list>
+				<ref bean="TEST_tonema1_2" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- FixUpTask 4 del customer1 -->
@@ -1740,6 +1755,11 @@
 		<property name="complaints">
 			<list>
 
+			</list>
+		</property>
+		<property name="tonemas">
+			<list>
+				<ref bean="TEST_tonema1_1" />
 			</list>
 		</property>
 	</bean>
@@ -1773,6 +1793,11 @@
 				<ref bean="complaint2_1_2" />
 			</list>
 		</property>
+		<property name="tonemas">
+			<list>
+				
+			</list>
+		</property>
 	</bean>
 
 	<!-- FixUpTask 2 del customer2 -->
@@ -1804,8 +1829,52 @@
 				<ref bean="complaint_X" />
 			</list>
 		</property>
+		<property name="tonemas">
+			<list>
+				<ref bean="TEST_tonema2_1" />
+				<ref bean="TEST_tonema2_2" />
+			</list>
+		</property>
 	</bean>
 
+
+	<!-- Tonema -->
+	<!-- Tonemas del customer 1 tonema1_id tonema -->
+	
+	<bean id="TEST_tonema1_1" class="domain.Tonema">
+		<property name="ticker" value="6ji917:0119:09" />
+		<property name="publicationMoment" value="09/01/2019 10:38" />
+		<property name="body" value="Vaya body" />
+		<property name="isFinal" value="true" />
+		<property name="fixUpTask" ref="fixUpTask4_1"/>
+	</bean>
+	
+	<bean id="TEST_tonema1_2" class="domain.Tonema">
+		<property name="ticker" value="7ji9p7:0119:01" />
+		<property name="publicationMoment" value="01/01/2019 10:38" />
+		<property name="body" value="Vaya body" />
+		<property name="isFinal" value="true" />
+		<property name="fixUpTask" ref="fixUpTask3_1"/>
+	</bean>
+	
+	<!-- Tonemas del customer 2 tonema2_id tonema -->
+	
+	<bean id="TEST_tonema2_1" class="domain.Tonema">
+		<property name="ticker" value="3jioo7:1117:09" />
+		<property name="publicationMoment" value="09/11/2017 10:38" />
+		<property name="body" value="Vaya body" />
+		<property name="isFinal" value="true" />
+		<property name="fixUpTask" ref="fixUpTask2_2"/>
+	</bean>
+	
+	<bean id="TEST_tonema2_2" class="domain.Tonema">
+		<property name="ticker" value="3jioo7:1116:09" />
+		<property name="publicationMoment" value="09/11/2016 10:38" />
+		<property name="body" value="Vaya body" />
+		<property name="isFinal" value="true" />
+		<property name="fixUpTask" ref="fixUpTask2_2"/>
+	</bean>
+	
 
 	<!-- CATEGORIES -->
 

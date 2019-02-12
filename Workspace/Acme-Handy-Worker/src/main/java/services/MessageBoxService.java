@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 
 import repositories.MessageBoxRepository;
 import domain.Actor;
-import domain.Administrator;
 import domain.Message;
 import domain.MessageBox;
 

@@ -36,18 +36,6 @@ public class CurriculumService {
 	private PersonalRecordService		personalRecordService;
 
 	@Autowired
-	private EducationRecordService		educationRecordService;
-
-	@Autowired
-	private EndorserRecordService		endorserRecordService;
-
-	@Autowired
-	private MiscellaneousRecordService	miscellaneousRecordService;
-
-	@Autowired
-	private ProfessionalRecordService	professionalRecordService;
-
-	@Autowired
 	private UtilityService				utilityService;
 
 

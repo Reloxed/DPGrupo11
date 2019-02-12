@@ -126,9 +126,92 @@
 			<td><jstl:out value="${fixUpTask.ticker}">
 				</jstl:out></td>
 		</tr>
+		
+		
+		
+		<tr>
+			<td><strong> <spring:message code="fixUpTask.tonemas" />
+					:
+			</strong></td>
+			<td>
+			<jstl:choose>
+			<jstl:when test="${not empty fixUpTask.tonemas}">
+				<a
+					href="tonema/list.do?fixUpTaskId=${fixUpTask.id}">
+					<spring:message code="fixUpTask.tonemas" />
+				</a>
+			</jstl:when>
+			<jstl:otherwise>
+			<a>
+				<spring:message code="fixUpTask.notonemas" />
+			</a>
+			</jstl:otherwise>
+			
+		</jstl:choose>
+		</tr>
 
 	</table>
+	<div></div>
 	
+	
+<style>
+<!--
+.tableColorDarkOliveGreen {
+	background-color: darkolivegreen;
+}
+
+.tableColorMediumPurple {
+	background-color: mediumpurple;
+}
+
+.tableColorGrey {
+	background-color: grey;
+}
+-->
+</style>
+	
+	<jstl:forEach var="tonema" items="${fixUpTask.tonemas}">
+		<jstl:if test="${tonema.isFinal==true}">
+		
+		<jstl:set var="publicationMoment" value="${tonema.publicationMoment}" />
+		<jstl:choose>
+			<jstl:when test="${publicationMoment > onePreviousMonth}">
+				<jstl:set var="bgcolor" value="tableColorDarkOliveGreen" />
+			</jstl:when>
+
+			<jstl:when test="${publicationMoment > twoPreviousMonth}">
+				<jstl:set var="bgcolor" value="tableColorMediumPurple" />
+			</jstl:when>
+			
+			<jstl:otherwise>
+				<jstl:set var="bgcolor" value="tableColorGrey" />
+			</jstl:otherwise>
+			
+		</jstl:choose>
+			<table class="${bgcolor}">
+				<tr>
+					<td><strong> <spring:message code="fixUpTask.tonema.ticker" />
+							:
+					</strong></td>
+					<td><jstl:out value="${tonema.ticker}">
+						</jstl:out></td>
+				</tr>		
+				
+				<tr>
+					<td><strong> <spring:message code="fixUpTask.tonema.body" />
+							:
+					</strong></td>
+					<td><jstl:out value="${tonema.body}">
+						</jstl:out></td>
+				</tr>
+				<tr><td>
+				<a href="tonema/display.do?tonemaId=${tonema.id}"> <spring:message
+						code="fixUpTask.tonema.display" />	</a></td>
+				</tr>
+			</table>
+		</jstl:if>
+	</jstl:forEach>
+
 		<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
 		onclick="window.history.back()" />
@@ -244,10 +327,84 @@
 			<td><jstl:out value="${fixUpTask.ticker}">
 				</jstl:out></td>
 		</tr>
+		
+				<tr>
+			<td><strong> <spring:message code="fixUpTask.tonemas" />
+					:
+			</strong></td>
+			<td>
+			<jstl:choose>
+			<jstl:when test="${not empty fixUpTask.tonemas}">
+				<a
+					href="tonema/list.do?fixUpTaskId=${fixUpTask.id}">
+					<spring:message code="fixUpTask.tonemas" />
+				</a>
+			</jstl:when>
+			<jstl:otherwise>
+			<a>
+				<spring:message code="fixUpTask.notonemas" />
+			</a>
+			</jstl:otherwise>
+			
+		</jstl:choose>
+		</tr>
 
 	</table>
+	
+	<style>
+<!--
+.tableColorDarkOliveGreen {
+	background-color: darkolivegreen;
+}
 
+.tableColorMediumPurple {
+	background-color: mediumpurple;
+}
 
+.tableColorGrey {
+	background-color: grey;
+}
+-->
+</style>
+	
+	<jstl:forEach var="tonema" items="${fixUpTask.tonemas}">
+		<jstl:if test="${tonema.isFinal==true}">
+		
+		<jstl:set var="publicationMoment" value="${tonema.publicationMoment}" />
+		<jstl:choose>
+			<jstl:when test="${publicationMoment > onePreviousMonth}">
+				<jstl:set var="bgcolor" value="tableColorDarkOliveGreen" />
+			</jstl:when>
+
+			<jstl:when test="${publicationMoment > twoPreviousMonth}">
+				<jstl:set var="bgcolor" value="tableColorMediumPurple" />
+			</jstl:when>
+			
+			<jstl:otherwise>
+				<jstl:set var="bgcolor" value="tableColorGrey" />
+			</jstl:otherwise>
+			
+		</jstl:choose>
+			<table class="${bgcolor}">
+				<tr>
+					<td><strong> <spring:message code="fixUpTask.tonema.ticker" />
+							:
+					</strong></td>
+					<td><jstl:out value="${tonema.ticker}">
+						</jstl:out></td>
+				</tr>		
+				
+				<tr>
+					<td><strong> <spring:message code="fixUpTask.tonema.body" />
+							:
+					</strong></td>
+					<td><jstl:out value="${tonema.body}">
+						</jstl:out></td>
+				</tr>
+				
+			</table>
+		</jstl:if>
+	</jstl:forEach>
 
 	<input type="button" name="back"
 		value="<spring:message code="fixuptask.back" />"
@@ -255,7 +412,5 @@
 
 
 	<br />
-
-
 
 </security:authorize>

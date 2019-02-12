@@ -2,7 +2,9 @@
 package controllers.handyWorker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +57,11 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		english = "en";
 		int customerId;
 
-
+		Calendar c = Calendar.getInstance(); 
+		c.add(Calendar.DAY_OF_MONTH, -30);
+		Date onePreviousMonth = c.getTime();
+		c.add(Calendar.DAY_OF_MONTH, -30);
+		Date twoPreviousMonth = c.getTime();
 
 		fixUpTask = this.fixUpTaskService.findOne(taskId);
 
@@ -69,6 +75,8 @@ public class FixUptaskHandyWorkerController extends AbstractController {
 		if(fixUpTask.getCategory()==null){
 			fixUpTask.setCategory(fixUpTask.getCategory().getParentCategory());
 		}
+		result.addObject("onePreviousMonth", onePreviousMonth);
+		result.addObject("twoPreviousMonth", twoPreviousMonth);
 		result.addObject("language", language);
 		result.addObject("español", español);
 		result.addObject("english", english);

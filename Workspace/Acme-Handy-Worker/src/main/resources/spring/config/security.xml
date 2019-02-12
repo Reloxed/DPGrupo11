@@ -41,9 +41,10 @@
 		<security:intercept-url pattern="/report/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/complaint/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/fixUpTask/customer/**" access="hasRole('CUSTOMER')"/>
-		<security:intercept-url pattern="/application/customer,handy-worker/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/application/customer,handy-worker/**" access="hasAnyRole('CUSTOMER','HANDYWORKER')"/>
 		<security:intercept-url pattern="/note/customer/**" access="hasRole('CUSTOMER')"/>
 		<security:intercept-url pattern="/creditcard/**" access="hasRole('CUSTOMER')"/>
+		<security:intercept-url pattern="/tonema/**" access="hasAnyRole('CUSTOMER','HANDYWORKER')"/>
 		
 		
 		<security:intercept-url pattern="/complaint/referee/**" access="hasRole('REFEREE')"/>

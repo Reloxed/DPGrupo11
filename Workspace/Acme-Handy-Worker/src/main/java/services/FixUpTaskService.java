@@ -16,6 +16,7 @@ import domain.Application;
 import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Tonema;
 
 @Service
 @Transactional
@@ -55,6 +56,7 @@ public class FixUpTaskService {
 
 		result.setApplications(new HashSet<Application>());
 		result.setComplaints(new HashSet<Complaint>());
+		result.setTonemas(new HashSet<Tonema>());
 		return result;
 
 	}
@@ -112,8 +114,6 @@ public class FixUpTaskService {
 				.isSpam(atributosAComprobar);
 		if (containsSpam)
 			principal.setIsSuspicious(true);
-
-		result = this.fixUpTaskRepository.save(fixUpTask);
 
 		return result;
 

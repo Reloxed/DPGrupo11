@@ -17,6 +17,7 @@ import org.springframework.util.Assert;
 import domain.Administrator;
 import domain.Curriculum;
 import domain.FixUpTask;
+import domain.Tonema;
 
 @Service
 @Transactional
@@ -29,6 +30,9 @@ public class UtilityService {
 
 	@Autowired
 	private CurriculumService curriculumService;
+	
+	@Autowired
+	private TonemaService tonemaService;
 
 	@Autowired
 	private SystemConfigurationService systemConfigurationService;
@@ -72,6 +76,9 @@ public class UtilityService {
 					continue;
 			for (final Curriculum curriculum : this.curriculumService.findAll())
 				if (curriculum.getTicker().equals(uniqueTicker))
+					continue;
+			for (final Tonema tonema : this.tonemaService.findAll())
+				if (tonema.getTicker().equals(uniqueTicker))
 					continue;
 			unique = true;
 		}
@@ -184,5 +191,51 @@ public class UtilityService {
 			}
 		}
 		return containsSpam;
+	}
+	
+	public String generateTickerForTonema() {
+		String uniqueTicker = null;
+		Calendar date;
+		String year, month, day, alphaNum;
+		boolean unique = false;
+
+		date = Calendar.getInstance();
+		date.setTime(LocalDate.now().toDate());
+		year = String.valueOf(date.get(Calendar.YEAR));
+		year = year.substring(year.length() - 2, year.length());
+		month = String.valueOf(date.get(Calendar.MONTH) + 1);
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
+		day = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+		if (day.length() == 1) {
+			day = "0" + day;
+		}
+		
+		while (unique == false) {
+			alphaNum = this.randomStringForTonema();
+			uniqueTicker = alphaNum + ":" + month + year + ":" + day;
+			for (final Tonema tonema : this.tonemaService.findAll())
+				if (tonema.getTicker().equals(uniqueTicker))
+					continue;
+			unique = true;
+		}
+
+		return uniqueTicker;
+	}
+
+	public String randomStringForTonema() {
+
+		final String possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
+		final SecureRandom rnd = new SecureRandom();
+		final int length = 6;
+
+		final StringBuilder stringBuilder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++)
+			stringBuilder.append(possibleChars.charAt(rnd.nextInt(possibleChars
+					.length())));
+		return stringBuilder.toString();
+
 	}
 }
