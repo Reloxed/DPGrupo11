@@ -244,7 +244,20 @@
 			<td><jstl:out value="${fixUpTask.ticker}">
 				</jstl:out></td>
 		</tr>
-
+		
+		<tr>
+			<td><strong> <spring:message code="fixUpTask.nust" />
+					:
+			</strong></td>
+			<td>
+				<ul>
+					<jstl:forEach var="nust" items="${fixUpTask.nusts}">
+					<li><jstl:out value="${nust.body }"/></li>
+					</jstl:forEach>
+				</ul>
+			</td>
+		</tr>
+	
 	</table>
 
 

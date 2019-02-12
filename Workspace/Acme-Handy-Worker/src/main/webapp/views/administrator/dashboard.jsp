@@ -26,8 +26,47 @@
 		 or not empty ratioFixWithComplaints or not empty statusStatistics or not empty notesStatistics 
 		 	or not empty customerStatistics or not empty customerStatistics2 or not empty handyWorkerStatistics
 		 		or not empty handyWorkerStatistics2}">
+	
+		
+	<table class="displayStyle" style="width: 50%">
+	<jstl:if test="${not empty nustStatistics}">
+		<tr>
+			<th colspan="2"><spring:message
+					code="administrator.nust.stats" /></th>
+		</tr>
+		<tr>
+			<td><spring:message code="administrator.nust.avg" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${nustStatistics[0]}" /></td>
+		</tr>
+		</jstl:if>
+		<tr>
+			<td><spring:message code="administrator.nust.desv" /></td>
+			<td style="text-align: right"><fmt:formatNumber
+					maxFractionDigits="4" value="${nustStatistics[1]}" /></td>
+		</tr>
+		<jstl:if test="${not empty nustRatioFinalMode}">
+		<tr>
+			<td><spring:message code="administrator.nust.final" /></td>
+			<td style="text-align: right">${nustRatioFinalMode}</td>
+		</tr>
+		</jstl:if>
+		<jstl:if test="${not empty nustRatioDraftMode}">
+		<tr>
+			<td><spring:message code="administrator.nust.draft" /></td>
+			<td style="text-align: right">${nustRatioDraftMode}</td>
+		</tr>
+	
+	</jstl:if>
+	
+	</table>
+	
+	
+	
+	
+	
 		 		
-	<jstl:if test="${not empty applicationsStatistics}"></jstl:if>
+	<jstl:if test="${not empty applicationsStatistics}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -52,8 +91,8 @@
 					maxFractionDigits="4" value="${applicationsStatistics[3]}" /></td>
 		</tr>
 	</table>
-
-	<jstl:if test="${not empty pricesStatistics}"></jstl:if>
+</jstl:if>
+	<jstl:if test="${not empty pricesStatistics}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -81,8 +120,8 @@
 					maxFractionDigits="4" value="${pricesStatistics[3]}" /></td>
 		</tr>
 	</table>
-
-	<jstl:if test="${not empty complaintStatistics}"></jstl:if>
+</jstl:if>
+	<jstl:if test="${not empty complaintStatistics}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -115,8 +154,8 @@
 					maxFractionDigits="4" value="${ratioFixWithComplaints}" /></td>
 		</tr>
 	</table>
-
-	<jstl:if test="${not empty statusStatistics}"></jstl:if>
+</jstl:if>
+	<jstl:if test="${not empty statusStatistics}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -144,8 +183,8 @@
 					maxFractionDigits="4" value="${pendingExpired}" /></td>
 		</tr>
 	</table>
-
-	<jstl:if test="${not empty notesStatistics}"></jstl:if>
+</jstl:if>
+	<jstl:if test="${not empty notesStatistics}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -173,10 +212,10 @@
 					maxFractionDigits="4" value="${notesStatistics[3]}" /></td>
 		</tr>
 	</table>
-
+</jstl:if>
 	<div>
 	
-	<jstl:if test="${not empty customerStatistics}"></jstl:if>
+	<jstl:if test="${not empty customerStatistics}">
 		<table class="displayStyle" style="width: 50%">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -197,8 +236,8 @@
 					</display:table></td>
 			</tr>
 		</table>
-		
-		<jstl:if test="${not empty customerStatistics2}"></jstl:if>
+		</jstl:if>
+		<jstl:if test="${not empty customerStatistics2}">
 		<table class="displayStyle" style="width: 50%">
 			<tr>
 				<td><display:table pagesize="5" class="displaytag"
@@ -219,9 +258,10 @@
 					</display:table></td>
 			</tr>
 		</table>
+		</jstl:if>
 	</div>
 	
-	<jstl:if test="${not empty handyWorkerStatistics }"></jstl:if>
+	<jstl:if test="${not empty handyWorkerStatistics }">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"
@@ -240,8 +280,8 @@
 				</display:table></td>
 		</tr>
 	</table>
-	
-	<jstl:if test="${not empty handyWorkerStatistics2}">
+	</jstl:if>
+	<jstl:if test="${ empty handyWorkerStatistics2}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<td><display:table pagesize="5" class="displaytag"

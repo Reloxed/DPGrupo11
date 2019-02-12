@@ -12,6 +12,10 @@
 	">
 
 	<util:list id="converters">
+
+		<bean class="converters.NustToStringConverter" />
+		<bean class="converters.StringToNustConverter" />
+
 		<bean class="converters.ActorToStringConverter" />
 		<bean class="converters.StringToActorConverter" />
 

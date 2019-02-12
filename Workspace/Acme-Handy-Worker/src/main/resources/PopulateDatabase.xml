@@ -12,40 +12,54 @@
 
 	
 	
-	<!-- Observations -->
-	<bean id="observation1" class="domain.Observation">
-		<property	name="ticker" value="159023-9A2J3C"	/>
-		<property 	name="publishedMoment" value="27/01/2019 17:14" />
-		<property name="body" value="Esta chapuza no me gusta como ha quedado. Vamos A APROBAR EL TEST DE DP EJEJ"		/>
-		<property name="picture" value="https://www.hofdhasldsfadsf.com"		/>
-		<property name="isFinal" value="false"		/>		
-	</bean>
+	<!-- nusts -->
 	
-	<bean id="observation2" class="domain.Observation">
-		<property	name="ticker" value="159023-7A2J3C"	/>
-		<property 	name="publishedMoment" value="15/12/2018 12:14" />
-		<property name="body" value="ESATA ES LA OBSERVACION NUMERO 2 TEST"		/>
-		<property name="picture" value="https://www.dfjlhaldskfjalskfnlakdsf.com"		/>
-		<property name="isFinal" value="false"		/>		
-	</bean>
-	
-	<bean id="observation3" class="domain.Observation">
-		<property	name="ticker" value="159023-7A2J3K"	/>
-		<property 	name="publishedMoment" value="15/09/2018 12:14" />
-		<property name="body" value="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "		/>
-		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
-		<property name="isFinal" value="false"		/>		
-	</bean>
-	
-	
-		<bean id="observation4" class="domain.Observation">
-		<property	name="ticker" value="159023-7A2J4H"	/>
-		<property 	name="publishedMoment" value="15/07/2018 12:14" />
-		<property name="body" value="LOLOL JEJE TEST A TOPEG FAASF AFASDF"		/>
-		<property name="picture" value="https://www.AGSFADSFADASDFDAScom"		/>
-		<property name="isFinal" value="false"		/>		
-	</bean>
-	
+	 <bean id="nust_TEST1" class="domain.Nust">
+    <property  name="ticker" value="15-jh-32-23-43"  />
+    <property   name="publishedMoment" value="2019/02/03 15:00" />
+    <property name="body" value="Esta chapuza no me gusta como ha quedado.(TEST) "    />
+    <property name="picture" value="https://www.hofdhasldsfadsf.com"    />
+    <property name="isFinal" value="false"    />    
+    <property name="fixUpTask">
+      <ref bean="fixUpTask1_1" />
+    </property>  
+  </bean>
+  
+  <bean id="nust_TEST2" class="domain.Nust">
+    <property  name="ticker" value="05-sh-31-28-43"  />
+    <property   name="publishedMoment" value="2019/01/03 11:00" />
+    <property name="body" value="No me ha quedado claro el objetivo de esto.(TEST)"    />
+    <property name="picture" value="https://www.dfjlhaldskfjalskfnlakdsf.com"    />
+    <property name="isFinal" value="true"    />  
+    <property name="fixUpTask">
+      <ref bean="fixUpTask1_1" />
+    </property>    
+  </bean>
+  
+  <bean id="nust_TEST3" class="domain.Nust">
+    <property  name="ticker" value="15-lh-32-23-25"  />
+    <property   name="publishedMoment" value="2018/08/09 10:00" />
+    <property name="body" value="No se bien a que se refiere(TEST)"    />
+    <property name="picture" value="https://www.AGSFADSFADASDFDAScom"    />
+    <property name="isFinal" value="false"    />
+    <property name="fixUpTask">
+      <ref bean="fixUpTask1_2" />
+    </property>    
+        
+  </bean>
+  
+  
+    <bean id="nust_TEST4" class="domain.Nust">
+    <property  name="ticker" value="15-hh-32-03-43"  />
+    <property   name="publishedMoment" value="2018/09/03 09:00" />
+    <property name="body" value="Esto es una prueba(TEST)"    />
+    <property name="picture" value="https://www.AGSFADSFADASDFDAScom"    />
+    <property name="isFinal" value="true"    />  
+    <property name="fixUpTask">
+      <ref bean="fixUpTask1_2" />
+    </property>    
+  </bean>
+  
 	<!-- ACTORS -->
 
 	<!-- Customers -->
@@ -1692,10 +1706,10 @@
 				<ref bean="complaint2_1_1" />
 			</list>
 		</property>
-		<property name="observations">
+		<property name="nusts">
 			<list>
-				<ref bean="observation1" />
-				<ref bean="observation2" />
+				<ref bean="nust_TEST1" />
+				<ref bean="nust_TEST2" />
 			</list>
 		</property>
 	</bean>
@@ -1815,10 +1829,10 @@
 				<ref bean="complaint2_1_2" />
 			</list>
 		</property>
-		<property name="observations">
+		<property name="nusts">
 			<list>
-				<ref bean="observation3" />
-				<ref bean="observation4" />
+				<ref bean="nust_TEST3" />
+				<ref bean="nust_TEST4" />
 			</list>
 		</property>
 	</bean>

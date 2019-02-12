@@ -14,6 +14,7 @@ import services.ApplicationService;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
+import services.NustService;
 import services.ReportService;
 import controllers.AbstractController;
 import domain.Customer;
@@ -39,6 +40,9 @@ public class StatisticsAdministratorController extends AbstractController {
 
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	private NustService nustService;
 
 	// Constructor
 
@@ -64,6 +68,15 @@ public class StatisticsAdministratorController extends AbstractController {
 		Double ratioFixWithComplaints;
 		List<Customer> customerStatistics2;
 		List<HandyWorker> handyWorkerStatistics2;
+		Double [] nustStatistics;
+		Double nustRatioFinalMode;
+		Double nustRatioDraftMode;
+		
+		//OBSERVATION STATS
+		
+		nustStatistics=this.nustService.findDataNustsPerFixUpTask();
+		nustRatioFinalMode=this.nustService.ratioNustsFinalMode();
+		nustRatioDraftMode=this.nustService.ratioNustsDraftMode();
 
 		// The average, the minimum, the maximum, and the standard deviation of
 		// the number of fix-up tasks per user
@@ -139,7 +152,10 @@ public class StatisticsAdministratorController extends AbstractController {
 		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
 		res.addObject("customerStatistics2", customerStatistics2);
 		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
-
+		
+		res.addObject("nustStatistics", nustStatistics);
+		res.addObject("nustRatioFinalMode",nustRatioFinalMode);
+		res.addObject("nustRatioDraftMode",nustRatioDraftMode);
 		res.addObject("requestURI", "statistics/administrator/display.do");
 
 		return res;

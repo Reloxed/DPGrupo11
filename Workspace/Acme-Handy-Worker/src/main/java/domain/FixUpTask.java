@@ -38,7 +38,7 @@ public class FixUpTask extends DomainEntity {
 	private Category category;
 	private Warranty warranty;
 	private Collection<Complaint> complaints;
-	private Collection<Observation> observations;
+	private Collection<Nust> nusts;
 
 	@NotBlank
 	@Column(unique = true)
@@ -158,13 +158,13 @@ public class FixUpTask extends DomainEntity {
 	}
 	
 	@Valid
-	@OneToMany
-	public Collection<Observation> getObservations() {
-		return observations;
+	@OneToMany(mappedBy="fixUpTask")
+	public Collection<Nust> getNusts() {
+		return nusts;
 	}
 
-	public void setObservations(Collection<Observation> observations) {
-		this.observations = observations;
+	public void setNusts(Collection<Nust> nusts) {
+		this.nusts = nusts;
 	}
 	
 	

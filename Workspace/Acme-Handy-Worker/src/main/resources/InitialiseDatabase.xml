@@ -48,7 +48,7 @@
 	</bean>
 
 	<!-- SYSTEM CONFIGURATION -->
-
+ 
 	<bean id="sysConf" class="domain.SystemConfiguration">
 		<property name="systemName" value="Acme Handy Worker" />
 		<property name="welcomeMessage">

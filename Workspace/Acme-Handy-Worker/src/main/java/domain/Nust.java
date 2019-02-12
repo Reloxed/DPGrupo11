@@ -6,10 +6,12 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+
+
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -19,19 +21,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Observation extends DomainEntity{
+public class Nust extends DomainEntity{
 
 	private String ticker;
 	private Date publishedMoment;
 	private String body;
 	private String picture;
 	private boolean isFinal;
+	private FixUpTask fixUpTask;
 	
 	
 	
 	@NotBlank
 	@Column(unique = true)
-	@Pattern(regexp = "\\d{6}-[a-z,A-Z,0-9]{6}")
+	@Pattern(regexp = "\\d{2}-[a-z,A-Z,0-9]{2}-[a-z,A-Z,0-9]{2}-[a-z,A-Z,0-9]{2}-[a-z,A-Z,0-9]{2}")
 	
 	public String getTicker() {
 		return ticker;
@@ -42,10 +45,8 @@ public class Observation extends DomainEntity{
 	}
 	
 	@NotNull
-	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	
 	public Date getPublishedMoment() {
 		return publishedMoment;
 	}
@@ -55,7 +56,7 @@ public class Observation extends DomainEntity{
 	}
 	
 	@NotBlank
-	@Length(min=0,max = 15)
+	@Length(min=0,max = 250)
 	
 	public String getBody() {
 		return body;
@@ -66,7 +67,6 @@ public class Observation extends DomainEntity{
 	}
 
 	@URL
-	@NotBlank
 	public String getPicture() {
 		return picture;
 	}
@@ -79,8 +79,16 @@ public class Observation extends DomainEntity{
 		return this.isFinal;
 	}
 
-	public void setFinal(final boolean isFinal) {
+	public void setIsFinal(final boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+	@ManyToOne(optional=false)
+	public FixUpTask getFixUpTask() {
+		return fixUpTask;
+	}
+
+	public void setFixUpTask(FixUpTask fixUpTask) {
+		this.fixUpTask = fixUpTask;
 	}
 	
 	

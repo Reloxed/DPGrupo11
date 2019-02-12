@@ -54,5 +54,6 @@
 		<value>/views/message/messages</value>
 		<value>/views/box/messages</value>
 		<value>/views/note/messages</value>
+		<value>/views/nust/messages</value>
 	</util:list>
 </beans>

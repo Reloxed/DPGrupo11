@@ -93,6 +93,9 @@
 		<security:intercept-url pattern="/customer/customer/create.do" access="isAnonymous()"/>
 		<security:intercept-url pattern="/handyworker/handyworker/create.do" access="isAnonymous()"/>
 		
+		<security:intercept-url pattern="/nust/list.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/nust/display.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/nust/**" access="hasRole('CUSTOMER')"/>
 		
 				
 		<security:form-login 
