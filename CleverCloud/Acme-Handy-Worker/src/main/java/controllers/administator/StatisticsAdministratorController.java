@@ -1,0 +1,188 @@
+package controllers.administator;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.ApplicationService;
+import services.ComplaintService;
+import services.CustomerService;
+import services.FixUpTaskService;
+import services.HandyWorkerService;
+import services.ReportService;
+import services.TapuService;
+import controllers.AbstractController;
+import domain.Customer;
+import domain.HandyWorker;
+
+@Controller
+@RequestMapping(value = "statistics/administrator")
+public class StatisticsAdministratorController extends AbstractController {
+
+	// Services
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private HandyWorkerService handyWorkerService;
+
+	@Autowired
+	private FixUpTaskService fixUpTaskService;
+
+	@Autowired
+	private ApplicationService applicationService;
+
+	@Autowired
+	private ReportService reportService;
+
+	@Autowired
+	private ComplaintService complaintService;
+
+	@Autowired
+	private TapuService xxxxService;
+
+	// Constructor
+
+	public StatisticsAdministratorController() {
+		super();
+
+	}
+
+	// Display
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display() {
+		final ModelAndView res;
+		Double[] fixuptasksStatistics;
+		Double[] applicationsStatistics;
+		Double[] pricesStatistics;
+		Double[] complaintsStatistics;
+		List<Double> statusStatistics = new ArrayList<>();
+		Double pendingExpired;
+		Collection<Customer> customerStatistics = null;
+		Collection<HandyWorker> handyWorkerStatistics;
+		Double[] notesStatistics;
+		Double ratioFixWithComplaints;
+		List<Customer> customerStatistics2 = null;
+		List<HandyWorker> handyWorkerStatistics2;
+		Double[] tapusStatistics;
+		Double ratioTapusFinalMode;
+		Double ratioTapusDraftMode;
+		boolean emptyDashboard = false;
+
+		// The average and standard deviation of the number of published XXXX
+		// per XXXX
+		tapusStatistics = this.xxxxService.operationsTapu();
+
+		// The ratio of published XXXX versus total number of XXXX
+		ratioTapusDraftMode = this.xxxxService.ratioTapusDraftMode();
+
+		// The ratio of unpublished XXXX versus total number of XXXX
+		ratioTapusFinalMode = this.xxxxService.ratioFinalTapus();
+
+		// The average, the minimum, the maximum, and the standard deviation of
+		// the number of fix-up tasks per user
+		fixuptasksStatistics = this.fixUpTaskService
+				.findFixUpTaskNumberOperation();
+
+		// The average, the minimum, the maximum, and the standard deviation of
+		// the number of applications per fix-up task
+		applicationsStatistics = this.fixUpTaskService
+				.findApplicationsNumberOperations();
+
+		// The average, the minimum, the maximum, and the standard deviation of
+		// the maximum price of the fix-up tasks
+		pricesStatistics = this.fixUpTaskService
+				.findMaxPricesNumberOperations();
+
+		// The minimum, the maximum, the average, and the standard deviation of
+		// the number of complaints per fix-up task
+		complaintsStatistics = this.fixUpTaskService
+				.findComplaintsNumberOperations();
+
+		// The ratio of pending applications
+		statusStatistics.add(this.applicationService
+				.findRatioPendingApplications());
+		// The ratio of accepted applications
+		statusStatistics.add(this.applicationService
+				.findRatioAcceptedApplications());
+		// The ratio of rejected applications
+		statusStatistics.add(this.applicationService
+				.findRatioRejectedApplications());
+
+		// The ratio of pending applications that cannot change its status
+		// because their time period's elapsed.
+		pendingExpired = this.applicationService
+				.findRatioPendingExpiredApplications();
+
+		// The listing of customers who have published at least 10% more fix-up
+		// tasks than the average, ordered by number of applications
+		if (!this.applicationService.findAll().isEmpty()) {
+			customerStatistics = this.customerService
+					.topThreeCustomersTenPercentMoraThanAverage();
+		}
+
+		// The listing of handy workers who have got accepted at least 10% more
+		// applications than the average, ordered by number of applications
+		handyWorkerStatistics = this.handyWorkerService
+				.findMoreApplicationsThanAvg();
+
+		// The minimum, the maximum, the average, and the standard deviation of
+		// the number of notes per referee report
+		notesStatistics = this.reportService.findNotesNumberOperations();
+
+		// The ratio of fix-up tasks with a complaint
+		ratioFixWithComplaints = this.fixUpTaskService
+				.ratioFixUpTaskWithComplaints();
+
+		// The top-three customers in terms of complaints
+		if (!this.complaintService.findAll().isEmpty()) {
+			customerStatistics2 = this.customerService
+					.findCustomersWithMoreComplaints();
+		}
+
+		// The top-three handy workers in terms of complaints
+		handyWorkerStatistics2 = this.handyWorkerService
+				.findTopComplaintsHandyWorkers();
+
+		if (tapusStatistics[0] == null && fixuptasksStatistics[0] == null
+				&& applicationsStatistics[0] == null
+				&& complaintsStatistics[0] == null
+				&& pricesStatistics[0] == null
+				&& statusStatistics.get(0) == null
+				&& customerStatistics == null && customerStatistics2 == null
+				&& handyWorkerStatistics.isEmpty()
+				&& handyWorkerStatistics2.isEmpty()) {
+			emptyDashboard = true;
+		}
+
+		res = new ModelAndView("administrator/dashboard");
+		res.addObject("tapusStatistics", tapusStatistics);
+		res.addObject("ratioTapusDraftMode", ratioTapusDraftMode);
+		res.addObject("ratioTapusFinalMode", ratioTapusFinalMode);
+		res.addObject("fixupstatistics", fixuptasksStatistics);
+		res.addObject("applicationsStatistics", applicationsStatistics);
+		res.addObject("pricesStatistics", pricesStatistics);
+		res.addObject("complaintStatistics", complaintsStatistics);
+		res.addObject("statusStatistics", statusStatistics.toArray());
+		res.addObject("pendingExpired", pendingExpired);
+		res.addObject("customerStatistics", customerStatistics);
+		res.addObject("handyWorkerStatistics", handyWorkerStatistics);
+		res.addObject("notesStatistics", notesStatistics);
+		res.addObject("ratioFixWithComplaints", ratioFixWithComplaints);
+		res.addObject("customerStatistics2", customerStatistics2);
+		res.addObject("handyWorkerStatistics2", handyWorkerStatistics2);
+		res.addObject("emptyDashboard", emptyDashboard);
+
+		res.addObject("requestURI", "statistics/administrator/display.do");
+
+		return res;
+	}
+}
