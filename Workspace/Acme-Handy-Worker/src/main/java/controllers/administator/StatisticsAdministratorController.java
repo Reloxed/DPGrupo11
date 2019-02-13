@@ -56,23 +56,24 @@ public class StatisticsAdministratorController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
 		final ModelAndView res;
-		Double[] fixuptasksStatistics;
-		Double[] applicationsStatistics;
-		Double[] pricesStatistics;
-		Double[] complaintsStatistics;
+		Double[] fixuptasksStatistics = null;
+		Double[] applicationsStatistics = null;
+		Double[] pricesStatistics = null;
+		Double[] complaintsStatistics = null;
 		List<Double> statusStatistics = new ArrayList<>();
-		Double pendingExpired;
-		Collection<Customer> customerStatistics;
-		Collection<HandyWorker> handyWorkerStatistics;
-		Double[] notesStatistics;
-		Double ratioFixWithComplaints;
-		List<Customer> customerStatistics2;
-		List<HandyWorker> handyWorkerStatistics2;
-		Double[] avgstdStatistics;
-		Double publishedTonema;
-		Double unpublishedTonema;
+		Double pendingExpired = null;
+		Collection<Customer> customerStatistics = new ArrayList<>();
+		Collection<HandyWorker> handyWorkerStatistics = new ArrayList<>();
+		Double[] notesStatistics = null;
+		Double ratioFixWithComplaints = null;
+		List<Customer> customerStatistics2 = new ArrayList<>();
+		List<HandyWorker> handyWorkerStatistics2 = new ArrayList<>();
+		Double[] avgstdStatistics = null;
+		Double publishedTonema = null;
+		Double unpublishedTonema = null;
 				
 		// The average and the standard deviation of the number of Tonema tasks per fixUptasks
+		
 		avgstdStatistics = this.tonemaService.avgstdOfTonema();
 		
 		// The ratio of published and unpublished Tonema
@@ -116,9 +117,11 @@ public class StatisticsAdministratorController extends AbstractController {
 
 		// The listing of customers who have published at least 10% more fix-up
 		// tasks than the average, ordered by number of applications
-		customerStatistics = this.customerService
-				.topThreeCustomersTenPercentMoraThanAverage();
-
+		if(!this.applicationService.findAll().isEmpty()){
+			customerStatistics = this.customerService
+					.topThreeCustomersTenPercentMoraThanAverage();
+		}
+		
 		// The listing of handy workers who have got accepted at least 10% more
 		// applications than the average, ordered by number of applications
 		handyWorkerStatistics = this.handyWorkerService
@@ -133,9 +136,10 @@ public class StatisticsAdministratorController extends AbstractController {
 				.ratioFixUpTaskWithComplaints();
 
 		// The top-three customers in terms of complaints
-		customerStatistics2 = this.customerService
-				.findCustomersWithMoreComplaints();
-
+		if(!this.applicationService.findAll().isEmpty()){
+			customerStatistics2 = this.customerService
+					.findCustomersWithMoreComplaints();
+		}
 		// The top-three handy workers in terms of complaints
 		handyWorkerStatistics2 = this.handyWorkerService
 				.findTopComplaintsHandyWorkers();

@@ -88,8 +88,14 @@
 			sortable="true" />
 		
 		<spring:message code="tonema.isFinal" var="finalHeader" />
-		<display:column property="isFinal" title="${finalHeader}"
-			sortable="true"/>		
+		<display:column title="${finalHeader}">
+			<jstl:if test="${row.isFinal}">
+				<spring:message	code="tonema.final" />
+			</jstl:if>
+			<jstl:if test="${!row.isFinal}">
+				<spring:message	code="tonema.draft" />
+			</jstl:if>
+		</display:column>
 			
 		<spring:message code="tonema.fixUpTask" var="fixUpTaskHeader" />
 		<display:column title="${fixUpTaskHeader}">

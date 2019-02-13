@@ -20,15 +20,17 @@
 	<jpa:repositories base-package="security" />
 
 	<!-- Data source -->
-	
+
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> 
-		<property name="jdbcUrl" value="jdbc:mysql://bmntuhzdgug6mrakmcz7-mysql.services.clever-cloud.com:3306/bmntuhzdgug6mrakmcz7" /> 
-		<property name="user" value="u9gwjidhyl8d5vcjp9nx" /> 
-		<property name="password" value="nKaVKiWsbPCen3dkf5Vh" /> 
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Handy-Worker" /> 
+		<property name="user" value="acme-user" />
+		<property name="password" value="ACME-Us3r-P@ssw0rd" />  
 		<property name="minPoolSize" value="1" /> 
 		<property name="maxPoolSize" value="5" /> 
 	</bean>
+
+
 
 
 	<!-- JPA -->
@@ -46,7 +48,7 @@
 		<prop key="hibernate.format_sql">true</prop>
 		<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
 		<prop key="hibernate.ejb.entitymanager_factory_name">entity-manager</prop>
-		<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>-->
+		<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> -->
 	</util:properties>
 
 </beans>

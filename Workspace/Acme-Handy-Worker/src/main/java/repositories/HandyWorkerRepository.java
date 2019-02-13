@@ -27,3 +27,4 @@ public interface HandyWorkerRepository extends
 	@Query("select h from HandyWorker h join h.applications a where a.id=?1")
 	HandyWorker findHandyWorkerByApplicationId(int applicationId);
 }
+

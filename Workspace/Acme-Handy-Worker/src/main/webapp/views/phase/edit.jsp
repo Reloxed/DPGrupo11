@@ -47,7 +47,7 @@
 				<spring:message code="phase.startmoment" />
 			</form:label>
 			<spring:message code="phase.startMoment.placeholder" var="placeholder" />
-			<form:input path="startMoment" type="date" placeholder="${placeholder}"/>
+			<form:input path="startMoment" placeholder="${placeholder}"/>
 			<form:errors cssClass="error" path="startMoment"/>
 			
 			&#160;
@@ -56,7 +56,7 @@
 				<spring:message code="phase.endmoment" />
 			</form:label>
 			<spring:message code="phase.startMoment.placeholder" var="placeholder" />
-			<form:input path="endMoment" type="date" placeholder="${placeholder}"/>
+			<form:input path="endMoment" placeholder="${placeholder}"/>
 			<form:errors cssClass="error" path="endMoment" />
 			
 			<br><br>

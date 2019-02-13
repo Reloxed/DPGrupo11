@@ -97,11 +97,15 @@ public class CurriculumHandyWorkerController extends AbstractController {
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int curriculumID) {
+	public ModelAndView edit(@RequestParam(required = false) final Integer curriculumID ) {
 		ModelAndView result;
 		Curriculum curriculum;
-
-		curriculum = this.curriculumService.findOne(curriculumID);
+		
+		try{
+			curriculum = this.curriculumService.findOne(curriculumID);
+		} catch (Throwable oops){
+			curriculum = this.curriculumService.findOne(this.handyWorkerService.findByPrincipal().getCurriculum().getId());
+		}
 		Assert.notNull(curriculum);
 		result = this.createEditModelAndView(curriculum);
 

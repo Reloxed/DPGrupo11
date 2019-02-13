@@ -133,17 +133,3 @@
 		onclick="javascript: relativeRedir('actor/display.do');" />
 	<br />
 </form:form>
-<script>
-	function checkEmail() {
-		var email = document.getElementById("email");
-		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
-			return (true);
-		} else if (/^(\w+ ?)*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-				.test(email.value)) {
-			return (true);
-		} else {
-			alert("<spring:message code="alertEmail" />");
-			return (false);
-		}
-	}
-</script>

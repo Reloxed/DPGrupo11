@@ -26,3 +26,4 @@ public interface TonemaRepository extends JpaRepository<Tonema, Integer> {
 	@Query("select count(x) / (select count(x) from Tonema x)*1.0 from Tonema x where x.isFinal=false")
 	Double ratioOfUnpublishedTonema();
 }
+

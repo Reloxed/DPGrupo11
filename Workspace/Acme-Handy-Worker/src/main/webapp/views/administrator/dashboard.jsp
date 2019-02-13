@@ -22,12 +22,12 @@
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
 	<jstl:choose>
-	<jstl:when test="${not empty applicationsStatistics or not empty pricesStatistics or not empty complaintStatistics
-		 or not empty ratioFixWithComplaints or not empty statusStatistics or not empty notesStatistics 
+	<jstl:when test="${applicationsStatistics[0] != null or pricesStatistics[0] != null or complaintStatistics[0] != null
+		 or not empty ratioFixWithComplaints or statusStatistics[0]!= null or notesStatistics[0] != null 
 		 	or not empty customerStatistics or not empty customerStatistics2 or not empty handyWorkerStatistics
-		 		or not empty handyWorkerStatistics2 or not empty avgstdStatistics}">
+		 		or not empty handyWorkerStatistics2 or avgstdStatistics[0] != null}">
 		 		
-	<jstl:if test="${not empty avgstdStatistics}">
+	<jstl:if test="${avgstdStatistics[0] != null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -54,7 +54,7 @@
 	</table>
 	</jstl:if>
 		 		
-	<jstl:if test="${not empty applicationsStatistics}">
+	<jstl:if test="${applicationsStatistics[0] != null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -81,7 +81,7 @@
 	</table>
 	</jstl:if>
 
-	<jstl:if test="${not empty pricesStatistics}">
+	<jstl:if test="${pricesStatistics[0] != null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -111,7 +111,7 @@
 	</table>
 	</jstl:if>
 
-	<jstl:if test="${not empty complaintStatistics}">
+	<jstl:if test="${complaintStatistics[0] != null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -146,7 +146,7 @@
 	</table>
 	</jstl:if>
 
-	<jstl:if test="${not empty statusStatistics}">
+	<jstl:if test="${statusStatistics[0]!= null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message
@@ -176,7 +176,7 @@
 	</table>
 	</jstl:if>
 
-	<jstl:if test="${not empty notesStatistics}">
+	<jstl:if test="${notesStatistics[0] != null}">
 	<table class="displayStyle" style="width: 50%">
 		<tr>
 			<th colspan="2"><spring:message

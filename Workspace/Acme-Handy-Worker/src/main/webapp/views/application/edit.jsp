@@ -30,10 +30,10 @@
 		id="form">
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<jstl:if test="${report.id == 0 }">
+		<jstl:if test="${application.id == 0 }">
 				<form:hidden path="registeredMoment" value="01/01/2001 00:00" />
 		</jstl:if>
-		<jstl:if test="${report.id != 0 }">
+		<jstl:if test="${application.id != 0 }">
 				<form:hidden path="registeredMoment" />
 		</jstl:if>
 		<form:hidden path="fixUpTask" />

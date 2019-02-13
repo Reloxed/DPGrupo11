@@ -58,7 +58,7 @@
 
 	<spring:message code="fixuptask.startMoment.placeholder"
 		var="placeholder" />
-	<form:input path="startMoment" type="date" placeholder="${placeholder}" />
+	<form:input path="startMoment" placeholder="${placeholder}" />
 	<form:errors cssClass="error" path="startMoment" />
 	
 	&#160;
@@ -69,7 +69,7 @@
 
 	<spring:message code="fixuptask.startMoment.placeholder"
 		var="placeholder" />
-	<form:input path="endMoment" type="date" placeholder="${placeholder}" />
+	<form:input path="endMoment" placeholder="${placeholder}" />
 	<form:errors cssClass="error" path="endMoment" />
 
 	<br />
@@ -122,7 +122,7 @@
 	<input type="submit" id="save" name="save"
 		value="<spring:message code="fixuptask.save" />" />
 
-	<jstl:if test="${empty fixUpTask.applications or fixUpTask.id == 0}">
+	<jstl:if test="${empty fixUpTask.applications and fixUpTask.id != 0}">
 		<input type="submit" id="delete" name="delete"
 			value="<spring:message code="fixuptask.delete" />" />
 
